@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Kazi Aidah Haque</title>
+  <script src="intro-mobile"></script>
+  <script async src="https://tally.so/widgets/embed.js"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #0F0F13;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    @font-face {
+      font-family: "GeneralSans";
+      src: url("fonts/GeneralSans-Variable.ttf") format("truetype");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+      @font-face {
+      font-family: "JetBrains Mono";
+      src: url("fonts/JetBrainsMono-VariableFont_wght") format("truetype");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    .intro-title {
+      font-size: 1.5em;
+      font-weight: 900;
+      color: #C7D0EF;
+      font-family: 'GeneralSans', sans-serif;
+    }
+
+    .aidah-name {
+      color: #3392ff;
+    }
+
+    header {
+      text-align: center;
+      padding: 1em;
+      background: #0F0F13;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      margin: 0 0.5em;
+      text-decoration: none;
+      color: #c5cee0;
+      font-weight: 400;
+      transition: color 0.3s ease, transform 0.2s ease;
+      padding: 5px 0;
+      display: inline-block;
+      transition: all 0.3s ease;
+      font-size: 1.1em;
+    }
+
+    nav a:hover {
+      color: #3392ff;
+      transform: translateY(-2px);
+    }
+
+    a {
+      color: #d8e3f9;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px dashed #414078;
+      margin: 20px 0;
+    }
+
+    .checkoutprojects {
+      margin-bottom: 10px;
+      font-size: 1.8em; 
+      font-family: 'GeneralSans', sans-serif;
+      font-weight: 500;
+      text-align: center;
+      padding-bottom: 10px;
+      padding-top: -30px;
+    }
+
+    .intro-bubblebody {
+      background: #1A1A2A;
+      width: 80%;
+      max-width: 900px;
+      margin: 0 auto 1.5em;
+      padding: 20px;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      margin-top: 0px !important;
+    }
+    
+    .wider-bubblebody {
+      background: #1A1A2A;
+      width: 90%;
+      max-width: 1000px; /* Wider */
+      margin: -50px auto 1.5em;
+      padding: 20px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .bubblebody {
+      background: #1A1A2A;
+      width: 80%;
+      max-width: 900px;
+      margin: 0 auto 1.5em;
+      padding: 10px 40px;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      margin-top: 0px !important;
+    }
+
+    .intro-arrow-left,
+    .intro-arrow-right {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .intro-arrow-left.visible,
+    .intro-arrow-right.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+
+    .heading-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: -10px;
+        margin-left: 2px;
+        margin-top: -15px;
+    }
+
+    .heading-container h2 {
+      font-size: 1.8em;
+      margin: 0;
+      color: #C7D0EF;
+      font-weight: 900;
+    }
+
+    .heading-container hr {
+      border: none;
+      border-top: 5px dashed #5d678a;
+      flex-grow: 1; /* Makes the line fill the remaining space 0o0 */
+      margin: 0;
+    }
+
+    .intro {
+      display: flex;
+      gap: 1.5em;
+      margin-bottom: 2em;
+      color: #C7D0EF;
+      align-items: center;
+    }
+
+    .intro-image {
+      min-width: 330px;
+      height: 300px;
+      background: #3D3DFF;
+      border-radius: 9px;
+      background-image: url('images/hellome.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+    
+
+    .intro-text {
+      padding-left: 10px;
+      transition: all 0.3s ease;
+      padding-right: 20px;
+    }
+
+    .intro-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      align-items: center;
+      padding-left: 10px; 
+      justify-content: flex-start; /* left-align icons */
+      transition: all 0.3s ease;
+    }
+
+    .intro-text-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 300px;
+      max-height: 300px;
+      min-height: 300px;
+      box-sizing: border-box;
+      padding-left: 10px;
+      padding-right: 10px;
+      overflow: auto; 
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .intro-text-container::-webkit-scrollbar { display: none; height: 0; width: 0; transition: all 0.3s ease;}
+
+    .intro-text {
+      margin: 0;
+      overflow: visible;
+      flex: 1 1 auto;
+      padding-right: 6px;
+    }
+
+    .intro-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      min-width: 44px;
+      height: 44px;
+      border-radius: 20%;
+      color: #cde6ff;
+      background: #0F0F13;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+      border: 3px solid #414078;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      font-size: 1.1em;
+    }
+
+    .intro-icon.service-icon {
+      width: 88px;
+      height: 44px;
+      border-radius: 12px; 
+      padding: 0 10px;
+      font-size: 0.95em;
+      font-weight: 700;
+      justify-content: center;
+      letter-spacing: 0.02em;
+      background: #0F0F13;
+      color: #cde6ff;
+      font-family: 'Jetbrains Mono', monospace;
+    }
+
+    .intro-icon.service-icon:hover {
+      transform: translateY(-0.5em) scale(1.02);
+      box-shadow: 0 6px 14px rgba(51,146,255,0.18);
+      background: linear-gradient(0deg, #414078, #1a1a2a);
+      color: #fff;
+      border: 4px solid #3392ff;
+    }
+
+    .commission-btn .btn-icon { display: inline-block; }
+    .commission-btn .btn-text { display: inline-block; }
+
+    @media (max-width: 950px) {
+      .commission-btn {
+        width: 44px !important;
+        min-width: 44px !important;
+        padding: 0 !important;
+        border-radius: 12px;
+        font-family: 'Jetbrains Mono';
+      }
+      .commission-btn .btn-text { display: none !important; }
+      .commission-btn .btn-icon { margin: 0 !important; }
+    }
+
+    @media (max-width: 450px) {
+      nav a {
+        margin: 0 0.3em;
+        font-size: 0.9em !important;
+        transition: all 0.3s ease;
+      }
+    }
+
+    /* .intro-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #23234a, #1a1a2a);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+      border: 3px solid rgba(255,255,255,0.03);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      font-size: 1.1em;
+    } */
+
+    .intro-icon i { pointer-events: none; }
+
+    .intro-icon:hover {
+      transform: translateY(-0.5em) scale(1.04);
+      box-shadow: 0 6px 14px rgba(51,146,255,0.18);
+      background: linear-gradient(0deg, #414078, #1a1a2a);
+      color: #fff;
+      border: 4px solid #3392ff;
+      transition: all 0.2s ease;
+    }
+
+    .custom-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      background: #23234a;
+      color: #fff;
+      text-align: center;
+      border-radius: 12px;
+      padding: 4px 12px;
+      position: absolute;
+      z-index: 100;
+      left: 50%;
+      top: -43px;
+      margin-left: 2px;
+      transform: translateX(-50%) scale(0.95);
+      font-size: 0.95em;
+      font-family: 'JetBrains Mono', monospace;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      transition: opacity 0.18s, visibility 0.18s, transform 0.18s;
+      white-space: nowrap;
+      z-index: 1001;
+    }
+    .intro-icon {
+      position: relative;
+    }
+    .intro-icon:hover .custom-tooltip,
+    .intro-icon:focus .custom-tooltip {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      transition-delay: 0.08s;
+    }
+
+    /* --- PROJECT CARDS SECTION --- */
+    .cardies {
+      padding: 0 0 0 0;
+    }
+
+    .project-cards {
+      display: flex;
+      flex-direction: column; /* Stack vertically */
+      gap: 1em;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .project-card {
+      position: relative;
+      flex: 1 1 100%;
+      height: 120px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.671), 0 1.5px 8px rgba(0, 0, 0, 0.18);
+      background-size: cover;
+      background-position: center;
+      background-color: #414078;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: bolder;
+      transition: transform 0.18s, box-shadow 0.18s;
+      border: 2.5px solid #5d678a;
+    }
+    .project-card:hover {
+      transform: scale(1.035) translateY(-4px);
+      box-shadow: 0 8px 10px rgba(51,146,255,0.25), 0 8px 12px rgba(0,0,0,0.22);
+      border: 5px solid #3392ff;
+      z-index: 2;
+      transition: all 0.3s ease, border 0.1s ease;
+    }
+    .project-card-overlay {
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 15, 19, 0.1);
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 10%;
+      z-index: 1;
+      opacity: 1;
+      transition: none;
+      pointer-events: none;
+    }
+
+    .project-card .project-card-overlay {
+      background: linear-gradient(
+        0deg,
+        rgba(15, 15, 19, 0.496) 50%,
+        rgba(15, 15, 19, 0.416) 70%,
+        rgba(15, 15, 19, 0.244) 90%,
+        rgba(15, 15, 19, 0) 100%
+      );
+      transition: background 0.3s ease;
+    }
+
+    .project-card:hover .project-card-overlay {
+      background: linear-gradient(
+        0deg,
+        rgba(15, 15, 19, 0.732) 50%,
+        rgba(15, 15, 19, 0.449) 100%
+      );
+      transition: background 0.3s ease;
+    }
+
+    /* ACTIVE CARD */
+    .project-card:active {
+        font-size: 0.9em;
+      transform: scale(0.85) translateY(0px);
+      box-shadow: 0 8px 10px rgba(51,146,255,0.25), 0 8px 12px rgba(0,0,0,0.22);
+      border: 3px solid #3392ff;
+      z-index: 2;
+      transition: all 0.3s ease, border 0.1s ease;
+      filter: brightness(1.6);
+    }
+
+    .project-card-title {
+      font-family: 'GeneralSans', sans-serif;
+      font-size: 1.22em;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2em;
+      text-shadow: 0 2px 5px #23234a;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 0;
+      color: #ebeef6;
+      transition: font-size 0.1s ease;
+    }
+
+    .project-card:hover .project-card-title {
+      font-size: 1.5em;
+      letter-spacing: 0.01em;
+      transition: all 0.1s ease;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 2px #000000;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-backdrop.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .yt-list { display:flex; gap:14px; flex-direction:column; align-items:center; }
+    .yt-channel {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 18px;
+      border-radius:12px;
+      background:#0f0f13;
+      border: 2px solid #2b3460;
+      cursor:pointer;
+      width:stretch;
+      min-width:300px;
+      box-sizing:border-box;
+      transition: all 0.2s ease;
+    }
+    .yt-channel:hover { box-shadow:0 6px 12px #2b56d5; transform:translateY(-3px); transition: all 0.3s ease; border: 4px solid #3392ff; }
+    .yt-avatar { width:56px;height:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.03); margin-left: -3px; }
+    .yt-meta { color:#cde6ff }
+    .yt-name { font-weight:700;font-family:'GeneralSans',sans-serif }
+    .yt-subs { font-size:0.9em;color:#9fb2d9 }
+
+    .discord-action { background:#23234a;color:#fff;padding:10px 12px;border-radius:8px;border:2px solid #414078;text-align:center;cursor:pointer;text-decoration:none;transition: all 0.3s ease; }
+    .discord-action:hover { background:#0F0F13; border:2px solid #2b56d5; transition: all 0.3s ease; }
+
+    /* TUT MODAL */
+    .tutorial-options { display:flex; gap:18px; flex-direction:row; align-items:center; justify-content:center; margin-top:18px; }
+    .tutorial-option {
+      position: relative;
+      width: 260px;
+      min-width: 200px;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #cde6ff;
+      border: 2px solid #414078;
+      box-shadow: 0 8px 22px rgba(20, 17, 27, 0.888);
+      transition: all 0.3s ease;
+      background-size: cover;
+      background-position: center center;
+    }
+    .tutorial-option:focus, .tutorial-option:hover { 
+      transform: translateY(-6px); 
+      box-shadow: 0 12px 30px rgba(0, 136, 255, 0.65); 
+      border-color: #3392ff; 
+      outline: none; 
+      text-shadow: #000000; 
+      border: 4px solid #3392ff;
+      transition: all 0.3s ease;
+      }
+      
+      .tutorial-option:hover .card-title,
+      .tutorial-option:focus .card-title {
+        color: #fff !important;
+        text-shadow: 0 3px 10px rgba(0,0,0,0.7);
+      }
+      .tutorial-option:hover .tutorial-icon,
+      .tutorial-option:focus .tutorial-icon {
+        color: #fff !important;
+        filter: drop-shadow(0 6px 10px rgba(0,0,0,0.7));
+      }
+    
+
+    .tutorial-option:hover::before, .tutorial-option:focus::before {
+      background: 
+      linear-gradient(180deg, 
+      rgba(0, 0, 0, 0.181) 0%, 
+      rgba(43, 55, 88, 0.89) 100%); /* TUT OPTION BRIGHTNESS */
+      transition: background 0.3s ease; 
+    }
+
+    .tutorial-option:active { 
+      transform: scale(0.92) translateY(6px);
+      box-shadow: 0 6px 18px rgba(0, 136, 255, 0.45);
+      border-color: #3392ff;
+      outline: none;
+      text-shadow: #000000;
+      border: 2px solid #3392ff;
+      z-index: 2;
+    }
+
+    /* dark overlay over background img AND center content */
+    .tutorial-option::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.644) 0%, rgb(58, 60, 109) 100%); /* TUT OPTION DARKNESS */
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
+    .tutorial-option-overlay {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      text-align: center;
+      font-weight: 700;
+      font-family: 'GeneralSans', sans-serif;
+      letter-spacing: 0.01em;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+  .tutorial-icon { font-size: 28px; color: currentColor; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.55)); }
+
+  .tutorial-option .card-title { font-size: 1.0em; color: inherit; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
+
+    @media (max-width:700px) {
+      .tutorial-options { flex-direction: column; gap:12px; }
+      .tutorial-option { min-width: 95%; height: 120px;  }
+    }
+
+      /* Always stack other proj cards vertically */
+      #otherProjectsModal .tutorial-options {
+        flex-direction: column !important;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      #otherProjectsModal .tutorial-option {
+        width: 250px;
+        height: 120px;
+      }
+
+    #toastContainer .toast { background:#23234a;color:#fff;padding:10px 16px;border-radius:10px;margin-top:8px;box-shadow:0 6px 16px rgba(0,0,0,0.35);opacity:0;transform:translateY(6px) scale(0.98);transition:all .18s ease;pointer-events:auto }
+    #toastContainer .toast.visible { opacity:1;transform:translateY(0) scale(1) }
+
+
+    @media (max-width: 700px) {
+      .yt-list { justify-content: center; }
+      .yt-channel { min-width: 80%; max-width: 92%; transition: all 0.3s ease;}
+    }
+
+    .modal-content {
+        background-color: #1A1A2A;
+        padding: 20px;
+        border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    border: 3px solid #3f3e74; 
+        position: relative;
+        max-width: 85%;
+        max-height: 85%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(0.8);
+        opacity: 0;
+        transform: translateY(50px) rotate(2deg);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .modal-backdrop.show .modal-content {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+  .tutorial-option .card-title.card-title--large { font-size: 1.12em; font-weight: 600; }
+  .tutorial-option .card-title.card-title--normal { font-size: 1.02em; font-weight: 600; }
+  .tutorial-icon { font-size: 28px; }
+
+  .modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px 5px;
+    width: 50px;
+    height: 50px;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.2s ease;
+    background-color: #1A1A2A;
+    border-radius: 6px;
+  }
+
+    .modal-close-button:hover {
+        color: #3392ff;
+        transform: rotate(90deg);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+        padding: 50px 300px 100px 25%;
+      background: #0F0F13;
+      color: #ffffff;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 300px;
+      padding: -10px;
+      margin-right: 100px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.4em;
+      margin-bottom: 0.8em;
+      color: #F8F8FF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-section p {
+      line-height: 1.5;
+      margin-bottom: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-section.socials {
+      text-align: right;
+    }
+
+    @media (min-width: 950px) {
+      .intro-text-container {
+        padding-top: 30px;
+        transition: all 0.3s ease;
+      }
+      .intro-icons {
+        transform: translateY(-2em);
+      }
+      .custom-tooltip {
+        top: -42px;
+        transition: all 0.3s ease;
+      }
+      
+      
+    }
+
+    @media (min-width: 700px) {
+      .project-cards {
+        flex-direction: row; /* Stacks cards horizontally */
+        flex-wrap: nowrap;
+      }
+      .project-card {
+        height: 150px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .intro-text {
+        margin-top: 20px;
+        max-width: 300px;
+        transition: all 0.3s ease;
+      }
+
+      .heading-container h2 {
+        font-size: 1.5em;
+        text-align: center;
+        transition: all 0.3s ease;
+        margin-left: 10px;
+      }
+
+      .intro-image, .process-image {
+        /* width: 500px;
+        max-width: 500px; */
+        height: 300px;
+        margin-top: 20px;
+        margin-bottom: -10px;
+        transition: all 0.3s ease;
+      }
+
+      .bubblebody, .wider-bubblebody {
+        width: 85%;
+        padding: 30px;
+        transition: all 0.3s ease;
+      }
+
+      .heading-container {
+        justify-content: center;
+      }
+
+      .intro {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .intro-image {
+        min-width: unset;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: -10px;
+        transition: all 0.3s ease;
+      }
+      .intro-text-container {
+        padding-left: 0;
+        margin-left: 65px; /* SOME SPACE CHECK */
+        text-align: left;
+        height: 300px;
+        transition: all 0.3s ease;
+        margin-top: -10px;
+      }
+      
+      .project-cards {
+        flex-direction: column;
+        align-items: stretch;
+        height: 250px; /* VERTICAL HEIGHT */
+        gap: 2px;
+        transition: all 0.3s ease;  
+      }
+      .project-card {
+        flex: 1 1 100%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        height: 180px;
+        margin: 0 0 1em 0;
+        box-sizing: border-box;
+        border: 3px solid #5d678a;
+        /* border-bottom: 2px;
+        border-right: 2px; */
+      }
+      .project-card .project-card-overlay {
+        background: linear-gradient(
+          0deg,
+          rgba(15, 15, 19, 0.932) 0%,
+          rgba(25, 25, 42, 0.627) 100%
+          /* rgba(23, 23, 31, 0.97) 0%,
+          rgba(25, 25, 42, 0.715) 100% */
+        );
+        transition: background 0.3s ease;
+      }
+      .footer-section.socials {
+        text-align: left;
+      }
+      .footer-section h3, .footer-section p {
+        justify-content: left;
+      }
+      nav a {
+        margin: 0 0.3em;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+      }
+      .footer-section {
+        min-width: 100%;
+        text-align: left;
+      }
+      .gallery-item {
+        width: unset;
+      }
+      .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(0.90em);
+      }
+      .header {
+        transform: scale(0.30em);
+      }
+    }
+
+    .intro-arrow {
+      display: none;
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 3px 0 0 0;
+      background: #2048be;
+      color: #cde6ff;
+      border: none;
+      /* border-radius: 10px 6px 6px 10px; */
+      border-radius: 30px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.8em;
+      box-shadow: 1px 7px 4px 0px rgba(20, 0, 107, 0);
+      /* box-shadow: 0 2px 6px rgba(0,0,0,0.18); */
+      z-index: 10;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .intro-arrow:hover {
+      background: #2b56d5;
+      transform: scale(1.05) translateY(-50%);
+      box-shadow: 1px 3px 4px 0px rgba(20, 0, 107, 0.312);
+    }
+    .intro-arrow:active {
+      background: #23234a;
+    }
+    .intro { position: relative; }
+    .intro-arrow.visible { display: block !important; }
+    .intro-arrow-left { left: 10px; right: auto; }
+
+    
+  .intro-pane { will-change: transform, opacity; backface-visibility: hidden; transform: translateZ(0); }
+  .intro--animating { will-change: height; }
+
+
+    @media (max-width: 700px) {
+
+      .intro {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative;
+      }
+
+      .intro-bubblebody {
+        width: 92%;
+        max-width: 900px;
+        padding: 10px;
+        margin: 0 auto 1.5em;
+        box-sizing: border-box;
+        position: relative;
+        justify-content: center;
+        border-radius: 20px 20px 0 0;
+      }
+
+      .wider-bubblebody {
+        width: 92%;
+        max-width: 1000px;
+        padding: 10px 15px 10px 15px;
+        box-sizing: border-box;
+        position: relative;
+        justify-content: center;
+        transition: all 0.3s ease;
+        margin: -30px auto 1.5em;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .intro-image {
+        min-width: unset;
+        width: 100%;
+        height: 300px;
+        margin-top: 0;
+        margin-bottom: -10px;
+        transition: transform 0.4s cubic-bezier(.77,0,.18,1);
+        border-radius: 12px;
+      }
+
+      .intro-text-container {
+        transform: none;
+        opacity: 1;
+        height: 300px;
+        width: stretch;
+        transition: none;
+        padding-right: 10px;
+        transition: all 0.3s ease;
+      }
+      
+  .intro-icons { padding-left: 0; justify-content: flex-start; }
+      }
+  </style>
+</head>
+<body>
+  <header>
+   <nav style="color: #C7D0EF; font-weight: 500;">
+      <a href="../index.html">
+        <i class="fas fa-home"></i>
+        HOME</a>
+      | </span>
+      <a class="request-form-button" style="cursor:pointer"
+          data-tally-open="nW688P"
+          data-tally-layout="modal"
+          data-tally-width="600"
+          data-tally-hide-title="1">
+        <i class="fa-solid fa-envelopes-bulk"></i>
+        REQUEST A TUTORIAL</a>
+      <!-- |
+      <a href="#contact">
+        <i class="fa-solid fa-border-top-left"></i>
+        FORMS</a  -->
+    </nav>
+  </header>
+
+  <div class="intro-bubblebody">
+      <section class="intro">
+        <div class="intro-image" tabindex="0"></div>
+        <button class="intro-arrow intro-arrow-right" aria-label="Show intro text" style="display:none">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <button class="intro-arrow intro-arrow-left" aria-label="Show intro image" style="display:none; left: 10px; right: auto;">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="intro-text-container" aria-hidden="false">
+          <p class="intro-text">
+            <span class="intro-title">
+                ABOUT ME:
+                <!-- <span class="aidah-name"> Aidah! </span> -->
+            </span>
+            <br>
+            I started my YouTube channel to create animations back in 2019. Even though I ended up making hundreds of tutorials, I'm still just as passionate about animation as when I began.
+          </p>
+          <!-- social favicons (circled Font Awesome icons) -->
+          <div class="intro-icons">
+            <a id="youtubeChooser" class="intro-icon" href="#" role="button" aria-label="Open YouTube selector">
+              <i class="fab fa-youtube" aria-hidden="true"></i>
+              <span class="custom-tooltip">YouTube</span>
+            </a>
+            <a id="emailCopy" class="intro-icon" href="#" role="button" aria-label="Copy email">
+              <i class="fas fa-envelope" aria-hidden="true"></i>
+              <span class="custom-tooltip">Copy Email</span>
+            </a>
+            <a id="discordChooser" class="intro-icon" href="https://discord.gg/MQHdupwMXD" target="_blank" role="button" aria-label="Join Discord">
+              <i class="fab fa-discord" aria-hidden="true"></i>
+              <span class="custom-tooltip">Discord</span>
+            </a>
+            <a class="intro-icon service-icon commission-btn" href="option/commissions.html" role="button" aria-label="Commission me" style="width:stretch; height:44px; border-radius:12px; font-weight:700; font-family: 'Jetbrains Mono'; justify-content:center; letter-spacing:0.02em;cursor: pointer;">
+              <i class="fa-solid fa-message btn-icon" aria-hidden="true" style="margin-right: 10px"></i>
+              <span class="btn-text">Commission Me</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    <div class="heading-container">
+        <h2 class="checkoutprojects">Explore my works!</h2>
+        <hr>
+    </div>
+  </div>
+
+  <div class="wider-bubblebody">
+    <section class="cardies">
+      <div class="project-cards">
+  <a class="project-card" href="https://www.youtube.com/playlist?list=PLJYnzg7CheuiRVW_zf3MbSPAX8PEtNtFQ" target="_blank" style="background-image: url('images/etio.gif');">
+          <div class="project-card-overlay">
+            <span class="project-card-title">ANIMATIONS</span>
+          </div>
+        </a>
+        <a class="project-card" id="tutorialsCard" href="#" style="background-image: url('images/aidahstar.gif');">
+          <div class="project-card-overlay">
+            <span class="project-card-title">TUTORIALS</span>
+          </div>
+        </a>
+        <a class="project-card" href="#" style="background-image: url('images/calendar1.png');">
+          <div class="project-card-overlay">
+            <span class="project-card-title">OTHER PROJECTS</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+
+
+  <div class="modal-backdrop" id="imageModal">
+    <div class="modal-content">
+      <button class="modal-close-button">&times;</button>
+      <img src="" class="modal-image" id="modalImage">
+    </div>
+  </div>
+
+  <!-- YouTube chooser modal -->
+  <div class="modal-backdrop" id="youtubeModal" aria-hidden="true" role="dialog" aria-label="Choose YouTube channel">
+    <div class="modal-content">
+      <button class="modal-close-button" data-close="youtubeModal">&times;</button>
+      <h3 style="margin-top:0;color:#cde6ff; margin-bottom: 1px;">Choose a channel</h3>
+  <div class="yt-list" style="margin-top:12px">
+        <div class="yt-channel" data-channel-url="https://www.youtube.com/c/KaziAidahHaque" data-fixed-name="Kazi Aidah Haque">
+          <img class="yt-avatar" src="images/pfp.png" alt="Kazi Aidah Haque avatar">
+          <div class="yt-meta">
+            <div class="yt-name">Kazi Aidah Haque</div>
+            <div class="yt-subs">272,500+ Subscribers</div>
+          </div>
+        </div>
+        <div class="yt-channel" data-channel-url="https://www.youtube.com/@kazi_aidah" data-fixed-name="Kazi Aidah's Animations">
+          <img class="yt-avatar" src="images/aidahstar.gif" alt="Kazi Aidah avatar">
+          <div class="yt-meta">
+            <div class="yt-name">Kazi Aidah's Animations </div>
+            <div class="yt-subs">9,700+ Subscribers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discord chooser modal -->
+  <div class="modal-backdrop" id="discordModal" aria-hidden="true" role="dialog" aria-label="Discord options">
+    <div class="modal-content">
+      <button class="modal-close-button" data-close="discordModal">&times;</button>
+      <h3 style="margin-top:0;color:#cde6ff; margin-bottom:4px;">Discord</h3>
+      <div class="tutorial-options" style="margin-top:12px;">
+        <button class="tutorial-option" id="copyDiscordId" aria-label="Copy Discord username" style="background-image: url('images/discorduser.jpg');">
+          <div class="tutorial-option-overlay">
+            <i class="fab fa-discord tutorial-icon" aria-hidden="true"></i>
+            <div class="card-title card-title--large">Copy Username<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.85em;color:#9fb2d9">@kazi_aidah</span></div>
+          </div>
+        </button>
+        <a class="tutorial-option" id="joinDiscordServer" href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener" aria-label="Join Aidah's Discord server" style="background-color: #1A1A2A;">
+          <div class="tutorial-option-overlay">
+            <i class="fa-solid fa-users tutorial-icon" aria-hidden="true"></i>
+            <div class="card-title card-title--normal">Join Aidah's Server</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tutorials modal -->
+  <div class="modal-backdrop" id="tutorialsModal" aria-hidden="true" role="dialog" aria-label="Tutorials options">
+    <div class="modal-content">
+      <button class="modal-close-button" data-close="tutorialsModal">&times;</button>
+      <h3 style="margin-top:0;color:#cde6ff; margin-bottom:4px;">Tutorials</h3>
+      <div class="tutorial-options">
+  <a class="tutorial-option" id="searchAllTutorials" href="option/tutorials.html" style="background-image: url('images/search1.jpg');" aria-label="Search all tutorials">
+          <div class="tutorial-option-overlay">
+            <i class="fas fa-search tutorial-icon" aria-hidden="true"></i>
+            <div class="card-title card-title--large">Search All Tutorials</div>
+          </div>
+        </button>
+        <a class="tutorial-option" id="seeYouTubePlaylists" href="https://www.youtube.com/@kaziaidahhaque/playlists" target="_blank" rel="noopener" style="background-image: url('images/YouTubeTutPlaylists.png');" aria-label="See tutorial playlists on YouTube">
+          <div class="tutorial-option-overlay">
+            <i class="fab fa-youtube tutorial-icon" aria-hidden="true"></i>
+            <div class="card-title card-title--normal">See Tutorial Playlists<br>on YouTube</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+    <!-- Other Projects modal -->
+    <div class="modal-backdrop" href="option/coding-projects.html" id="otherProjectsModal" aria-hidden="true" role="dialog" aria-label="Other Projects options">
+      <div class="modal-content">
+        <button class="modal-close-button" data-close="otherProjectsModal">&times;</button>
+        <h3 style="margin-top:0;color:#cde6ff; margin-bottom:4px;">Other Projects</h3>
+        <div class="tutorial-options">
+          <a class="tutorial-option" id="codingProjectsBtn" href="option/coding-projects.html" style="background-image: url('images/alwayscolortext1.jpg');">
+            <div class="tutorial-option-overlay">
+              <i class="fa-solid fa-code tutorial-icon" aria-hidden="true"></i>
+              <div class="card-title card-title--large">Coding Projects<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.85em;color:#d9aa9f">coming soon</span></div>
+            </div>
+          </button>
+          <a class="tutorial-option" id="lorepageBtn" href="option/lorepage.html" style="background-image: url('images/black.png');">
+            <div class="tutorial-option-overlay">
+              <i class="fa-solid fa-book tutorial-icon" aria-hidden="true"></i>
+              <div class="card-title card-title--normal">Lorepage<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.85em;color:#d9aa9f">coming soon</span></div>
+            </div>
+          </a>
+          </button>
+          <a class="tutorial-option" href="option/artworks-page.html" id="artworksBtn" style="background-image: url('images/adoravamp.png');">
+            <div class="tutorial-option-overlay">
+              <i class="fa-solid fa-palette tutorial-icon" aria-hidden="true"></i>
+              <div class="card-title card-title--normal">Artworks<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.85em;color:#d9aa9f">coming soon</span></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  <!-- Toast container -->
+  <div id="toastContainer" aria-live="polite" style="position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:3000;pointer-events:none"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const imageModal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalCloseButton = imageModal.querySelector('.modal-close-button');
+
+      function showModal(imageSrc) {
+          const img = new Image();
+          img.onload = function() {
+              modalImage.src = imageSrc;
+              imageModal.classList.add('show');
+              document.body.style.overflow = 'hidden';
+          };
+          img.src = imageSrc;
+      }
+
+      function hideModal() {
+          imageModal.classList.remove('show');
+          document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('img').forEach(img => {
+          img.addEventListener('click', function() {
+              showModal(this.src);
+          });
+      });
+
+      document.querySelectorAll('.intro-image').forEach(div => {
+          div.addEventListener('click', function() {
+              const bgImage = window.getComputedStyle(this).backgroundImage;
+              const imageUrl = bgImage.slice(4, -1).replace(/"/g, "");
+              showModal(imageUrl);
+          });
+      });
+
+      modalCloseButton.addEventListener('click', hideModal);
+
+      const modalContent = imageModal.querySelector('.modal-content');
+
+      modalImage.addEventListener('click', function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          return false;
+      });
+
+      modalContent.addEventListener('click', function(event) {
+          event.stopPropagation();
+      });
+
+      imageModal.addEventListener('click', function(event) {
+          if (event.target === this) {
+              hideModal();
+          }
+      });
+
+      document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape' && imageModal.classList.contains('show')) {
+              hideModal();
+          }
+      });
+
+        // Other Projects modal logic
+        const otherProjectsCard = Array.from(document.querySelectorAll('.project-card')).find(card => card.textContent.includes('OTHER PROJECTS'));
+        const otherProjectsModal = document.getElementById('otherProjectsModal');
+        const otherProjectsCloseBtn = otherProjectsModal ? otherProjectsModal.querySelector('.modal-close-button') : null;
+
+        function showOtherProjectsModal() {
+          if (otherProjectsModal) {
+            otherProjectsModal.classList.add('show');
+            otherProjectsModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+        }
+        function hideOtherProjectsModal() {
+          if (otherProjectsModal) {
+            otherProjectsModal.classList.remove('show');
+            otherProjectsModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+          }
+        }
+        if (otherProjectsCard) {
+          otherProjectsCard.addEventListener('click', function(e) {
+            e.preventDefault();
+            showOtherProjectsModal();
+          });
+        }
+        if (otherProjectsCloseBtn) {
+          otherProjectsCloseBtn.addEventListener('click', hideOtherProjectsModal);
+        }
+        if (otherProjectsModal) {
+          otherProjectsModal.addEventListener('click', function(event) {
+            if (event.target === this) {
+              hideOtherProjectsModal();
+            }
+          });
+        }
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape' && otherProjectsModal && otherProjectsModal.classList.contains('show')) {
+            hideOtherProjectsModal();
+          }
+        });
+    });
+  </script>
+
+  <script>
+    // Modal + action handlers for Yt, email, discord
+    (function(){
+      function showBackdrop(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('show');
+        el.setAttribute('aria-hidden','false');
+      }
+      function hideBackdrop(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('show');
+        el.setAttribute('aria-hidden','true');
+      }
+
+      var youtubeBtn = document.getElementById('youtubeChooser');
+      var emailBtn = document.getElementById('emailCopy');
+      var discordBtn = document.getElementById('discordChooser');
+
+      var youtubeModal = document.getElementById('youtubeModal');
+      var discordModal = document.getElementById('discordModal');
+
+      // Open YouTube choooser
+      if (youtubeBtn) youtubeBtn.addEventListener('click', function(e){
+        e.preventDefault(); showBackdrop('youtubeModal');
+        populateYouTubeModal();
+      });
+
+      // Channel click opens channel in new tab yay this this
+      document.querySelectorAll('.yt-channel').forEach(function(node){
+        node.addEventListener('click', function(){
+          var url = node.getAttribute('data-url');
+          if (url) window.open(url, '_blank');
+          hideBackdrop('youtubeModal');
+        });
+      });
+
+      // Email copy
+      if (emailBtn) emailBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        var email = 'kaziaidahhaque@gmail.com';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(function(){
+            showToast('Email Copied!');
+          }, function(){
+            fallbackCopy(email);
+          });
+        } else {
+          fallbackCopy(email);
+        }
+      });
+
+      function fallbackCopy(text, successMsg){
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly','');
+        ta.style.position='fixed'; ta.style.left='-9999px'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          ta.setSelectionRange(0, ta.value.length);
+        } catch(e) {}
+        try {
+          var ok = document.execCommand('copy');
+          if (ok) showToast(successMsg || 'Copied!'); else showToast('Copy failed');
+        } catch(e){ showToast('Copy failed'); }
+        document.body.removeChild(ta);
+      }
+
+      // Discord chooser
+      if (discordBtn) discordBtn.addEventListener('click', function(e){
+        e.preventDefault(); showBackdrop('discordModal');
+      });
+
+      // Tutorials card -> opens tutorials modal
+      var tutorialsCard = document.getElementById('tutorialsCard');
+      var tutorialsModal = document.getElementById('tutorialsModal');
+      if (tutorialsCard) tutorialsCard.addEventListener('click', function(e){
+        e.preventDefault(); showBackdrop('tutorialsModal');
+      });
+      if (tutorialsCard) tutorialsCard.setAttribute('role','button');
+      if (tutorialsCard) tutorialsCard.setAttribute('tabindex','0');
+      if (tutorialsCard) tutorialsCard.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showBackdrop('tutorialsModal'); } });
+
+      // Tutorials actions
+      var searchAllBtn = document.getElementById('searchAllTutorials');
+      var seeYTBtn = document.getElementById('seeYouTubePlaylists');
+      if (searchAllBtn) searchAllBtn.addEventListener('click', function(){
+        // close modal then navg to the tutpage
+        hideBackdrop('tutorialsModal');
+        window.location.href = 'option/tutorials.html';
+      });
+      // keyboard support for btn
+      if (searchAllBtn) searchAllBtn.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hideBackdrop('tutorialsModal'); window.location.href = 'option/tutorials.html'; } });
+      if (seeYTBtn) {
+        seeYTBtn.addEventListener('click', function(){ hideBackdrop('tutorialsModal'); });
+        // make sure keyboard focusable
+        seeYTBtn.addEventListener('keydown', function(e){ if (e.key === 'Enter') { hideBackdrop('tutorialsModal'); } });
+      }
+
+      var copyDiscordBtn = document.getElementById('copyDiscordId');
+      if (copyDiscordBtn) copyDiscordBtn.addEventListener('click', function(){
+        var id = 'kazi_aidah';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(id).then(function(){ showToast("Discord username copied!"); }, function(){ fallbackCopy(id, "Discord username copied!"); });
+        } else { fallbackCopy(id, "Discord username copied!"); }
+      });
+
+      // YouTube Data fetching=
+      var YT_API_KEY = 'AIzaSyDB9GX4GitTAFo-6c16157dMY64TiMX6-E';
+      function normalizeStr(s){ return (s||'').toString().toLowerCase().replace(/[^a-z0-9]/g,''); }
+      function resolveChannelInfo(query, usedSet, node){
+
+        try {
+          var dataUrl = node && node.getAttribute && node.getAttribute('data-url');
+          if (dataUrl) {
+            var parts = dataUrl.split('/').filter(Boolean);
+
+            var ci = parts.indexOf('channel');
+            if (ci !== -1 && parts[ci+1]) {
+              var channelId = parts[ci+1];
+              var chanUrl = 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=' + channelId + '&key=' + YT_API_KEY;
+              return fetch(chanUrl).then(function(r){ return r.json(); }).then(function(cdata){
+                if (cdata.items && cdata.items.length) {
+                  var info = cdata.items[0];
+                  if (usedSet) usedSet.add(channelId);
+                  return { id: channelId, title: info.snippet.title, avatar: (info.snippet.thumbnails && (info.snippet.thumbnails.medium || info.snippet.thumbnails.default)).url, subs: info.statistics.subscriberCount };
+                }
+                return Promise.reject('no channel by id');
+              });
+            }
+            // check for username
+            var userSeg = null;
+            var ui = parts.indexOf('user'); if (ui !== -1 && parts[ui+1]) userSeg = parts[ui+1];
+            var ci2 = parts.indexOf('c'); if (!userSeg && ci2 !== -1 && parts[ci2+1]) userSeg = parts[ci2+1];
+            if (userSeg) {
+              var forUserUrl = 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forUsername=' + encodeURIComponent(userSeg) + '&key=' + YT_API_KEY;
+              return fetch(forUserUrl).then(function(r){ return r.json(); }).then(function(d3){
+                if (d3.items && d3.items.length) {
+                  var info = d3.items[0];
+                  var cid = info.id;
+                  if (usedSet) usedSet.add(cid);
+                  return { id: cid, title: info.snippet.title, avatar: (info.snippet.thumbnails && (info.snippet.thumbnails.medium || info.snippet.thumbnails.default)).url, subs: info.statistics.subscriberCount };
+                }
+                return Promise.reject('no channel by username');
+              });
+            }
+          }
+        } catch(e) { }
+
+        // Use search.listy
+        var searchUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&maxResults=5&q=' + encodeURIComponent(query) + '&key=' + YT_API_KEY;
+        return fetch(searchUrl).then(function(r){ return r.json(); }).then(function(data){
+          if (!data.items || !data.items.length) return Promise.reject('not found');
+          var qNorm = normalizeStr(query);
+
+          var candidates = data.items.slice();
+          candidates.sort(function(a,b){
+            var at = normalizeStr(a.snippet && (a.snippet.channelTitle || a.snippet.title) || '');
+            var bt = normalizeStr(b.snippet && (b.snippet.channelTitle || b.snippet.title) || '');
+            var aScore = (at === qNorm) ? 0 : (at.indexOf(qNorm)!==-1 ? 1 : 2);
+            var bScore = (bt === qNorm) ? 0 : (bt.indexOf(qNorm)!==-1 ? 1 : 2);
+            return aScore - bScore;
+          });
+
+          var chosen = null;
+          for (var i=0;i<candidates.length;i++){
+            var it = candidates[i];
+            var channelId = (it.id && it.id.channelId) || (it.snippet && it.snippet.channelId) || null;
+            if (!channelId) continue;
+            if (usedSet && usedSet.has(channelId)) continue;
+            chosen = it; break;
+          }
+
+          if (!chosen) {
+            chosen = null;
+            try {
+              var dataUrl = node && node.getAttribute && node.getAttribute('data-url');
+              if (dataUrl) {
+                // try searching the full URL as query
+                // eslint-disable-next-line no-unused-vars
+                var searchUrl2 = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&maxResults=5&q=' + encodeURIComponent(dataUrl) + '&key=' + YT_API_KEY;
+                // synchrs fallback
+                return fetch(searchUrl2).then(function(r2){ return r2.json(); }).then(function(d2){
+                  var cand2 = d2.items && d2.items.length ? d2.items[0] : null;
+                  if (cand2) {
+                    var cid = (cand2.id && cand2.id.channelId) || (cand2.snippet && cand2.snippet.channelId);
+                    if (cid && (!usedSet || !usedSet.has(cid))) {
+                      chosen = cand2;
+                    }
+                  }
+                  if (!chosen && dataUrl) {
+                    // username endpick
+                    var parts = dataUrl.split('/').filter(Boolean);
+                    var last = parts[parts.length-1];
+                    if (last) {
+                      var forUserUrl = 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forUsername=' + encodeURIComponent(last) + '&key=' + YT_API_KEY;
+                      return fetch(forUserUrl).then(function(r3){ return r3.json(); }).then(function(d3){
+                        if (d3.items && d3.items.length) {
+                          var candidate = { snippet: { channelTitle: d3.items[0].snippet.title }, id: { channelId: d3.items[0].id } };
+                          chosen = candidate;
+                        }
+                        if (!chosen) {
+                          // give up
+                          chosen = candidates[0];
+                        }
+                        var channelId = (chosen.id && chosen.id.channelId) || (chosen.snippet && chosen.snippet.channelId);
+                        var channelTitle = chosen.snippet && (chosen.snippet.channelTitle || chosen.snippet.title) || query;
+                        if (!channelId) return Promise.reject('no id');
+                        if (usedSet) usedSet.add(channelId);
+                        var chanUrl = 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=' + channelId + '&key=' + YT_API_KEY;
+                        return fetch(chanUrl).then(function(r4){ return r4.json(); }).then(function(cdata4){
+                          if (!cdata4.items || !cdata4.items.length) return Promise.reject('no channel');
+                          var info = cdata4.items[0];
+                          return {
+                            id: channelId,
+                            title: channelTitle || info.snippet.title,
+                            avatar: (info.snippet.thumbnails && (info.snippet.thumbnails.medium || info.snippet.thumbnails.default)).url,
+                            subs: info.statistics.subscriberCount
+                          };
+                        });
+                      });
+                    }
+                  }
+                  // if we set chosen from searchUrl2 above
+                  if (chosen) {
+                    var channelId = (chosen.id && chosen.id.channelId) || (chosen.snippet && chosen.snippet.channelId);
+                    var channelTitle = chosen.snippet && (chosen.snippet.channelTitle || chosen.snippet.title) || query;
+                    if (!channelId) return Promise.reject('no id');
+                    if (usedSet) usedSet.add(channelId);
+                    var chanUrl = 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=' + channelId + '&key=' + YT_API_KEY;
+                    return fetch(chanUrl).then(function(r5){ return r5.json(); }).then(function(cdata5){
+                      if (!cdata5.items || !cdata5.items.length) return Promise.reject('no channel');
+                      var info = cdata5.items[0];
+                      return {
+                        id: channelId,
+                        title: channelTitle || info.snippet.title,
+                        avatar: (info.snippet.thumbnails && (info.snippet.thumbnails.medium || info.snippet.thumbnails.default)).url,
+                        subs: info.statistics.subscriberCount
+                      };
+                    });
+                  }
+                });
+              }
+            } catch(e) {}
+            // if all else fails, pick first candidate
+            chosen = candidates[0];
+          }
+
+          var channelId = (chosen.id && chosen.id.channelId) || (chosen.snippet && chosen.snippet.channelId);
+          var channelTitle = chosen.snippet && (chosen.snippet.channelTitle || chosen.snippet.title) || query;
+          if (!channelId) return Promise.reject('no id');
+          // mark used
+          if (usedSet) usedSet.add(channelId);
+          // fetch full details
+          var chanUrl = 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=' + channelId + '&key=' + YT_API_KEY;
+          return fetch(chanUrl).then(function(r){ return r.json(); }).then(function(cdata){
+            if (!cdata.items || !cdata.items.length) return Promise.reject('no channel');
+            var info = cdata.items[0];
+            return {
+              id: channelId,
+              title: channelTitle || info.snippet.title,
+              avatar: (info.snippet.thumbnails && (info.snippet.thumbnails.medium || info.snippet.thumbnails.default)).url,
+              subs: info.statistics.subscriberCount
+            };
+          });
+        });
+      }
+
+      // Populate YouTube modal helper
+      function populateYouTubeModal(){
+        var used = new Set();
+        var nodes = Array.prototype.slice.call(document.querySelectorAll('.yt-channel'));
+        nodes.forEach(function(node){
+          // if a fixed channel URL is provided, use it directly
+          var fixedUrl = node.getAttribute('data-channel-url');
+          var fixedName = node.getAttribute('data-fixed-name');
+          var subsEl = node.querySelector('.yt-subs');
+          if (fixedUrl) {
+            // set click behavior and display fixed name
+            node.addEventListener('click', function(){ window.open(fixedUrl, '_blank'); });
+            if (fixedName) {
+              var nameEl = node.querySelector('.yt-name'); if (nameEl) nameEl.textContent = fixedName;
+            }
+            // Store original text so we can restore it on failure
+            if (subsEl && typeof subsEl.getAttribute === 'function') {
+              if (!subsEl.getAttribute('data-original')) subsEl.setAttribute('data-original', subsEl.textContent || '');
+              subsEl.textContent = 'Loading...';
+            }
+            resolveChannelInfo(fixedName || fixedUrl, used, node).then(function(info){
+              if (subsEl) subsEl.textContent = Number(info.subs).toLocaleString() + ' subscribers';
+            }).catch(function(err){
+              console.error('YouTube lookup failed for fixed channel:', fixedUrl, err);
+              if (subsEl && subsEl.getAttribute) {
+                var orig = subsEl.getAttribute('data-original');
+                if (orig !== null) subsEl.textContent = orig; else subsEl.textContent = '';
+              }
+            });
+            // continue (no early return) - skip the separate API branch below
+            return;
+          }
+
+          // otherwise use API-based resolution
+          var q = node.getAttribute('data-query');
+          if (!q) return;
+          if (subsEl) subsEl.textContent = 'Loading...';
+          resolveChannelInfo(q, used, node).then(function(info){
+            var img = node.querySelector('.yt-avatar'); if (img && info.avatar) img.src = info.avatar;
+            var nameEl = node.querySelector('.yt-name'); if (nameEl) nameEl.textContent = info.title;
+            if (subsEl) subsEl.textContent = Number(info.subs).toLocaleString() + ' subscribers';
+            node.setAttribute('data-resolved-id', info.id);
+            // attach click to open channel url if available
+            node.addEventListener('click', function(){ window.open('https://www.youtube.com/channel/' + info.id, '_blank'); });
+          }).catch(function(err){
+            console.error('YouTube lookup failed for query:', q, err);
+            if (subsEl && subsEl.getAttribute) {
+              var orig2 = subsEl.getAttribute('data-original');
+              if (orig2 !== null) subsEl.textContent = orig2; else subsEl.textContent = '';
+            }
+            var img = node.querySelector('.yt-avatar'); if (img) img.src = img.getAttribute('src') || 'images/hellome.png';
+            try { showToast('YouTube info unavailable'); } catch(e) {}
+          });
+        });
+      }
+
+      // close buttons inside our new modals
+      document.querySelectorAll('.modal-close-button[data-close]').forEach(function(btn){
+        btn.addEventListener('click', function(){ hideBackdrop(btn.getAttribute('data-close')); });
+      });
+
+      // click backdrop to close
+      document.querySelectorAll('.modal-backdrop').forEach(function(b){
+        b.addEventListener('click', function(e){ if (e.target === b) { b.classList.remove('show'); b.setAttribute('aria-hidden','true'); } });
+      });
+
+      // keyboard escape closes all
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') { ['youtubeModal','discordModal'].forEach(function(id){ hideBackdrop(id); }); } });
+
+      // Toast utility
+      var toastContainer = document.getElementById('toastContainer');
+      function showToast(text, timeout){
+        timeout = timeout || 2200;
+        if (!toastContainer) return;
+        var t = document.createElement('div');
+        t.className = 'toast'; t.textContent = text;
+        t.style.pointerEvents = 'auto';
+        toastContainer.appendChild(t);
+        requestAnimationFrame(function(){ t.classList.add('visible'); });
+        setTimeout(function(){ t.classList.remove('visible'); setTimeout(function(){ toastContainer.removeChild(t); },220); }, timeout);
+      }
+
+    })();
+  </script>
+</body>
+</html>
+
+<script class="intro-mobile">
+  //  Handles swipe for intro section on mobile screens
+  //  Swipe does not work but arrows do
+(function () {
+  function isMobile() {
+    return window.innerWidth <= 700;
+  }
+
+  let startX = null;
+  let currentState = 0; // 0: show image, 1: show text
+  let lastIsMobile = isMobile();
+
+  function updateArrows() {
+    const rightArrow = document.querySelector('.intro-arrow-right');
+    const leftArrow = document.querySelector('.intro-arrow-left');
+    if (!rightArrow || !leftArrow) return;
+
+    if (currentState === 0) {
+      rightArrow.classList.add("visible");
+      leftArrow.classList.remove("visible");
+    } else {
+      rightArrow.classList.remove("visible");
+      leftArrow.classList.add("visible");
+    }
+  }
+
+  function snapToImage() {
+    const img = document.querySelector('.intro-image');
+    const textContainer = document.querySelector('.intro-text-container');
+    if (!img || !textContainer) return;
+
+    img.style.display = '';
+    img.style.transition = '';
+    img.style.transform = 'translateX(0)';
+
+    textContainer.style.display = 'none';
+    textContainer.style.transition = '';
+    textContainer.style.transform = 'translateX(100vw)';
+    textContainer.style.opacity = '0';
+
+    currentState = 0;
+    updateArrows();
+  }
+
+  function snapToText() {
+    const img = document.querySelector('.intro-image');
+    const textContainer = document.querySelector('.intro-text-container');
+    if (!img || !textContainer) return;
+
+    textContainer.style.display = '';
+    textContainer.style.transition = '';
+    textContainer.style.transform = 'translateX(0)';
+    textContainer.style.opacity = '1';
+    img.style.display = 'none';
+    img.style.transition = '';
+    img.style.transform = 'translateX(-100vw)';
+
+    currentState = 1;
+    updateArrows();
+  }
+
+  function showImage() {
+  const img = document.querySelector('.intro-image');
+  const textContainer = document.querySelector('.intro-text-container');
+  const container = document.querySelector('.intro');
+  if (!img || !textContainer || !container) return;
+
+  // mark state + arrows immediately
+  currentState = 0;
+  updateArrows();
+
+  const incoming = img;
+  const outgoing = textContainer;
+  outgoing.style.display = '';
+  incoming.style.display = '';
+  incoming.style.visibility = 'hidden';
+
+  if (isMobile()) {
+    const imgRect = img.getBoundingClientRect();
+    const textRect = textContainer.getBoundingClientRect();
+    const outgoingHeight = Math.ceil(textRect.height || container.getBoundingClientRect().height);
+    const incomingHeight = Math.ceil(imgRect.height || container.getBoundingClientRect().height);
+    container.style.height = outgoingHeight + 'px';
+    container.style.overflow = 'hidden';
+
+    img.style.position = 'absolute'; img.style.top = '0'; img.style.left = '0'; img.style.width = '100%';
+    textContainer.style.position = 'absolute'; textContainer.style.top = '0'; textContainer.style.left = '0'; textContainer.style.width = '100%';
+
+    // Set initial transform and transition (no transition yet)
+    img.style.transition = 'none';
+    textContainer.style.transition = 'none';
+    img.style.transform = 'translateX(-100vw)';
+    textContainer.style.transform = 'translateX(0)';
+    textContainer.style.opacity = '1';
+
+    incoming.style.visibility = 'visible';
+
+    // Use double requestAnimationFrame to ensure browser applies initial state before transition
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        img.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1)';
+        textContainer.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1), opacity 0.3s';
+        img.style.transform = 'translateX(0)';
+        textContainer.style.transform = 'translateX(100vw)';
+        textContainer.style.opacity = '0';
+      });
+    });
+
+    setTimeout(() => {
+      textContainer.style.display = 'none';
+      container.style.transition = 'height 0.2s ease';
+      requestAnimationFrame(() => {
+        container.style.height = incomingHeight + 'px';
+      });
+
+      setTimeout(() => {
+        img.style.position = ''; textContainer.style.position = '';
+        img.style.top = ''; textContainer.style.top = '';
+        img.style.left = ''; textContainer.style.left = '';
+        img.style.width = ''; textContainer.style.width = '';
+        container.style.height = '';
+        container.style.transition = '';
+        container.style.overflow = '';
+      }, 320);
+    }, 420);
+  } else {
+    snapToImage();
+  }
+  }
+
+  function showText() {
+  const img = document.querySelector('.intro-image');
+  const textContainer = document.querySelector('.intro-text-container');
+  const container = document.querySelector('.intro');
+  if (!img || !textContainer || !container) return;
+
+  // mark state + arrows immediately
+  currentState = 1;
+  updateArrows();
+
+  const incoming = textContainer;
+  const outgoing = img;
+  outgoing.style.display = '';
+  incoming.style.display = '';
+  incoming.style.visibility = 'hidden';
+
+  if (isMobile()) {
+    const imgRect = img.getBoundingClientRect();
+    const textRect = textContainer.getBoundingClientRect();
+    const outgoingHeight = Math.ceil(imgRect.height || container.getBoundingClientRect().height);
+    const incomingHeight = Math.ceil(textRect.height || container.getBoundingClientRect().height);
+    container.style.height = outgoingHeight + 'px';
+    container.style.overflow = 'hidden';
+
+    img.style.position = 'absolute'; textContainer.style.position = 'absolute';
+    img.style.top = '0'; textContainer.style.top = '0';
+    img.style.left = '0'; textContainer.style.left = '0';
+    img.style.width = '100%'; textContainer.style.width = '100%';
+
+    // Set initial transform and transition (no transition yet)
+    img.style.transition = 'none';
+    textContainer.style.transition = 'none';
+    img.style.transform = 'translateX(0)';
+    textContainer.style.transform = 'translateX(100vw)';
+    textContainer.style.opacity = '0';
+
+    incoming.style.visibility = 'visible';
+
+    // Use double requestAnimationFrame to ensure browser applies initial state before transition
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        img.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1)';
+        textContainer.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1), opacity 0.3s';
+        img.style.transform = 'translateX(-100vw)';
+        textContainer.style.transform = 'translateX(0)';
+        textContainer.style.opacity = '1';
+      });
+    });
+
+    setTimeout(() => {
+      img.style.display = 'none';
+      container.style.transition = 'height 0.3s ease';
+      requestAnimationFrame(() => {
+        container.style.height = incomingHeight + 'px';
+      });
+      setTimeout(() => {
+        img.style.position = ''; textContainer.style.position = '';
+        img.style.top = ''; textContainer.style.top = '';
+        img.style.left = ''; textContainer.style.left = '';
+        img.style.width = ''; textContainer.style.width = '';
+        container.style.height = '';
+        container.style.transition = '';
+        container.style.overflow = '';
+      }, 320);
+    }, 420);
+  } else {
+    snapToText();
+  }
+  }
+
+  function handleResize() {
+    const nowIsMobile = isMobile();
+    // If we crossed from desktop -> mobile, default to showing the image on the smaller screen
+    if (nowIsMobile && !lastIsMobile) {
+      currentState = 0;
+      snapToImage();
+    } else if (nowIsMobile) {
+      if (currentState === 0) snapToImage(); else snapToText();
+    } else {
+      const img = document.querySelector('.intro-image');
+      const textContainer = document.querySelector('.intro-text-container');
+      if (img) img.style.display = '';
+      if (textContainer) textContainer.style.display = '';
+      if (img) img.style.transform = '';
+      if (textContainer) {
+        textContainer.style.transform = '';
+        textContainer.style.opacity = '';
+      }
+      const right = document.querySelector('.intro-arrow-right');
+      const left = document.querySelector('.intro-arrow-left');
+      if (right) right.classList.remove("visible");
+      if (left) left.classList.remove("visible");
+    }
+    lastIsMobile = nowIsMobile;
+    
+  }
+
+  function handleTouchStart(e) {
+    if (!isMobile()) return;
+    startX = e.touches[0].clientX;
+  }
+
+  function handleTouchEnd(e) {
+    if (!isMobile() || startX === null) return;
+    let endX = e.changedTouches[0].clientX;
+    if (endX < startX - 40) {
+      showText();
+    } else if (endX > startX + 40) {
+      showImage();
+    }
+    startX = null;
+  }
+
+  window.addEventListener('resize', handleResize);
+  function initIntro() {
+    if (!document.querySelector('.intro')) return;
+
+    if (isMobile()) {
+      currentState = 0;
+      snapToImage(); // initialize cleanly with image shown on narrow screens
+    } else {
+      currentState = 1;
+      snapToText(); // on desktop, show text by default
+      // Ensure desktop final state is clean: explicitly show text container and hide image
+      const img = document.querySelector('.intro-image');
+      const textContainer = document.querySelector('.intro-text-container');
+      if (img) {
+        img.style.display = 'none';
+        img.style.transform = '';
+      }
+      if (textContainer) {
+        textContainer.style.display = '';
+        textContainer.style.transform = '';
+        textContainer.style.opacity = '1';
+      }
+    }
+
+    const intro = document.querySelector('.intro');
+    intro.addEventListener('touchstart', handleTouchStart);
+    intro.addEventListener('touchend', handleTouchEnd);
+
+    const rightArrow = document.querySelector('.intro-arrow-right');
+    const leftArrow = document.querySelector('.intro-arrow-left');
+
+    if (rightArrow)
+      rightArrow.addEventListener('click', function () {
+        showText();
+      });
+    if (leftArrow)
+      leftArrow.addEventListener('click', function () {
+        showImage();
+      });
+
+    updateArrows();
+    // Normalize layout once more to avoid any leftover transitional styles
+    setTimeout(handleResize, 50);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initIntro);
+  } else {
+    initIntro();
+  }
+})();
+
+</script>
+
+<!-- Small script: shift About Me content lower on very tall viewports for aesthetic spacing -->
+<script>
+  (function () {
+    function applyIntroVerticalOffset() {
+      var container = document.querySelector('.intro-text-container');
+      var intro = document.querySelector('.intro');
+      if (!container || !intro) return;
+
+      // Thresholds (tweakable): only apply on wider viewports (desktop) and tall heights
+      var minWidth = 700; // avoid on mobile
+      var tallThreshold = 880; // px
+
+      var h = window.innerHeight;
+      var w = window.innerWidth;
+
+      // Reset first
+      container.style.marginTop = '';
+      container.style.transition = 'margin-top 300ms ease';
+
+      if (w > minWidth && h > tallThreshold) {
+        // Compute a gentle offset based on extra vertical space available
+        var extra = h - tallThreshold; // how many extra px we have
+        // Clamp the offset to something visually pleasing (max 120px)
+        var offset = Math.min(120, Math.round(extra * 0.35));
+
+        // Apply offset as top margin to the text container so the whole block appears lower
+        container.style.marginTop = offset + 'px';
+
+        // Also add a small fade/translate for smoother appearance on large jumps
+        container.style.transform = 'translateY(0)';
+      } else {
+        // small devices: ensure no leftover transform
+        container.style.marginTop = '';
+        container.style.transform = '';
+      }
+    }
+
+    // Run on load and on resize/orientation changes
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyIntroVerticalOffset);
+    } else {
+      applyIntroVerticalOffset();
+    }
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(applyIntroVerticalOffset, 120);
+    });
+    window.addEventListener('orientationchange', function () {
+      setTimeout(applyIntroVerticalOffset, 200);
+    });
+  })();
+</script>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YTCardNoteLink</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #0F0F13;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .cards-container {
+      display: flex;
+      gap: 25px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .yt-card, .notes-card {
+      width: 340px;
+      background: #1A1A2A;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(51,146,255,0.15), 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid #23234a;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .yt-card:hover, .notes-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(51,146,255,0.35), 0 3px 12px rgba(0,0,0,0.3);
+      border-color: #3392ff;
+    }
+
+    .yt-card:active {
+      transform: translateY(6px) scale(0.9);
+      box-shadow: 0 8px 24px rgba(51,146,255,0.35), 0 3px 12px rgba(0,0,0,0.3);
+      border-color: #3392ff;
+    }
+
+    .yt-card:hover .yt-thumbnail {
+        transition: all 0.3s ease;
+    }
+
+    .yt-thumbnail {
+      width: 100%;
+      height: 190px;
+      background-size: cover;
+      background-position: center;
+      background-color: #444;
+      border-bottom: 2px solid #23234a;
+      transition: all 0.3s ease;
+    }
+
+    .yt-content {
+      padding: 15px;
+      flex-grow: 1;
+    }
+
+    .yt-title {
+      font-size: 1.05em;
+      font-weight: 600;
+      color: #F8F8FF;
+      margin: -2px 0 10px 0;
+    }
+
+    .yt-date {
+      font-size: 0.9em;
+      color: #c5cee0;
+      margin-top: -2px;
+      margin-bottom: 0px;
+    }
+
+    .notes-header {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1em;
+      padding: 12px;
+      border-bottom: 2px solid #23234a;
+      color: #F8F8FF;
+    }
+
+    .notes-body {
+      padding: 15px;
+      font-size: 0.95em;
+      color: #c5cee0;
+      line-height: 1.5;
+      flex-grow: 1;
+      display: block;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .video-input {
+      margin-top: 25px;
+      padding: 10px;
+      font-size: 0.95em;
+      color: #c5cee0;
+      width: 712px;
+      border-radius: 12px;
+      border: 2px solid #23234a;
+      background-color: #1A1A2A;
+      text-align: center;
+      outline: none;
+      box-sizing: border-box;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .video-input::placeholder {
+      color: #747c8d;
+    }
+
+    .settings-icon {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      fill: #747c8d;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .modal {
+      background: #1A1A2A;
+      border-radius: 16px;
+      border: 2px solid #23234a;
+      width: 400px;
+      max-width: 90%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .modal textarea {
+      width: 95%;
+      min-height: 150px;
+      background: #0F0F13;
+      color: #fff;
+      border: 2px solid #23234a;
+      border-radius: 10px;
+      padding: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95em;
+      resize: vertical;
+      outline: none;
+    }
+
+    .modal button {
+      align-self: flex-end;
+      padding: 6px 12px;
+      background: #3392ff;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+    }
+
+    .modal button:hover {
+      background: #1a6fe0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cards-container">
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="yt-card">
+      <div class="yt-thumbnail" id="thumbnail" style="background-image: url('https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg');"></div>
+      <div class="yt-content">
+        <h3 class="yt-title" id="video-title">How to Animate in Alight Motion - Gacha Life 2</h3>
+        <p class="yt-date" id="video-date">Published: September 14, 2025</p>
+      </div>
+    </a>
+
+    <div class="notes-card">
+      <div class="notes-header">Aidah's Notes</div>
+      <div class="notes-body" id="notes-body">
+	✦ I am so motivated eeee
+      </div>
+    </div>
+  </div>
+
+  <input type="text" class="video-input" id="video-input" placeholder="Paste YouTube URL here">
+
+  <!-- <i class="fa-solid fa-a settings-icon" id="settings-icon"></i> -->
+
+  <svg class="settings-icon" id="settings-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm7.43-3a1 1 0 0 0 .07-1l-1.4-2.43a1 1 0 0 0-.94-.54l-2.67.36a6.992 6.992 0 0 0-1.47-1.47l.36-2.67a1 1 0 0 0-.54-.94L13 2.5a1 1 0 0 0-1-.07l-2.43 1.4a1 1 0 0 0-.54.94l.36 2.67a6.992 6.992 0 0 0-1.47 1.47l-2.67-.36a1 1 0 0 0-.94.54L2.5 11a1 1 0 0 0-.07 1l1.4 2.43a1 1 0 0 0 .94.54l2.67-.36a6.992 6.992 0 0 0 1.47 1.47l-.36 2.67a1 1 0 0 0 .54.94L11 21.5a1 1 0 0 0 1 .07l2.43-1.4a1 1 0 0 0 .54-.94l-.36-2.67a6.992 6.992 0 0 0 1.47-1.47l2.67.36a1 1 0 0 0 .94-.54l1.4-2.43z"/>
+  </svg>
+
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal">
+      <textarea id="modal-textarea"></textarea>
+      <button id="modal-save">Save</button>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = 'AIzaSyDB9GX4GitTAFo-6c16157dMY64TiMX6-E';
+    const input = document.getElementById('video-input');
+    const thumbnail = document.getElementById('thumbnail');
+    const titleEl = document.getElementById('video-title');
+    const dateEl = document.getElementById('video-date');
+    const ytCard = document.querySelector('.yt-card');
+    const notesBody = document.getElementById('notes-body');
+    const settingsIcon = document.getElementById('settings-icon');
+    const modalBg = document.getElementById('modal-bg');
+    const modalTextarea = document.getElementById('modal-textarea');
+    const modalSave = document.getElementById('modal-save');
+
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const extractVideoId = (url) => {
+      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    };
+
+    const setThumbnail = (videoId) => {
+      const maxRes = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      const fallback = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+      const img = new Image();
+      img.onload = () => {
+        if (img.width <= 120) {
+          thumbnail.style.backgroundImage = `url('${fallback}')`;
+        } else {
+          thumbnail.style.backgroundImage = `url('${maxRes}')`;
+        }
+      };
+      img.onerror = () => {
+        thumbnail.style.backgroundImage = `url('${fallback}')`;
+      };
+      img.src = maxRes;
+    };
+
+    input.addEventListener('input', async () => {
+      const videoId = extractVideoId(input.value);
+      if (!videoId) return;
+
+      ytCard.href = `https://www.youtube.com/watch?v=${videoId}`;
+
+      try {
+        const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`);
+        const data = await res.json();
+        if (data.items && data.items.length > 0) {
+          const snippet = data.items[0].snippet;
+          titleEl.textContent = snippet.title;
+
+          const publishedDate = new Date(snippet.publishedAt);
+          dateEl.textContent = `Published: ${months[publishedDate.getMonth()]} ${publishedDate.getDate()}, ${publishedDate.getFullYear()}`;
+        }
+      } catch (err) {
+        console.error('Error fetching video info:', err);
+      }
+
+      setThumbnail(videoId);
+    });
+
+    // === Settings icon -> opens modal
+    settingsIcon.addEventListener('click', () => {
+      modalTextarea.value = notesBody.innerText;
+      modalBg.style.display = 'flex';
+    });
+
+    // === Save button -> update notes
+    modalSave.addEventListener('click', () => {
+  notesBody.innerHTML = modalTextarea.value;
+      modalBg.style.display = 'none';
+    });
+
+    // = Close modal on background click
+    modalBg.addEventListener('click', (e) => {
+      if (e.target === modalBg) modalBg.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
+

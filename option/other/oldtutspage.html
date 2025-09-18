@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kazi Aidah's Tutorials!</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #06003C;
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .top-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        .top-bar ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        .top-bar ul li a {
+            color: #fff9ce;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .top-bar ul li a:hover {
+            color: #f4d03f;
+        }
+
+        .content {
+            margin-left: 220px;
+            padding-top: 120px;
+        }
+        @font-face {
+    font-family: 'Helvetica Now Display';
+    src: url('fonts/HelveticaNowDisplay.ttf') format('woff2'),
+         url('fonts/HelveticaNowDisplay.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    scroll-behavior: smooth;
+  }
+  
+
+body {
+    font-family: 'Azeret Mono', monospace;
+    background-color: #780001;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    gap: 25px 20px;
+    justify-content: center;
+    width: 100%;
+    max-width: 2000px;
+}
+
+.video {
+    background-color: #06003C;
+    padding: 10px;
+    border-radius: 12px;
+    border: 4px solid #fff9ce;
+    box-shadow: 0 6px 0px 0 rgba(255, 253, 207, 1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(1);
+    transition: all 0.3s ease;
+}
+
+.video img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+    transform: translateX(0);
+    border: 2px solid #25095e;
+}
+
+.video:hover {
+    transform: scale(1.04) translateY(-10px);
+    box-shadow: 0 10px 0px 0 rgba(255, 253, 207, 1);
+    transition: all 0.3s ease box-shadow 0.3s ease;
+}
+
+.video:active {
+    box-shadow: 0 0px 0px 0 rgba(255, 253, 207, 1);
+    transform: translateY(8px);
+    transition: transform 0.3s ease box-shadow 0.3s ease;
+}
+
+.me {
+    font-family: 'Azeret Mono', monospace;
+    color: #ffdb93;
+    margin: 0;
+    padding-bottom: 3px;
+    padding-top: 6px;
+    text-align: center;
+}
+
+.tut-count {
+    font-family: 'Azeret Mono', monospace;
+    color: #ffc1c1;
+    margin: 0;
+    padding-bottom: 0px;
+    padding-top: 3px;
+    text-align: center;
+}
+
+
+.alltut {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 38px;
+    font-weight: bolder;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: -2px;
+    transform: scale(1.0);
+    transition: all 0.2s ease-out;
+    border-radius: 14px;
+}
+
+.alltut:hover {
+    color: #f4d03f;
+    transform: scale(1.04);
+    transition: all 0.3s ease text-decoration 0.3s ease;
+    animation-delay: 0.5s;
+    text-decoration: underline;
+    border-radius: 12px;
+    text-shadow: #06003C;
+}
+
+
+.dlinem {
+    transition: all 0.3s ease;
+    border: none; 
+    border-top: 3px dashed #ffc1c1; 
+    width: 50%; 
+    margin: 30px auto;
+}
+
+
+.textmamapapa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+
+.no-tut {
+    transition: all 0.3s ease;
+    color: #ffc1c1;
+}
+
+.no-tut:hover {
+    transition: all 0.3s ease;
+    color: #ffc1c1;
+    font-size:xx-large;
+    animation-duration: 10s;
+}
+
+.Aidah {
+    transition: all 400ms ease-out;
+    color: #ffe3c2;
+    text-decoration: none;
+    text-decoration-style: wavy;
+    text-decoration-thickness: 0px;
+    text-underline-offset: 4px;
+}
+
+.Aidah:hover {
+    transition: all 0.3s ease;
+    color: #ffb9d1;
+    font-size:xx-large;
+    animation-duration: 10s;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+
+
+p {
+    font-weight: 550;
+    margin: 6px;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    color: #fff9ce;
+    font-family: 'Azeret Mono';
+}
+
+body {
+    font-family: 'Azeret Mono', monospace;
+    background-color: #780001;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    overflow-y: scroll;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, #06003C, #25095e, #520000, #520000);
+    border-radius: 0px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #ffdb93;
+    border-radius: 10px;
+    border: 2px solid #06003C;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #ffc94c;
+}
+
+body::-webkit-scrollbar-corner {
+    background: #5a0000;
+}
+
+h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: #ffe3c2;
+    text-align: left;
+    font-family: 'Azeret Mono', monospace;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #ffe3c2;
+    text-align: left;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    background-color: #06003C;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+    position: fixed;
+}
+
+.top-bar {
+    width: 100%;
+    margin: 0 auto;
+}
+
+li {
+    font-family: 'Azeret Mono', monospace;
+    line-height: 1.5rem;
+    font-size: 14px;
+}
+
+ul {
+    width: 60%;
+    margin: 0 auto;
+    transition: all 0.3s ease;  
+}
+
+.contentheh {
+    width: 100%;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #780001;
+    z-index: 1;
+    position: relative;
+    top: unset;
+    left: unset;
+    transform: unset;
+}
+
+@media (max-width: 504px) {
+    .top-bar {
+        width: 80%; 
+        margin: 0 auto; 
+    }
+
+    li {
+        font-size: 10px;
+        line-height: 1.3rem;
+        padding: 5px 0px; 
+        border-radius: 5px; 
+        text-align: center;
+        background-color: #06003C; 
+        width: 1000px;
+        height: 20px;
+      
+    }
+    
+    ul {
+        width: 80%; 
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        list-style: none; 
+        padding: 0;
+        justify-content: center; 
+        align-items: center; 
+    }
+    
+
+    .contentheh {
+        position: relative;
+        margin-top: 80px;
+    }
+}
+
+body.sidebar-open .top-bar {
+    transform: translateX(250px);
+    width: calc(100% - 250px);
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.sort-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    visibility: hidden;
+}
+
+.sort-btn, .filter-btn {
+    background-color: #780001;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: transform 0.1s, border 0.1s;
+    font-family: 'Helvetica Now Display';
+    font-weight: 500;
+}
+
+.sort-btn:hover, .filter-btn:hover {
+    background-color: #890022;
+    font-family: 'Helvetica Now Display';
+    font-weight: 700;
+    transition: all 0.3s;
+    transform: scale(1.1);
+}
+
+.sort-btn:active, .filter-btn:active {
+    box-shadow: 0px 2px 0px 0px #c5990b;
+    transform: scaleX(1.0);
+}
+
+.search-bar {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    background-color: white;
+    color: #06003C;
+    width: 200px;
+}
+
+.search-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #780001;
+    color: white;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-family: 'Azeret Mono', monospace;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #890022; 
+    border-color: #ffc94c;
+    color: #fff9ce; 
+}
+
+.search-btn:active {
+    background-color: #780001; 
+    border-color: #c5990b; 
+    font-weight: 600;
+}
+
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background-color: #06003C;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    border-right: 5px solid #fff9ce;
+    z-index: 10;
+}
+
+.sidebar.open {
+    left: 0;
+    z-index: 10;
+}
+
+.sidebar.open #toggle-button {
+    right: -48px;
+}
+
+.sidebar-section {
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.search {
+    background-color: #780001;
+    position: fixed;
+    color: white;
+    padding: 10px 30px 10px 10px;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+}
+
+.search:hover {
+    opacity: 0.8;
+}
+
+.search .cross-btn {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: white;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.search-input {
+    width: 92%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 8px 8px 0px 0px;
+    border: none;
+    outline: none;
+    background-color: #f4f4f4;
+    color: #06003C;
+}
+
+.alltutsbtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #780001;
+    color: white;
+    border: none;
+    border-radius: 0px 0px 8px 8px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-family: 'Azeret Mono', monospace;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.alltutsbtn:hover {
+    background-color: #890022;
+    border-radius: 10px;
+    font-family: 'Azeret Mono', monospace;
+}
+
+.alltutsbtn:active {
+    box-shadow: 0px 2px 0px 0px #c5990b;
+    background-color: #780001;
+}
+
+.app-filter-btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 8px;
+    width: 230px;
+}
+
+.filter-btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 5px;
+    width: 230px;
+}
+
+#toggle-button {
+    position: absolute;
+    top: 150px;
+    right: -45px;
+    font-size: 1.5em;
+    background-color: #06003C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transition: right 0.3s ease;
+    z-index: 10;
+    border-top: 3px solid #fff9ce;
+    border-right: 3px solid #fff9ce;
+    border-bottom: 5px solid #fff9ce;
+}
+
+#toggle-button:hover {
+    background-color: #3b2144;
+    z-index: 10;
+}
+
+#arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    transform: rotate(0deg);
+    z-index: 10;
+    font-family: 'Helvetica Now Display';
+    color: #f4f4f4;
+}
+
+#arrow:hover {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    transform: rotate(135deg);
+    z-index: 10;
+}
+
+.sidebar.open #arrow {
+    transform: rotate(180deg);
+    z-index: 10;
+}
+
+.sidebar.open #toggle-button {
+    border-top: 5px solid #fff9ce;
+    border-right: 5px solid #fff9ce;
+    border-bottom: 5px solid #fff9ce;
+    z-index: 10;
+    right: -47.6px;
+}
+
+.contentheh {
+    width: 98%;
+    height: 900px;
+    border: none;
+    transition: transform 0.3s ease, left 0.3s ease;
+    background-color: #780001;
+    padding: 20px;
+    position: absolute;
+    left: 0;
+    top: 30px;
+    z-index: 1;
+    top: calc(50px + 15px);
+}
+
+body.sidebar .contentheh {
+    transform: translateX(0);
+    left: 0;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.sidebar.contentheh {
+    transform: translateX(0);
+    left: 0;
+    width: 100%;
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+body.sidebar-open .contentheh {
+    transform: translateX(250px);
+    left: 0;
+    width: calc(100% - 250px);
+    transition: transform 0.3s ease, left 0.3s ease, width 0.3s ease;
+}
+
+.sidebar.open .contentheh {
+    transform: translateX(250px);
+    left: 250px;
+    width: calc(100% - 250px);
+    transition: transform 0.3s ease, left 0.3s ease, width 0.3s ease;
+}
+
+
+.highlight {
+    background-color: yellow;
+    color: black;        
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.pagination-controls {
+    justify-content: space-between;
+    text-align: center; 
+    margin-top: 20px;
+    border: 3px solid #f4d03f;
+    padding: 10px; 
+    background-color: #06003C; 
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.pagination-btn {
+    background-color: #06003C; 
+    color: white; 
+    border: 3px solid #fff9ce; 
+    border-radius: 12px; 
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    font-family: 'Azeret Mono', monospace;
+    transition: all 0.3s ease; 
+}
+
+.pagination-btn:hover {
+    background-color: #580000; 
+    color: #ffc94c; 
+    transform: translateY(-10px) scale(1.1);
+    transition: all 0.3s ease; 
+    box-shadow: 0 6px 0px 0 hsl(58, 100%, 91%);
+}
+
+.pagination-btn.active {
+    background-color: #640101;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    color: #f4d03f;
+    border-color: #f4d03f;
+    box-shadow: 0 0px 0px 0 hsl(48, 89%, 60%);
+}
+
+.pagination-btn.active:hover {
+    background-color: #640101;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    color: #f4d03f;
+    border-color: #f4d03f;
+    box-shadow: 0 6px 0px 0 hsl(48, 89%, 60%);
+}
+
+.pagination-btn:disabled {
+    background-color: #520000; 
+    color: gray; 
+    cursor: not-allowed;
+}
+
+    </style>
+</head>
+<body>
+    <div id="toggle-btn" class="toggle-btn">
+        <button id="sidebar-toggle-btn">
+            <span id="arrow">&#8594;</span>
+        </button>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+        <button id="toggle-button">
+            <span id="arrow">&#8594;</span>
+        </button>
+        <div class="sidebar-section">
+            <h1>Search</h1>
+            <input type="text" class="search-input" id="search-input" name="search" placeholder="Search Videos">
+            <button class="filter-btn alltutsbtn" data-filter="All Tutorials">All Tutorials</button>
+            <div class="search-list"></div>
+        </div>
+
+        <div class="sidebar-section">
+            <h2>Application</h2>
+            <div class="app-filter-btn-container">
+                <button class="filter-btn" data-filter="Alight Motion" style="border-color:#00ff95; background-color: #29223d; color: #00ff95;">Alight Motion</button>
+                <button class="filter-btn" data-filter="Moho Pro" style="background-color: #c40000;">Moho Pro</button>
+                <button class="filter-btn" data-filter="IbisPaint X" style="background: #234b73; color: #fff;">IbisPaint X</button>
+                <button class="filter-btn" data-filter="Other Apps" style="background-color: #935f35;">Other Apps</button>
+                <button class="filter-btn" data-filter="Live2D Cubism" style="background-color: #d26704;">Live2D Cubism</button>
+            </div>
+
+            <h2>Tutorial Filters</h2>
+            <div class="filter-btn-container">
+                <button class="filter-btn" data-filter="Beginner Friendly">Beginner Friendly</button>
+                <button class="filter-btn" data-filter="Useful">Useful</button>
+                <button class="filter-btn" data-filter="Head/Body Turns">Head/Body Turns</button>
+                <button class="filter-btn" data-filter="Facial">Facial</button>
+                <button class="filter-btn" data-filter="Eyes">Eyes</button>
+                <button class="filter-btn" data-filter="Mouth">Mouth</button>
+                <button class="filter-btn" data-filter="Hand">Hand</button>
+                <button class="filter-btn" data-filter="Walking/Running">Walking/Running</button>
+                <button class="filter-btn" data-filter="Wings">Wings</button>
+                <button class="filter-btn" data-filter="Vector Drawing">Vector Drawing</button>
+                <button class="filter-btn" data-filter="Vehicle">Vehicle</button>
+                <button class="filter-btn" data-filter="Separation">Separation</button>
+                <button class="filter-btn" data-filter="Front Facing">Front Facing</button>
+                <button class="filter-btn" data-filter="Teleportation/Magical">Teleportation/Magical</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <ul> 
+            <li class="abtme"><a href="https://aidahhoho.carrd.co/#aidah">About Me</a></li>
+            <li class="anis"><a href="https://www.youtube.com/playlist?list=PLJYnzg7CheuiRVW_zf3MbSPAX8PEtNtFQ">Animations</a></li>
+            <li class="tuts"><a href="">Tutorials</a></li>
+        </ul>
+    </div>
+
+    <div class="contentheh">
+        <div class="textmamapapa"></div>
+        <a href="https://www.youtube.com/@KaziAidahHaque/playlists" style="text-decoration: none;">
+            <h1 class="alltut">ALL TUTORIALS</h1>
+        </a>
+        <h2 class="me">By Kazi <span class="Aidah">Aidah</span> Haque</h2>
+        <h3 class="tut-count">[ Tutorial Count: <span class="no-tut">364</span> ]</h3>
+        <hr class="dlinem"></hr>
+        <div id="video-grid" class="video-grid"></div>
+        <p></p>
+        <p></p>
+        <div id="pagination-controls" class="pagination-controls"></div>
+        <p style="text-align: center;"> NOTE: <i><b>Page 8 fails. </b></i><br>Check out this <a href="https://www.youtube.com/playlist?list=PLJYnzg7Cheuhn-eX2wZs9G7g4J4ZNyegU" style="color: #f4d03f;">playlist</a> for all the tutorials. <br> I'm sorry I haven't been able to fix it, yet.</p>
+        <p></p>
+    </div>
+    
+
+<script>
+const API_KEY = 'AIzaSyDB9GX4GitTAFo-6c16157dMY64TiMX6-E'; // YEP, THIS IS YOUR YOUTUBE API KEY.
+let currentPlaylistId = 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd'; // WE'LL START WITH THIS DEFAULT PLAYLIST ID.
+let currentPage = 1; // FR, WE'RE STARTING ON THE FIRST PAGE.
+let totalPages = 0; // WE'LL FIGURE OUT THE TOTAL NUMBER OF PAGES LATER.
+let nextPageTokens = []; // THIS ARRAY WILL HELP US KEEP TRACK OF WHERE WE ARE IN THE YOUTUBE API RESULTS FOR PAGINATION.
+
+const videoGrid = document.getElementById('video-grid');
+const paginationControls = document.getElementById('pagination-controls');
+const MAX_VIDEOS_PER_PAGE = 48; // DO! WE WANT TO SHOW A MAXIMUM OF 48 VIDEOS PER PAGE.
+const MIN_VIDEOS_PER_PAGE = 1; // WE NEED AT LEAST 1 VIDEO PER PAGE.
+
+// QUICK! HERE'S A LIST OF PLAYLIST IDS FOR EACH TUTORIAL CATEGORY.
+const playlistIds = {
+    'Beginner Friendly': 'PLJYnzg7CheujMlNygnUKt8yE1oxS_GaTb',
+    'Useful': '',
+    'Head/Body Turns': 'PLJYnzg7Cheug0BL2gRM7xPEq3iOYzkeX5',
+    'Facial': 'PLJYnzg7CheujyYrdS89yOF_J3v-IIB7iU',
+    'Eyes': 'PLJYnzg7Cheug-vg5tZh7bkws7ziWurx2L',
+    'Mouth': 'PLJYnzg7CheujFMXS6lHxgsMDxALKLIjeR',
+    'Walking/Running': 'PLJYnzg7CheugMYOs-L9i2jVtVxb4iF-Ff',
+    'Vector Drawing': 'PLJYnzg7CheuihOe23r0qiFPw1nbjTOVmy',
+    'Hand': 'PLJYnzg7Cheuh5Pn0LQDKnGnzHjKLNmtHH',
+    'Vehicle': 'PLJYnzg7CheugIs8W8kWf0nBCHlordaY2Q',
+    'Wings': 'PLJYnzg7Cheui8N4jQKjvFXmWfn6QZXvfK',
+    'Separation': 'PLJYnzg7CheugwlOepehdshjYVX4MW0UyT',
+    'Front Facing': 'PLJYnzg7Cheug8J328soWAwxN2V9yZtIft',
+    'Teleportation/Magical': 'PLJYnzg7CheugPf4yjzS_zRCqv2LOP_NMM',
+    'Alight Motion': 'PLJYnzg7Cheuhn-eX2wZs9G7g4J4ZNyegU',
+    'Moho Pro': '',
+    'IbisPaint X': 'PLJYnzg7CheugO1qfRsP83bAsE2kG-EWG1',
+    'Other Apps': '',
+    'Live2D Cubism': 'PLJYnzg7CheuiUNKI0Q_8tUPipgspR5hpO',
+    'All Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+};
+
+// DO! GRABS VIDEOS FOR THE PAGE WE'RE CURRENTLY ON.
+async function fetchVideosForPage(page) {
+    if (!currentPlaylistId) {
+        videoGrid.innerHTML = '<p>OOPS! IT LOOKS LIKE NO PLAYLIST HAS BEEN LINKED FOR THIS CATEGORY YET.</p>';
+        return;
+    }
+
+    // YEP, WE USE A PAGE TOKEN TO TELL THE YOUTUBE API WHERE TO START FETCHING VIDEOS.
+    const pageToken = nextPageTokens[page - 1] || ''; 
+    try {
+        videoGrid.innerHTML = '<p>JUST A MOMENT, LOADING VIDEOS FOR YOU...</p>'; // LET THE USER KNOW WE'RE BUSY LOADING.
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${currentPlaylistId}&maxResults=${MAX_VIDEOS_PER_PAGE}&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
+        
+        console.log('FR, WE ARE REQUESTING VIDEOS FROM THIS URL:', url); // THIS HELPS US DEBUG BY SHOWING THE URL.
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        console.log('YEP, HERE IS THE DATA WE RECEIVED:', data); // LET'S SEE WHAT THE YOUTUBE API SENT BACK.
+
+        if (response.ok) {
+            displayVideos(data.items); // TIME TO SHOW OFF THE VIDEOS!
+
+            // IF WE HAVEN'T CALCULATED TOTAL PAGES YET, LET'S DO IT NOW.
+            if (!totalPages && data.pageInfo?.totalResults) {
+                totalPages = Math.ceil(data.pageInfo.totalResults / MAX_VIDEOS_PER_PAGE); // CALCULATE HOW MANY PAGES WE'LL NEED.
+                createPaginationControls(); // AND THEN SET UP OUR PAGE NAVIGATION BUTTONS.
+            }
+
+            // IF THERE'S A NEXT PAGE, LET'S SAVE ITS TOKEN FOR LATER.
+            if (data.nextPageToken) {
+                nextPageTokens[page] = data.nextPageToken; 
+            }
+
+            console.log('CURRENTLY ON PAGE:', currentPage, 'HERE ARE OUR NEXT PAGE TOKENS:', nextPageTokens);
+
+            updatePaginationHighlight(); // MAKE SURE THE CURRENT PAGE BUTTON IS HIGHLIGHTED.
+        } else {
+            console.error(`NOOOO, UH OH, THERE WAS AN ERROR FETCHING VIDEOS: ${data.error.message}`);
+            videoGrid.innerHTML = `<p>SORRY, WE RAN INTO AN ERROR: ${data.error.message}</p>`;
+        }
+    } catch (error) {
+        console.error('NOOOO, SOMETHING WENT WRONG WHILE TRYING TO FETCH VIDEOS:', error);
+        videoGrid.innerHTML = '<p>IT SEEMS WE COULDN\'T LOAD THE VIDEOS RIGHT NOW. PLEASE TRY AGAIN A BIT LATER!</p>';
+    }
+}
+
+// TAKES THE VIDEO DATA AND PUTS IT ONTO OUR PAGE.
+function displayVideos(videos) {
+    videoGrid.innerHTML = ''; // FIRST, CLEAR OUT ANY OLD VIDEOS.
+    videos.forEach(item => {
+        const videoId = item.snippet.resourceId.videoId;
+        const videoTitle = item.snippet.title;
+        const videoThumbnail = item.snippet.thumbnails.high.url;
+
+        const videoElement = document.createElement('div');
+        videoElement.classList.add('video');
+        videoElement.innerHTML = `
+            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                <img src="${videoThumbnail}" alt="${videoTitle}" style="width: 100%; height: auto; border-radius: 6px;">
+            </a>
+            <p>${videoTitle}</p>
+        `;
+        videoGrid.appendChild(videoElement);
+    });
+}
+
+// CREATES THE "PREVIOUS", "NEXT", AND PAGE NUMBER BUTTONS FOR NAVIGATION.
+function createPaginationControls() {
+    paginationControls.innerHTML = ''; // CLEAR OUT ANY EXISTING PAGINATION BUTTONS.
+
+    // LET'S ADD BUTTONS FOR EACH PAGE NUMBER.
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.classList.add('pagination-btn');
+        if (i === currentPage) {
+            pageButton.classList.add('active'); // MAKE SURE THE CURRENT PAGE BUTTON STANDS OUT.
+        }
+        pageButton.addEventListener('click', () => {
+            currentPage = i;
+            fetchVideosForPage(currentPage); // WHEN CLICKED, FETCH VIDEOS FOR THAT PAGE.
+            updatePaginationHighlight(); // AND UPDATE THE BUTTON HIGHLIGHT.
+        });
+        paginationControls.appendChild(pageButton);
+    }
+
+    // NOW, LET'S ADD A "NEXT" BUTTON.
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Next';
+    nextButton.classList.add('pagination-btn');
+    nextButton.disabled = currentPage === totalPages; // DISABLE IT IF WE'RE ALREADY ON THE LAST PAGE.
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            fetchVideosForPage(currentPage); // GO TO THE NEXT PAGE.
+            updatePaginationHighlight(); // UPDATE THE HIGHLIGHT.
+        }
+    });
+    paginationControls.appendChild(nextButton);
+}
+
+// THIS LITTLE HELPER MAKES SURE THE CORRECT PAGE NUMBER BUTTON IS HIGHLIGHTED.
+function updatePaginationHighlight() {
+    const buttons = paginationControls.querySelectorAll('.pagination-btn');
+    buttons.forEach(button => button.classList.remove('active')); // REMOVE THE ACTIVE CLASS FROM ALL BUTTONS FIRST.
+
+    // THEN, FIND THE BUTTON FOR OUR CURRENT PAGE AND MAKE IT ACTIVE.
+    const currentPageButton = Array.from(buttons).find(
+        button => button.textContent === String(currentPage)
+    );
+    if (currentPageButton) {
+        currentPageButton.classList.add('active');
+    }
+}
+
+// HELPS US HIGHLIGHT SEARCH RESULTS IN THE VIDEO TITLES.
+function highlightSearch(query) {
+    // GRAB ALL THE VIDEO TITLES CURRENTLY DISPLAYED.
+    const videoElements = document.querySelectorAll('.video p');
+
+    if (!videoElements.length) {
+        console.warn('NOOOO, HMM, NO VIDEOS TO SEARCH THROUGH RIGHT NOW.');
+        return;
+    }
+
+    videoElements.forEach(videoElement => {
+        const videoTitle = videoElement.textContent;
+
+        // LET'S SEE IF OUR SEARCH QUERY IS PART OF THIS VIDEO'S TITLE.
+        if (videoTitle.toLowerCase().includes(query.toLowerCase())) {
+            // IF IT MATCHES, WE'LL WRAP THE MATCHING TEXT WITH A HIGHLIGHT.
+            const regex = new RegExp(`(${query})`, 'gi');
+            const highlightedTitle = videoTitle.replace(regex, '<span class="highlight">$1</span>');
+            videoElement.innerHTML = highlightedTitle; // UPDATE THE DISPLAY WITH THE HIGHLIGHTED TITLE.
+        } else {
+            // IF IT DOESN'T MATCH, WE'LL JUST SHOW THE ORIGINAL TITLE WITHOUT ANY HIGHLIGHTS.
+            videoElement.innerHTML = videoTitle;
+        }
+    });
+}
+
+// DO! THIS SECTION RUNS WHEN THE ENTIRE PAGE IS LOADED.
+document.addEventListener('DOMContentLoaded', () => {
+    fetchVideosForPage(currentPage); // LET'S LOAD THE FIRST PAGE OF VIDEOS RIGHT AWAY.
+
+    const searchInput = document.querySelector('.search-input');
+
+    // WE'RE CREATING A "SEARCH" BUTTON DYNAMICALLY HERE.
+    const searchBtn = document.createElement('button');
+    searchBtn.textContent = 'Search';
+    searchBtn.classList.add('search-btn');
+    searchInput.insertAdjacentElement('afterend', searchBtn);
+
+    searchBtn.addEventListener('click', () => {
+        const query = searchInput.value.trim();
+        if (query) highlightSearch(query);
+        else alert('NOOOO, PLEASE TYPE SOMETHING IN THE SEARCH BOX FIRST!');
+    });
+
+    // DO! WE'LL ADD EVENT LISTENERS TO ALL OUR FILTER BUTTONS.
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // WHEN A FILTER BUTTON IS CLICKED, FIRST REMOVE THE 'ACTIVE' CLASS FROM ALL OF THEM.
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // THEN, MAKE THE CLICKED BUTTON ACTIVE.
+            button.classList.add('active');
+            const filter = button.getAttribute('data-filter');
+
+            // IF WE HAVE A PLAYLIST ID FOR THIS FILTER, LET'S USE IT.
+            if (playlistIds[filter]) {
+                currentPlaylistId = playlistIds[filter] || currentPlaylistId;
+                fetchVideosForPage(currentPage); // AND FETCH THE VIDEOS FOR THIS NEW FILTER.
+            } else {
+                console.log(`NOOOO, HMM, WE COULDN'T FIND A PLAYLIST ID FOR: ${filter}`);
+                videoGrid.innerHTML = '<p>IT SEEMS THERE\'S NO YOUTUBE PLAYLIST LINKED FOR THIS CATEGORY YET.</p>';
+            }
+        });
+    });
+
+    // THIS IS THE SIDEBAR OPENING AND CLOSING.
+    const toggleButton = document.getElementById('toggle-button');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (toggleButton) {
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('open'); // TOGGLE THE 'OPEN' CLASS ON THE SIDEBAR.
+            document.body.classList.toggle('sidebar-open'); // ALSO TOGGLE A CLASS ON THE BODY TO ADJUST CONTENT.
+        });
+    } else {
+        console.warn('NOOOO, THE TOGGLE BUTTON FOR THE SIDEBAR WAS NOT FOUND. THAT\'S ODD!');
+    }
+});
+</script>
+</body>
+</html>

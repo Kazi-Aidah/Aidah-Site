@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Kazi Aidah Haque</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #0F0F13;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 1em;
+      background: #0F0F13;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      margin: 0 0.5em;
+      text-decoration: none;
+      color: #c5cee0;
+      font-weight: 400;
+      transition: color 0.3s ease, transform 0.2s ease;
+      padding: 5px 0;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #3392ff;
+      transform: translateY(-2px);
+    }
+
+    a {
+      color: #d8e3f9;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #3392ff;
+      text-decoration: none;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px dashed #414078;
+      margin: 20px 0;
+    }
+
+    .bubblebody {
+      background: #1A1A2A;
+      width: 90%;
+      max-width: 1200px;
+      margin-top: 0;
+      margin-bottom: 1.5em;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+      border-radius: 19px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 0.8em;
+      color: #F8F8FF;
+      padding-top: 10px;
+      margin-top: -25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      text-align: center;
+      padding-left: 0;
+    }
+
+
+    h2.h2comm-me {
+      text-align: center;
+      margin-bottom: 1em;
+      margin-top: -15px;
+      justify-content: center;
+      padding-left: 0;
+    }
+
+    /* Always center these h2s */
+    h2.checkoutprojects,
+    .my-works h2,
+    .my-processes h2 {
+      justify-content: center !important;
+      text-align: center !important;
+      padding-left: 0 !important;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .intro {
+      display: flex;
+      gap: 1.5em;
+      margin-bottom: 2em;
+      color: #C7D0EF;
+      align-items: center;
+    }
+
+    .intro-image {
+      min-width: 500px;
+      height: stretch;
+      background: #3D3DFF;
+      border-radius: 9px;
+      background-image: url('../images/babypic.jpg');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .intro-image:hover {
+        background-image: url('../images/babypic2.jpg');
+        transition: all 0.2s ease;
+    }
+
+    .intro p {
+      padding-left: 10px;
+    }
+
+    .accordion-container {
+        width: 100%;
+        max-width: 2000px;
+        margin: 2em auto;
+        background-color: #0F0F13;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        overflow: hidden;
+        transition: all 0.3s ease-out;
+        border: 2px solid transparent;
+    }
+
+    .accordion-container:hover {
+        border: 2px solid #3392ff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .accordion-item {
+        border-radius: 6px;
+        overflow: visible;
+    }
+
+    .accordion-item:last-child {
+        border-bottom: none;
+    }
+
+    .accordion-header {
+        background-color: #0F0F13;
+        color: #E0E0FF;
+        cursor: pointer;
+        padding: 1em 1.5em;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 6px;
+    }
+
+    .accordion-header:hover {
+        color: #3392ff;
+    }
+
+    .accordion-header .arrow {
+        font-size: 0.8em;
+        margin-left: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .accordion-header.active .arrow {
+        transform: rotate(90deg);
+    }
+
+    .accordion-content {
+        background-color: #1A1A2A;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 1.5em;
+        color: #c5cee0;
+        border-radius: 6px;
+        margin: 0px;
+        transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out;
+    }
+
+    .accordion-content.show {
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin: 10px;
+    }
+
+    .accordion-content a {
+        display: flex;
+        align-items: center;
+        color: #c5cee0;
+        padding-top: 4px;
+        padding-bottom: 10px;
+        text-decoration: none;
+        transition: color 0.2s ease-out;
+        padding-left: 40px;
+    }
+
+    .accordion-content a i {
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .accordion-content a:hover {
+        color: #3392ff;
+    }
+
+    .nested-accordion-item .accordion-header {
+        background-color: #1A1A2A;
+        padding-left: 2.5em;
+        background-color: #0F0F13;
+        margin: 4px;
+        border-radius: 6px;
+    }
+
+    .accordion-content p.accordion-text-item {
+        color: #c5cee0;
+        padding-top: 4px;
+        padding-bottom: 10px;
+        padding-left: 40px;
+        line-height: 1.5;
+    }
+
+    .accordion-content p.accordion-text-item-with-icon i {
+        display: inline-block;
+        vertical-align: center;
+        margin-right: 5px;
+        flex-shrink: 0;
+        bottom: -8px;
+    }
+
+    .accordion-content p.accordion-text-item a {
+        display: inline;
+        padding: 0;
+        margin: 0;
+        text-decoration: underline;
+        color: #3392ff;
+        transition: color 0.2s ease-out;
+    }
+
+    .accordion-content p.accordion-text-item a:hover {
+        color: #d8e3f9;
+    }
+
+    .my-works {
+      margin: 3em 0;
+    }
+
+    .image-gallery {
+      position: relative;
+      margin-top: 1.5em;
+      padding: 5px;
+      max-height: 600px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border: 2px dashed transparent;
+      border-radius: 12px;
+      padding-right: 10px;
+    }
+
+    .image-gallery::-webkit-scrollbar {
+      width: 0px;
+      color: transparent;
+      background-color: transparent;
+    }
+
+    .image-gallery::-webkit-scrollbar-track {
+      color: transparent;
+      background-color: transparent;
+      border-radius: 10px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb {
+      color: transparent;
+      background-color: transparent;
+      border-radius: 10px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb:hover {
+      color: transparent;
+      background-color: transparent;
+    }
+
+    .gallery-item {
+      background: transparent;
+      border-radius: 12px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border: 3px solid transparent;
+    }
+
+    .gallery-item:hover {
+      transform: scale(0.97) translateY(0px);
+      box-shadow: 0 8px 20px rgba(51, 146, 255, 0.4);
+      border-color: #3392ff;
+      z-index: 10;
+      border: 3px solid #3392ff;
+    }
+
+    .gallery-item:active {
+      transform: scale(1.025) translateY(20px) rotateZ(2deg);
+      box-shadow: 0 8px 20px rgba(51, 146, 255, 0.4);
+      border: 3px solid #3392ff;
+      z-index: 10;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery-item .text-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(26, 26, 42, 0.8);
+      color: #C7D0EF;
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+      transform: translateY(100%);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      box-sizing: border-box;
+    }
+
+    .gallery-item:hover .text-overlay {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .my-processes h2 {
+      margin-bottom: 0.8em;
+    }
+
+    .process-text {
+      display: flex;
+      gap: 1.5em;
+      align-items: center;
+      color: #C7D0EF;
+      margin-bottom: 0.5em;
+    }
+
+    .process-image {
+      min-width: 500px;
+      height: 250px;
+      background: #3D3DFF;
+      border-radius: 9px;
+      background-image: url('https://placehold.co/500x250/3D3DFF/ffffff?text=Your+Process+Image');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+
+    .see-more {
+      font-size: 0.9em;
+      color: #ccc;
+      margin-top: 1em;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.3s ease, transform 0.2s ease;
+      display: block;
+      text-align: center;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .see-more:hover {
+      color: #3392ff;
+      transform: translateY(-1px);
+    }
+
+    .more-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, opacity 0.4s ease;
+      color: #C7D0EF;
+      opacity: 0;
+      padding-top: 5px;
+    }
+
+    .more-content.expanded {
+      max-height: 500px;
+      opacity: 1;
+    }
+
+    .commission {
+      margin: 3em 0;
+      background: #1A1A2A;
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      text-align: center;
+      border: 2px solid #414078;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .commission:hover {
+      border-color: #3392ff;
+      box-shadow: 0 0 20px 5px rgba(51, 146, 255, 0.7);
+      transform: scale(1.5em) translateY(-10px);
+    }
+
+    .commission h2 {
+        text-align: left;
+        padding-top: 0.5em;
+        justify-content: flex-start;
+    }
+
+    .commission-image {
+      width: 100%;
+      height: 150px;
+      background: #3D3DFF;
+      border-radius: 10px;
+      margin-bottom: 1.5em;
+      margin-left: auto;
+      margin-right: auto;
+      background-image: url('https://placehold.co/600x150/3D3DFF/ffffff?text=Commission+Banner');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 2.5em 15%;
+      background: #0F0F13;
+      color: #ffffff;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 290px;
+      padding: 10px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.4em;
+      margin-bottom: 0.8em;
+      color: #F8F8FF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-section p {
+      line-height: 1.5;
+      margin-bottom: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-section.socials {
+      text-align: right;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-backdrop.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background-color: #1A1A2A;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        position: relative;
+        max-width: 85%;
+        max-height: 85%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(0.8);
+        opacity: 0;
+        transform: translateY(50px) rotate(2deg);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .modal-backdrop.show .modal-content {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .modal-image {
+        max-width: 100%;
+        max-height: 80vh;
+        display: block;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    .modal-image-title {
+        display: none;
+    }
+
+    .modal-close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 2em;
+        color: #fff;
+        cursor: pointer;
+        padding: 5px 5px;
+        width: 50px;
+        height: 50px;
+        line-height: 1;
+        transition: color 0.2s ease, transform 0.2s ease;
+        background-color: #1A1A2A;
+        border-radius: 6px;
+    }
+
+    .modal-close-button:hover {
+        color: #3392ff;
+        transform: rotate(90deg);
+    }
+
+    .request-form-button {
+        padding: 12px 25px;
+        background: linear-gradient(145deg, #1A1A2A, #0F0F13);
+        color: white;
+        border: 2px solid #3392ff;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 600;
+        transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        align-self: flex-end;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .request-form-button:hover {
+        background: linear-gradient(145deg, #0F0F13, #1A1A2A);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(51, 146, 255, 0.6);
+    }
+
+    .user-id-display {
+        font-size: 0.8em;
+        color: #C7D0EF;
+        text-align: center;
+        margin-top: 1em;
+        margin-bottom: -1em;
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    @media (min-width: 901px) {
+        .my-processes .see-more {
+            margin-top: 2em;
+        }
+    }
+
+    /* The image:text sections breakage */
+    @media (max-width: 900px) {
+      .intro, .process-text {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .intro-image, .process-image {
+        min-width: unset;
+        width: 90%;
+        max-width: 400px;
+        height: 300px;
+        margin-bottom: -10px;
+      }
+      .bubblebody {
+        width: 85%;
+        padding: 15px;
+        max-width: 1000px;
+      }
+      .intro-image {
+        width: 100%;
+        max-width: 800px;
+        max-height: 400px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .accordion-content a,
+      .accordion-content p.accordion-text-item {
+        padding-left: 20px;
+      }
+      .accordion-content a i {
+        margin-right: 20px;
+      }
+      .accordion-header {
+          justify-content: flex-start;
+          padding-left: 1em;
+          padding-right: 1.5em;
+      }
+      .accordion-header i {
+          margin-right: 15px;
+          flex-shrink: 0;
+      }
+      .accordion-header .arrow {
+          margin-left: auto;
+      }
+
+      .nested-accordion-item .accordion-header {
+          padding-left: 1em;
+      }
+      .nested-accordion-item .accordion-header i {
+          margin-right: 15px;
+      }
+
+      .footer-section.socials {
+        text-align: left;
+      }
+      .footer-section h3, .footer-section p {
+        justify-content: left;
+      }
+      nav a {
+        margin: 0 0.3em;
+        font-size: 0.95em;
+        transition: all 0.3s ease;
+      }
+      .footer-section {
+        min-width: 100%;
+        text-align: left;
+      }
+      .gallery-item {
+        width: unset;
+      }
+      .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(0.90em);
+      }
+      .header {
+        transform: scale(0.30em);
+      }
+    }
+
+    @media (max-width: 700px) {
+      h2:not(.h2comm-me) {
+        justify-content: center;
+        padding-left: 0;
+      }
+      h2 {
+        font-size: 1.5em;
+      }
+      .footer {
+        padding: 2.5em 5%;
+      }
+    }
+
+    @media (max-width: 450px) {
+      nav a {
+        margin: 0 0.3em;
+        font-size: 0.7em;
+        transition: all 0.3s ease;
+      }
+      .accordion-content a,
+      .accordion-content p.accordion-text-item {
+        padding-left: 5px;
+        width: 110%;
+        word-wrap: break-word;
+        font-size: 0.95em;
+      }
+       .accordion-content a i,
+       .accordion-content p.accordion-text-item-with-icon i {
+           margin-right: 9px;
+       }
+       .accordion-header {
+           padding-left: 0.8em;
+           font-size: 0.95em;
+       }
+       .accordion-header i {
+           margin-right: 10px;
+       }
+       .nested-accordion-item .accordion-header {
+           padding-left: 0.8em;
+       }
+       .nested-accordion-item .accordion-header i {
+           margin-right: 10px;
+       }
+    }
+
+    /* --- PROJECT CARDS SECTION --- */
+    .cardies {
+      margin: 3em 0 1.5em 0;
+      padding: 0 0 1em 0;
+    }
+    .project-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: center;
+      margin-top: 1.5em;
+      position: relative;
+    }
+    .project-card {
+      position: relative;
+      flex: 1 1 100%;
+      height: 120px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(51, 146, 255, 0.13), 0 1.5px 8px rgba(0, 0, 0, 0.18);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      text-decoration: none;
+      transition: transform 0.18s, box-shadow 0.18s;
+      border: 2.5px solid #23234a;
+    }
+    .project-card:hover {
+      transform: scale(1.035) translateY(-4px);
+      box-shadow: 0 8px 32px rgba(51,146,255,0.25), 0 2px 12px rgba(0,0,0,0.22);
+      border-color: #3392ff;
+      z-index: 2;
+    }
+    .project-card-overlay {
+      width: 100%;
+      background: linear-gradient(
+        0deg,
+        rgba(15, 15, 19, 0.682) 50%,
+        rgba(15, 15, 19, 0.416) 70%,
+        rgba(15, 15, 19, 0.11) 90%,
+        rgba(15, 15, 19, 0) 100%
+      );
+      padding: 1.2em 1.1em 1.1em 1.1em;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 10%;
+      z-index: 1;
+      opacity: 1;
+      transition: none;
+    }
+    .project-card-title {
+      font-size: 1.18em;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+      text-shadow: 0 2px 8px #23234a;
+      width: 100%;
+      text-align: left;
+      justify-content: left;
+      margin-bottom: -0.3em;
+      transition: font-size 0.1s ease; 
+    }
+
+    .project-card:hover .project-card-title {
+      font-size: 1.3em;
+      transition: all 0.1s ease; 
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .project-card:hover .project-card-overlay {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      background: linear-gradient(
+        0deg,
+        rgba(15, 15, 19, 0.858) 50%,
+        rgba(15, 15, 19, 0.416) 70%,
+        rgba(15, 15, 19, 0.11) 90%,
+        rgba(15, 15, 19, 0) 100%
+      );
+      min-height: 20%;
+      transition: background 0.1s ease; 
+    }
+
+    .project-card:hover .project-card-badge {
+      background-color: #1A1A2A;
+      color: #fff;
+      opacity: 0;
+      /* border: 2px #3392ff solid; */
+      transition: opacity 0.1s ease;
+    }
+
+    .project-card-badge {
+      background: #414078;
+      color: #fff;
+      font-size: 0.85em;
+      font-weight: 500;
+      border-radius: 7px;
+      padding: 2px 8px;
+      margin-left: 0.7em;
+      opacity: 0.85;
+      letter-spacing: 0.01em;
+    }
+    /* .project-card i {
+      font-size: 1.1em;
+      margin-right: 0.2em;
+    } */
+
+
+    /* Desktop and larger tablets: 2 per row */
+    @media (min-width: 700px) {
+      .project-card {
+        flex: 1 1 calc(50% - 1.2em);
+        height: 150px;
+      }
+    }
+
+    /* Ultra-wide screens: optionally 3 per row */
+    @media (min-width: 1200px) {
+      .project-card {
+        flex: 1 1 calc(33.33% - 1.2em);
+      }
+    }
+
+  </style>
+  <script async src="https://tally.so/widgets/embed.js"></script>
+</head>
+<body>
+  <header>
+    <nav style="color: #C7D0EF; font-weight: 500; font-size: 1.1em;">
+      <a href="../index.html"><i class="fas fa-home"></i> HOME</a> |
+      <a href="#contact"><i class="fa-solid fa-person-running"></i> CONTACT ME</a> |
+      <a href="#my-works-section"><i class="fab fa-github"></i> GITHUB </a>
+    </nav>
+  </header>
+
+  <div class="bubblebody">
+    <section class="intro">
+      <div class="intro-image" data-modal-title="My Intro Image"></div>
+      <p>
+        As you can see, I have been using a computer since I was a baby! I have always been fascinated by technology and art, which is why I love making animations and coding just about anything.
+        <br>
+        <br>
+        On this page, you will find a collection of my coding projects that I have created over the years. Feel free to explore and learn more about my work!
+      </p>
+    </section>
+
+    <hr>
+
+    <div class="accordion-container">
+        <div class="accordion-item">
+            <button class="accordion-header"><i class="fas fa-link"></i> REQUEST BOX / QUICK LINKS <span class="arrow">->></span></button>
+            <div class="accordion-content">
+
+                <div class="accordion-item nested-accordion-item">
+                    <button class="accordion-header"><i class="fa-solid fa-share"></i> Submit a Tutorial Request <span class="arrow">></span></button>
+                    <div class="accordion-content">
+                        <button type="button" class="request-form-button"
+                                data-tally-open="nW688P"
+                                data-tally-layout="modal"
+                                data-tally-width="600"
+                                data-tally-hide-title="1">
+                            Open Tutorial Request Form
+                        </button>
+                    </div>
+                </div>
+                <div class="accordion-item nested-accordion-item">
+                    <button class="accordion-header"><i class="fa-regular fa-circle-question"></i> Get Aidah's help! <span class="arrow">></span></button>
+                    <div class="accordion-content">
+                        <p class="accordion-text-item">
+                            You can get in contact with me through <a href="#contact">these socials!</a>
+                        </p>
+                        <p class="accordion-text-item accordion-text-item-with-icon">
+                            <i class="fa-brands fa-discord"></i> Or you could also ask in the <a href="https://discord.gg/hbn6Z3kreg">help-from-aidah</a> channel on my Discord Server.
+                        </p>
+                        <p class="accordion-text-item accordion-text-item-with-icon">
+                            <i class="fa-solid fa-star"></i>
+                            <b style="color: #ffffff;">Don't hesitate to text me!</b> And if you need help with something specific, or a cool effect you can't seem to figure out, just send me an image or video of what you're trying to achieve :D
+                        </p>
+                    </div>
+                </div>
+
+                <div class="accordion-item nested-accordion-item">
+                    <button class="accordion-header"><i class="fas fa-folder"></i> Other Items  <span class="arrow">></span></button>
+                    <div class="accordion-content">
+                        <a href="tutorials-page.html" class="accordion-link"><i class="fas fa-search"></i> SEARCH ALL TUTORIALS </a>
+                        <a href="oldtutspage.html" class="accordion-link"><i class="fas fa-search-minus"></i> OLD Tutorials Search Page </a>
+                        <a href="VideoCardNoteLink.html" class="accordion-link"><i class="fa-solid fa-tv"></i> VideoCardNoteLink </a>
+                        <a href="#" class="accordion-link"><i class="fas fa-xmark"></i> Unavailable — Animations Showcase </a>
+                    </div>
+                </div>
+                <hr class="acc-hr">
+                <a href="https://www.youtube.com/@kaziaidahhaque/playlists" class="accordion-link"><i class="fa-solid fa-table-cells-large"></i> Categorized Tutorial Playlists</a>
+                <a href="https://www.youtube.com/@kazi_aidah" class="accordion-link"><i class="fas fa-star-of-life"></i> All My Animations! </a>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    
+  <script>
+    // --------- APPLY MASONRY LAYOUT ----------
+    function applyMasonryLayout() {
+        const gallery = document.getElementById('imageGallery');
+        if (!gallery) return;
+        const items = Array.from(gallery.children);
+
+        let columns = 4;
+        if (window.innerWidth < 900 && window.innerWidth >= 600) {
+            columns = 3;
+        } else if (window.innerWidth < 600) {
+            columns = 2;
+        }
+
+        const galleryWidth = gallery.clientWidth;
+        const gap = 1 * 16;
+        const columnWidth = (galleryWidth - (columns - 1) * gap) / columns;
+
+        const columnHeights = Array(columns).fill(0);
+        const columnLefts = Array(columns).fill(0);
+
+        for (let i = 0; i < columns; i++) {
+            columnLefts[i] = i * (columnWidth + gap);
+        }
+
+        items.forEach(item => {
+            const minHeight = Math.min(...columnHeights);
+            const minHeightIndex = columnHeights.indexOf(minHeight);
+
+            item.style.position = 'absolute';
+            item.style.width = `${columnWidth}px`;
+            item.style.left = `${columnLefts[minHeightIndex]}px`;
+            item.style.top = `${columnHeights[minHeightIndex]}px`;
+
+            columnHeights[minHeightIndex] += item.offsetHeight + gap;
+        });
+
+        gallery.style.height = `${Math.max(...columnHeights) - gap}px`;
+        gallery.style.position = 'relative';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const seeMoreBtn = document.getElementById('seeMoreBtn');
+      const moreContent = document.getElementById('moreProcessContent');
+
+      if (seeMoreBtn && moreContent) {
+        seeMoreBtn.addEventListener('click', function() {
+          moreContent.classList.toggle('expanded');
+          if (moreContent.classList.contains('expanded')) {
+            seeMoreBtn.textContent = 'SHOW LESS!';
+          } else {
+            seeMoreBtn.textContent = 'SEE MORE!';
+          }
+        });
+      }
+
+      const seeMoreCommissionBtn = document.getElementById('seeMoreCommissionBtn');
+      const moreCommissionContent = document.getElementById('moreCommissionContent');
+
+      if (seeMoreCommissionBtn && moreCommissionContent) {
+        seeMoreCommissionBtn.addEventListener('click', function() {
+          moreCommissionContent.classList.toggle('expanded');
+          if (moreCommissionContent.classList.contains('expanded')) {
+            seeMoreCommissionBtn.textContent = 'SHOW LESS!';
+          } else {
+            seeMoreCommissionBtn.textContent = 'SEE MORE!';
+          }
+        });
+      }
+
+      document.querySelectorAll('.accordion-header').forEach(header => {
+          header.addEventListener('click', function(event) {
+              event.preventDefault();
+
+              const content = this.nextElementSibling;
+              const arrow = this.querySelector('.arrow');
+
+              const isNested = this.closest('.nested-accordion-item');
+              const parentAccordion = isNested ? this.closest('.accordion-content') : document.querySelector('.accordion-container');
+
+              parentAccordion.querySelectorAll(':scope > .accordion-item > .accordion-header').forEach(otherHeader => {
+                  if (otherHeader !== this) {
+                      otherHeader.classList.remove('active');
+                      otherHeader.nextElementSibling.style.maxHeight = '0px';
+                      otherHeader.nextElementSibling.classList.remove('show');
+                  }
+              });
+
+              const isActive = this.classList.contains('active');
+
+              this.classList.toggle('active');
+
+              if (isActive) {
+                  content.style.maxHeight = content.scrollHeight + 'px';
+                  void content.offsetWidth;
+                  content.style.maxHeight = '0px';
+                  content.classList.remove('show');
+              } else {
+                  content.classList.add('show');
+                  content.style.maxHeight = content.scrollHeight + 'px';
+              }
+
+              content.addEventListener('transitionend', function handler() {
+                  if (!isActive) {
+                      content.style.maxHeight = 'none';
+                  }
+                  content.removeEventListener('transitionend', handler);
+              });
+          });
+      });
+
+      document.querySelectorAll('.accordion-link').forEach(link => {
+          link.addEventListener('click', function(event) {
+              if (this.getAttribute('href') === '#') {
+                  event.preventDefault();
+              }
+          });
+      });
+
+      const images = document.querySelectorAll('.image-gallery img');
+      let imagesLoadedCount = 0;
+
+      if (images.length === 0) {
+          applyMasonryLayout();
+      } else {
+          images.forEach(img => {
+              if (img.complete) {
+                  imagesLoadedCount++;
+              } else {
+                  img.addEventListener('load', () => {
+                      imagesLoadedCount++;
+                      if (imagesLoadedCount === images.length) {
+                          applyMasonryLayout();
+                      }
+                  });
+                  img.addEventListener('error', () => {
+                      imagesLoadedCount++;
+                      if (imagesLoadedCount === images.length) {
+                          applyMasonryLayout();
+                      }
+                  });
+              }
+          });
+
+          if (imagesLoadedCount === images.length) {
+              applyMasonryLayout();
+          }
+      }
+
+      window.addEventListener('resize', applyMasonryLayout);
+
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Aidah's Tutorials!</title>
+  <link rel="icon" href="icon.png">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #0F0F13;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 1em 0;
+      background: #0F0F13;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    nav {
+        padding-bottom: 1em;
+        width: 100%;
+    }
+
+    nav a {
+      margin: 0 0.5em;
+      text-decoration: none;
+      color: #c5cee0;
+      font-weight: 400;
+      transition: color 0.3s ease, transform 0.2s ease;
+      padding: 5px 0;
+      display: inline-block;
+      transition: all 0.3s ease;
+      font-size: 1.1em;
+    }
+
+    nav a:hover {
+      color: #3392ff;
+      transform: translateY(-2px);
+    }
+
+    a {
+      color: #d8e3f9;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #3392ff;
+      text-decoration: none;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px dashed #414078;
+      margin: 20px 0;
+    }
+
+    .bubblebody {
+      background: #1A1A2A;
+      width: 90%;
+      max-width: 1200px;
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+      border-radius: 19px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .bubblebody::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .bubblebody::-webkit-scrollbar-track {
+        background: #1A1A2A;
+        border-radius: 10px;
+    }
+
+    .bubblebody::-webkit-scrollbar-thumb {
+        background-color: #3392ff;
+        border-radius: 10px;
+        border: 2px solid #1A1A2A;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 0.8em;
+      color: #F8F8FF;
+      padding-top: 10px;
+      margin-top: -25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 20px;
+    }
+
+    h2.h2comm-me {
+      text-align: center;
+      margin-bottom: 1em;
+      margin-top: -15px;
+      justify-content: center;
+      padding-left: 0;
+    }
+
+    .contentheh {
+        text-align: center;
+        color: #c5cee0;
+        margin-top: 20px;
+    }
+
+    .alltut {
+        font-size: 2.5em;
+        color: #F8F8FF;
+        margin-bottom: 0.2em;
+        text-shadow: 0 0 10px rgba(51, 146, 255, 0.5);
+        margin-top: 0;
+        transition: all 0.3s ease;
+        display: block;
+    }
+
+    .alltut:hover {
+      text-shadow: 0 0 10px rgba(128, 161, 198, 0.5);
+      transform: scale(1.15);
+      transition: all 0.3s ease;
+    }
+
+    .by-me {
+      font-size: 1.5em;
+      color: #E0E0FF;
+      margin-bottom: 0.5em;
+      font-weight: 300;
+      text-align: center;
+      margin-top: -12px;
+      position: relative;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .by-me::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      border-bottom: 2px dashed #3392ff;
+      background-repeat: repeat-x;
+      background-size: 10px 2px;
+      background-position: 0 100%;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .by-me:hover {
+      font-weight: 600;
+    }
+
+    .by-me:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+      animation: dashMove 1s linear infinite;
+    }
+
+    @keyframes dashMove {
+      from {
+        background-position: 0 100%;
+      }
+      to {
+        background-position: 10px 100%;
+      }
+    }
+
+    .Aidah {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .by-me .Aidah:hover {
+        color: #3392ff;
+        font-weight: 900;
+    }
+
+    .tut-count {
+        font-size: 1em;
+        color: #c5cee0;
+        margin-bottom: 1.5em;
+        display: block;
+    }
+
+    .no-tut {
+        font-weight: 600;
+        color: #F8F8FF;
+    }
+
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px 0;
+        justify-content: center;
+    }
+
+    .video {
+        background-color: #0F0F13;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        border: 2px solid #414078;
+        cursor: pointer;
+    }
+
+    .video:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(51, 146, 255, 0.4);
+        border-color: #3392ff;
+
+    }
+
+    .video.active {
+        border-color: #3392ff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transform: translateY(0px);
+    }
+
+
+    .video-thumbnail-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .video img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 6px 6px 0 0;
+    }
+
+    .video p {
+        padding: 10px 15px;
+        font-size: 0.9em;
+        min-height: 4em;
+        display: block;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #E0E0FF;
+        word-wrap: break-word;
+    }
+
+    .highlight {
+        background-color: yellow;
+        color: black;
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+
+    .pagination-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .pagination-btn {
+        padding: 8px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #0F0F13;
+        color: #c5cee0;
+        border: 2px solid #414078;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9em;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pagination-btn:hover:not(.active) {
+        background-color: #1A1A2A;
+        border-color: #3392ff;
+        color: #3392ff;
+    }
+
+    .pagination-btn.active {
+        background-color: #0F0F13;
+        color: #3392ff;
+        border-color: #3392ff;
+    }
+
+    .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #0F0F13;
+        border-color: #414078;
+        color: #7a7a7a;
+    }
+
+    .global-search-container {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        background-color: #0F0F13;
+        border-top: 2px dashed #1A1A2A;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .search-input-wrapper {
+        position: relative;
+        flex-grow: 1;
+        max-width: 500px;
+        padding-top: 12px;
+    }
+
+    .global-search-input {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        border: 2px solid #414078;
+        border-radius: 8px;
+        background-color: #0F0F13;
+        color: #c5cee0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1em;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        height: 44px;
+    }
+
+    .global-search-input:focus {
+        outline: none;
+        border-color: #3392ff;
+        box-shadow: 0 0 8px rgba(51, 146, 255, 0.5);
+    }
+
+    .global-search-input::placeholder {
+        color: #7a7a7a;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #c5cee0;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: color 0.3s ease, transform 0.3s ease;
+        padding-top: 12px;
+    }
+
+    .search-icon.clear-icon:hover {
+        color: #ec4242;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .search-icon:not(.clear-icon):hover {
+        color: #3392ff;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .filter-toggle-btn {
+        padding: 12px 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 2px solid #414078;
+        background-color: #1A1A2A;
+        color: #c5cee0;
+        cursor: pointer;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        flex-shrink: 0;
+        height: 44px;
+    }
+
+    .filter-toggle-btn:hover {
+        background-color: #0F0F13;
+        border-color: #3392ff;
+        color: #3392ff;
+    }
+
+    .filter-toggle-btn i {
+        color: inherit;
+    }
+
+    .filter-dropdown {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 20px;
+        width: 300px;
+        background-color: #1A1A2A;
+        border: 2px solid #414078;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        padding: 15px;
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    .filter-dropdown.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .filter-dropdown h2 {
+        font-size: 1.2em;
+        color: #F8F8FF;
+        margin-bottom: 10px;
+        padding-left: 0;
+        margin-top: 0;
+        text-align: center;
+        border-bottom: 1px solid #414078;
+        padding-bottom: 5px;
+    }
+
+    .filter-dropdown .filter-group-section {
+        border: none;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .filter-group-section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 2px solid #414078;
+        border-radius: 8px;
+        background-color: transparent;
+    }
+
+    .filter-group-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .filter-group-section h1, .filter-group-section h2 {
+        font-size: 1.2em;
+        color: #F8F8FF;
+        margin-bottom: 5px;
+        padding-left: 0;
+        margin-top: 0;
+        display: block;
+        text-align: center;
+    }
+
+    .filter-btn-container, .app-filter-btn-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .filter-btn {
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      font-weight: 700;
+      transition: all 0.2s ease-in-out;
+      border: 2px solid;
+      background-color: transparent;
+      white-space: nowrap;
+    }
+
+    .filter-btn[data-filter="Alight Motion"] { border-color: #00ff95; color: #00ff95; }
+    .filter-btn[data-filter="Moho Pro"] { border-color: #c40000; color: #c40000; }
+    .filter-btn[data-filter="IbisPaint X"] { border-color: #234b73; color: #d8e3f9; }
+    .filter-btn[data-filter="Other Apps"] { border-color: #935f35; color: #935f35; }
+    .filter-btn[data-filter="Live2D Cubism"] { border-color: #d26704; color: #d26704; }
+    .filter-btn[data-filter="All Tutorials"] { border-color: #c5cee0; color: #c5cee0; }
+
+    .filter-btn-container .filter-btn {
+        border-color: #c5cee0;
+        color: #c5cee0;
+    }
+
+    .filter-btn.active {
+        background-color: #3392ff;
+        color: #ffffff;
+        border-color: #3392ff;
+        font-weight: 900;
+    }
+
+    .filter-btn[data-filter="Alight Motion"].active { background-color: #00ff95; color: #1A1A2A; border-color: #00ff95; }
+    .filter-btn[data-filter="Moho Pro"].active { background-color: #c40000; color: #ffffff; border-color: #c40000; }
+    .filter-btn[data-filter="IbisPaint X"].active { background-color: #234b73; color: #ffffff; border-color: #234b73; }
+    .filter-btn[data-filter="Other Apps"].active { background-color: #935f35; color: #ffffff; border-color: #935f35; }
+    .filter-btn[data-filter="Live2D Cubism"].active { background-color: #d26704; color: #ffffff; border-color: #d26704; }
+    .filter-btn[data-filter="All Tutorials"].active { background-color: #c5cee0; color: #1A1A2A; border-color: #c5cee0; }
+
+    .filter-btn:not(.active):hover {
+      background-color: rgba(51, 146, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .section-divider {
+        border: none;
+        border-top: 2px dashed #414078;
+        margin: 30px 0;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 2.5em 15%;
+      background: #0F0F13;
+      color: #ffffff;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 290px;
+      padding: 10px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.4em;
+      margin-bottom: 0.8em;
+      color: #F8F8FF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-section p {
+      line-height: 1.5;
+      margin-bottom: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-section.socials {
+      text-align: right;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-backdrop.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background-color: #1A1A2A;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        position: relative;
+        max-width: 85%;
+        max-height: 85%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(0.8);
+        opacity: 0;
+        transform: translateY(50px) rotate(2deg);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .modal-backdrop.show .modal-content {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .modal-image {
+        max-width: 100%;
+        max-height: 80vh;
+        display: block;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    .modal-image-title {
+        color: #c5cee0;
+        margin-top: 10px;
+        font-size: 1.1em;
+        text-align: center;
+        word-wrap: break-word;
+        white-space: normal;
+        display: block;
+    }
+
+    .modal-close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 2em;
+        color: #fff;
+        cursor: pointer;
+        padding: 5px 5px;
+        width: 50px;
+        height: 50px;
+        line-height: 1;
+        transition: color 0.2s ease, transform 0.2s ease;
+        background-color: #1A1A2A;
+        border-radius: 6px;
+    }
+
+    .modal-close-button:hover {
+        color: #3392ff;
+        transform: rotate(90deg);
+    }
+
+    .loading-modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .loading-modal-backdrop.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .loading-modal-content {
+        background-color: #1A1A2A;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        color: #F8F8FF;
+        font-size: 1.5em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+    }
+
+    .loading-modal-backdrop.show .loading-modal-content {
+        transform: scale(1);
+    }
+
+    .loading-spinner {
+        border: 5px solid #414078;
+        border-top: 5px solid #3392ff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 900px) {
+      header {
+          padding-left: 10px;
+          padding-right: 10px;
+      }
+      .bubblebody {
+        width: 85%;
+        padding: 15px;
+        margin-top: 1.5em;
+      }
+      .global-search-container {
+          padding: 10px 15px;
+          gap: 10px;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+      .search-input-wrapper {
+          flex-grow: 1;
+          max-width: none;
+      }
+      .filter-dropdown {
+          top: calc(100% + 10px);
+          left: 50%;
+          transform: translateX(-50%);
+          width: calc(100% - 40px);
+          right: auto;
+      }
+    }
+
+    @media (max-width: 700px) {
+      h2:not(.h2comm-me) {
+        justify-content: center;
+        padding-left: 0;
+      }
+      h2 {
+        font-size: 1.5em;
+      }
+      .footer {
+        padding: 2.5em 5%;
+      }
+    }
+
+    @media (max-width: 600px) {
+        .global-search-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .search-input-wrapper {
+            width: 100%;
+        }
+        .filter-toggle-btn {
+            width: 100%;
+            justify-content: center;
+          margin-top: 0px;
+        }
+      .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(0.90em);
+      }
+      .header {
+        transform: scale(0.30em);
+      }
+    }
+
+    @media (max-width: 700px) {
+      nav a {
+        margin: 0 0.3em;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+      }
+    }
+
+    @media (max-width: 450px) {
+       .filter-dropdown {
+           width: calc(100% - 20px);
+           transform: translateX(-50%);
+       }
+       .filter-btn {
+           font-size: 0.75em;
+           padding: 5px 8px;
+       }
+      .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(0.80em);
+      }
+
+      nav a {
+        margin: 0 0.3em;
+        font-size: 0.9em !important;
+        transition: all 0.3s ease;
+      }
+    }
+  </style>
+  <script async src="https://tally.so/widgets/embed.js"></script>
+</head>
+<body>
+  <header>
+   <nav style="color: #C7D0EF; font-weight: 500;">
+      <a href="../index.html">
+        <i class="fas fa-home"></i>
+        HOME</a>
+      | </span>
+      <a class="request-form-button" style="cursor:pointer"
+          data-tally-open="nW688P"
+          data-tally-layout="modal"
+          data-tally-width="600"
+          data-tally-hide-title="1">
+        <i class="fa-solid fa-envelopes-bulk"></i>
+        REQUEST A TUTORIAL</a>
+      <!-- |
+      <a href="#contact">
+        <i class="fa-solid fa-border-top-left"></i>
+        FORMS</a  -->
+    </nav>
+    <div class="global-search-container">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon" id="global-search-icon"></i>
+            <input type="text" id="global-search-input" placeholder="Search all tutorials..." class="global-search-input">
+        </div>
+        <button id="filter-toggle-button" class="filter-toggle-btn"><i class="fas fa-filter"></i> Filter</button>
+        <div id="filter-dropdown" class="filter-dropdown">
+            <div class="filter-group-section">
+                <h2>Application</h2>
+                <div class="app-filter-btn-container">
+                    <button class="filter-btn" data-filter="All Tutorials">💯 All Tutorials</button>
+                    <button class="filter-btn" data-filter="Alight Motion">📱 Alight Motion</button>
+                    <button class="filter-btn" data-filter="Moho Pro">🖥️ Moho Pro</button>
+                    <button class="filter-btn" data-filter="IbisPaint X">🎨 IbisPaint X</button>
+                    <button class="filter-btn" data-filter="Other Apps">Other Apps</button>
+                    <button class="filter-btn" data-filter="Live2D Cubism">🎭 Live2D Cubism</button>
+                    <button class="filter-btn" data-filter="CapCut">✂️ CapCut</button>
+                </div>
+            </div>
+
+            <div class="filter-group-section">
+                <h2>Tutorial Filters</h2>
+                <div class="filter-btn-container">
+                    <button class="filter-btn" data-filter="Beginner Friendly">✨ Beginner Friendly</button>
+                    <button class="filter-btn" data-filter="Useful">🧠 Useful Tricks</button>
+                    <button class="filter-btn" data-filter="Best Tutorials">🏆 Best Tutorials</button>
+                    <button class="filter-btn" data-filter="Special Tutorials">🌟 Special Tutorials</button>
+                    <button class="filter-btn" data-filter="Head/Body Turns">🔄 Head / Body Turns</button>
+                    <button class="filter-btn" data-filter="Facial">😊 Facial Tutorials</button>
+                    <button class="filter-btn" data-filter="Eyes">👁️ Eye Tutorials</button>
+                    <button class="filter-btn" data-filter="Mouth">👄 Mouth Tutorials</button>
+                    <button class="filter-btn" data-filter="Hand">🖐️ Hand Tutorials</button>
+                    <button class="filter-btn" data-filter="Walking/Running">🚶 Walking / Running</button>
+                    <button class="filter-btn" data-filter="Wings">🦋 Wings</button>
+                    <button class="filter-btn" data-filter="Vector Drawing">Vector Drawing</button>
+                    <button class="filter-btn" data-filter="Vehicle">🚗 Vehicles</button>
+                    <button class="filter-btn" data-filter="Separation">🔀 Separation</button>
+                    <button class="filter-btn" data-filter="Front Facing">🧍‍♂️ Posing</button>
+                    <button class="filter-btn" data-filter="Teleportation/Magical">🔮 Magical</button>
+                    <button class="filter-btn" data-filter="Hair Tutorials">💇‍♀️ Hair Tutorials</button>
+                    <button class="filter-btn" data-filter="Environment">🌿 Environment</button>
+                    <button class="filter-btn" data-filter="Animals">🐾 Animals</button>
+                    <button class="filter-btn" data-filter="Instruments">🎸 Instruments</button>
+                    <button class="filter-btn" data-filter="Glow">💡 Glow</button>
+                    <button class="filter-btn" data-filter="Backgrounds">🌆 Backgrounds</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </header>
+
+  <div class="contentheh">
+      <h1 class="alltut" id="allTutHeader">ALL TUTORIALS</h1>
+      <p class="by-me" id="byMeSubheader">By Kazi <span class="Aidah">Aidah</span> Haque</p>
+  </div>
+
+  <div class="bubblebody">
+      <div id="video-grid" class="video-grid"></div>
+      <p></p>
+      <p></p>
+      <div id="pagination-controls" class="pagination-controls"></div>
+      <p></p>
+  </div>
+
+  <footer class="footer" id="contact">
+    <div class="footer-section contact">
+      <h3>CONTACT OPTIONS:</h3>
+      <p>
+        <i class="fas fa-at" style="color: #3392ff;"></i>
+        Email: <a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a>
+      </p>
+      <p>
+        <i class="fab fa-discord" style="color: #bc6fff;"></i>
+        Discord: <a href="https://discordapp.com/users/kazi_aidah" target="_blank">kazi_aidah</a>
+      </p>
+      <p>
+        These two will get you the fastest responses.<br>
+        Feel to contact me for help or any questions.
+      </p>
+    </div>
+
+    <div class="footer-section socials">
+      <h3>SOCIALS:</h3>
+      <p>
+        <i class="fab fa-youtube" style="color: #ec4242;"></i>
+        <a href="https://www.youtube.com/@kaziaidahhaque/playlists" target="_blank">Tutorials on YouTube</a>
+      </p>
+      <p>
+        <i class="fab fa-youtube" style="color: #FF69B4;"></i>
+        <a href="https://www.youtube.com/@kazi_aidah/playlists" target="_blank">Animation Channel</a>
+      </p>
+      <p>
+        <i class="fab fa-instagram" style="transform: scale(1.2)";></i>
+        <a href="https://www.instagram.com/kazi_aidah/" target="_blank">Instagram</a>
+      </p>
+      <p>
+        <i class="fab fa-tiktok" style="color: #ffffff;"></i>
+        <a href="https://www.tiktok.com/@kazi_aidah" target="_blank">TikTok</a>
+      </p>
+      <p>
+        <i class="fab fa-facebook"></i>
+        <a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/" target="_blank">Facebook</a>
+      </p>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="imageModal">
+    <div class="modal-content">
+      <button class="modal-close-button">&times;</button>
+      <img src="" class="modal-image" id="modalImage">
+      <p class="modal-image-title" id="modalImageTitle"></p>
+    </div>
+  </div>
+
+  <div class="loading-modal-backdrop" id="loadingModal">
+    <div class="loading-modal-content">
+      <div class="loading-spinner"></div>
+      <span>Searching, please wait...</span>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterToggleButton = document.getElementById('filter-toggle-button');
+      const filterDropdown = document.getElementById('filter-dropdown');
+
+      filterToggleButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          filterDropdown.classList.toggle('show');
+      });
+
+      document.addEventListener('click', (event) => {
+          if (!filterDropdown.contains(event.target) && !filterToggleButton.contains(event.target)) {
+              filterDropdown.classList.remove('show');
+          }
+      });
+
+      document.querySelectorAll('.filter-dropdown .filter-btn').forEach(button => {
+          button.addEventListener('click', () => {
+              filterDropdown.classList.remove('show');
+          });
+      });
+
+      // --------- IMAGE MODAL STUFF ----------
+      const imageModal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalImageTitle = document.getElementById('modalImageTitle');
+      const modalCloseButton = imageModal.querySelector('.modal-close-button');
+
+      function showModal(imageSrc, titleText) {
+          const img = new Image();
+          img.onload = function() {
+              modalImage.src = imageSrc;
+              modalImageTitle.textContent = titleText;
+              imageModal.classList.add('show');
+              document.body.style.overflow = 'hidden';
+          };
+          img.src = imageSrc;
+      }
+
+      function hideModal() {
+          imageModal.classList.remove('show');
+          document.body.style.overflow = '';
+          modalImageTitle.textContent = '';
+      }
+
+      modalCloseButton.addEventListener('click', hideModal);
+      imageModal.querySelector('.modal-content').addEventListener('click', (event) => event.stopPropagation());
+      imageModal.addEventListener('click', (event) => {
+          if (event.target === imageModal) {
+              hideModal();
+          }
+      });
+      document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && imageModal.classList.contains('show')) {
+              hideModal();
+          }
+      });
+
+      // --------- LOADING MODAL FUNCTIONS ----------
+      const loadingModal = document.getElementById('loadingModal');
+
+      function showLoadingModal() {
+          loadingModal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+      }
+
+      function hideLoadingModal() {
+          loadingModal.classList.remove('show');
+          document.body.style.overflow = '';
+      }
+
+      // --------- YOUTUBE API INTEGRATION ----------
+      const API_KEY = 'AIzaSyDB9GX4GitTAFo-6c16157dMY64TiMX6-E';
+      let currentPlaylistId = 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd';
+      let currentPage = 1;
+      let totalPages = 0;
+      let nextPageTokens = {};
+      let allVideosInCurrentPlaylist = new Map();
+      let currentActiveVideo = null;
+      let searchTimeout = null;
+
+      const videoGrid = document.getElementById('video-grid');
+      const paginationControls = document.getElementById('pagination-controls');
+      const allTutHeader = document.getElementById('allTutHeader');
+      const byMeSubheader = document.getElementById('byMeSubheader');
+      const MAX_VIDEOS_PER_PAGE = 50;
+
+      const playlistIds = {
+          'Beginner Friendly': 'PLJYnzg7CheujMlNygnUKt8yE1oxS_GaTb',
+          'Useful': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Head/Body Turns': 'PLJYnzg7Cheug0BL2gRM7xPEq3iOYzkeX5',
+          'Facial': 'PLJYnzg7CheujyYrdS89yOF_J3v-IIB7iU',
+          'Eyes': 'PLJYnzg7Cheug-vg5tZh7bkws7ziWurx2L',
+          'Mouth': 'PLJYnzg7CheujFMXS6lHxgsMDxALKLIjeR',
+          'Walking/Running': 'PLJYnzg7CheugMYOs-L9i2jVtVxb4iF-Ff',
+          'Vector Drawing': 'PLJYnzg7CheuihOe23r0qiFPw1nbjTOVmy',
+          'Hand': 'PLJYnzg7Cheuh5Pn0LQDKnGnzHjKLNmtHH',
+          'Vehicle': 'PLJYnzg7CheugIs8W8kWf0nBCHlordaY2Q',
+          'Wings': 'PLJYnzg7Cheui8N4jQKjvFXmWfn6QZXvfK',
+          'Separation': 'PLJYnzg7CheugwlOepehdshjYVX4MW0UyT',
+          'Front Facing': 'PLJYnzg7Cheug8J328soWAwxN2V9yZtIft',
+          'Teleportation/Magical': 'PLJYnzg7CheugPf4yjzS_zRCqv2LOP_NMM',
+          'Alight Motion': 'PLJYnzg7Cheuhn-eX2wZs9G7g4J4ZNyegU',
+          'Moho Pro': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'IbisPaint X': 'PLJYnzg7CheugO1qfRsP83bAsE2kG-EWG1',
+          'Other Apps': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Live2D Cubism': 'PLJYnzg7CheuiUNKI0Q_8tUPipgspR5hpN',
+          'Hair Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Best Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Special Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Environment': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Animals': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Instruments': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Glow': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Posing': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Backgrounds': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'CapCut': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+      };
+
+      const allFilterButtons = document.querySelectorAll('.filter-btn');
+      const globalSearchInput = document.getElementById('global-search-input');
+      const globalSearchIcon = document.getElementById('global-search-icon');
+
+      function deactivateAllFilters(excludeButton = null) {
+          allFilterButtons.forEach(btn => {
+              if (btn !== excludeButton) {
+                  btn.classList.remove('active');
+              }
+          });
+      }
+
+      allFilterButtons.forEach(button => {
+          button.addEventListener('click', async function() {
+              const filterName = this.dataset.filter;
+              const newPlaylistId = playlistIds[filterName];
+
+              if (!newPlaylistId) {
+                  console.warn(`No playlist ID found for filter: ${filterName}, nooo!`);
+                  videoGrid.innerHTML = `<p style="color: #f4d03f; text-align: center;">No Playlist linked for "${filterName}".</p>`;
+                  paginationControls.innerHTML = '';
+                  return;
+              }
+
+              if (this.classList.contains('active')) {
+                  return;
+              }
+
+              deactivateAllFilters(this);
+              this.classList.add('active');
+
+              globalSearchInput.value = '';
+              updateSearchIcon();
+              highlightSearch('');
+
+              currentPlaylistId = newPlaylistId;
+              currentPage = 1;
+              nextPageTokens = {};
+              allVideosInCurrentPlaylist = new Map();
+
+              await fetchVideosForPage(currentPage);
+              updateHeaderText();
+          });
+      });
+
+      const initialAllTutorialsButton = document.querySelector('.filter-btn[data-filter="All Tutorials"]');
+      if (initialAllTutorialsButton) {
+          initialAllTutorialsButton.classList.add('active');
+      }
+
+      // --------- FETCHVIDEOSFORPAGE ----------
+      async function fetchVideosForPage(page) {
+          if (!currentPlaylistId) {
+              videoGrid.innerHTML = '<p style="color: #f4d03f; text-align: center;">No Playlist has been linked for this category.</p>';
+              paginationControls.innerHTML = '';
+              return;
+          }
+
+          if (globalSearchInput.value.trim() !== '') {
+              await fetchAllVideosInPlaylist(currentPlaylistId);
+              displayVideos(filterVideosBySearch(Array.from(allVideosInCurrentPlaylist.values()), globalSearchInput.value.trim()));
+              return;
+          }
+
+          const pageToken = nextPageTokens[page - 1] || '';
+          try {
+              videoGrid.innerHTML = '<p style="text-align: center; color: #E0E0FF;">Loading videos...</p>';
+              const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${currentPlaylistId}&maxResults=${MAX_VIDEOS_PER_PAGE}&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
+
+              const response = await fetch(url);
+              const data = await response.json();
+
+              if (response.ok) {
+                  const videos = data.items;
+                  displayVideos(videos);
+
+                  if (data.pageInfo && data.pageInfo.totalResults) {
+                      totalPages = Math.ceil(data.pageInfo.totalResults / MAX_VIDEOS_PER_PAGE);
+                  } else if (page === 1 && videos.length < MAX_VIDEOS_PER_PAGE) {
+                      totalPages = 1;
+                  }
+
+                  if (data.nextPageToken) {
+                      nextPageTokens[page] = data.nextPageToken;
+                  } else {
+                      nextPageTokens[page] = undefined;
+                  }
+                  
+                  createPaginationControls();
+                  updatePaginationHighlight();
+                  updateHeaderText();
+              } else {
+                  console.error(`Error fetching videos: ${data.error.message}`);
+                  videoGrid.innerHTML = `<p style="color: #f4d03f; text-align: center;">Error: ${data.error.message}</p>`;
+                  paginationControls.innerHTML = '';
+              }
+          } catch (error) {
+              console.error('Failed to fetch videos:', error);
+              videoGrid.innerHTML = '<p style="color: #f4d03f; text-align: center;">Failed to load videos. Please try again later.</p>';
+              paginationControls.innerHTML = '';
+          }
+      }
+
+      // --------- FETCHALLVIDEOSINPLAYLIST ----------
+      async function fetchAllVideosInPlaylist(playlistId) {
+          allVideosInCurrentPlaylist = new Map();
+          let pageToken = '';
+          let totalFetched = 0;
+
+          try {
+              const playlistDetailsUrl = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
+              const playlistDetailsResponse = await fetch(playlistDetailsUrl);
+              const playlistDetailsData = await playlistDetailsResponse.json();
+              const totalPlaylistItems = playlistDetailsData.items[0]?.contentDetails?.itemCount || 0;
+
+              do {
+                  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
+                  const response = await fetch(url);
+                  const data = await response.json();
+
+                  if (response.ok) {
+                      data.items.forEach(item => {
+                          allVideosInCurrentPlaylist.set(item.snippet.resourceId.videoId, item);
+                      });
+                      totalFetched += data.items.length;
+                      pageToken = data.nextPageToken;
+                  } else {
+                      console.error(`Error fetching all videos: ${data.error.message}`);
+                      break;
+                  }
+              } while (pageToken && totalFetched < totalPlaylistItems);
+          } catch (error) {
+              console.error('Failed to fetch all videos in playlist:', error);
+          }
+      }
+
+      function displayVideos(videosToDisplay) {
+          videoGrid.innerHTML = '';
+          currentActiveVideo = null;
+
+          if (videosToDisplay && videosToDisplay.length > 0) {
+              videosToDisplay.forEach(item => {
+                  const videoId = item.snippet.resourceId.videoId;
+                  const videoTitle = item.snippet.title;
+                  const videoThumbnail = item.snippet.thumbnails.high ? item.snippet.thumbnails.high.url : 'https://placehold.co/100%25x150/1A1A2A/ffffff?text=Video+Thumbnail';
+
+                  const videoElement = document.createElement('div');
+                  videoElement.classList.add('video');
+
+                  videoElement.innerHTML = `
+                      <div class="video-thumbnail-container">
+                          <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                              <img src="${videoThumbnail}" alt="${videoTitle}" onerror="this.onerror=null;this.src='https://placehold.co/100%25x150/1A1A2A/ffffff?text=Video+Thumbnail';">
+                          </a>
+                      </div>
+                      <p data-original-title="${videoTitle}">${videoTitle}</p>
+                  `;
+                  videoGrid.appendChild(videoElement);
+
+                  videoElement.addEventListener('click', function() {
+                      if (currentActiveVideo) {
+                          currentActiveVideo.classList.remove('active');
+                      }
+                      this.classList.add('active');
+                      currentActiveVideo = this;
+                  });
+              });
+          } else {
+              videoGrid.innerHTML = '<p style="text-align: center; color: #E0E0FF;">No videos found matching your criteria.</p>';
+          }
+          updateHeaderText(videosToDisplay.length);
+      }
+
+      function createPaginationControls() {
+          paginationControls.innerHTML = '';
+
+          if (globalSearchInput.value.trim() !== '') {
+              paginationControls.style.display = 'none';
+              return;
+          } else {
+              paginationControls.style.display = 'flex';
+          }
+
+          const prevButton = document.createElement('button');
+          prevButton.textContent = 'Prev';
+          prevButton.classList.add('pagination-btn');
+          prevButton.disabled = currentPage === 1;
+          prevButton.addEventListener('click', () => {
+              if (currentPage > 1) {
+                  currentPage--;
+                  fetchVideosForPage(currentPage);
+              }
+          });
+          paginationControls.appendChild(prevButton);
+
+          let startPage = Math.max(1, currentPage - 2);
+          let endPage = Math.min(totalPages, currentPage + 2);
+
+          if (startPage > 1) {
+              const firstPageButton = document.createElement('button');
+              firstPageButton.textContent = '1';
+              firstPageButton.classList.add('pagination-btn');
+              firstPageButton.addEventListener('click', () => {
+                  currentPage = 1;
+                  fetchVideosForPage(currentPage);
+              });
+              paginationControls.appendChild(firstPageButton);
+              if (startPage > 2) {
+                  const ellipsis = document.createElement('span');
+                  ellipsis.textContent = '...';
+                  ellipsis.style.color = '#c5cee0';
+                  ellipsis.style.margin = '0 5px';
+                  paginationControls.appendChild(ellipsis);
+              }
+          }
+
+          for (let i = startPage; i <= endPage; i++) {
+              const pageButton = document.createElement('button');
+              pageButton.textContent = i;
+              pageButton.classList.add('pagination-btn');
+              if (i === currentPage) {
+                  pageButton.classList.add('active');
+              }
+              pageButton.addEventListener('click', () => {
+                  currentPage = i;
+                  fetchVideosForPage(currentPage);
+              });
+              paginationControls.appendChild(pageButton);
+          }
+
+          if (endPage < totalPages) {
+              if (endPage < totalPages - 1) {
+                  const ellipsis = document.createElement('span');
+                  ellipsis.textContent = '...';
+                  ellipsis.style.color = '#c5cee0';
+                  ellipsis.style.margin = '0 5px';
+                  paginationControls.appendChild(ellipsis);
+              }
+              const lastPageButton = document.createElement('button');
+              lastPageButton.textContent = totalPages;
+              lastPageButton.classList.add('pagination-btn');
+              lastPageButton.addEventListener('click', () => {
+                  currentPage = totalPages;
+                  fetchVideosForPage(currentPage);
+              });
+              paginationControls.appendChild(lastPageButton);
+          }
+
+          const nextButton = document.createElement('button');
+          nextButton.textContent = 'Next';
+          nextButton.classList.add('pagination-btn');
+          nextButton.disabled = currentPage === totalPages;
+          nextButton.addEventListener('click', () => {
+              if (currentPage < totalPages) {
+                  currentPage++;
+                  fetchVideosForPage(currentPage);
+              }
+          });
+          paginationControls.appendChild(nextButton);
+          updatePaginationHighlight();
+      }
+
+      function updatePaginationHighlight() {
+          const buttons = paginationControls.querySelectorAll('.pagination-btn');
+          buttons.forEach(button => button.classList.remove('active'));
+
+          const currentPageButton = Array.from(buttons).find(
+              button => button.textContent === String(currentPage)
+          );
+          if (currentPageButton) {
+              currentPageButton.classList.add('active');
+          }
+          const prevButton = Array.from(buttons).find(button => button.textContent === 'Prev');
+          const nextButton = Array.from(buttons).find(button => button.textContent === 'Next');
+          if (prevButton) prevButton.disabled = currentPage === 1;
+          if (nextButton) nextButton.disabled = currentPage === totalPages;
+      }
+
+      function filterVideosBySearch(videos, query) {
+          if (!query) {
+              return videos;
+          }
+          const lowerCaseQuery = query.toLowerCase();
+          return videos.filter(video => video.snippet.title.toLowerCase().includes(lowerCaseQuery));
+      }
+
+      // --------- PERFORMING GLOBAL SEARCH ----------
+      async function performGlobalSearch(query) {
+          deactivateAllFilters();
+          paginationControls.style.display = 'none';
+
+          if (query.trim() === '') {
+              await fetchVideosForPage(currentPage);
+              paginationControls.style.display = 'flex';
+              const allTutorialsBtn = document.querySelector('.filter-btn[data-filter="All Tutorials"]');
+              if (allTutorialsBtn) {
+                  allTutorialsBtn.classList.add('active');
+              }
+          } else {
+              if (allVideosInCurrentPlaylist.size === 0) {
+                  showLoadingModal();
+                  await fetchAllVideosInPlaylist(currentPlaylistId);
+                  hideLoadingModal();
+              }
+              const filtered = filterVideosBySearch(Array.from(allVideosInCurrentPlaylist.values()), query);
+              displayVideos(filtered);
+          }
+          highlightSearch(query);
+      }
+
+      function highlightSearch(query) {
+          const allVideoTitles = document.querySelectorAll('.video p');
+          allVideoTitles.forEach(p => {
+              const originalTitle = p.dataset.originalTitle;
+              if (originalTitle) {
+                  if (query) {
+                      const regex = new RegExp(`(${query})`, 'gi');
+                      p.innerHTML = originalTitle.replace(regex, '<span class="highlight">$1</span>');
+                  } else {
+                      p.innerHTML = originalTitle;
+                  }
+              }
+          });
+      }
+
+      function updateHeaderText(count = null) {
+          if (globalSearchInput.value.trim() !== '') {
+              allTutHeader.textContent = `${count} Tutorials found`;
+              byMeSubheader.innerHTML = '<a href="#" id="clearSearchLink">Go back to All Tutorials</a>';
+              document.getElementById('clearSearchLink').addEventListener('click', (event) => {
+                  event.preventDefault();
+                  globalSearchInput.value = '';
+                  updateSearchIcon();
+                  performGlobalSearch('');
+              });
+          } else {
+              const activeFilterButton = document.querySelector('.filter-btn.active');
+              if (activeFilterButton && activeFilterButton.dataset.filter !== 'All Tutorials') {
+                  allTutHeader.textContent = activeFilterButton.dataset.filter;
+                  byMeSubheader.textContent = 'Tutorials';
+              } else {
+                  allTutHeader.textContent = 'ALL TUTORIALS';
+                  byMeSubheader.innerHTML = 'By Kazi <span class="Aidah">Aidah</span> Haque';
+              }
+          }
+      }
+
+      function updateSearchIcon() {
+          if (globalSearchInput.value.trim() !== '') {
+              globalSearchIcon.classList.remove('fa-search');
+              globalSearchIcon.classList.add('fa-xmark');
+              globalSearchIcon.classList.add('clear-icon');
+          } else {
+              globalSearchIcon.classList.remove('fa-xmark');
+              globalSearchIcon.classList.remove('clear-icon');
+              globalSearchIcon.classList.add('fa-search');
+          }
+      }
+
+      globalSearchInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          const query = this.value.trim();
+          searchTimeout = setTimeout(() => {
+              updateSearchIcon();
+              highlightSearch(query);
+          }, 300);
+      });
+
+      // --------- HANDLE ENTER KEY FOR SEARCH ----------
+      globalSearchInput.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+              event.preventDefault(); 
+              clearTimeout(searchTimeout);
+              const query = this.value.trim();
+              performGlobalSearch(query); 
+          }
+      });
+
+      globalSearchIcon.addEventListener('click', function() {
+          if (this.classList.contains('clear-icon')) {
+              globalSearchInput.value = '';
+              updateSearchIcon();
+              performGlobalSearch('');
+          }
+      });
+
+      fetchVideosForPage(currentPage);
+    });
+  </script>
+</body>
+</html>

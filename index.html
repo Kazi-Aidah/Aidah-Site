@@ -188,6 +188,7 @@
     .intro-image {
       min-width: 300px;
       height: 300px;
+      min-height: 300px;
       background: #3D3DFF;
       border-radius: 9px;
       background-image: url('images/hellome.png');
@@ -195,6 +196,7 @@
       background-position: center;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       cursor: pointer;
+      transition: all 0.3s ease;
     }
     
 
@@ -207,7 +209,7 @@
     .intro-icons {
       display: flex;
       gap: 12px;
-      margin-top: 10px;
+      margin-top: 14px;
       align-items: center;
       padding-left: 10px; 
       justify-content: flex-start; /* left-align icons */
@@ -218,9 +220,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 300px;
-      max-height: 300px;
-      min-height: 300px;
+      height: stretch;
       box-sizing: border-box;
       padding-left: 10px;
       padding-right: 10px;
@@ -228,6 +228,7 @@
       -webkit-overflow-scrolling: touch;
       -ms-overflow-style: none;
       scrollbar-width: none;
+      transition: all 0.3s ease;
     }
 
     .intro-text-container::-webkit-scrollbar { display: none; height: 0; width: 0; transition: all 0.3s ease;}
@@ -584,7 +585,7 @@
       content: '';
       position: absolute;
       left: 0; right: 0; top: 0; bottom: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.644) 0%, rgb(24, 25, 54) 100%); /* TUT OPTION DARKNESS */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.732) 0%, rgb(24, 25, 54) 100%); /* TUT OPTION DARKNESS */
       pointer-events: none;
       transition: background 0.3s ease;
     }
@@ -734,9 +735,20 @@
         top: -42px;
         transition: all 0.3s ease;
       }
-      
-      
     }
+
+    @media (max-width: 950px) {
+      .intro-image {
+        width: auto;
+        min-width: 275px;
+        transition: all 0.3s ease;
+      }
+
+      .intro-text-container {
+        margin-left: -10px;
+        transition: all 0.3s ease;
+      }
+    } 
 
     @media (min-width: 700px) {
       .project-cards {
@@ -751,7 +763,7 @@
     @media (max-width: 700px) {
       .intro-text {
         margin-top: 20px;
-        max-width: 300px;
+        max-width: stretch;
         transition: all 0.3s ease;
       }
 
@@ -795,9 +807,9 @@
       }
       .intro-text-container {
         padding-left: 0;
-        margin-left: 65px; /* SOME SPACE CHECK */
+        margin-left: 65px; /* FOR ARROW SPACE */
         text-align: left;
-        height: 300px;
+        height: stretch;
         transition: all 0.3s ease;
         margin-top: -10px;
       }
@@ -943,7 +955,7 @@
       .intro-text-container {
         transform: none;
         opacity: 1;
-        height: 300px;
+        height: stretch;
         width: stretch;
         transition: none;
         padding-right: 10px;
@@ -1005,7 +1017,7 @@
                 <!-- <span class="aidah-name"> Aidah! </span> -->
             </span>
             <br>
-            I started my YouTube channel to create animations back in 2019. Even though I ended up making hundreds of tutorials, I'm still just as passionate about animation as when I began.
+            I started my YouTube channel in 2019 to animate, and somehow ended up making hundreds of animation tutorials. I'm still obsessed with it, and lately, I've been diving into coding, turning random ideas into little projects I love.
           </p>
           <!-- social favicons (circled Font Awesome icons) -->
           <div class="intro-icons">
@@ -1572,7 +1584,7 @@
   // Handles instant show/hide for intro section on mobile screens
   (function () {
     function isMobile() {
-      return window.innerWidth <= 710;
+      return window.innerWidth <= 701;
     }
 
     let currentState = 0; // 0: show image, 1: show text
@@ -1693,7 +1705,7 @@
       if (!container || !intro) return;
 
       // Thresholds (tweakable): only apply on wider viewports (desktop) and tall heights
-      var minWidth = 710; // avoid on mobile
+      var minWidth = 701; // avoid on mobile
       var tallThreshold = 880; // px
 
       var h = window.innerHeight;

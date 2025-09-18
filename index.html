@@ -1568,322 +1568,121 @@
     })();
   </script>
 
-<script class="intro-mobile">
-  //  Handles swipe for intro section on mobile screens
-  //  Swipe does not work but arrows do
-(function () {
-  function isMobile() {
-    return window.innerWidth <= 700;
-  }
-
-  let startX = null;
-  let currentState = 0; // 0: show image, 1: show text
-  let lastIsMobile = isMobile();
-
-  function updateArrows() {
-    const rightArrow = document.querySelector('.intro-arrow-right');
-    const leftArrow = document.querySelector('.intro-arrow-left');
-    if (!rightArrow || !leftArrow) return;
-
-    if (currentState === 0) {
-      rightArrow.classList.add("visible");
-      leftArrow.classList.remove("visible");
-    } else {
-      rightArrow.classList.remove("visible");
-      leftArrow.classList.add("visible");
-    }
-  }
-
-  function snapToImage() {
-    const img = document.querySelector('.intro-image');
-    const textContainer = document.querySelector('.intro-text-container');
-    if (!img || !textContainer) return;
-
-    img.style.display = '';
-    img.style.transition = '';
-    img.style.transform = 'translateX(0)';
-
-    textContainer.style.display = 'none';
-    textContainer.style.transition = '';
-    textContainer.style.transform = 'translateX(100vw)';
-    textContainer.style.opacity = '0';
-
-    currentState = 0;
-    updateArrows();
-  }
-
-  function snapToText() {
-    const img = document.querySelector('.intro-image');
-    const textContainer = document.querySelector('.intro-text-container');
-    if (!img || !textContainer) return;
-
-    textContainer.style.display = '';
-    textContainer.style.transition = '';
-    textContainer.style.transform = 'translateX(0)';
-    textContainer.style.opacity = '1';
-    img.style.display = 'none';
-    img.style.transition = '';
-    img.style.transform = 'translateX(-100vw)';
-
-    currentState = 1;
-    updateArrows();
-  }
-
-  function showImage() {
-  const img = document.querySelector('.intro-image');
-  const textContainer = document.querySelector('.intro-text-container');
-  const container = document.querySelector('.intro');
-  if (!img || !textContainer || !container) return;
-
-  // mark state + arrows immediately
-  currentState = 0;
-  updateArrows();
-
-  const incoming = img;
-  const outgoing = textContainer;
-  outgoing.style.display = '';
-  incoming.style.display = '';
-  incoming.style.visibility = 'hidden';
-
-  if (isMobile()) {
-    const imgRect = img.getBoundingClientRect();
-    const textRect = textContainer.getBoundingClientRect();
-    const outgoingHeight = Math.ceil(textRect.height || container.getBoundingClientRect().height);
-    const incomingHeight = Math.ceil(imgRect.height || container.getBoundingClientRect().height);
-    container.style.height = outgoingHeight + 'px';
-    container.style.overflow = 'hidden';
-
-    img.style.position = 'absolute'; img.style.top = '0'; img.style.left = '0'; img.style.width = '100%';
-    textContainer.style.position = 'absolute'; textContainer.style.top = '0'; textContainer.style.left = '0'; textContainer.style.width = '100%';
-
-    // Set initial transform and transition (no transition yet)
-    img.style.transition = 'none';
-    textContainer.style.transition = 'none';
-    img.style.transform = 'translateX(-100vw)';
-    textContainer.style.transform = 'translateX(0)';
-    textContainer.style.opacity = '1';
-
-    incoming.style.visibility = 'visible';
-
-    // Use double requestAnimationFrame to ensure browser applies initial state before transition
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        img.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1)';
-        textContainer.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1), opacity 0.3s';
-        img.style.transform = 'translateX(0)';
-        textContainer.style.transform = 'translateX(100vw)';
-        textContainer.style.opacity = '0';
-      });
-    });
-
-    setTimeout(() => {
-      textContainer.style.display = 'none';
-      container.style.transition = 'height 0.2s ease';
-      requestAnimationFrame(() => {
-        container.style.height = incomingHeight + 'px';
-      });
-
-      setTimeout(() => {
-        img.style.position = ''; textContainer.style.position = '';
-        img.style.top = ''; textContainer.style.top = '';
-        img.style.left = ''; textContainer.style.left = '';
-        img.style.width = ''; textContainer.style.width = '';
-        container.style.height = '';
-        container.style.transition = '';
-        container.style.overflow = '';
-      }, 320);
-    }, 420);
-  } else {
-    snapToImage();
-  }
-  }
-
-  function showText() {
-  const img = document.querySelector('.intro-image');
-  const textContainer = document.querySelector('.intro-text-container');
-  const container = document.querySelector('.intro');
-  if (!img || !textContainer || !container) return;
-
-  // mark state + arrows immediately
-  currentState = 1;
-  updateArrows();
-
-  const incoming = textContainer;
-  const outgoing = img;
-    outgoing.style.display = '';
-    incoming.style.display = 'flex';
-  incoming.style.visibility = 'hidden';
-
-  if (isMobile()) {
-    const imgRect = img.getBoundingClientRect();
-    const textRect = textContainer.getBoundingClientRect();
-    const outgoingHeight = Math.ceil(imgRect.height || container.getBoundingClientRect().height);
-    const incomingHeight = Math.ceil(textRect.height || container.getBoundingClientRect().height);
-    container.style.height = outgoingHeight + 'px';
-    container.style.overflow = 'hidden';
-
-    img.style.position = 'absolute'; textContainer.style.position = 'absolute';
-    img.style.top = '0'; textContainer.style.top = '0';
-    img.style.left = '0'; textContainer.style.left = '0';
-    img.style.width = '100%'; textContainer.style.width = '100%';
-
-    // Set initial transform and transition (no transition yet)
-    img.style.transition = 'none';
-    textContainer.style.transition = 'none';
-    img.style.transform = 'translateX(0)';
-    textContainer.style.transform = 'translateX(100vw)';
-    textContainer.style.opacity = '0';
-
-    incoming.style.visibility = 'visible';
-
-    // Use double requestAnimationFrame to ensure browser applies initial state before transition
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        img.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1)';
-        textContainer.style.transition = 'transform 0.4s cubic-bezier(.77,0,.18,1), opacity 0.3s';
-        img.style.transform = 'translateX(-100vw)';
-        textContainer.style.transform = 'translateX(0)';
-        textContainer.style.opacity = '1';
-      });
-    });
-
-    setTimeout(() => {
-      img.style.display = 'none';
-      container.style.transition = 'height 0.3s ease';
-      requestAnimationFrame(() => {
-        container.style.height = incomingHeight + 'px';
-      });
-      setTimeout(() => {
-        img.style.position = ''; textContainer.style.position = '';
-        img.style.top = ''; textContainer.style.top = '';
-        img.style.left = ''; textContainer.style.left = '';
-        img.style.width = ''; textContainer.style.width = '';
-        container.style.height = '';
-        container.style.transition = '';
-        container.style.overflow = '';
-      }, 320);
-    }, 420);
-  } else {
-    snapToText();
-  }
-  }
-
-  function handleResize() {
-    const nowIsMobile = isMobile();
-    // If we crossed from desktop -> mobile, default to showing the image on the smaller screen
-    if (nowIsMobile && !lastIsMobile) {
-      currentState = 0;
-      snapToImage();
-    } else if (nowIsMobile) {
-      if (currentState === 0) snapToImage(); else snapToText();
-    } else {
-      const img = document.querySelector('.intro-image');
-      const textContainer = document.querySelector('.intro-text-container');
-      if (img) img.style.display = '';
-      if (textContainer) textContainer.style.display = '';
-      if (img) img.style.transform = '';
-      if (textContainer) {
-        textContainer.style.transform = '';
-        textContainer.style.opacity = '';
-      }
-      const right = document.querySelector('.intro-arrow-right');
-      const left = document.querySelector('.intro-arrow-left');
-      if (right) right.classList.remove("visible");
-      if (left) left.classList.remove("visible");
-    }
-    lastIsMobile = nowIsMobile;
-    
-  }
-
-  function handleTouchStart(e) {
-    if (!isMobile()) return;
-    startX = e.touches[0].clientX;
-  }
-
-  function handleTouchEnd(e) {
-    if (!isMobile() || startX === null) return;
-    let endX = e.changedTouches[0].clientX;
-    if (endX < startX - 40) {
-      showText();
-    } else if (endX > startX + 40) {
-      showImage();
-    }
-    startX = null;
-  }
-
-  window.addEventListener('resize', handleResize);
-  function initIntro() {
-    if (!document.querySelector('.intro')) return;
-
-    if (isMobile()) {
-      currentState = 0;
-      snapToImage(); // initialize cleanly with image shown on narrow screens
-    } else {
-      currentState = 1;
-      snapToText(); // on desktop, show text by default
-      // Ensure desktop final state is clean: explicitly show text container and hide image
-      const img = document.querySelector('.intro-image');
-      const textContainer = document.querySelector('.intro-text-container');
-      if (img) {
-        img.style.display = 'none';
-        img.style.transform = '';
-      }
-      if (textContainer) {
-        textContainer.style.display = '';
-        textContainer.style.transform = '';
-        textContainer.style.opacity = '1';
-      }
+<script>
+  // Handles instant show/hide for intro section on mobile screens
+  (function () {
+    function isMobile() {
+      return window.innerWidth <= 710;
     }
 
-    const intro = document.querySelector('.intro');
-    intro.addEventListener('touchstart', handleTouchStart);
-    intro.addEventListener('touchend', handleTouchEnd);
+    let currentState = 0; // 0: show image, 1: show text
+    let lastIsMobile = isMobile();
 
-    const rightArrow = document.querySelector('.intro-arrow-right');
-    const leftArrow = document.querySelector('.intro-arrow-left');
+    function updateArrows() {
+      const rightArrow = document.querySelector('.intro-arrow-right');
+      const leftArrow = document.querySelector('.intro-arrow-left');
+      if (!rightArrow || !leftArrow) return;
 
-    if (rightArrow)
-      rightArrow.addEventListener('click', function () {
-        showText();
-      });
-    if (leftArrow)
-      leftArrow.addEventListener('click', function () {
-        showImage();
-      });
-
-    // Keyboard support: on narrow screens, allow ArrowRight/ArrowLeft to toggle
-    // between image and text. Ignore when focus is in an input/textarea/contentEditable.
-    document.addEventListener('keydown', function (e) {
-      try {
-        if (!isMobile()) return;
-        var active = document.activeElement;
-        var tag = active && active.tagName ? active.tagName.toUpperCase() : '';
-        if (tag === 'INPUT' || tag === 'TEXTAREA' || (active && active.isContentEditable)) return;
-        if (e.key === 'ArrowRight') {
-          e.preventDefault();
-          showText();
-        } else if (e.key === 'ArrowLeft') {
-          e.preventDefault();
-          showImage();
+      if (isMobile()) {
+        if (currentState === 0) {
+          rightArrow.classList.add("visible");
+          leftArrow.classList.remove("visible");
+        } else {
+          rightArrow.classList.remove("visible");
+          leftArrow.classList.add("visible");
         }
-      } catch (err) {
-        // swallow any errors to avoid breaking other handlers
+      } else {
+        rightArrow.classList.remove("visible");
+        leftArrow.classList.remove("visible");
       }
-    });
+    }
 
-    updateArrows();
-    // Normalize layout once more to avoid any leftover transitional styles
-    setTimeout(handleResize, 50);
-  }
+    function showImage() {
+      const img = document.querySelector('.intro-image');
+      const textContainer = document.querySelector('.intro-text-container');
+      if (!img || !textContainer) return;
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initIntro);
-  } else {
-    initIntro();
-  }
-})();
+      textContainer.style.display = 'none';
+      img.style.display = '';
 
+      currentState = 0;
+      updateArrows();
+    }
+
+    function showText() {
+      const img = document.querySelector('.intro-image');
+      const textContainer = document.querySelector('.intro-text-container');
+      if (!img || !textContainer) return;
+
+      img.style.display = 'none';
+      textContainer.style.display = '';
+
+      currentState = 1;
+      updateArrows();
+    }
+
+    function handleResize() {
+      const nowIsMobile = isMobile();
+
+      if (nowIsMobile && !lastIsMobile) {
+        currentState = 0;
+        showImage();
+      } else if (!nowIsMobile && lastIsMobile) {
+        const img = document.querySelector('.intro-image');
+        const textContainer = document.querySelector('.intro-text-container');
+
+        if (img) img.style.display = '';
+        if (textContainer) textContainer.style.display = '';
+
+        const rightArrow = document.querySelector('.intro-arrow-right');
+        const leftArrow = document.querySelector('.intro-arrow-left');
+        if (rightArrow) rightArrow.classList.remove("visible");
+        if (leftArrow) leftArrow.classList.remove("visible");
+      }
+
+      lastIsMobile = nowIsMobile;
+    }
+
+    function initIntro() {
+      if (!document.querySelector('.intro')) return;
+
+      if (isMobile()) {
+        currentState = 0;
+        showImage();
+      } else {
+        const img = document.querySelector('.intro-image');
+        const textContainer = document.querySelector('.intro-text-container');
+        if (img) img.style.display = '';
+        if (textContainer) textContainer.style.display = '';
+      }
+
+      const rightArrow = document.querySelector('.intro-arrow-right');
+      const leftArrow = document.querySelector('.intro-arrow-left');
+
+      if (rightArrow) {
+        rightArrow.addEventListener('click', function () {
+          if (isMobile()) showText();
+        });
+      }
+
+      if (leftArrow) {
+        leftArrow.addEventListener('click', function () {
+          if (isMobile()) showImage();
+        });
+      }
+
+      updateArrows();
+      window.addEventListener('resize', handleResize);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initIntro);
+    } else {
+      initIntro();
+    }
+  })();
 </script>
+
 
 <!-- Small script: shift About Me content lower on very tall viewports for aesthetic spacing -->
 <script>
@@ -1894,7 +1693,7 @@
       if (!container || !intro) return;
 
       // Thresholds (tweakable): only apply on wider viewports (desktop) and tall heights
-      var minWidth = 700; // avoid on mobile
+      var minWidth = 710; // avoid on mobile
       var tallThreshold = 880; // px
 
       var h = window.innerHeight;

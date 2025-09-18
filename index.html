@@ -184,7 +184,7 @@
     }
 
     .intro-image {
-      min-width: 330px;
+      min-width: 300px;
       height: 300px;
       background: #3D3DFF;
       border-radius: 9px;
@@ -582,7 +582,7 @@
       content: '';
       position: absolute;
       left: 0; right: 0; top: 0; bottom: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.644) 0%, rgb(58, 60, 109) 100%); /* TUT OPTION DARKNESS */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.644) 0%, rgb(24, 25, 54) 100%); /* TUT OPTION DARKNESS */
       pointer-events: none;
       transition: background 0.3s ease;
     }
@@ -785,7 +785,7 @@
         text-align: center;
       }
       .intro-image {
-        min-width: unset;
+        min-width: 290px;
         width: 100%;
         margin-top: 20px;
         margin-bottom: -10px;
@@ -929,7 +929,7 @@
       }
 
       .intro-image {
-        min-width: unset;
+        min-width: 290px;
         width: 100%;
         height: 300px;
         margin-top: 0;
@@ -950,12 +950,26 @@
       
   .intro-icons { padding-left: 0; justify-content: flex-start; }
       }
+
+
+    @media (min-width: 950px) {
+    .comm-me-ct {
+      display: none;
+    }
+  }
+    @media (max-width: 700px) {
+    .comm-me-ct {
+      display: visible;
+      font-family: 'Jetbrains Mono';
+      font-size: 1em;
+    }
+  }
   </style>
 </head>
 <body>
   <header>
    <nav style="color: #C7D0EF; font-weight: 500;">
-      <a href="../index.html">
+      <a href="/">
         <i class="fas fa-home"></i>
         HOME</a>
       | </span>
@@ -1008,6 +1022,7 @@
             <a class="intro-icon service-icon commission-btn" href="option/commissions.html" role="button" aria-label="Commission me" style="width:stretch; height:44px; border-radius:12px; font-weight:700; font-family: 'Jetbrains Mono'; justify-content:center; letter-spacing:0.02em;cursor: pointer;">
               <i class="fa-solid fa-message btn-icon" aria-hidden="true" style="margin-right: 10px"></i>
               <span class="btn-text">Commission Me</span>
+              <span class="custom-tooltip comm-me-ct">Comission Me</span>
             </a>
           </div>
         </div>
@@ -1127,20 +1142,20 @@
           <a class="tutorial-option" id="codingProjectsBtn" href="option/coding-projects.html" style="background-image: url('images/alwayscolortext1.jpg');">
             <div class="tutorial-option-overlay">
               <i class="fa-solid fa-code tutorial-icon" aria-hidden="true"></i>
-              <div class="card-title card-title--large">Coding Projects<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.85em;color:#d9aa9f">coming soon</span></div>
+              <div class="card-title card-title--large">Coding Projects<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.75em;color:#8995af">( in progress )</span></div>
             </div>
           </button>
           <a class="tutorial-option" id="lorepageBtn" href="option/lorepage.html" style="background-image: url('images/black.png');">
             <div class="tutorial-option-overlay">
               <i class="fa-solid fa-book tutorial-icon" aria-hidden="true"></i>
-              <div class="card-title card-title--normal">Lorepage<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.85em;color:#d9aa9f">coming soon</span></div>
+              <div class="card-title card-title--normal">Lorepage<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.75em;color:#8995af">( coming soon )</span></div>
             </div>
           </a>
           </button>
           <a class="tutorial-option" href="option/artworks-page.html" id="artworksBtn" style="background-image: url('images/adoravamp.png');">
             <div class="tutorial-option-overlay">
               <i class="fa-solid fa-palette tutorial-icon" aria-hidden="true"></i>
-              <div class="card-title card-title--normal">Artworks<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.85em;color:#d9aa9f">coming soon</span></div>
+              <div class="card-title card-title--normal">Artworks<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.75em;color:#8995af">( coming soon )</span></div>
             </div>
           </a>
         </div>
@@ -1152,64 +1167,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const imageModal = document.getElementById('imageModal');
-      const modalImage = document.getElementById('modalImage');
-      const modalCloseButton = imageModal.querySelector('.modal-close-button');
-
-      function showModal(imageSrc) {
-          const img = new Image();
-          img.onload = function() {
-              modalImage.src = imageSrc;
-              imageModal.classList.add('show');
-              document.body.style.overflow = 'hidden';
-          };
-          img.src = imageSrc;
-      }
-
-      function hideModal() {
-          imageModal.classList.remove('show');
-          document.body.style.overflow = '';
-      }
-
-      document.querySelectorAll('img').forEach(img => {
-          img.addEventListener('click', function() {
-              showModal(this.src);
-          });
-      });
-
-      document.querySelectorAll('.intro-image').forEach(div => {
-          div.addEventListener('click', function() {
-              const bgImage = window.getComputedStyle(this).backgroundImage;
-              const imageUrl = bgImage.slice(4, -1).replace(/"/g, "");
-              showModal(imageUrl);
-          });
-      });
-
-      modalCloseButton.addEventListener('click', hideModal);
-
-      const modalContent = imageModal.querySelector('.modal-content');
-
-      modalImage.addEventListener('click', function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          return false;
-      });
-
-      modalContent.addEventListener('click', function(event) {
-          event.stopPropagation();
-      });
-
-      imageModal.addEventListener('click', function(event) {
-          if (event.target === this) {
-              hideModal();
-          }
-      });
-
-      document.addEventListener('keydown', function(event) {
-          if (event.key === 'Escape' && imageModal.classList.contains('show')) {
-              hideModal();
-          }
-      });
 
         // Other Projects modal logic
         const otherProjectsCard = Array.from(document.querySelectorAll('.project-card')).find(card => card.textContent.includes('OTHER PROJECTS'));

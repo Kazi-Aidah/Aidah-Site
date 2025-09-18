@@ -369,6 +369,83 @@
         color: #7a7a7a;
     }
 
+        /* Footer styles copied from main site (cleaned) */
+        .footer {
+            display: flex;
+            justify-content: center;
+            padding: 50px 40px 100px 40px;
+            background: #0F0F13;
+            color: #ffffff;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 0;
+            margin-right: 10px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.4em;
+            margin-bottom: 0.8em;
+            color: #F8F8FF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            width: 100%;
+            align-items: start;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-list,
+        .socials-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: #cde6ff;
+        }
+
+        .contact-list li a,
+        .socials-list li a {
+            color: #cde6ff;
+            text-decoration: none;
+        }
+
+        .contact-list li a:hover, .socials-list li a:hover {
+            color: #60a7ff;
+            text-decoration: underline;
+        }
+
+        nav a:hover { color: #3392ff; text-decoration: none; }
+        .intro-icons a:hover, .intro-icon:hover { color: #fff; text-decoration: none; }
+
+        .contact-list li i,
+        .socials-list li i,
+        .footer-section h3 i {
+            color: #3392ff;
+            width: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .footer { padding: 28px 22px 40px 22px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-section { margin-right: 0; min-width: 100%; }
+            .footer-section h3 { font-size: 1.1em; }
+        }
+
     .search-icon {
         position: absolute;
         left: 15px;
@@ -900,47 +977,29 @@
       <p></p>
   </div>
 
-  <footer class="footer" id="contact">
-    <div class="footer-section contact">
-      <h3>CONTACT OPTIONS:</h3>
-      <p>
-        <i class="fas fa-at" style="color: #3392ff;"></i>
-        Email: <a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a>
-      </p>
-      <p>
-        <i class="fab fa-discord" style="color: #bc6fff;"></i>
-        Discord: <a href="https://discordapp.com/users/kazi_aidah" target="_blank">kazi_aidah</a>
-      </p>
-      <p>
-        These two will get you the fastest responses.<br>
-        Feel to contact me for help or any questions.
-      </p>
+<footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
+  <div class="footer-grid">
+    <div class="footer-section contact-section">
+      <h3 style="margin-bottom: 5px;">Contact Me</h3>
+      <ul class="contact-list">
+        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+        <li><i class="fab fa-discord" style="color: #8465ff" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
+        <li><i class="fa-solid fa-paper-plane" style="color: #c34bff"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
+      </ul>
     </div>
 
-    <div class="footer-section socials">
-      <h3>SOCIALS:</h3>
-      <p>
-        <i class="fab fa-youtube" style="color: #ec4242;"></i>
-        <a href="https://www.youtube.com/@kaziaidahhaque/playlists" target="_blank">Tutorials on YouTube</a>
-      </p>
-      <p>
-        <i class="fab fa-youtube" style="color: #FF69B4;"></i>
-        <a href="https://www.youtube.com/@kazi_aidah/playlists" target="_blank">Animation Channel</a>
-      </p>
-      <p>
-        <i class="fab fa-instagram" style="transform: scale(1.2)";></i>
-        <a href="https://www.instagram.com/kazi_aidah/" target="_blank">Instagram</a>
-      </p>
-      <p>
-        <i class="fab fa-tiktok" style="color: #ffffff;"></i>
-        <a href="https://www.tiktok.com/@kazi_aidah" target="_blank">TikTok</a>
-      </p>
-      <p>
-        <i class="fab fa-facebook"></i>
-        <a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/" target="_blank">Facebook</a>
-      </p>
+    <div class="footer-section socials-section">
+      <h3 style="margin-bottom: 5px;">Social Medias</h3>
+      <ul class="socials-list">
+        <li><i class="fab fa-youtube" style="color: #ff6262" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+        <li><i class="fab fa-youtube" style="color: #ff8cb4" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+        <li><i class="fab fa-instagram" style="color: #df87ff" aria-hidden="true"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+        <li><i class="fab fa-facebook" style="color: #60a7ff" aria-hidden="true"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
+        <li><i class="fab fa-tiktok" style="color: #7acaff" aria-hidden="true"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+      </ul>
     </div>
-  </footer>
+  </div>
+</footer>
 
   <div class="modal-backdrop" id="imageModal">
     <div class="modal-content">

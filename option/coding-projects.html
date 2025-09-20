@@ -13,18 +13,6 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
   
   <style>
-    /* ===== HEADER ===== */
-    nav a {
-      text-decoration: none;
-      color: #C7D0EF;
-    }
-
-    @media (max-width: 600px) {
-      nav {
-        font-size: 0.2em;
-      }
-    }
-
     /* ===== INTRO ===== */
     .intro {
       display: flex;
@@ -91,11 +79,14 @@
     } */
 
     /* The image:text sections breakage */
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       .intro, .process-text {
         flex-direction: column;
         align-items: center;
         text-align: center;
+      }
+      .intro p {
+        text-align: left;
       }
       .intro-image, .process-image {
         min-width: unset;
@@ -121,7 +112,7 @@
 </head>
 <body>
   <header>
-    <nav style="color: #C7D0EF; font-weight: 500; font-size: 1.1em;">
+    <nav style="color: #C7D0EF; font-weight: 500; font-size: 1.0em;">
       <a href="../index.html"><i class="fas fa-home"></i> HOME</a> |
       <a href="#contact"><i class="fas fa-phone"></i> </a> |
       <a href="#my-works-section"><i class="fab fa-github"></i> GITHUB </a>

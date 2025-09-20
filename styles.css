@@ -33,19 +33,15 @@ body {
 /* ===== HEADER & NAVIGATION ===== */
 header {
     text-align: center;
-    padding: 1em 0;
+    padding: 1em;
     background: #0F0F13;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 nav {
-    padding-bottom: 1em;
+    padding-bottom: 0em;
     width: 100%;
 }
 

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Aidah's Commissions!</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script async src="https://tally.so/widgets/embed.js"></script>
+<style>
+  /* ===== BUBBLEBODY ===== */
+  .bubblebody h2, .bubblebody h3 { margin-top: 6px; margin-bottom: 8px; }
+  .bubblebody { padding: 12px 24px; }
+
+  /* ===== H1 STYLES ===== */
+  .hero-commissions h1 {
+    font-family: 'GeneralSans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    color: #EAF0FF;
+    text-align: center;
+    letter-spacing: 0.12em;
+    font-weight: 800;
+    font-size: 2em;
+    text-shadow: 0 2px 8px rgba(51,146,255,0.12);
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  .hero-commissions h1::before,
+  .hero-commissions h1::after {
+    content: "";
+    flex-grow: 1;
+    height: 10px;
+    background-color: #5d678a;
+    opacity: 1;
+  }
+  .hero-commissions h1 span { white-space: nowrap; }
+  .hero-commissions h1:hover {
+    letter-spacing: 0.26em;
+    transition: all 0.3s ease;
+  }
+
+  /* ===== H2 STYLES ===== */
+  .h2wall {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 600;
+    font-size: 2em;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    position: relative;
+    width: 100%;
+    letter-spacing: 0.05em;
+    transition: 0.3s all ease;
+  }
+  .h2wall::before,
+  .h2wall::after {
+    content: "";
+    flex-grow: 1;
+    height: 20px;
+    background-color: #5d678a;
+    opacity: 1;
+  }
+  .h2wall:hover {
+    letter-spacing: 0.16em;
+    transition: all 0.3s ease;
+  }
+  h2 { padding-left: 0px; }
+
+  /* ===== COMMISSIONS GRID ===== */
+  .comm-grid { display: block; }
+  @media (min-width:1200px) {
+    .comm-grid { max-width: 980px; margin: 0 auto; }
+  }
+
+  /* ===== OFFER TABLE ===== */
+  .offer-table {
+    width: 100%;
+    border-collapse: separate;
+    margin-bottom: 12px;
+    background: transparent;
+    color: #E0E0FF;
+    border: 2px solid #414078;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .offer-table th, .offer-table td {
+    padding: 8px 10px;
+    border-bottom: 1px dashed rgba(65,64,120,0.6);
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+  }
+  .offer-table th {
+    background: rgba(51,146,255,0.03);
+    color: #C7D0EF;
+    font-weight: 800;
+  }
+
+  /* ===== PREVIEW IMAGE ===== */
+  .preview {
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 16px;
+    border: 3px solid #414078;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.28);
+    object-fit: cover;
+    justify-content: space-between;
+    cursor: zoom-in;
+  }
+
+  /* ===== CAROUSEL ===== */
+  .carousel {
+    position: relative;
+    background: #0F0F13;
+    border: 1px solid #414078;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 6px;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.45);
+    transition: all 0.3s ease;
+  }
+  .carousel img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+  }
+  .carousel-viewport { border-radius: 6px; overflow: hidden; }
+
+  /* ===== CAROUSEL ARROWS ===== */
+  .carousel-controls {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+  .carousel-controls .carousel-btn { pointer-events: auto; }
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: #1a1a2a90;
+    backdrop-filter: blur(2px);
+    color: #c5cee0;
+    border: 1px solid #414078;
+    border-radius: 20px;
+    width: 34px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 240ms ease, transform 240ms ease, background-color 240ms ease;
+  }
+  .carousel-btn { opacity: 1; visibility: visible; }
+  .carousel-btn:hover { background-color: #41407890; transform: translateY(-50%) scale(1.05); }
+  .carousel-btn:active { transform: translateY(-50%) scale(0.9); }
+  .carousel-btn.prev { left: 16px; }
+  .carousel-btn.next { right: 16px; }
+  .carousel-btn i { pointer-events: none; font-size: 1.1rem; }
+
+  /* ===== CAROUSEL RESPONSIVE ===== */
+  .carousel { padding: 10px;
+    --carousel-height: 280px;
+}
+
+  .carousel .carousel-viewport { overflow: hidden; }
+  .carousel .carousel-track { 
+    display: flex; 
+    gap: 12px; 
+    align-items: stretch; 
+    height: var(--carousel-height); 
+    transition: transform 360ms cubic-bezier(.2,.9,.2,1); 
+    will-change: transform; 
+}
+
+  @media (min-width:600px) {
+    .carousel { --carousel-height: 300px; transition: all 0.3s ease; }
+  }
+  @media (min-width:900px) {
+    .carousel { --carousel-height: 300px; transition: all 0.3s ease; }
+  }
+  @media (min-width:1200px) {
+    .carousel { --carousel-height: 320px; transition: all 0.3s ease; }
+  }
+  
+  /* ===== CAROUSEL ANIMATIONS ===== */
+  .carousel img {
+    transition: opacity 500ms cubic-bezier(.2,.9,.2,1), transform 500ms cubic-bezier(.2,.9,.2,1);
+    opacity: 0;
+    transform: translateY(8px) scale(0.95) translateX(2px);
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    display: block;
+    flex: 0 0 auto;
+  }
+  .carousel img.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+ /* ===== MODAL STUFF ===== */
+.image-modal { 
+    position: fixed; 
+    inset: 0; 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 9999; 
+}
+
+.image-modal[aria-hidden="false"] { display: flex; }
+.image-modal__backdrop { 
+    position: absolute; 
+    inset: 0; 
+    background: rgba(2,6,23,0.75); 
+    backdrop-filter: 
+    blur(4px); 
+}
+
+.image-modal__panel { 
+    position: relative; 
+    max-width: 92vw; 
+    max-height: 92vh; 
+    z-index: 2; 
+    border-radius: 12px; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6); 
+    overflow: hidden; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.image-modal__img { max-width: 100%; max-height: 100%; display: block; }
+.image-modal__close { 
+    position: absolute; 
+    top: 8px; 
+    right: 8px; 
+    z-index: 3; 
+    background: rgba(0, 0, 0, 0.151); color: #fff; border: none; 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    font-size: 20px; 
+    line-height: 1; 
+    transition: all 0.3s ease; 
+}
+
+.image-modal__close:hover { 
+    background: rgba(0, 0, 0, 0.351); 
+    transition: all 0.3s ease; 
+}
+.image-modal__close:focus { outline: 2px solid #3392ff; transition: all 0.3s ease; }
+@media (max-width:600px) { 
+    .image-modal__panel { 
+        max-width: 96vw; 
+        max-height: 84vh; 
+    } 
+}
+</style>
+</head>
+<body>
+<header>
+  <nav style="color: #C7D0EF; font-weight: 500;">
+    <a href="/"> <i class="fas fa-home"></i> HOME</a>
+    | 
+    <a href="#contact"> <i class="fa-solid fa-envelopes-bulk"></i> CONTACT ME</a>
+  </nav>
+</header>
+
+<!-- COMMISSIONS  -->
+<!-- Intro -->
+<div class="bubblebody">
+      <div class="hero-commissions">
+    <h1 class="hero-commissions"><span>COMMISSIONS</span></h1>
+  </div>
+  <h2 style="color: red;"> THIS PAGE IS A WORK-IN-PROGRESS</h2>
+  <br>
+  <div class="comm-grid">
+    <section class="intro">
+      <div class="commissions-container">
+        <h3 style="text-align: center; margin: -6px;">I've been a self taught animator for <strong>6 years</strong> now.</h3>
+        <p class="contentheh">This is the current state of my character animation:</p>
+        <img src="../images/aidahstar.gif" alt="animation preview" class="preview" />
+        <p class="contentheh" style="margin-top:10px;">I prefer to work with <strong>chibi</strong> characters. I'm open to any commission on a chibi character, ranging from artworks and character design to rigging and animation. Rigging and animation are my strongest points.</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- What I Offer -->
+<div class="bubblebody">
+  <h2 class="h2wall" style="--h2-color:#5d678a">WHAT I OFFER</h6>
+
+  <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;">COMPLEX SERVICE TYPES</h3>
+  <table class="offer-table">
+    <thead>
+      <tr><th>COMPLEX SERVICE TYPES</th><th>DESCRIPTION</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Character Design</td><td></td></tr>
+      <tr><td>Character Illustration</td><td></td></tr>
+      <tr><td>Character PSD Cutting</td><td></td></tr>
+      <tr><td>Live2D Character Rigging</td><td></td></tr>
+      <tr><td>Moho Pro Character Rigging</td><td></td></tr>
+      <tr><td>Character 2D Animation</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;">SIMPLE SERVICE TYPES</h3>
+  <table class="offer-table">
+    <thead>
+      <tr><th>SIMPLE SERVICE TYPES</th><th>DESCRIPTION</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>PNGtubers</td><td></td></tr>
+      <tr><td>Static Emotes</td><td></td></tr>
+      <tr><td>Animated Emotes</td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Portfolio: Character Design -->
+<div class="bubblebody">
+  <h2 class="h2wall" style="--h2-color:#5d678a">PORTFOLIO</h6>
+  <p class="contentheh">These are some of my best works from each category. Click arrows to browse.</p>
+
+  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;">Character Design</h3>
+  <div class="carousel" data-carousel>
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+        <img src="../images/adoravamp.png" alt="design 1">
+        <img src="../images/emowillow.png" alt="design 2">
+        <img src="../images/aidahguide.png" alt="design 3">
+        <img src="../images/black.png" alt="design 4">
+        <img src="../images/hellome.png" alt="design 1">
+        <img src="../images/hand.png" alt="design 2">
+        <img src="../images/ciel_move.gif" alt="design 3">
+        <img src="../images/black.png" alt="design 4">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn prev" data-prev aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn next" data-next aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Portfolio: Illustration -->
+<div class="bubblebody">
+  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;">Illustration / Artworks</h3>
+  <div class="carousel" data-carousel>
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+        <img src="../images/adoravamp.png" alt="design 1">
+        <img src="../images/emowillow.png" alt="design 2">
+        <img src="../images/aidahguide.png" alt="design 3">
+        <img src="../images/black.png" alt="design 4">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn prev" data-prev aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn next" data-next aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Portfolio: Animation -->
+<div class="bubblebody">
+  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;">Animation / Rigging</h3>
+  <div class="carousel" data-carousel>
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+        <img src="../images/ciel_move.gif" alt="animation sample">
+        <img src="../images/etio.gif" alt="animation sample 2">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn prev" data-prev aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn next" data-next aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Communication / Contact -->
+<div class="bubblebody">
+  <h2 class="h2wall" style="--h2-color:#5d678a">COMMUNICATION</h6>
+  <ul class="contact-list">
+    <li><strong>Preferred:</strong> Vgen</li>
+    <li>Email: <a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+    <li>Discord: <span style="color:#c5cee0">kazi_aidah</span></li>
+    <li>Instagram: <a href="https://instagram.com/kazi_aidah" target="_blank" rel="noopener">@kazi_aidah</a></li>
+  </ul>
+
+  <hr class="section-divider">
+
+  <section id="contact">
+    <h2 class="h2wall">COMMISSION AIDAH</h2>
+    <p style="color:#c5cee0;">Click the button to open a quick commission form.</p>
+    <button> CHECK OUT AIDAH'S SERVICES </button>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Carousel behavior: paged by visible columns (3 on wide screens, 1 on small)
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousels = Array.from(document.querySelectorAll('[data-carousel]'));
+    function visibleColumns() {
+      if (window.matchMedia('(min-width:900px)').matches) return 3;
+      if (window.matchMedia('(min-width:600px)').matches) return 2;
+      return 1;
+    }
+    carousels.forEach((carousel) => {
+      const viewport = carousel.querySelector('.carousel-viewport');
+      const track = carousel.querySelector('.carousel-track');
+      if (!track || !viewport) return;
+      const items = Array.from(track.children);
+      if (items.length === 0) return;
+
+      // determines how many items to show at once based on breakpoints
+      function visibleCount() {
+        if (window.matchMedia('(min-width:1200px)').matches) return 4;
+        if (window.matchMedia('(min-width:900px)').matches) return 3;
+        if (window.matchMedia('(min-width:600px)').matches) return 2;
+        return 1;
+      }
+
+      let offsets = [];
+      let totalWidth = 0;
+      let currentIndex = 0;
+
+      function recalcOffsetsAndSizes() {
+        const style = getComputedStyle(track);
+        const gap = parseFloat(style.gap) || 12;
+        offsets = [];
+        let acc = 0;
+        totalWidth = 0;
+        // don't force widths : allow natural image widths
+        items.forEach((it, idx) => {
+          offsets.push(acc);
+          const rect = it.getBoundingClientRect();
+          const w = rect.width;
+          acc += w + gap;
+          totalWidth += w;
+        });
+        if (items.length > 1) totalWidth += gap * (items.length - 1);
+      }
+
+      // recalc when images load or a short fallback; ensure we call showIndex AFTER measuring
+      let loaded = 0;
+      items.forEach(img => {
+        if (img.complete) loaded++;
+        else img.addEventListener('load', () => {
+          loaded++;
+          if (loaded === items.length) {
+            // all images loaded -> measure and show
+            recalcOffsetsAndSizes();
+            showIndex(currentIndex);
+          }
+        });
+      });
+  // initial calc + fallback: measure soon and then show index (in case some images are cached)
+  setTimeout(() => { recalcOffsetsAndSizes(); showIndex(currentIndex); }, 220);
+
+  // when the whole page (including images) finishes loading, ensure measurements and visibility are correct
+  window.addEventListener('load', () => { recalcOffsetsAndSizes(); showIndex(currentIndex); });
+
+      function clampIndex(i) {
+        return Math.max(0, Math.min(i, items.length - 1));
+      }
+
+      function showIndex(i) {
+        currentIndex = clampIndex(i);
+        // if offsets aren't ready (race), recalc synchronously so we can compute visibility
+        if (offsets.length !== items.length || totalWidth === 0) {
+          recalcOffsetsAndSizes();
+        }
+        const desired = offsets[currentIndex] || 0;
+        const vpW = viewport.clientWidth;
+        const maxTranslate = Math.max(0, totalWidth - vpW);
+        const x = Math.max(0, Math.min(desired, maxTranslate));
+        track.style.transform = `translateX(${-x}px)`;
+        // mark items visible if they overlap the viewport
+        const style = getComputedStyle(track);
+        const gap = parseFloat(style.gap) || 12;
+        items.forEach((it, idx) => {
+          const left = offsets[idx];
+          const rect = it.getBoundingClientRect();
+          const w = rect.width;
+          const itemLeft = left - x; // relative to viewport left
+          const itemRight = itemLeft + w;
+          const isVisible = itemRight > -gap && itemLeft < vpW + gap;
+          it.classList.toggle('visible', !!isVisible);
+        });
+      }
+
+      // next/prev handlers: step by 1
+      const btnPrev = carousel.querySelector('[data-prev]');
+      const btnNext = carousel.querySelector('[data-next]');
+      if (btnPrev) btnPrev.addEventListener('click', () => showIndex(clampIndex(currentIndex - 1)));
+      if (btnNext) btnNext.addEventListener('click', () => showIndex(clampIndex(currentIndex + 1)));
+
+      // respond to resize: recalc sizes & offsets then keep same logical index
+      let resizeTimer = null;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => { recalcOffsetsAndSizes(); showIndex(currentIndex); }, 120);
+      });
+
+  // start: initial measurement/show will occur via the image-load handlers, the load event, or the fallback timeout above
+    });
+  });
+</script>
+
+  <!-- Image Modal Markup -->
+  <div id="image-modal" class="image-modal" aria-hidden="true" role="dialog" aria-label="Image preview">
+    <div class="image-modal__backdrop" data-modal-backdrop></div>
+    <div class="image-modal__panel" role="document">
+      <button class="image-modal__close" data-modal-close aria-label="Close preview">×</button>
+      <img class="image-modal__img" src="" alt="Preview">
+    </div>
+  </div>
+
+
+  <script>
+  // Modal behavior: open when clicking carousel images
+  (function () {
+    const modal = document.getElementById('image-modal');
+    if (!modal) return;
+    const backdrop = modal.querySelector('[data-modal-backdrop]');
+    const closeBtn = modal.querySelector('[data-modal-close]');
+    const imgEl = modal.querySelector('.image-modal__img');
+
+    function openModal(src, alt) {
+      imgEl.src = src;
+      imgEl.alt = alt || 'Preview';
+      modal.setAttribute('aria-hidden', 'false');
+      // lock scroll
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      // focus close button for accessibility
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      imgEl.src = '';
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+
+    // delegate click from document to any carousel image
+    document.addEventListener('click', (ev) => {
+      const target = ev.target;
+      if (target && target.matches && target.matches('.carousel img')) {
+        openModal(target.src, target.alt);
+      }
+    });
+
+    backdrop.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeModal);
+    window.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
+    });
+  })();
+  </script>
+
+</body>
+</html>

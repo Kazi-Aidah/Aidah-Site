@@ -11,7 +11,7 @@
 
   <title>Aidah's Commissions!</title>
   <link rel="stylesheet" href="../styles.css">
-  <!-- Fallback for GitHub Pages project site: ensure styles load when hosted at /kazi-aidah/Aidah-Site/ -->
+  <!-- Fallback for GitHub Pages -->
   <link rel="stylesheet" href="/kazi-aidah/Aidah-Site/styles.css">
   <script async src="https://tally.so/widgets/embed.js"></script>
 <style>
@@ -77,6 +77,57 @@
   }
   h2 { padding-left: 0px; }
 
+  /* ===== H2 WALL LIGHT BLUE ===== */
+  .h2wall-LB {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 600;
+    font-size: 2em;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    position: relative;
+    width: 100%;
+    letter-spacing: 0.05em;
+    transition: 0.3s all ease;
+  }
+  .h2wall-LB::before,
+  .h2wall-LB::after {
+    content: "";
+    flex-grow: 1;
+    height: 20px;
+    background-color: #7dbaff;
+    opacity: 1;
+  }
+
+  /* ===== BUTTON ===== */
+  button {
+      padding: 12px 25px;
+      background: linear-gradient(145deg, #1A1A2A, #0F0F13);
+      color: white;
+      border: 3px solid #3392ff;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      align-self: flex-end;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      display: block;
+      width: fit-content;
+      margin: 0 auto;
+      width: stretch;
+      max-width: 400px;
+  }
+
+  button:hover {
+      background: linear-gradient(145deg, #0F0F13, #1A1A2A);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(51, 146, 255, 0.6);
+      /* border: 4px solid #3392ff; */
+      transition: all 0.3s ease;
+  }
+
   /* ===== COMMISSIONS GRID ===== */
   .comm-grid { display: block; }
   @media (min-width:1200px) {
@@ -102,9 +153,10 @@
     font-size: 0.9em;
   }
   .offer-table th {
-    background: rgba(51,146,255,0.03);
+    background: #1b1e31;
     color: #C7D0EF;
     font-weight: 800;
+    border-left: 1px solid transparent;
   }
 
   /* ===== PREVIEW IMAGE ===== */
@@ -138,6 +190,7 @@
     object-fit: cover;
     border-radius: 6px;
     display: block;
+    cursor: zoom-in;
   }
   .carousel-viewport { border-radius: 6px; overflow: hidden; }
 
@@ -257,11 +310,12 @@
     background: rgba(0, 0, 0, 0.151); color: #fff; border: none; 
     width: 36px; 
     height: 36px; 
-    border-radius: 50%; 
+    /* border-radius: 50%;  */
     cursor: pointer; 
-    font-size: 20px; 
+    font-size: 30px; 
     line-height: 1; 
     transition: all 0.3s ease; 
+    padding: 0px 0px 0px 0px;
 }
 
 .image-modal__close:hover { 
@@ -310,32 +364,34 @@
 <div class="bubblebody">
   <h2 class="h2wall" style="--h2-color:#5d678a">WHAT I OFFER</h6>
 
-  <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;">COMPLEX SERVICE TYPES</h3>
+  <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;"><i class="fas fa-wrench" style="margin-right: 7px;"></i>COMPLEX SERVICE TYPES</h3>
   <table class="offer-table">
     <thead>
-      <tr><th>COMPLEX SERVICE TYPES</th><th>DESCRIPTION</th></tr>
+      <tr><th>COMPLEX SERVICE TYPES</th><th>DESCRIPTION</th><th>PRICING</th></tr>
     </thead>
     <tbody>
-      <tr><td>Character Design</td><td></td></tr>
-      <tr><td>Character Illustration</td><td></td></tr>
-      <tr><td>Character PSD Cutting</td><td></td></tr>
-      <tr><td>Live2D Character Rigging</td><td></td></tr>
-      <tr><td>Moho Pro Character Rigging</td><td></td></tr>
-      <tr><td>Character 2D Animation</td><td></td></tr>
+      <tr>
+        <td>Character Design</td><td>You provide with references, I draw up a chibi character with those references.</td><td>$20-30</td></tr>
+      <tr><td>Character Illustration</td><td>You give me an image of an already existing character and I draw it up.</td><td>$20-40</td></tr>
+      <tr><td>Character PSD Cutting</td><td>I cut up an already existing character into a PSD (or draw a chibi version and cut it up.)</td><td>$30-50</td></tr>
+      <tr><td>Live2D Character Rigging</td><td></td><td></td></tr>
+      <tr><td>Moho Pro Character Rigging</td><td></td><td></td></tr>
+      <tr><td>Character 2D Animation</td><td></td><td></td></tr>
     </tbody>
   </table>
 
-  <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;">SIMPLE SERVICE TYPES</h3>
+  <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;"><i class="fas fa-disease" style="margin-right: 7px;"></i>SIMPLE SERVICE TYPES</h3>
   <table class="offer-table">
     <thead>
-      <tr><th>SIMPLE SERVICE TYPES</th><th>DESCRIPTION</th></tr>
+      <tr><th>SIMPLE SERVICE TYPES</th><th>DESCRIPTION</th><th>PRICING</th></tr>
     </thead>
     <tbody>
-      <tr><td>PNGtubers</td><td></td></tr>
-      <tr><td>Static Emotes</td><td></td></tr>
-      <tr><td>Animated Emotes</td><td></td></tr>
+      <tr><td>PNGtubers</td><td>Static Images in multiple poses, mouth open on voice.</td><td>$35+</td></tr>
+      <tr><td>Static Emotes</td><td>I draw emojis for your character.</td><td>$5 per Emote</td></tr>
+      <tr><td>Animated Emotes</td><td>I draw and animate emojis for your character.</td><td>$10 per Emote</td></tr>
     </tbody>
   </table>
+    <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif; margin-top: 20px;"> <i class="fas fa-star" style="margin-right: 7px;"></i>CUSTOM SERVICES ARE ALSO WELCOME!</h3>
 </div>
 
 <!-- Portfolio: Character Design -->
@@ -343,7 +399,7 @@
   <h2 class="h2wall" style="--h2-color:#5d678a">PORTFOLIO</h6>
   <p class="contentheh">These are some of my best works from each category. Click arrows to browse.</p>
 
-  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;">Character Design</h3>
+  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person" style="margin-right: 7px;"></i>Character Design</h3>
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
       <div class="carousel-track">
@@ -366,7 +422,7 @@
 
 <!-- Portfolio: Illustration -->
 <div class="bubblebody">
-  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;">Illustration / Artworks</h3>
+  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="far fa-image" style="margin-right: 7px;"></i>Illustration / Artworks</h3>
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
       <div class="carousel-track">
@@ -385,7 +441,7 @@
 
 <!-- Portfolio: Animation -->
 <div class="bubblebody">
-  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;">Animation / Rigging</h3>
+  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person-walking" style="margin-right: 7px;"></i>Animation / Rigging</h3>
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
       <div class="carousel-track">
@@ -400,9 +456,12 @@
   </div>
 </div>
 
-<!-- Communication / Contact -->
+<!-- STATUS & PAYMENTS -->
 <div class="bubblebody">
-  <h2 class="h2wall" style="--h2-color:#5d678a">COMMUNICATION</h6>
+  <h2 class="h2wall" style="--h2-color:#5d678a">STATUS & PAYMENTS</h6>
+    <h3> <b style="color: #7dbaff;"><i class="fas fa-battery-full" style="margin-right: 7px;"></i>STATUS:</b> Happily accepting commissions! </h3>
+    <hr>
+    <p class="contentheh">Click the button to open a quick commission form.</p>
   <ul class="contact-list">
     <li><strong>Preferred:</strong> Vgen</li>
     <li>Email: <a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
@@ -413,9 +472,9 @@
   <hr class="section-divider">
 
   <section id="contact">
-    <h2 class="h2wall">COMMISSION AIDAH</h2>
-    <p style="color:#c5cee0;">Click the button to open a quick commission form.</p>
-    <button> CHECK OUT AIDAH'S SERVICES </button>
+    <h2 class="h2wall-LB">COMMISSION ME</h2>
+    <p class="contentheh">Click the button to open a quick commission form.</p>
+    <button><i class="fas fa-eye"></i> CHECK OUT AIDAH'S SERVICES <i class="fas fa-eye"></i></button>
     </div>
   </section>
 </div>

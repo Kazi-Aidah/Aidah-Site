@@ -16,9 +16,21 @@
 </head>
 <body>
     <style>
+        .bubblebody {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px 10px;
+        }
         nav {
             padding-bottom: 1em;
             width: 100%;
+        }
+
+        @media (max-width: 1000px) {
+            .bubblebody {
+                padding: 10px 10px;
+            }
         }
     </style>
   <header>

@@ -9,5 +9,5 @@ styles copy.css
 
 # Ignore Firebase config folder and files
 .firebaserc
-.firebase.json
+firebase.json
 .firebase/

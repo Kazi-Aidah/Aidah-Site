@@ -1,4 +1,13 @@
-.adstar
+# Ignore folder named .adstar
+.adstar/
+
+# Ignore folder named um
 um/
-/styles copy.css
+
+# Ignore specific file
 styles copy.css
+
+# Ignore Firebase config folder and files
+.firebaserc
+.firebase.json
+.firebase/

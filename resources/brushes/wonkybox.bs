@@ -1,0 +1,79 @@
+-- Square Wave Brush (Always-On Version)
+-- Works in FireAlpaca's limited Lua brush system (no bs_line/bs_rect)
+
+local firstDraw = true
+local currentWidth = 0
+local targetWidth = 0
+local transitionSteps = 0
+local maxTransitionSteps = 25
+
+bs_setmode(1)
+
+function default_size()
+  return 4, 0.25
+end
+
+function param1()
+  return "wave intensity", 1, 10, 7
+end
+
+-- Calculate the next target width for the wave effect
+local function calculateNextTargetWidth(baseWidth)
+  local intensity = bs_param1() / 10
+  local minWidth = baseWidth * (1 - intensity * 0.3)
+  local maxWidth = baseWidth * (1 + intensity * 0.3)
+
+  local rand = math.random()
+  rand = (rand + rand + rand) / 3
+  return (maxWidth - minWidth) * rand + minWidth
+end
+
+-- Smoothly interpolate between current width and target width
+local function updateWidth()
+  if transitionSteps >= maxTransitionSteps then
+    currentWidth = targetWidth
+    targetWidth = calculateNextTargetWidth(bs_width())
+    transitionSteps = 0
+  else
+    local t = transitionSteps / maxTransitionSteps
+    t = t * t * t * (t * (t * 6 - 15) + 10)
+    currentWidth = currentWidth + (targetWidth - currentWidth) * t
+    transitionSteps = transitionSteps + 1
+  end
+  return currentWidth
+end
+
+-- Fake a square by drawing a grid of small ellipses
+local function drawSquare(x, y, size)
+  local r, g, b = bs_fore()
+  local opacity = bs_opaque() * 255
+  local dots = math.max(2, math.floor(size / 2)) -- grid density
+  local spacing = size / dots
+
+  local start = -size / 2
+  for i = 0, dots - 1 do
+    for j = 0, dots - 1 do
+      local dx = start + i * spacing
+      local dy = start + j * spacing
+      bs_ellipse(x + dx, y + dy, spacing, spacing, 0, r, g, b, opacity)
+    end
+  end
+end
+
+function main(x, y, p)
+  local baseWidth = bs_width()
+  if firstDraw then
+    currentWidth = baseWidth
+    targetWidth = calculateNextTargetWidth(baseWidth)
+    firstDraw = false
+  end
+
+  local width = updateWidth()
+  drawSquare(x, y, width)
+  return 1
+end
+
+function stroke_end()
+  firstDraw = true
+  transitionSteps = 0
+end

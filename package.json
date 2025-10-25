@@ -1,0 +1,13 @@
+{
+  "name": "aidah-site-manifest-generator",
+  "version": "1.0.0",
+  "description": "Generates manifest.json files for each data subfolder.",
+  "main": "generate-manifests.js",
+  "scripts": {
+    "generate-manifests": "node generate-manifests.js"
+  },
+  "author": "kazi-aidah",
+  "license": "MIT"
+}
+
+

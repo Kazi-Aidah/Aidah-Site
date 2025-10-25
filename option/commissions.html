@@ -40,9 +40,9 @@
   .hero-commissions h1::after {
     content: "";
     flex-grow: 1;
-    height: 10px;
+    height: 5px;
     background-color: #5d678a;
-    opacity: 1;
+    opacity: 0.7;
   }
   .hero-commissions h1 span { white-space: nowrap; }
   .hero-commissions h1:hover {
@@ -101,6 +101,26 @@
     opacity: 1;
   }
 
+  /* ===== H2-2 ===== */
+  .h2-2 {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 600;
+    font-size: 1.8em;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a1a29;
+    border-bottom: 3px solid #343355;
+    color: #c5cee0;
+    letter-spacing: 0.05em;
+    transition: 0.3s all ease;
+    border-radius: 20px 20px 0 0;
+    margin: -23px;
+    margin-top: -12px !important;
+    padding-bottom: 10px;
+  }
+
+
   /* ===== BUTTON ===== */
   button {
       padding: 12px 25px;
@@ -142,7 +162,7 @@
     margin-bottom: 12px;
     background: transparent;
     color: #E0E0FF;
-    border: 2px solid #414078;
+    border: 2px solid #49506e;
     border-radius: 10px;
     overflow: hidden;
   }
@@ -167,7 +187,7 @@
     max-width: 100%;
     max-height: 250px;
     border-radius: 16px;
-    border: 3px solid #414078;
+    border: 3px solid #49506e;
     box-shadow: 0 6px 12px rgba(0,0,0,0.28);
     object-fit: cover;
     justify-content: space-between;
@@ -178,7 +198,7 @@
   .carousel {
     position: relative;
     background: #0F0F13;
-    border: 1px solid #414078;
+    border: 1px solid #49506e;
     border-radius: 10px;
     overflow: hidden;
     padding: 6px;
@@ -210,7 +230,7 @@
     background: #1a1a2a40;
     backdrop-filter: blur(2px);
     color: #c5cee0;
-    border: 1px solid #414078;
+    border: 1px solid #49506e;
     border-radius: 20px;
     width: 34px;
     height: 44px;
@@ -223,7 +243,7 @@
     transition: opacity 240ms ease, transform 240ms ease, background-color 240ms ease;
   }
   .carousel-btn { opacity: 1; visibility: visible; }
-  .carousel-btn:hover { background-color: #41407840; transform: translateY(-50%) scale(1.05); }
+  .carousel-btn:hover { background-color: #49506e40; transform: translateY(-50%) scale(1.05); }
   .carousel-btn:active { transform: translateY(-50%) scale(0.9); }
   .carousel-btn.prev { left: 16px; }
   .carousel-btn.next { right: 16px; }
@@ -363,7 +383,7 @@
 
 <!-- What I Offer -->
 <div class="bubblebody">
-  <h2 class="h2wall" style="--h2-color:#5d678a">WHAT I OFFER</h6>
+  <h2 class="h2-2" style="--h2-color:#5d678a">WHAT I OFFER</h6>
 
   <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;"><i class="fas fa-wrench" style="margin-right: 7px;"></i>COMPLEX SERVICE TYPES</h3>
   <table class="offer-table">
@@ -400,7 +420,7 @@
 
 <!-- Portfolio: Character Design -->
 <div class="bubblebody">
-  <h2 class="h2wall" style="--h2-color:#5d678a">PORTFOLIO</h6>
+  <h2 class="h2-2" style="--h2-color:#5d678a">PORTFOLIO</h6>
   <p class="contentheh">These are some of my best works from each category. Click arrows to browse.</p>
 
   <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person" style="margin-right: 7px;"></i>Character Design</h3>
@@ -462,7 +482,7 @@
 
 <!-- STATUS & PAYMENTS -->
 <div class="bubblebody">
-  <h2 class="h2wall" style="--h2-color:#5d678a">STATUS & PAYMENTS</h6>
+  <h2 class="h2-2" style="--h2-color:#5d678a">STATUS & PAYMENTS</h6>
     <h3> <b style="color: #7dbaff;"><i class="fas fa-battery-full" style="margin-right: 7px;"></i>STATUS:</b> Happily accepting commissions! </h3>
     <hr>
     <p class="contentheh">Click the button to open a quick commission form.</p>

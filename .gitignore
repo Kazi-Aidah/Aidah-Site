@@ -11,3 +11,6 @@ styles copy.css
 .firebaserc
 firebase.json
 .firebase/
+
+.obsidian/
+data/.obsidian

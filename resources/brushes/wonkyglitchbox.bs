@@ -1,0 +1,96 @@
+-- Square Glitch Wave Brush
+-- Combines wave width variation + randomized block texture
+-- Optimized to avoid high load
+
+local firstDraw = true
+local currentWidth = 0
+local targetWidth = 0
+local transitionSteps = 0
+local maxTransitionSteps = 20
+local stepCount = 0
+
+bs_setmode(1)
+
+function default_size()
+  return 4, 0.25
+end
+
+function param1()
+  return "wave intensity", 1, 10, 6
+end
+
+function param2()
+  return "glitch spacing", 1, 30, 4
+end
+
+-- Smooth wave width variation
+local function calculateNextTargetWidth(baseWidth)
+  local intensity = bs_param1() / 10
+  local minWidth = baseWidth * (1 - intensity * 0.3)
+  local maxWidth = baseWidth * (1 + intensity * 0.3)
+
+  local rand = math.random()
+  rand = (rand + rand + rand) / 3
+  return (maxWidth - minWidth) * rand + minWidth
+end
+
+local function updateWidth()
+  if transitionSteps >= maxTransitionSteps then
+    currentWidth = targetWidth
+    targetWidth = calculateNextTargetWidth(bs_width())
+    transitionSteps = 0
+  else
+    local t = transitionSteps / maxTransitionSteps
+    t = t * t * (3 - 2 * t)
+    currentWidth = currentWidth + (targetWidth - currentWidth) * t
+    transitionSteps = transitionSteps + 1
+  end
+  return currentWidth
+end
+
+-- Randomized textured square (blocky pattern)
+local function drawTexturedSquare(x, y, size)
+  local r, g, b = bs_fore()
+  local opacity = bs_opaque() * 255
+  local density = math.max(1, math.floor(size / 3))
+  local spacing = size / density
+  local start = -size / 2
+
+  for i = 0, density - 1 do
+    for j = 0, density - 1 do
+      -- Random skip to reduce draw calls and add texture
+      if math.random() < 0.7 then
+        local dx = start + i * spacing + math.random(-1, 1)
+        local dy = start + j * spacing + math.random(-1, 1)
+        bs_ellipse(x + dx, y + dy, spacing * 0.8, spacing * 0.8, 0, r, g, b, opacity)
+      end
+    end
+  end
+end
+
+function main(x, y, p)
+  local baseWidth = bs_width()
+  local spacing = bs_param2()
+
+  if firstDraw then
+    currentWidth = baseWidth
+    targetWidth = calculateNextTargetWidth(baseWidth)
+    firstDraw = false
+  end
+
+  stepCount = stepCount + 1
+  if stepCount < spacing then
+    return 0
+  end
+  stepCount = 0
+
+  local width = updateWidth()
+  drawTexturedSquare(x, y, width)
+  return 1
+end
+
+function stroke_end()
+  firstDraw = true
+  transitionSteps = 0
+  stepCount = 0
+end

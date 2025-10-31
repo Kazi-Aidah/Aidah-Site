@@ -1,0 +1,5 @@
+{
+  "hiddenFolders": ["noshow", "dump", "templates"],
+  "hiddenFiles": ["Old Story 'Nowherean'"],
+  "hiddenPatterns": ["*.draft.md", "*.wip.md"]
+}

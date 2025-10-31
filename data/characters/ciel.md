@@ -1,9 +1,13 @@
 ---
-title: "Ciel"
-type: "character"
-image: "media/GuyHead.png"
-icon: "media/GuyHead.png"
-tags: ["mage", "air", "mysterious"]
+title: Ciel
+type: character
+image: media/GuyHead.png
+icon: media/GuyHead.png
+tags:
+  - mage
+  - air
+  - mysterious
+iconColor: "#fff"
 ---
 
 **Race:** Human (Aether-touched)
@@ -47,3 +51,8 @@ tags: ["mage", "air", "mysterious"]
 **Background:** Born during a rare celestial convergence, Ciel has always had an affinity for the skies. She travels the world studying ancient weather patterns and forgotten cloud temples.
 ##### Heading 5
 **Background:** Born during a rare celestial convergence, Ciel has always had an affinity for the skies. She travels the world studying ancient weather patterns and forgotten cloud temples.
+
+
+![](media/GuyHead.png)
+
+![](media/largeimg.png)

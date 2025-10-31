@@ -1,0 +1,14 @@
+[
+  {
+    "title": "noshow",
+    "type": "folder",
+    "icon": "fas fa-folder",
+    "view": "medium-view"
+  },
+  {
+    "title": "progressing",
+    "type": "folder",
+    "icon": "fas fa-folder",
+    "view": "medium-view"
+  }
+]

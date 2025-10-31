@@ -4,20 +4,20 @@
     "icon": "fas fa-users",
     "view": "large-view"
   },
-  "world-info": {
-    "title": "World Info", 
-    "icon": "fas fa-globe",
+  "world": {
+    "title": "World", 
+    "icon": "fas fa-earth-americas",
     "iconColor": "#9fc387",
     "view": "medium-view"
   },
-  "scenes": {
-    "title": "Scenes",
-    "icon": "fas fa-home",
+  "episodes": {
+    "title": "Episodes",
+    "icon": "fas fa-map-location-dot",
     "iconColor": "#d7614c",
     "view": "medium-view"
   },
-  "other-stuff": {
-    "title": "Other Stuff",
+  "box": {
+    "title": "box",
     "icon": "fas fa-box",
     "iconColor": "#6993c2",
     "view": "list-view"

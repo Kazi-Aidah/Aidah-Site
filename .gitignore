@@ -14,3 +14,6 @@ firebase.json
 
 .obsidian/
 data/.obsidian
+data/.smart-env
+data/.stfolder
+data/.trash

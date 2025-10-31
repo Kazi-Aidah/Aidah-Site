@@ -7,10 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.35.0/tabler-icons.min.css" crossorigin="anonymous">
+
 
   <title>Aidah's Lorepage</title>
-  <!-- <link rel="stylesheet" href="../styles.css"> -->
   <link rel="icon" type="image/png" href="images/favicon.png">
   <script async src="https://tally.so/widgets/embed.js"></script>
 
@@ -31,7 +32,8 @@
         color: #ffffff;
         overflow-x: hidden;
     }
-        /* UI STYLINH THEMA */
+    
+    /* UI STYLINH THEMA */
     @font-face {
         font-family: "JetBrains Mono";
         src: url("fonts/JetBrainsMono-VariableFont_wght") format("truetype");
@@ -82,6 +84,7 @@
     a:hover {
         text-decoration: none;
     }
+    
     .bubblebody {
         background: #1A1A2A;
         width: 80%;
@@ -92,7 +95,6 @@
         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         transition: all 0.3s ease;
     }
-
 
     /* ===== FOOTER ===== */
     .footer {
@@ -233,7 +235,6 @@
         left: 10px; 
         right: auto; 
     }
-
 
     @media (max-width: 700px) {
         .intro {
@@ -562,6 +563,11 @@
         a {
             font-family: 'Jetbrains Mono' !important;
         }
+        
+        img {
+          width: 100%;
+          border-radius: 20px;
+        }
 
 
         button {
@@ -855,6 +861,8 @@
             color: white;
             font-size: 24px;
             font-weight: bold;
+            background-size: cover;
+            background-position: center;
         }
 
         .document-content {
@@ -1139,10 +1147,11 @@
   </header>
 
   <main class="wrap">
-    <section class="bubblebody">
+    <section class="bubblebody" style="max-width: 600px;">
       <h3 class="h3-t" style="font-family: 'Jetbrains Mono'; margin-bottom: 8px; font-weight: 400 !important; font-size: 1.0em">
-        <span style="color: var(--retro-green);"> Welcome to my worldbuilding project!  </span>
-        <br> 
+        <span style="color: var(--retro-green);"> Welcome to my worldbuilding project!</span>
+        
+        <br>
         I'm actively expanding the lore little by little, which is currently in its <s>early stages</s> nonexistent. Feel free to explore what I've created so far using the file explorer below.</h3>
         <div style="margin-top:16px">
           <button class="primary-btn" id="openExplorerBtn">Open File Explorer</button>
@@ -1230,7 +1239,10 @@
     </div>
   </div>
 </footer>
+
 <script>
+    let currentFolderPath = '';
+
     async function fetchJSON(url) {
         const res = await fetch(`${url}`);
         if (!res.ok) {
@@ -1260,10 +1272,13 @@
                     if (value.startsWith('[') && value.endsWith(']')) {
                         try {
                             value = JSON.parse(value);
-                        } catch (e) {
-                        }
+                        } catch (e) {}
                     } else {
                         value = value.replace(/^"|"$/g, '');
+                        const low = value.toLowerCase();
+                        if (low === 'true') value = true;
+                        else if (low === 'false') value = false;
+                        else if (!isNaN(value) && value !== '') value = Number(value);
                     }
                     meta[key.trim()] = value;
                 }
@@ -1277,6 +1292,14 @@
         try {
             const config = await fetchJSON('../data/folders.json');
             console.log("Folders config:", config);
+            // Load site config (hiding rules) if available
+            try {
+                const cfg = await fetchJSON('../data/config.json');
+                siteConfig = cfg || siteConfig;
+                console.log('Loaded site config:', siteConfig);
+            } catch (e) {
+                console.warn('Could not load ../data/config.json, using defaults', e);
+            }
             
             const fileSystem = {};
             
@@ -1290,21 +1313,38 @@
                     console.log(`Found files in ${key}:`, files);
                     
                     const items = {};
-                    for (const file of files) {
+                    for (const item of files) {
                         try {
-                            const mdUrl = `../data/${folderPath}/${file}.md`;
+                            const itemTitle = item.title || item;
+
+                            if (item.type === 'folder') {
+                                items[itemTitle] = {
+                                    ...item,
+                                    type: 'folder',
+                                    _folderPath: `${folderPath}/${itemTitle}`
+                                };
+                                continue;
+                            }
+
+                            const mdUrl = `../data/${folderPath}/${itemTitle}.md`;
                             console.log(`Loading markdown from: ${mdUrl}`);
                             const content = await fetchText(mdUrl);
                             const { meta, body } = parseMarkdownFile(content);
-                            items[file] = {
+                            
+                            const processedBody = processMarkdownImages(body);
+                            
+                            items[itemTitle] = {
+                                ...item,
                                 ...meta,
-                                info: body,
+                                info: processedBody,
                                 type: meta.type || 'document',
-                                content: body
+                                content: processedBody,
+                                _folderPath: folderPath,
+                                _dataFolder: folderPath
                             };
-                            console.log(`Parsed ${file}:`, meta);
+                            console.log(`Parsed ${itemTitle}:`, meta);
                         } catch (error) {
-                            console.error(`Error loading file ${file} in ${key}:`, error);
+                            console.error(`Error loading file ${item} in ${key}:`, error);
                         }
                     }
                     
@@ -1329,8 +1369,70 @@
         }
     }
 
-    let fileSystem = {};
-    let navigationStack = ['root'];
+    function processMarkdownImages(content, dataFolder) {
+        return content.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, altText, src) => {
+            console.log('Processing markdown image - alt:', altText, 'src:', src);
+            
+            if (src && (src.startsWith('http') || src.startsWith('data:') || src.startsWith('/') || src.startsWith('../'))) {
+                return match;
+            }
+            
+            if (src.startsWith('media/')) {
+                const newPath = `../data/${src}`.replace(/\/+/g, '/');
+                console.log('Converted media image to:', newPath);
+                return `![${altText}](${newPath})`;
+            }
+            
+            if (dataFolder) {
+                const newPath = `../data/${dataFolder}/${src}`.replace(/\/+/g, '/');
+                console.log('Converted to:', newPath);
+                return `![${altText}](${newPath})`;
+            }
+            
+            return match;
+            });
+        }
+
+        // site configuration (from ../data/config.json) and helpers for hiding
+        // files/folders based on that configuration.
+        let siteConfig = { hiddenFolders: [], hiddenFiles: [], hiddenPatterns: [] };
+
+        function globToRegex(pattern) {
+            // escape regex special chars except * which becomes .*
+            const esc = pattern.replace(/[-/\\^$+?.()|[\]{}]/g, '\\$&');
+            const regexStr = '^' + esc.replace(/\\\*/g, '.*') + '$';
+            return new RegExp(regexStr);
+        }
+
+        function isHiddenFolder(folderKey) {
+            if (!siteConfig || !siteConfig.hiddenFolders) return false;
+            if (!folderKey) return false;
+            const keyNorm = String(folderKey).toLowerCase().trim();
+            return siteConfig.hiddenFolders.some(h => String(h).toLowerCase().trim() === keyNorm);
+        }
+
+        function isHiddenFile(folderPath, itemTitle) {
+            if (!siteConfig) return false;
+            if (!itemTitle) return false;
+            const titleNorm = String(itemTitle).toLowerCase().trim();
+
+            const hf = siteConfig.hiddenFiles || [];
+            if (hf.some(h => String(h).toLowerCase().trim() === titleNorm)) return true;
+
+            const patterns = siteConfig.hiddenPatterns || [];
+            for (const p of patterns) {
+                try {
+                    const re = globToRegex(p);
+                    if (re.test(itemTitle) || re.test(itemTitle + '.md') || re.test(titleNorm) || re.test(titleNorm + '.md')) return true;
+                } catch (e) {
+                    // ignore bad patterns
+                }
+            }
+            return false;
+        }
+
+        let fileSystem = {};
+        let navigationStack = ['root'];
 
     const md = new markdownit({
         html: true,
@@ -1394,23 +1496,176 @@
         if (navigationStack.length > 1) {
             navigationStack.pop();
             const previousFolder = navigationStack[navigationStack.length - 1];
-            navigateTo(previousFolder);
+            const currentParts = currentFolderPath.split('/');
+            if (currentParts.length > 1) {
+                currentParts.pop();
+                navigateTo(currentParts.join('/'));
+            } else {
+                navigateTo(previousFolder);
+            }
         }
     });
 
-    function navigateTo(folder) {
+    async function navigateTo(folder) {
         if (folder === 'root') {
+            currentFolderPath = '';
             backBtn.classList.add('hidden');
             currentPath.textContent = 'File Explorer';
             displayRoot();
-        } else if (fileSystem[folder]) {
+        } else {
             backBtn.classList.remove('hidden');
-            currentPath.textContent = fileSystem[folder].title || folder.charAt(0).toUpperCase() + folder.slice(1);
-            displayFolder(folder);
+            if (folder.includes('/')) {
+                currentFolderPath = folder;
+                const folderParts = folder.split('/');
+                const folderName = folderParts[folderParts.length - 1];
+                currentPath.textContent = folderName.charAt(0).toUpperCase() + folderName.slice(1);
+                await loadAndDisplaySubfolder(folder);
+            } else if (fileSystem[folder]) {
+                currentFolderPath = folder;
+                currentPath.textContent = fileSystem[folder].title || folder.charAt(0).toUpperCase() + folder.slice(1);
+                displayFolder(folder);
+            }
         }
         
         if (navigationStack[navigationStack.length - 1] !== folder) {
             navigationStack.push(folder);
+        }
+    }
+
+    async function loadAndDisplaySubfolder(folderPath) {
+        try {
+            const manifestUrl = `../data/${folderPath}/manifest.json`;
+            console.log(`Loading subfolder manifest from: ${manifestUrl}`);
+            const files = await fetchJSON(manifestUrl);
+            
+            fileGrid.innerHTML = '';
+            let viewMode = 'medium-view';
+            try {
+                const parts = folderPath.split('/').filter(Boolean);
+                if (parts.length > 0 && fileSystem && fileSystem[parts[0]]) {
+                    let node = fileSystem[parts[0]];
+                    for (let i = 1; i < parts.length; i++) {
+                        const seg = parts[i];
+                        if (node && node.items && node.items[seg]) {
+                            node = node.items[seg];
+                        } else {
+                            node = null;
+                            break;
+                        }
+                    }
+                    if (node && node.view) {
+                        viewMode = node.view;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not determine subfolder view, falling back to medium-view', e);
+            }
+            fileGrid.className = `file-grid ${viewMode}`;
+            
+            for (const item of files) {
+                const title = item.title || item;
+                // skip hidden items configured in data/config.json
+                if (isHiddenFile(folderPath, title)) continue;
+                // skip subfolders that are configured hidden
+                if (item.type === 'folder' && isHiddenFolder(title)) continue;
+                const itemElement = document.createElement('div');
+                itemElement.className = 'file-item';
+
+                const itemIcon = document.createElement('div');
+                itemIcon.className = 'file-icon';
+
+                if (item.type === 'folder') {
+                    itemIcon.classList.add('folder-icon');
+                    itemIcon.innerHTML = item.icon ? `<i class="${item.icon}"></i>` : '<i class="fas fa-folder"></i>';
+                    if (item.iconColor) itemIcon.style.color = item.iconColor;
+
+                    itemElement.addEventListener('click', () => {
+                        navigateTo(`${folderPath}/${item.title}`);
+                    });
+                } else {
+                    itemIcon.classList.add('document-icon');
+                    itemIcon.innerHTML = '<i class="fas fa-file"></i>';
+                    (async () => {
+                        try {
+                            const mdUrl = `../data/${folderPath}/${item.title}.md`;
+                            const content = await fetchText(mdUrl);
+                            const { meta, body } = parseMarkdownFile(content);
+
+                            // icon from YAML > then manifest item.icon
+                            const iconSource = (meta && meta.icon) || item.icon;
+                            const iconColor = (meta && meta.iconColor) || item.iconColor;
+
+                            if (iconSource) {
+                                const rawIcon = iconSource;
+                                const iconStr = normalizeIcon(rawIcon);
+                                if (/\.(png|jpg|jpeg|svg|gif|webp)$/i.test(iconStr)) {
+                                    let iconSrc = iconStr;
+                                    if (!iconSrc.startsWith('http') && !iconSrc.startsWith('data:') && !iconSrc.startsWith('../') && !iconSrc.startsWith('/')) {
+                                        if (iconSrc.startsWith('media/')) {
+                                            iconSrc = `../data/${iconSrc}`.replace(/\/+/g, '/');
+                                        } else {
+                                            iconSrc = `../data/${folderPath}/${iconSrc}`.replace(/\/+/g, '/');
+                                        }
+                                    }
+                                    itemIcon.innerHTML = `<img src="${iconSrc}" alt="icon" class="icon-img">`;
+                                } else {
+                                    itemIcon.innerHTML = `<i class="${iconStr}"></i>`;
+                                }
+
+                                if (iconColor) {
+                                    itemIcon.style.color = iconColor;
+                                }
+                            }
+
+                            itemElement.addEventListener('click', () => {
+                                try {
+                                    const processedBody = processMarkdownImages(body, folderPath);
+                                    openDocument({
+                                        ...item,
+                                        ...meta,
+                                        content: processedBody,
+                                        info: processedBody,
+                                        _folderPath: folderPath,
+                                        _dataFolder: folderPath
+                                    });
+                                } catch (error) {
+                                    console.error(`Error opening document: ${error}`);
+                                }
+                            });
+                        } catch (error) {
+                            itemElement.addEventListener('click', async () => {
+                                try {
+                                    const mdUrl = `../data/${folderPath}/${item.title}.md`;
+                                    const content = await fetchText(mdUrl);
+                                    const { meta, body } = parseMarkdownFile(content);
+                                    const processedBody = processMarkdownImages(body, folderPath);
+                                    openDocument({
+                                        ...item,
+                                        ...meta,
+                                        content: processedBody,
+                                        info: processedBody,
+                                        _folderPath: folderPath,
+                                        _dataFolder: folderPath
+                                    });
+                                } catch (err) {
+                                    console.error(`Error loading markdown file: ${err}`);
+                                }
+                            });
+                        }
+                    })();
+                }
+                
+                const itemName = document.createElement('div');
+                itemName.className = 'file-name';
+                itemName.textContent = item.title;
+                
+                itemElement.appendChild(itemIcon);
+                itemElement.appendChild(itemName);
+                fileGrid.appendChild(itemElement);
+            }
+        } catch (error) {
+            console.error(`Error loading subfolder ${folderPath}:`, error);
+            fileGrid.innerHTML = '<div style="text-align: center; padding: 20px; color: #999;">Error loading folder contents</div>';
         }
     }
 
@@ -1424,6 +1679,7 @@
         }
         
         Object.keys(fileSystem).forEach(folder => {
+            if (isHiddenFolder(folder)) return;
             const folderItem = document.createElement('div');
             folderItem.className = 'file-item';
             folderItem.setAttribute('data-folder', folder);
@@ -1432,17 +1688,19 @@
             folderIcon.className = 'file-icon folder-icon';
             
             if (fileSystem[folder].icon) {
-                if (isImageUrl(fileSystem[folder].icon)) {
-                    let iconSrc = fileSystem[folder].icon;
+                const rawIcon = fileSystem[folder].icon;
+                const iconStr = normalizeIcon(rawIcon);
+                if (isImageUrl(iconStr)) {
+                    let iconSrc = iconStr;
                     if (!iconSrc.startsWith('http') && !iconSrc.startsWith('data:')) {
                         iconSrc = `${iconSrc}`;
                     }
                     folderIcon.innerHTML = `<img src="${iconSrc}" alt="Folder Icon">`;
                     folderIcon.classList.remove('folder-icon');
                 } else {
-                    folderIcon.innerHTML = `<i class="${fileSystem[folder].icon}"></i>`;
+                    folderIcon.innerHTML = `<i class="${iconStr}"></i>`;
                 }
-                
+
                 if (fileSystem[folder].iconColor) {
                     folderIcon.style.color = fileSystem[folder].iconColor;
                 }
@@ -1478,7 +1736,10 @@
         fileGrid.className = `file-grid ${viewMode}`;
         
         Object.keys(folder.items).forEach(itemKey => {
+            if (isHiddenFile(folderName, itemKey)) return;
             const item = folder.items[itemKey];
+            // hide subfolders listed in siteConfig.hiddenFolders
+            if (item && item.type === 'folder' && isHiddenFolder(itemKey)) return;
             const itemElement = document.createElement('div');
             itemElement.className = 'file-item';
             itemElement.setAttribute('data-key', itemKey);
@@ -1503,14 +1764,16 @@
             }
             
             if (item.icon) {
-                if (/\.(png|jpg|jpeg|svg|gif|webp)$/i.test(item.icon)) {
-                    let iconSrc = item.icon;
+                const rawIcon = item.icon;
+                const iconStr = normalizeIcon(rawIcon);
+                if (/\.(png|jpg|jpeg|svg|gif|webp)$/i.test(iconStr)) {
+                    let iconSrc = iconStr;
                     if (!iconSrc.startsWith('http') && !iconSrc.startsWith('data:')) {
                         iconSrc = `../data/${iconSrc}`;
                     }
                     itemIcon.innerHTML = `<img src="${iconSrc}" alt="icon" class="icon-img">`;
                 } else {
-                    itemIcon.innerHTML = `<i class="${item.icon}"></i>`;
+                    itemIcon.innerHTML = `<i class="${iconStr}"></i>`;
                 }
                 if (item.iconColor) {
                     itemIcon.style.color = item.iconColor;
@@ -1532,6 +1795,11 @@
                 itemElement.addEventListener('click', () => {
                     openDocument(item);
                 });
+            } else if (item.type === 'folder') {
+                itemElement.addEventListener('click', () => {
+                    const subpath = `${folderName}/${item.title}`;
+                    navigateTo(subpath);
+                });
             }
             
             fileGrid.appendChild(itemElement);
@@ -1544,6 +1812,15 @@
         return imageExtRe.test(string) || string.startsWith('http') || string.startsWith('data:');
     }
 
+    function normalizeIcon(icon) {
+        if (!icon || typeof icon !== 'string') return icon;
+        if (icon.startsWith('tabler:')) {
+            const name = icon.split(':')[1];
+            if (name) return `ti ti-${name}`;
+        }
+        return icon;
+    }
+
     function openCharacter(character) {
         characterTitle.textContent = character.title;
         
@@ -1553,24 +1830,67 @@
         }
         characterImg.src = imageSrc;
         characterImg.alt = character.title;
-        characterInfo.innerHTML = md.render(character.info || 'No information available.');
+        
+        let htmlContent = md.render(character.info || 'No information available.');
+        
+        characterInfo.innerHTML = htmlContent;
         characterModal.classList.add('open');
+        
+        console.log('Character content rendered');
     }
 
     function openDocument(document) {
         documentTitle.textContent = document.title;
-        documentBanner.style.backgroundColor = document.bannerColor || '#4a6572';
-        documentBanner.textContent = document.title;
-        documentContent.innerHTML = md.render(document.content || document.info || 'No content available.');
+
+        const showBanner = (typeof document.banner === 'boolean') ? document.banner : false;
+        
+        if (showBanner) {
+            documentBanner.style.display = '';
+            
+            if (document['banner-img']) {
+                let bannerImgSrc = document['banner-img'];
+                if (bannerImgSrc && !bannerImgSrc.startsWith('http') && !bannerImgSrc.startsWith('data:')) {
+                    bannerImgSrc = `../data/${bannerImgSrc}`;
+                }
+                documentBanner.style.backgroundImage = `url(${bannerImgSrc})`;
+                documentBanner.style.backgroundSize = 'cover';
+                documentBanner.style.backgroundPosition = 'center';
+                documentBanner.textContent = '';
+                documentBanner.style.backgroundColor = 'transparent';
+            } else {
+                documentBanner.style.backgroundImage = 'none';
+                documentBanner.style.backgroundColor = document.bannerColor || '#4a6572';
+                documentBanner.textContent = document.title;
+            }
+        } else {
+            documentBanner.style.display = 'none';
+        }
+
+        let htmlContent = md.render(document.content || document.info || 'No content available.');
+        
+        htmlContent = htmlContent.replace(/<img[^>]*src="([^"]*)"[^>]*>/g, (match, src) => {
+            console.log('Found image in rendered HTML with src:', src);
+            if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('/') && !src.startsWith('../')) {
+                if (src.includes('media/')) {
+                    const newSrc = `../data/${src}`.replace(/\/+/g, '/');
+                    console.log('Fallback: Converted media image to:', newSrc);
+                    return match.replace(`src="${src}"`, `src="${newSrc}"`);
+                }
+            }
+            return match;
+        });
+        
+        documentContent.innerHTML = htmlContent;
         documentModal.classList.add('open');
+        
+        console.log('Document content rendered');
     }
 
     window.addEventListener('message', (event) => {
         let msg = event.data;
         try { 
             if (typeof msg === 'string') msg = JSON.parse(msg); 
-        } catch (e) { 
-        }
+        } catch (e) {}
         if (msg && msg.type === 'file-explorer' && msg.action === 'open') {
             fileExplorerModal.classList.add('open');
             try { 
@@ -1595,5 +1915,7 @@
 
     window.addEventListener('DOMContentLoaded', initializeExplorer);
 </script>
+
+
 </body>
 </html>

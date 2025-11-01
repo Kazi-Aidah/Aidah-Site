@@ -74,7 +74,7 @@ a:hover {
 
 hr {
     border: none;
-    border-top: 2px dashed #414078;
+    border-top: 2px dashed #3f455f;
     margin: 20px 0;
 }
 
@@ -311,7 +311,7 @@ hr {
     background: #0F0F13;
     text-decoration: none;
     box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-    border: 3px solid #414078;
+    border: 3px solid #3f455f;
     transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
     font-size: 1.1em;
     position: relative;
@@ -324,7 +324,7 @@ hr {
 .intro-icon:hover {
     transform: translateY(-0.5em) scale(1.04);
     box-shadow: 0 6px 14px rgba(51,146,255,0.18);
-    background: linear-gradient(0deg, #414078, #1a1a2a);
+    background: linear-gradient(0deg, #3f455f, #1a1a2a);
     color: #fff;
     border: 4px solid #3392ff;
     text-decoration: none;
@@ -347,7 +347,7 @@ hr {
 .intro-icon.service-icon:hover {
     transform: translateY(-0.5em) scale(1.02);
     box-shadow: 0 6px 14px rgba(51,146,255,0.18);
-    background: linear-gradient(0deg, #414078, #1a1a2a);
+    background: linear-gradient(0deg, #3f455f, #1a1a2a);
     color: #fff;
     border: 4px solid #3392ff;
 }
@@ -405,7 +405,7 @@ hr {
 
 .heading-container hr { 
     border: none;
-    border-top: 5px dashed #5d678a;
+    border-top: 5px dashed #49506e;
     flex-grow: 1; /* line fill the remaining space 0o0 */
     margin: 0;
 }
@@ -452,13 +452,13 @@ h2.h2comm-me {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.671), 0 1.5px 8px rgba(0, 0, 0, 0.18);
     background-size: cover;
     background-position: center;
-    background-color: #414078;
+    background-color: #3f455f;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: bolder;
     transition: transform 0.18s, box-shadow 0.18s;
-    border: 2.5px solid #5d678a;
+    border: 2.5px solid #49506e;
 }
 
 .project-card:hover {
@@ -553,7 +553,7 @@ h2.h2comm-me {
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    border: 3px solid #414078;
+    border: 3px solid #343453;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -620,11 +620,11 @@ h2.h2comm-me {
 
 .pagination-btn {
     padding: 8px 15px;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     background-color: #0F0F13;
     color: #c5cee0;
-    border: 2px solid #414078;
+    border: 2px solid #3f455f;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9em;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
@@ -640,13 +640,14 @@ h2.h2comm-me {
     background-color: #0F0F13;
     color: #3392ff;
     border: 3px solid #3392ff;
+    border-radius: 16px;
 }
 
 .pagination-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     background-color: #0F0F13;
-    border-color: #414078;
+    border-color: #3f455f;
     color: #7a7a7a;
 }
 
@@ -658,7 +659,7 @@ h2.h2comm-me {
     align-items: center;
     gap: 10px;
     background-color: #0F0F13;
-    border-top: 2px dashed #1A1A2A;
+    border-top: 2px dashed #343453;
     position: relative;
     width: 100%;
     box-sizing: border-box;
@@ -675,7 +676,7 @@ h2.h2comm-me {
 .global-search-input {
     width: 100%;
     padding: 12px 15px 12px 40px;
-    border: 2px solid #414078;
+    border: 2px solid #343453;
     border-radius: 8px;
     background-color: #0F0F13;
     color: #c5cee0;
@@ -684,6 +685,26 @@ h2.h2comm-me {
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     height: 44px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    outline: none;
+}
+
+@media(max-width: 600px) {
+    .global-search-input {
+        font-size: 0.9em;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 8px;
+        border-top-right-radius: 12px;
+    }
+
+    .filter-toggle-btn {
+        height: 38px;
+        padding: 10px 12px;
+        font-size: 0.85em;
+        border-bottom-left-radius: 16px !important;
+        border-bottom-right-radius: 16px !important;
+    }
 }
 
 .global-search-input:focus {
@@ -693,7 +714,7 @@ h2.h2comm-me {
 }
 
 .global-search-input::placeholder {
-    color: #7a7a7a;
+    color: #5d6586;
 }
 
 .search-icon {
@@ -701,12 +722,17 @@ h2.h2comm-me {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #c5cee0;
+    color: #8c95a9;
     cursor: pointer;
     font-size: 1.1em;
     transition: color 0.3s ease, transform 0.3s ease;
     padding-top: 12px;
 }
+
+.search-input-wrapper:focus-within .search-icon {
+    color: #c5cee0;
+}
+
 
 .search-icon.clear-icon:hover {
     color: #ec4242;
@@ -722,7 +748,7 @@ h2.h2comm-me {
     padding: 12px 15px;
     margin-top: 10px;
     border-radius: 8px;
-    border: 2px solid #414078;
+    border: 2px solid #3f455f;
     background-color: #1A1A2A;
     color: #c5cee0;
     cursor: pointer;
@@ -734,6 +760,8 @@ h2.h2comm-me {
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     flex-shrink: 0;
     height: 44px;
+    /* border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; */
 }
 
 .filter-toggle-btn:hover {
@@ -753,7 +781,7 @@ h2.h2comm-me {
     width: 85%;
     justify-content: center;
     background-color: #0F0F13;
-    border: 2px solid #414078;
+    border: 2px solid #3f455f;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     padding: 15px;
@@ -780,7 +808,7 @@ h2.h2comm-me {
     padding-left: 0;
     margin-top: 0;
     text-align: center;
-    border-bottom: 1px solid #414078;
+    border-bottom: 1px solid #3f455f;
     padding-bottom: 5px;
 }
 
@@ -791,9 +819,9 @@ h2.h2comm-me {
 }
 
 .filter-group-section {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 3px solid #414078;
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 3px solid #3f455f;
     border-radius: 8px;
     background-color: transparent;
 }
@@ -815,9 +843,9 @@ h2.h2comm-me {
 .filter-btn-container, .app-filter-btn-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     justify-content: center;
-    padding-top: 10px;
+    padding-top: 8px;
 }
 
 .filter-btn {
@@ -842,13 +870,13 @@ h2.h2comm-me {
 .filter-btn[data-filter="All Tutorials"] { border-color: #c5cee0; color: #c5cee0; }
 
 .filter-btn-container .filter-btn {
-    border-color: #5d678a;
+    border-color: #49506e;
     color: #c5cee0;
 }
 
 .filter-btn.active {
-    background-color: #3392ff;
-    color: #ffffff;
+    background-color: #191929;
+    color: #3392ff;
     border-color: #3392ff;
     font-weight: 900;
 }
@@ -862,13 +890,13 @@ h2.h2comm-me {
 
 
 .filter-btn:not(.active):hover {
-    background-color: #23234a;
+    background-color: #0f0f13;
     transform: translateY(-2px);
 }
 
 .section-divider {
     border: none;
-    border-top: 2px dashed #414078;
+    border-top: 2px dashed #3f455f;
     margin: 30px 0;
 }
 
@@ -901,7 +929,7 @@ h2.h2comm-me {
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    border: 3px solid #3f3e74;
+    border: 3px solid #49506e;
     position: relative;
     max-width: 85%;
     max-height: 85%;
@@ -913,6 +941,63 @@ h2.h2comm-me {
     transform: translateY(50px) rotate(2deg);
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
+
+
+.filters-modal .modal-content {
+    background-color: #1a1a2a;
+    border-color: #364250;
+    align-items: stretch;
+    height: 800px;
+}
+
+.filters-modal .modal-body {
+    overflow-y: auto;
+    height: 800px;
+}
+
+/* Custom scrollbars */
+html { scrollbar-color: #364250 #0F0F13; scrollbar-width: thin; }
+
+html::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track { background: #0F0F13; }
+html::-webkit-scrollbar-thumb { background: #364250; border-radius: 10px; border: 2px solid #0F0F13; }
+
+.filters-modal .modal-body { scrollbar-color: #364250 #1a1a2a; scrollbar-width: thin; }
+.filters-modal .modal-body::-webkit-scrollbar { width: 10px; }
+.filters-modal .modal-body::-webkit-scrollbar-track { background: #1a1a2a; border-radius: 8px; }
+.filters-modal .modal-body::-webkit-scrollbar-thumb { background: #364250; border-radius: 8px; border: 2px solid #1a1a2a; }
+
+.filter-btn { transition: transform 0.12s ease; }
+
+.filters-modal .modal-header h2 { color: #cde6ff; }
+
+.filters-modal .filter-btn {
+    border-radius: 999px; 
+}
+
+.filters-modal .modal-footer .filter-action-btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 2px solid #364250;
+    background: transparent;
+    color: #cde6ff;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.filters-modal .modal-footer .apply-filters-btn {
+    background: #3392ff;
+    color: #ffffff;
+    border-color: #3392ff;
+}
+
+.filters-modal .modal-footer .clear-filters-btn {
+    background: transparent;
+    color: #cde6ff;
+    border-color: #49506e;
+}
+
+.filters-modal .filter-btn { padding: 8px 12px; }
 
 .modal-backdrop.show .modal-content {
     transform: scale(1);
@@ -1019,7 +1104,7 @@ h2.h2comm-me {
     height: 88vh;
     background: #0F0F13;
     border-radius: 12px;
-    border: 3px solid #3f3e74;
+    border: 3px solid #49506e;
     box-shadow: 0 8px 30px rgba(0,0,0,0.6);
     position: relative;
     overflow: hidden;
@@ -1049,7 +1134,7 @@ h2.h2comm-me {
 .iframe-modal .modal-close-button:hover { color: #3392ff; }
 
 .loading-spinner {
-    border: 5px solid #414078;
+    border: 5px solid #3f455f;
     border-top: 5px solid #3392ff;
     border-radius: 50%;
     width: 40px;
@@ -1085,7 +1170,7 @@ h2.h2comm-me {
     justify-content: center;
     text-decoration: none;
     color: #cde6ff;
-    border: 2px solid #414078;
+    border: 2px solid #49506e;
     box-shadow: 0 8px 22px rgba(20, 17, 27, 0.888);
     transition: all 0.3s ease;
     background-size: cover;
@@ -1229,7 +1314,7 @@ h2.h2comm-me {
     color:#fff;
     padding:10px 12px;
     border-radius:8px;
-    border:2px solid #414078;
+    border:2px solid #3f455f;
     text-align:center;
     cursor:pointer;
     text-decoration:none;
@@ -1501,7 +1586,7 @@ h2.h2comm-me {
         height: 180px;
         margin: 0 0 1em 0;
         box-sizing: border-box;
-        border: 3px solid #5d678a;
+        border: 3px solid #49506e;
     }
     
     .project-card .project-card-overlay {

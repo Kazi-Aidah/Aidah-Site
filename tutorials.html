@@ -32,6 +32,43 @@
                 padding: 10px 10px;
             }
         }
+
+        .modal-close-button {
+            border-radius: 100%;
+            border: 2px solid #4f5776;
+            width: 35px;
+            height: 35px;
+            padding: 2px;
+            font-size: 1.5em;
+        }
+
+        .modal-header {
+            margin: -10px;
+            padding: 2px 12px;
+            color: #c5cee0;
+        }
+
+        .filter-h3 {
+            font-family: 'GeneralSans', sans-serif;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+        }
+
+        .filter-h3::before,
+        .filter-h3::after {
+            content: "";
+            flex-grow: 1;
+            height: 2px;
+            background-color: #5d678a;
+            opacity: 0.4;
+        }
+
+
     </style>
   <header>
    <nav style="color: #C7D0EF; font-weight: 500;">
@@ -57,45 +94,80 @@
             <input type="text" id="global-search-input" placeholder="Search all tutorials..." class="global-search-input">
         </div>
         <button id="filter-toggle-button" class="filter-toggle-btn"><i class="fas fa-filter"></i> Filter</button>
-        <div id="filter-dropdown" class="filter-dropdown">
-            <div class="filter-group-section">
-                <h2 style="font-family: 'GeneralSans', sans-serif; font-size: 1.6em; letter-spacing: 0.05em;">Application</h2>
-                <div class="app-filter-btn-container">
-                    <button class="filter-btn" data-filter="All Tutorials">💯 All Tutorials</button>
-                    <button class="filter-btn" data-filter="Alight Motion">📱 Alight Motion</button>
-                    <button class="filter-btn" data-filter="Moho Pro">🖥️ Moho Pro</button>
-                    <button class="filter-btn" data-filter="IbisPaint X">🎨 IbisPaint X</button>
-                    <button class="filter-btn" data-filter="Other Apps">Other Apps</button>
-                    <button class="filter-btn" data-filter="Live2D Cubism">🎭 Live2D Cubism</button>
-                </div>
-            </div>
+        <div id="filtersModal" class="modal-backdrop filters-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="filtersModalTitle">
+            <div class="modal-content" role="document">
+                <header class="modal-header" style="display:flex;align-items:center;justify-content:space-between;width:100%;background-color: #1a1a2a;">
+                    <h2 id="filtersModalTitle" style="font-family: 'GeneralSans', sans-serif; font-size:1.4em; margin:0;color: #c5cee0;">Filter Tutorials</h2>
+                    <button class="modal-close-button" aria-label="Close filters" id="filtersModalClose">&times;</button>
+                </header>
 
-            <div class="filter-group-section">
-                <h2 style="font-family: 'GeneralSans', sans-serif; font-size: 1.6em; letter-spacing: 0.05em;">Tutorial Filters</h2>
-                <div class="filter-btn-container">
-                    <button class="filter-btn" data-filter="Beginner Friendly">✨ Beginner Friendly</button>
-                    <button class="filter-btn" data-filter="Useful">🧠 Useful Tricks</button>
-                    <button class="filter-btn" data-filter="Best Tutorials">🏆 Best Tutorials</button>
-                    <button class="filter-btn" data-filter="Special Tutorials">🌟 Special Tutorials</button>
-                    <button class="filter-btn" data-filter="Head/Body Turns">🔄 Head / Body Turns</button>
-                    <button class="filter-btn" data-filter="Facial">😊 Facial Tutorials</button>
-                    <button class="filter-btn" data-filter="Eyes">👁️ Eye Tutorials</button>
-                    <button class="filter-btn" data-filter="Mouth">👄 Mouth Tutorials</button>
-                    <button class="filter-btn" data-filter="Hand">🖐️ Hand Tutorials</button>
-                    <button class="filter-btn" data-filter="Walking/Running">🚶 Walking / Running</button>
-                    <button class="filter-btn" data-filter="Wings">🦋 Wings</button>
-                    <button class="filter-btn" data-filter="Vector Drawing">Vector Drawing</button>
-                    <button class="filter-btn" data-filter="Vehicle">🚗 Vehicles</button>
-                    <button class="filter-btn" data-filter="Separation">🔀 Separation</button>
-                    <button class="filter-btn" data-filter="Front Facing">🧍‍♂️ Posing</button>
-                    <button class="filter-btn" data-filter="Teleportation/Magical">🔮 Magical</button>
-                    <button class="filter-btn" data-filter="Hair Tutorials">💇‍♀️ Hair Tutorials</button>
-                    <button class="filter-btn" data-filter="Environment">🌿 Environment</button>
-                    <button class="filter-btn" data-filter="Animals">🐾 Animals</button>
-                    <button class="filter-btn" data-filter="Instruments">🎸 Instruments</button>
-                    <button class="filter-btn" data-filter="Glow">💡 Glow</button>
-                    <button class="filter-btn" data-filter="Backgrounds">🌆 Backgrounds</button>
+                <div class="modal-body" style="width:100%; padding-top:12px;">
+                    <div class="filter-group-section" style="border: none; padding: 0 6px;">
+                        <h3 class="filter-h3" style="font-family: 'GeneralSans', sans-serif; font-size: 1.1em; margin:0 0 8px 0;">Applications</h3>
+                        <div class="app-filter-btn-container">
+                            <button class="filter-btn" data-filter="All Tutorials" aria-pressed="false">All Tutorials</button>
+                            <button class="filter-btn" data-filter="Alight Motion" aria-pressed="false">Alight Motion</button>
+                            <button class="filter-btn" data-filter="Moho Pro" aria-pressed="false">Moho Pro</button>
+                            <button class="filter-btn" data-filter="IbisPaint X" aria-pressed="false">IbisPaint X</button>
+                            <button class="filter-btn" data-filter="Other Apps" aria-pressed="false">Other</button>
+                            <button class="filter-btn" data-filter="Live2D Cubism" aria-pressed="false">Live2D</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group-section" style="border: none; padding: 12px 6px;">
+                        <h3 class="filter-h3" style="font-family: 'GeneralSans', sans-serif; font-size: 1.1em; margin:0 0 8px 0;">Tutorial Types</h3>
+                        <div class="filter-btn-container">
+                            <button class="filter-btn" data-filter="Beginner" aria-pressed="false">Beginner</button>
+                            <button class="filter-btn" data-filter="Useful Tricks" aria-pressed="false">Useful Tricks</button>
+                            <button class="filter-btn" data-filter="Best" aria-pressed="false">Best</button>
+                            <button class="filter-btn" data-filter="Special" aria-pressed="false">Special</button>
+                            <button class="filter-btn" data-filter="Hidden Gems" aria-pressed="false">Hidden Gems</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group-section" style="border: none; padding: 12px 6px;">
+                        <h3 class="filter-h3" style="font-family: 'GeneralSans', sans-serif; font-size: 1.1em; margin:0 0 8px 0;">Character Parts</h3>
+                        <div class="filter-btn-container">
+                            <button class="filter-btn" data-filter="head/body" aria-pressed="false">head & body turns</button>
+                            <button class="filter-btn" data-filter="separation" aria-pressed="false">separation</button>
+                            <button class="filter-btn" data-filter="facial" aria-pressed="false">facial</button>
+                            <button class="filter-btn" data-filter="eyes" aria-pressed="false">eyes</button>
+                            <button class="filter-btn" data-filter="mouth" aria-pressed="false">mouth</button>
+                            <button class="filter-btn" data-filter="hands" aria-pressed="false">hands</button>
+                            <button class="filter-btn" data-filter="hair" aria-pressed="false">hair</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group-section" style="border: none; padding: 12px 6px;">
+                        <h3 class="filter-h3" style="font-family: 'GeneralSans', sans-serif; font-size: 1.1em; margin:0 0 8px 0;">Visual Effects</h3>
+                        <div class="filter-btn-container">
+                            <button class="filter-btn" data-filter="Magical" aria-pressed="false">Magical</button>
+                            <button class="filter-btn" data-filter="Glow" aria-pressed="false">Glow</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group-section" style="border: none; padding: 12px 6px;">
+                        <h3 class="filter-h3" style="font-family: 'GeneralSans', sans-serif; font-size: 1.1em; margin:0 0 8px 0;">Movement</h3>
+                        <div class="filter-btn-container">
+                            <button class="filter-btn" data-filter="walking/running" aria-pressed="false">walking/running</button>
+                            <button class="filter-btn" data-filter="posing" aria-pressed="false">posing</button>
+                            <button class="filter-btn" data-filter="movements" aria-pressed="false">movements</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group-section" style="border: none; padding: 12px 6px 30px 6px;">
+                        <h3 class="filter-h3" style="font-family: 'GeneralSans', sans-serif; font-size: 1.1em; margin:0 0 8px 0;">Environment &amp; objects</h3>
+                        <div class="filter-btn-container">
+                            <button class="filter-btn" data-filter="Wings" aria-pressed="false">Wings</button>
+                            <button class="filter-btn" data-filter="Vehicles" aria-pressed="false">Vehicles</button>
+                            <button class="filter-btn" data-filter="Animals" aria-pressed="false">Animals</button>
+                            <button class="filter-btn" data-filter="Backgrounds" aria-pressed="false">Backgrounds</button>
+                            <button class="filter-btn" data-filter="Instruments" aria-pressed="false">Instruments</button>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- removed apply/clear buttons per user request: selecting a filter applies immediately -->
             </div>
         </div>
     </div>
@@ -153,26 +225,62 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
       const filterToggleButton = document.getElementById('filter-toggle-button');
-      const filterDropdown = document.getElementById('filter-dropdown');
+      const filtersModal = document.getElementById('filtersModal');
+    const filtersModalClose = document.getElementById('filtersModalClose');
+      const filterButtonsSelector = '#filtersModal .filter-btn';
+      let lastFocusedElementBeforeModal = null;
 
-      filterToggleButton.addEventListener('click', (event) => {
-          event.stopPropagation();
-          filterDropdown.classList.toggle('show');
+      function openFiltersModal() {
+          lastFocusedElementBeforeModal = document.activeElement;
+          filtersModal.classList.add('show');
+          filtersModal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+          const first = filtersModal.querySelector(filterButtonsSelector);
+          if (first) first.focus();
+      }
+
+      function closeFiltersModal() {
+          filtersModal.classList.remove('show');
+          filtersModal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          if (lastFocusedElementBeforeModal) lastFocusedElementBeforeModal.focus();
+      }
+
+      filterToggleButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          openFiltersModal();
       });
 
-      document.addEventListener('click', (event) => {
-          if (!filterDropdown.contains(event.target) && !filterToggleButton.contains(event.target)) {
-              filterDropdown.classList.remove('show');
+      filtersModalClose.addEventListener('click', closeFiltersModal);
+      filtersModal.addEventListener('click', (e) => {
+          if (e.target === filtersModal) closeFiltersModal();
+      });
+      document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && filtersModal.classList.contains('show')) {
+              closeFiltersModal();
           }
       });
 
-      document.querySelectorAll('.filter-dropdown .filter-btn').forEach(button => {
-          button.addEventListener('click', () => {
-              filterDropdown.classList.remove('show');
-          });
+      filtersModal.addEventListener('keydown', function(e) {
+          if (e.key !== 'Tab') return;
+          const focusable = Array.from(filtersModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(el => !el.disabled && el.offsetParent !== null);
+          if (focusable.length === 0) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey) {
+              if (document.activeElement === first) {
+                  e.preventDefault();
+                  last.focus();
+              }
+          } else {
+              if (document.activeElement === last) {
+                  e.preventDefault();
+                  first.focus();
+              }
+          }
       });
 
       // --------- IMAGE MODAL STUFF ----------
@@ -229,6 +337,7 @@
       let currentPlaylistId = 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd';
       let currentPage = 1;
       let totalPages = 0;
+    let currentPlaylistTotal = null;
       let nextPageTokens = {};
       let allVideosInCurrentPlaylist = new Map();
       let currentActiveVideo = null;
@@ -241,35 +350,35 @@
       const MAX_VIDEOS_PER_PAGE = 50;
 
       const playlistIds = {
-          'Beginner Friendly': 'PLJYnzg7CheujMlNygnUKt8yE1oxS_GaTb',
-          'Useful': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Head/Body Turns': 'PLJYnzg7Cheug0BL2gRM7xPEq3iOYzkeX5',
-          'Facial': 'PLJYnzg7CheujyYrdS89yOF_J3v-IIB7iU',
-          'Eyes': 'PLJYnzg7Cheug-vg5tZh7bkws7ziWurx2L',
-          'Mouth': 'PLJYnzg7CheujFMXS6lHxgsMDxALKLIjeR',
-          'Walking/Running': 'PLJYnzg7CheugMYOs-L9i2jVtVxb4iF-Ff',
-          'Vector Drawing': 'PLJYnzg7CheuihOe23r0qiFPw1nbjTOVmy',
-          'Hand': 'PLJYnzg7Cheuh5Pn0LQDKnGnzHjKLNmtHH',
-          'Vehicle': 'PLJYnzg7CheugIs8W8kWf0nBCHlordaY2Q',
-          'Wings': 'PLJYnzg7Cheui8N4jQKjvFXmWfn6QZXvfK',
-          'Separation': 'PLJYnzg7CheugwlOepehdshjYVX4MW0UyT',
-          'Front Facing': 'PLJYnzg7Cheug8J328soWAwxN2V9yZtIft',
-          'Teleportation/Magical': 'PLJYnzg7CheugPf4yjzS_zRCqv2LOP_NMM',
+          'All Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
           'Alight Motion': 'PLJYnzg7Cheuhn-eX2wZs9G7g4J4ZNyegU',
           'Moho Pro': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
           'IbisPaint X': 'PLJYnzg7CheugO1qfRsP83bAsE2kG-EWG1',
           'Other Apps': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Live2D Cubism': 'PLJYnzg7CheuiUNKI0Q_8tUPipgspR5hpN',
-          'Hair Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Best Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Special Tutorials': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Environment': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Animals': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Instruments': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Glow': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Posing': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'Backgrounds': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
-          'CapCut': 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd',
+          'Live2D Cubism': 'PLJYnzg7Cheuj_DQe6pe2tl5IohqjYgbMa',
+          'Beginner': 'PLJYnzg7CheujMlNygnUKt8yE1oxS_GaTb',
+          // Useful Tricks: 
+          'walking/running': 'PLJYnzg7CheugMYOs-L9i2jVtVxb4iF-Ff',
+          'separation': 'PLJYnzg7CheugwlOepehdshjYVX4MW0UyT',
+          'head/body': 'PLJYnzg7Cheug0BL2gRM7xPEq3iOYzkeX5',
+          'hair': 'PLJYnzg7CheujFMXS6lHxgsMDxALKLIjeR',
+          'facial': 'PLJYnzg7CheujyYrdS89yOF_J3v-IIB7iU',
+          'eyes': 'PLJYnzg7Cheug-vg5tZh7bkws7ziWurx2L',
+          'mouth': 'PLJYnzg7CheujL6eye2vHo8AtA0JRnUox6',
+          'hands': 'PLJYnzg7Cheuh5Pn0LQDKnGnzHjKLNmtHH',
+          'Best': 'PLJYnzg7Cheug5vcE7o9uH8wuBC4nZXkVv',
+          // Special Tutorials: 
+          // Useful Tricks: 
+          'Wings': 'PLJYnzg7Cheui8N4jQKjvFXmWfn6QZXvfK',
+          'Magical': 'PLJYnzg7CheugPf4yjzS_zRCqv2LOP_NMM',
+          'Vehicles': 'PLJYnzg7CheugIs8W8kWf0nBCHlordaY2Q',
+          'Animals': 'PLJYnzg7Cheug-8PKfruo-pE6ZjZEb-aAi',
+          'Instruments': 'PLJYnzg7Cheujg4gA-PVvFlD0F6rlsB6s-',
+          'Glow': 'PLJYnzg7CheugfOpJBD4Th-ORb9l7Rx8tM',
+          'Separation': 'PLJYnzg7CheuiRpNZJDCgHtqdBQoAh8bAy',
+          'posing': 'PLJYnzg7CheuhYEEyOz4h6DOfdpBYNTIjo',
+          'Backgrounds': 'PLJYnzg7CheugBptz1jX_Dx3YoSkxRWSB6',
+          'movements': 'PLJYnzg7CheuiwxdtkpYJu1u5GDddmSToM',
       };
 
       const allFilterButtons = document.querySelectorAll('.filter-btn');
@@ -280,33 +389,54 @@
           allFilterButtons.forEach(btn => {
               if (btn !== excludeButton) {
                   btn.classList.remove('active');
+                  btn.removeAttribute('aria-pressed');
               }
           });
       }
 
+      async function fetchPlaylistTotal(playlistId) {
+          try {
+              const url = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
+              const resp = await fetch(url);
+              const data = await resp.json();
+              if (resp.ok && data.items && data.items[0] && data.items[0].contentDetails && typeof data.items[0].contentDetails.itemCount === 'number') {
+                  currentPlaylistTotal = data.items[0].contentDetails.itemCount;
+              } else {
+                  currentPlaylistTotal = currentPlaylistTotal || null;
+              }
+          } catch (err) {
+              console.error('Failed to fetch playlist metadata:', err);
+          }
+      }
+
       allFilterButtons.forEach(button => {
-          button.addEventListener('click', async function() {
+          button.addEventListener('click', async function(e) {
+              e.preventDefault();
               const filterName = this.dataset.filter;
               const newPlaylistId = playlistIds[filterName];
 
               if (!newPlaylistId) {
-                  console.warn(`No playlist ID found for filter: ${filterName}, nooo!`);
+                  console.warn(`No playlist ID found for filter: ${filterName}`);
                   videoGrid.innerHTML = `<p style="color: #f4d03f; text-align: center;">No Playlist linked for "${filterName}".</p>`;
                   paginationControls.innerHTML = '';
+                  if (filtersModal && filtersModal.classList.contains('show')) closeFiltersModal();
                   return;
               }
 
               if (this.classList.contains('active')) {
+                  if (filtersModal && filtersModal.classList.contains('show')) closeFiltersModal();
                   return;
               }
 
               deactivateAllFilters(this);
               this.classList.add('active');
+              this.setAttribute('aria-pressed', 'true');
 
               globalSearchInput.value = '';
               updateSearchIcon();
               highlightSearch('');
 
+              await fetchPlaylistTotal(newPlaylistId);
               currentPlaylistId = newPlaylistId;
               currentPage = 1;
               nextPageTokens = {};
@@ -314,6 +444,8 @@
 
               await fetchVideosForPage(currentPage);
               updateHeaderText();
+
+              if (filtersModal && filtersModal.classList.contains('show')) closeFiltersModal();
           });
       });
 
@@ -346,20 +478,22 @@
 
               if (response.ok) {
                   const videos = data.items;
-                  displayVideos(videos);
-
                   if (data.pageInfo && data.pageInfo.totalResults) {
+                      currentPlaylistTotal = data.pageInfo.totalResults;
                       totalPages = Math.ceil(data.pageInfo.totalResults / MAX_VIDEOS_PER_PAGE);
                   } else if (page === 1 && videos.length < MAX_VIDEOS_PER_PAGE) {
                       totalPages = 1;
+                      currentPlaylistTotal = videos.length;
                   }
+
+                  displayVideos(videos);
 
                   if (data.nextPageToken) {
                       nextPageTokens[page] = data.nextPageToken;
                   } else {
                       nextPageTokens[page] = undefined;
                   }
-                  
+
                   createPaginationControls();
                   updatePaginationHighlight();
                   updateHeaderText();
@@ -386,6 +520,7 @@
               const playlistDetailsResponse = await fetch(playlistDetailsUrl);
               const playlistDetailsData = await playlistDetailsResponse.json();
               const totalPlaylistItems = playlistDetailsData.items[0]?.contentDetails?.itemCount || 0;
+              currentPlaylistTotal = totalPlaylistItems;
 
               do {
                   const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
@@ -442,7 +577,8 @@
           } else {
               videoGrid.innerHTML = '<p style="text-align: center; color: #E0E0FF;">No videos found matching your criteria.</p>';
           }
-          updateHeaderText(videosToDisplay.length);
+
+          updateHeaderText(videosToDisplay ? videosToDisplay.length : 0);
       }
 
       function createPaginationControls() {
@@ -611,7 +747,12 @@
               const activeFilterButton = document.querySelector('.filter-btn.active');
               if (activeFilterButton && activeFilterButton.dataset.filter !== 'All Tutorials') {
                   allTutHeader.textContent = activeFilterButton.dataset.filter;
-                  byMeSubheader.textContent = 'Tutorials';
+                  const total = (typeof currentPlaylistTotal === 'number' && currentPlaylistTotal >= 0) ? currentPlaylistTotal : count;
+                  if (total !== null && total !== undefined) {
+                      byMeSubheader.textContent = `${total} Tutorials`;
+                  } else {
+                      byMeSubheader.textContent = 'Tutorials';
+                  }
               } else {
                   allTutHeader.textContent = 'ALL TUTORIALS';
                   byMeSubheader.innerHTML = 'By Kazi <span class="Aidah">Aidah</span> Haque';
@@ -658,7 +799,12 @@
           }
       });
 
-      fetchVideosForPage(currentPage);
+            try {
+                    if (currentPlaylistId) await fetchPlaylistTotal(currentPlaylistId);
+            } catch (err) {
+                    console.warn('Could not fetch initial playlist total', err);
+            }
+            fetchVideosForPage(currentPage);
     });
   </script>
 </body>

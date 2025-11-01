@@ -64,7 +64,7 @@
               <i class="fab fa-discord" aria-hidden="true"></i>
               <span class="custom-tooltip">Discord</span>
             </a>
-            <a class="intro-icon service-icon commission-btn" href="option/commissions.html" role="button" aria-label="Commission me" style="width:stretch; height:44px; border-radius:12px; font-weight:700; font-family: 'Jetbrains Mono'; justify-content:center; letter-spacing:0.02em;cursor: pointer;">
+            <a class="intro-icon service-icon commission-btn" href="commissions.html" role="button" aria-label="Commission me" style="width:stretch; height:44px; border-radius:12px; font-weight:700; font-family: 'Jetbrains Mono'; justify-content:center; letter-spacing:0.02em;cursor: pointer;">
               <i class="fa-solid fa-message btn-icon" aria-hidden="true" style="margin-right: 10px"></i>
               <span class="btn-text">Commission Me</span>
               <span class="custom-tooltip comm-me-ct">Comission Me</span>
@@ -187,7 +187,7 @@
       <button class="modal-close-button" data-close="tutorialsModal">&times;</button>
       <h3 style="margin-top:0;color:#cde6ff; margin-bottom:4px;">Tutorials</h3>
       <div class="tutorial-options">
-  <a class="tutorial-option" id="searchAllTutorials" href="option/tutorials.html" style="background-image: url('images/search1.jpg');" aria-label="Search all tutorials">
+  <a class="tutorial-option" id="searchAllTutorials" href="tutorials.html" style="background-image: url('images/search1.jpg');" aria-label="Search all tutorials">
           <div class="tutorial-option-overlay">
             <i class="fas fa-search tutorial-icon" aria-hidden="true"></i>
             <div class="card-title card-title--large">Search All Tutorials</div>
@@ -204,25 +204,25 @@
   </div>
 
     <!-- Other Projects modal -->
-    <div class="modal-backdrop" href="option/coding-projects.html" id="otherProjectsModal" aria-hidden="true" role="dialog" aria-label="Other Projects options">
+    <div class="modal-backdrop" href="coding-projects.html" id="otherProjectsModal" aria-hidden="true" role="dialog" aria-label="Other Projects options">
       <div class="modal-content">
         <button class="modal-close-button" data-close="otherProjectsModal">&times;</button>
         <h3 style="margin-top:0;color:#cde6ff; margin-bottom:4px;">Other Projects</h3>
         <div class="tutorial-options">
-          <a class="tutorial-option" id="codingProjectsBtn" href="option/coding-projects.html" style="background-image: url('images/alwayscolortext1.jpg');">
+          <a class="tutorial-option" id="codingProjectsBtn" href="coding-projects.html" style="background-image: url('images/alwayscolortext1.jpg');">
             <div class="tutorial-option-overlay">
               <i class="fa-solid fa-code tutorial-icon" aria-hidden="true"></i>
               <div class="card-title card-title--large">Coding Projects<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.75em;color:#8995af">( in progress )</span></div>
             </div>
           </button>
-          <a class="tutorial-option" id="lorepageBtn" href="option/lorepage.html" style="background-image: url('images/black.png');">
+          <a class="tutorial-option" id="lorepageBtn" href="lorepage.html" style="background-image: url('images/black.png');">
             <div class="tutorial-option-overlay">
               <i class="fa-solid fa-book tutorial-icon" aria-hidden="true"></i>
               <div class="card-title card-title--normal">Lorepage<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.75em;color:#8995af">( in progress )</span></div>
             </div>
           </a>
           </button>
-          <a class="tutorial-option" href="option/artworks-page.html" id="artworksBtn" style="background-image: url('images/adoravamp.png');">
+          <a class="tutorial-option" href="artworks-page.html" id="artworksBtn" style="background-image: url('images/adoravamp.png');">
             <div class="tutorial-option-overlay">
               <i class="fa-solid fa-palette tutorial-icon" aria-hidden="true"></i>
               <div class="card-title card-title--normal">Artworks<br><span style="font-weight:500; font-family: 'Jetbrains Mono'; font-size: 0.75em;color:#8995af">( coming soon )</span></div>
@@ -372,10 +372,10 @@
       if (searchAllBtn) searchAllBtn.addEventListener('click', function(){
         // close modal then navg to the tutpage
         hideBackdrop('tutorialsModal');
-        window.location.href = 'option/tutorials.html';
+        window.location.href = 'tutorials.html';
       });
       // keyboard support for btn
-      if (searchAllBtn) searchAllBtn.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hideBackdrop('tutorialsModal'); window.location.href = 'option/tutorials.html'; } });
+      if (searchAllBtn) searchAllBtn.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hideBackdrop('tutorialsModal'); window.location.href = 'tutorials.html'; } });
       if (seeYTBtn) {
         seeYTBtn.addEventListener('click', function(){ hideBackdrop('tutorialsModal'); });
         // make sure keyboard focusable

@@ -3,7 +3,7 @@ title: Countries
 type: document
 icon: fa-solid fa-earth-americas
 banner: "true"
-iconColor: #57C785
+iconColor:
 ---
 
 # KROSH <sub style="font-size: 22px;"><i>The pretty lie</i></sub>
@@ -23,6 +23,7 @@ Appears benevolent, but tightly monitors and controls behind the scenes.
 **Surname Examples:**
 Armen, Kimish, Ralif, Thish
 **Surname Style:** Easy, based on job. (Format: Consonant + -if, -ish, -en, -hef)
+Architecture: Tall buildings, short houses, clean streets and good architecture overall. However, non-capital areas may be overlooked...
 
 # HARLON <sub style="font-size: 22px;"><i>The ugly truth</i></sub>
 Type: Republic
@@ -42,6 +43,7 @@ Life is harsh and controlled; the people have little choice and face systemic op
 **Language:** Soft sounding language.
 **Surname Style:** Long, based on location+rank/job. (Format: the first letters of a location + abbreviated rank/job.)
 **Surname Examples:** n/a
+Architecture: Cramped tall buildings. Monotonous, some buildings have worn down colours. Lack of greenery.
 
 # ARETTE  <sub style="font-size: 22px;"><i>The hope</i></sub>
 Type: Constitutional Monarchy
@@ -59,6 +61,7 @@ Recovering from historical erasure; rebuilt by people who have suffered injustic
 This empire had been removed from the world map eons ago. Only leaders know of it, they have chosen to keep it a secret.
 **Languages:** One official language + tons of minorities.
 **Surname Style:** Based on region; some regions prefer location-based, date-meaning based, some similar herbs and natural resources.
+**Architecture:** Every building has a fun and distinct colour. Low buildings, max 2 floors is, 3 floors is for a big family or halls or important national buildngs.
 
 ---
 They unite to destroy but separate when it comes to heal.

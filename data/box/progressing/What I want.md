@@ -62,3 +62,17 @@ Sen sighs.
 
 'Wow, it's just like Cell Tower back in my world,' Nora thinks. There are a bunch of kids around him, explaining him how everything works. Arette seems to educate youngs very well. Nora literally gets dragged into school after one of the children asks why he doesn't have a badge... Free schooling haha.
 
+In class, he watches as the teachers show them how to make stuff. Engineering stuff is being taught to children?? They're all making things...
+
+"Wow.."
+
+Cut back to Krosh, the friends are discussing by phone. 
+
+Leo: You think he's dead?
+Sen: That doesn't mean his phone is gonna land on the other side of the universe 💀
+June: I called his mom
+June: She said he was deported
+Sen: the hell you mean?
+June: the whole expelling thing that Krosh and Harlon's doing
+June: He was deported a week ago and he hasn't contacted his family
+

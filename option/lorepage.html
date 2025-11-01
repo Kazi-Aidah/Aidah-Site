@@ -1568,6 +1568,25 @@
                 if (isHiddenFile(folderPath, title)) continue;
                 // skip subfolders that are configured hidden
                 if (item.type === 'folder' && isHiddenFolder(title)) continue;
+
+                // Ensure the referenced markdown file actually exists on the server
+                // (some hosts are case-sensitive or manifests can be stale). Do a
+                // lightweight HEAD check for non-folder entries and skip entries
+                // which return non-ok to avoid showing stale/duplicate items.
+                if (item.type !== 'folder') {
+                    const mdUrlCheck = `../data/${folderPath}/${title}.md`;
+                    try {
+                        const headRes = await fetch(mdUrlCheck, { method: 'HEAD' });
+                        if (!headRes.ok) {
+                            console.warn(`Skipping manifest entry because file not found: ${mdUrlCheck}`);
+                            continue;
+                        }
+                    } catch (e) {
+                        console.warn(`Error checking file ${mdUrlCheck}, skipping entry:`, e);
+                        continue;
+                    }
+                }
+
                 const itemElement = document.createElement('div');
                 itemElement.className = 'file-item';
 

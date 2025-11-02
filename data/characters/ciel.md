@@ -9,10 +9,11 @@ tags:
   - mysterious
 iconColor: "#fff"
 ---
-
 **Race:** Human (Aether-touched)
 **Age:** 27
 **Appearance:** Silver-haired with stormy grey eyes, wears flowing blue robes adorned with cloud patterns
+
+***
 
 **Abilities:** 
 - Aeromancy (air magic)

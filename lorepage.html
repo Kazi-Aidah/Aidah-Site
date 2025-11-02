@@ -75,6 +75,23 @@
         text-decoration: none;
     }
 
+    .modal-title .breadcrumb-link {
+        color: #c5cee0;
+        text-decoration: none;
+        cursor: pointer;
+        font-family: 'Jetbrains Mono';
+    }
+
+    .modal-title .breadcrumb-link:hover {
+        color: var(--retro-green);
+        /* text-decoration: underline; */
+    }
+
+    .breadcrumb-sep {
+        color: #7a8899;
+        margin: 0 0px;
+    }
+
     /* ===== TYPOGRAPHY & LINKS ===== */
     a {
         color: #d8e3f9;
@@ -569,9 +586,36 @@
           border-radius: 20px;
         }
 
-        p {
+        .document-content p {
             color: #d5e1e5;
         }
+
+
+        #documentContent hr,
+        .document-content hr,
+        #characterContent hr,
+        .character-info hr {
+            border: 0;
+            height: 2px;
+            background-color: #364250 !important;
+            display: block;
+            width: 100%;
+            margin: 1em 0;
+            border-radius: 20px;
+        }
+
+        #documentContent,
+        #documentContent p,
+        #documentContent li,
+        #documentContent h1, #documentContent h2, #documentContent h3, #documentContent h4,
+        #documentContent blockquote,
+        #documentContent code,
+        #documentContent pre,
+        #documentContent a {
+        color: #d5e1e5;
+        }
+
+        #documentContent a { color: var(--retro-red); }
 
 
         button {
@@ -885,6 +929,7 @@
         .document-content li:before {
             content: "- ";
             margin-right: 5px;
+            color: var(--retro-green);
         }
 
         .character-info ul {
@@ -899,6 +944,7 @@
         .character-info li:before {
             content: "- ";
             margin-right: 5px;
+            color: var(--retro-green);
         }
 
         .navigation {
@@ -1296,7 +1342,7 @@
         try {
             const config = await fetchJSON('../data/folders.json');
             console.log("Folders config:", config);
-            // Load site config (hiding rules) if available
+
             try {
                 const cfg = await fetchJSON('../data/config.json');
                 siteConfig = cfg || siteConfig;
@@ -1397,12 +1443,10 @@
             });
         }
 
-        // site configuration (from ../data/config.json) and helpers for hiding
-        // files/folders based on that configuration.
         let siteConfig = { hiddenFolders: [], hiddenFiles: [], hiddenPatterns: [] };
 
         function globToRegex(pattern) {
-            // escape regex special chars except * which becomes .*
+
             const esc = pattern.replace(/[-/\\^$+?.()|[\]{}]/g, '\\$&');
             const regexStr = '^' + esc.replace(/\\\*/g, '.*') + '$';
             return new RegExp(regexStr);
@@ -1429,7 +1473,6 @@
                     const re = globToRegex(p);
                     if (re.test(itemTitle) || re.test(itemTitle + '.md') || re.test(titleNorm) || re.test(titleNorm + '.md')) return true;
                 } catch (e) {
-                    // ignore bad patterns
                 }
             }
             return false;
@@ -1450,6 +1493,38 @@
     const backBtn = document.getElementById('backBtn');
     const currentPath = document.getElementById('currentPath');
     const fileGrid = document.getElementById('fileGrid');
+
+
+    function capitalizeLabel(str) {
+        return String(str).charAt(0).toUpperCase() + String(str).slice(1);
+    }
+
+    function renderBreadcrumb(path) {
+        const homeHtml = `<a href="#" class="breadcrumb-link" data-path="root">Home</a>`;
+
+        if (!path) {
+            // root view -> only show Home
+            currentPath.innerHTML = homeHtml;
+            return;
+        }
+
+        const parts = path.split('/').filter(Boolean);
+        const rest = parts.map((part, idx) => {
+            const cum = parts.slice(0, idx + 1).join('/');
+            return `<a href="#" class="breadcrumb-link" data-path="${cum}">${capitalizeLabel(part)}</a>`;
+        }).join('<span class="breadcrumb-sep"> / </span>');
+
+        currentPath.innerHTML = homeHtml + '<span class="breadcrumb-sep"> / </span>' + rest;
+    }
+
+    currentPath.addEventListener('click', (ev) => {
+        const a = ev.target.closest && ev.target.closest('.breadcrumb-link');
+        if (a) {
+            ev.preventDefault();
+            const targetPath = a.getAttribute('data-path');
+            if (targetPath) navigateTo(targetPath);
+        }
+    });
     
     const characterModal = document.getElementById('characterModal');
     const closeCharacterBtn = document.getElementById('closeCharacterBtn');
@@ -1514,7 +1589,7 @@
         if (folder === 'root') {
             currentFolderPath = '';
             backBtn.classList.add('hidden');
-            currentPath.textContent = 'File Explorer';
+            renderBreadcrumb('');
             displayRoot();
         } else {
             backBtn.classList.remove('hidden');
@@ -1522,16 +1597,19 @@
                 currentFolderPath = folder;
                 const folderParts = folder.split('/');
                 const folderName = folderParts[folderParts.length - 1];
-                currentPath.textContent = folderName.charAt(0).toUpperCase() + folderName.slice(1);
+                renderBreadcrumb(folder);
                 await loadAndDisplaySubfolder(folder);
             } else if (fileSystem[folder]) {
                 currentFolderPath = folder;
-                currentPath.textContent = fileSystem[folder].title || folder.charAt(0).toUpperCase() + folder.slice(1);
+                renderBreadcrumb(folder);
                 displayFolder(folder);
             }
         }
         
-        if (navigationStack[navigationStack.length - 1] !== folder) {
+        const existingIndex = navigationStack.indexOf(folder);
+        if (existingIndex !== -1) {
+            navigationStack = navigationStack.slice(0, existingIndex + 1);
+        } else {
             navigationStack.push(folder);
         }
     }
@@ -1568,15 +1646,9 @@
             
             for (const item of files) {
                 const title = item.title || item;
-                // skip hidden items configured in data/config.json
                 if (isHiddenFile(folderPath, title)) continue;
-                // skip subfolders that are configured hidden
                 if (item.type === 'folder' && isHiddenFolder(title)) continue;
 
-                // Ensure the referenced markdown file actually exists on the server
-                // (some hosts are case-sensitive or manifests can be stale). Do a
-                // lightweight HEAD check for non-folder entries and skip entries
-                // which return non-ok to avoid showing stale/duplicate items.
                 if (item.type !== 'folder') {
                     const mdUrlCheck = `../data/${folderPath}/${title}.md`;
                     try {
@@ -1761,7 +1833,7 @@
         Object.keys(folder.items).forEach(itemKey => {
             if (isHiddenFile(folderName, itemKey)) return;
             const item = folder.items[itemKey];
-            // hide subfolders listed in siteConfig.hiddenFolders
+
             if (item && item.type === 'folder' && isHiddenFolder(itemKey)) return;
             const itemElement = document.createElement('div');
             itemElement.className = 'file-item';

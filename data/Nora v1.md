@@ -2,7 +2,10 @@
 title:
 type:
 image: media/
-icon: 
+icon:
+cssclasses:
+  - noembed
+  - no-embed
 ---
 ### **Nora - Comprehensive Character Profile**
 
@@ -60,3 +63,115 @@ icon:
 + **Sen:** The information gatherer.
 	+ Inquisitive & sharp.
 + **Leo:** The heart of the group.
+
+## <u style="text-decoration: underline; color: var(--color-red); font-family: Jetbrains Mono;">Distinct Personalities:</u>
+
+![[Nora is the builder 1518]]
+***
+![[June is the responsible one 1521]]
+***
+![[Sen is the researcher 1518]]
+***
+![[Leo is the heart of the group 1518]]
+
+## How did the friend group work?
+- **June (The Architect)** handled the **plan**. He organized their time, set deadlines, and broke down the big goal into manageable steps.
+- **Sen (The Hacker)** handled the **code and information**. He wrote the software, found the data they needed, and hacked any systems required for their projects.
+- **Leo (The Heart)** handled the **vision and morale**. He came up with the crazy "what if" ideas, kept their spirits high, and reminded them _why_ they were building something.
+- **Nora (The Builder)** was the **hands**. He was the one in the garage, physically assembling the robots. He understood motors, sensors, and circuitry. He turned Sen's code and Leo's vision into a tangible, working machine.
+
+## **Friend Group Visual Differentiation**
+### **Key Distinguishing Features for Nora**
+**Height/Build**: Nora is 5'9" - make him noticeably taller than his friends  
+**Hair**: Dark, unruly - while his friends might have more controlled styles  
+**Eyes**: Sharp, observant - give him more angular eye shape than his rounder-eyed friends  
+**Hands**: Show them working - grease stains, small cuts, while his friends have cleaner hands initially
+
+### **June (The Architect)**
+- **Build**: Stockier, solid - looks organized
+- **Hair**: Neat, controlled - reflects his methodical nature
+- **Colors**: Earthy greens, browns - stability colors
+- **Accessories**: Ruler patterns, organized look
+
+### **Sen (The Hacker)**
+- **Build**: Lean, fast - looks like he could type rapidly
+- **Hair**: Slightly messy but intentional - shows his investigative nature
+- **Colors**: Cool blues, grays - technology colors
+- **Accessories**: Multiple devices, cables visible
+
+### **Leo (The Heart)**
+- **Build**: More average, approachable
+- **Hair**: Warm brown, casual - friendly appearance
+- **Colors**: Warm oranges, yellows - energy/sunshine colors
+- **Accessories**: Things that help him connect with people
+
+## **The Connection Strategy**
+
+### **Make Nora Familiar But Special**
+
+- Start Nora looking like a "member" of the group
+- Give him a **signature element** that makes him memorable (his unruly hair, the way he fidget with small parts, his height)
+- Show him **working with his hands** while friends focus on tech/screen work
+
+### **Visual Relationship Dynamics**
+
+- **Together shots**: Show how they move as a unit - Nora leading, June organizing, Sen observing, Leo connecting
+- **Individual shots**: Each friend in their "element" but all orbiting around Nora's building
+- **Body language**: Nora is always engaged with physical projects, friends might be more screen-focused
+
+## **Progressive Visual Story**
+
+
+## The three (Leo, Sen, June)
+```palette
+#e59c58, #9fc387, #6993c2
+{"height": 200}
+```
+## Nora:
+```palette
+#965b3b
+```
+## Mood Colours
+```palette
+https://colorhunt.co/palette/84994fffe797fcb53ba72703
+```
+
+```palette
+https://colorhunt.co/palette/fffd8fb0ce884c763b043915
+```
+
+```palette
+https://colorhunt.co/palette/7b542fb6771dff9d00ffcf71
+```
+
+## Aretian Architecture (National)
+```palette
+https://colorhunt.co/palette/faf8f1faeab134656d334443
+```
+
+```palette
+https://colorhunt.co/palette/295f98cdc2a5e1d7c6eae4dd
+```
+
+```palette
+https://colorhunt.co/palette/b7e5cd8abeb9305669c1785a
+```
+
+```palette
+https://colorhunt.co/palette/9bb4c0e1d0b3a18d6d703b3b
+```
+
+Aretten Architecture Colour Philosophy:
+Muted but colourful. (Muted to not hurt the eyes)
+
+
+
+
+
+```palette
+https://colorhunt.co/palette/313647435663a3b087fff8d4
+```
+
+```palette
+https://colorhunt.co/palette/efece38fabd44a70a9000000
+```

@@ -124,7 +124,7 @@
 </head>
 <body>
   <header>
-    <nav style="color: #C7D0EF; font-weight: 500; font-size: 1.0em;">
+    <nav style="color: var(--color-text-secondary); font-weight: 500; font-size: 1.0em;">
       <a href="../index.html"><i class="fas fa-home"></i> HOME</a> |
       <a href="#contact"><i class="fas fa-phone"></i> </a> |
       <a href="https://github.com/Kazi-Aidah"><i class="fab fa-github"></i> GITHUB </a>
@@ -203,19 +203,19 @@
       <h3 style="margin-bottom: 5px;">Contact Me</h3>
       <ul class="contact-list">
         <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
-        <li><i class="fab fa-discord" style="color: #8465ff" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
-        <li><i class="fa-solid fa-paper-plane" style="color: #c34bff"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
+        <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
+        <li><i class="fa-solid fa-paper-plane" style="color: var(--color-plane)"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
       </ul>
     </div>
 
     <div class="footer-section socials-section">
       <h3 style="margin-bottom: 5px;">Social Medias</h3>
       <ul class="socials-list">
-        <li><i class="fab fa-youtube" style="color: #ff6262" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
-        <li><i class="fab fa-youtube" style="color: #ff8cb4" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
-        <li><i class="fab fa-instagram" style="color: #df87ff" aria-hidden="true"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
-        <li><i class="fab fa-facebook" style="color: #60a7ff" aria-hidden="true"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
-        <li><i class="fab fa-tiktok" style="color: #7acaff" aria-hidden="true"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+        <li><i class="fab fa-youtube" style="color: var(--color-youtube-red)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+        <li><i class="fab fa-youtube" style="color: var(--color-youtube-pink)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+        <li><i class="fab fa-instagram" style="color: var(--color-instagram)" aria-hidden="true"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+        <li><i class="fab fa-facebook" style="color: var(--color-facebook)" aria-hidden="true"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
+        <li><i class="fab fa-tiktok" style="color: var(--color-tiktok)" aria-hidden="true"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
       </ul>
     </div>
   </div>
@@ -288,6 +288,77 @@
       });
 
     });
+  </script>
+
+  <div class="modal-backdrop" id="projectsOptionsModal" aria-hidden="true" role="dialog" aria-label="Coding Projects options">
+    <div class="modal-content">
+      <button class="modal-close-button" data-close="projectsOptionsModal">&times;</button>
+      <h3 style="margin-top:0;color:var(--color-text-muted); margin-bottom:4px;">Coding Projects</h3>
+      <div class="projects-options">
+        <a class="projects-option" id="viewGithubBtn" href="https://github.com/Kazi-Aidah" target="_blank" rel="noopener" style="background-image: url('../images/alwayscolortext1.jpg');">
+          <div class="tutorial-option-overlay">
+            <i class="fab fa-github tutorial-icon" aria-hidden="true"></i>
+            <div class="card-title card-title--large">View on GitHub</div>
+          </div>
+        </a>
+        <a class="projects-option" id="exploreProjectsBtn" href="#" style="background-color: var(--color-bg-card);">
+          <div class="tutorial-option-overlay">
+            <i class="fa-solid fa-code tutorial-icon" aria-hidden="true"></i>
+            <div class="card-title card-title--normal">Explore Projects</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const projectsOptionsModal = document.getElementById('projectsOptionsModal');
+      const modalCloseBtn = projectsOptionsModal ? projectsOptionsModal.querySelector('.modal-close-button') : null;
+
+      function openProjectsOptionsModal() {
+        if (projectsOptionsModal) {
+          projectsOptionsModal.classList.add('show');
+          projectsOptionsModal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeProjectsOptionsModal() {
+        if (projectsOptionsModal) {
+          projectsOptionsModal.classList.remove('show');
+          projectsOptionsModal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+      }
+
+      if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeProjectsOptionsModal);
+      }
+
+      if (projectsOptionsModal) {
+        projectsOptionsModal.addEventListener('click', function(event) {
+          if (event.target === this) {
+            closeProjectsOptionsModal();
+          }
+        });
+      }
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && projectsOptionsModal && projectsOptionsModal.classList.contains('show')) {
+          closeProjectsOptionsModal();
+        }
+      });
+
+      // Make the intro image clickable to open the modal
+      const introImage = document.querySelector('.intro-image');
+      if (introImage) {
+        introImage.style.cursor = 'pointer';
+        introImage.addEventListener('click', function() {
+          openProjectsOptionsModal();
+        });
+      }
+    })();
   </script>
 </body>
 </html>

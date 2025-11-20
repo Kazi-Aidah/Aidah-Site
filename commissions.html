@@ -17,7 +17,8 @@
 <style>
   /* ===== BUBBLEBODY ===== */
   .bubblebody h2, .bubblebody h3 { margin-top: 6px; margin-bottom: 8px; }
-  .bubblebody { padding: 12px 24px; }
+
+  .bubblebody { padding: 12px 24px; border: 3px solid #343355;}
 
   /* ===== H1 STYLES ===== */
   .hero-commissions h1 {
@@ -328,7 +329,9 @@
     top: 8px; 
     right: 8px; 
     z-index: 3; 
-    background: rgba(0, 0, 0, 0.151); color: #fff; border: none; 
+    background: #1a1a29; 
+    color: #fff; 
+    border: none; 
     width: 36px; 
     height: 36px; 
     /* border-radius: 50%;  */
@@ -354,7 +357,7 @@
 </head>
 <body>
 <header>
-  <nav style="color: #C7D0EF; font-weight: 500;">
+  <nav style="color: var(--color-text-secondary); font-weight: 500;">
     <a href="../index.html"> <i class="fas fa-home"></i> HOME</a>
     | 
     <a href="#contact"> <i class="fa-solid fa-envelopes-bulk"></i> CONTACT ME</a>
@@ -489,7 +492,7 @@
   <ul class="contact-list">
     <li><strong>Preferred:</strong> Vgen</li>
     <li>Email: <a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
-    <li>Discord: <span style="color:#c5cee0">kazi_aidah</span></li>
+    <li>Discord: <span style="color:var(--color-text-tertiary)">kazi_aidah</span></li>
     <li>Instagram: <a href="https://instagram.com/kazi_aidah" target="_blank" rel="noopener">@kazi_aidah</a></li>
   </ul>
 
@@ -665,7 +668,63 @@
       if (ev.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
     });
   })();
+
+  // Commission options modal
+  (function() {
+      const modal = document.getElementById('commissionOptionsModal');
+      const backdrop = document.getElementById('commissionBackdrop');
+
+      function showModal() {
+          modal.style.display = 'block';
+          backdrop.style.display = 'block';
+      }
+
+      function hideModal() {
+          modal.style.display = 'none';
+          backdrop.style.display = 'none';
+      }
+
+      // Make page title clickable
+      const pageTitle = document.querySelector('h1');
+      if (pageTitle) {
+          pageTitle.style.cursor = 'pointer';
+          pageTitle.addEventListener('click', showModal);
+      }
+
+      // Close button
+      modal.querySelector('.close-modal').addEventListener('click', hideModal);
+
+      // Escape key
+      document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') hideModal();
+      });
+
+      // Click outside to close
+      backdrop.addEventListener('click', hideModal);
+      modal.addEventListener('click', (e) => e.stopPropagation());
+  })();
   </script>
+
+  <!-- Commission Options Modal -->
+  <div id="commissionOptionsModal" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background: linear-gradient(135deg, var(--color-background-dark) 0%, var(--color-background-darker) 100%); border: 2px solid var(--color-border-primary); border-radius: 12px; padding: 40px 30px; z-index: 1001; max-width: 600px; width: 90%; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); max-height: 80vh; overflow-y: auto; display: none;">
+      <button class="close-modal" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; color: var(--color-text-secondary); cursor: pointer; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">&times;</button>
+      <h3 style="color: var(--color-accent-primary); margin: 0 0 30px 0; text-align: center; font-size: 24px;">Commission Info</h3>
+      <div class="commission-options">
+          <div class="commission-option" style="background-image: url('images/modal-bg-1.jpg'); cursor: pointer;">
+              <div class="tutorial-option-overlay">
+                  <i class="fas fa-palette tutorial-icon"></i>
+                  <span class="card-title">View Portfolio</span>
+              </div>
+          </div>
+          <div class="commission-option" style="background-image: url('images/modal-bg-2.jpg'); cursor: pointer;">
+              <div class="tutorial-option-overlay">
+                  <i class="fas fa-file-contract tutorial-icon"></i>
+                  <span class="card-title">Request Commission</span>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div id="commissionBackdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 1000; display: none;"></div>
 
 </body>
 </html>

@@ -338,11 +338,15 @@
       }
 
       // --------- YOUTUBE API INTEGRATION ----------
-      const API_KEY = 'AIzaSyDB9GX4GitTAFo-6c16157dMY64TiMX6-E';
+      // Determine the API endpoint based on environment
+      const API_BASE_URL = window.location.hostname === 'localhost' 
+          ? 'https://aidah-site.pages.dev' 
+          : '';
+      
       let currentPlaylistId = 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd';
       let currentPage = 1;
       let totalPages = 0;
-    let currentPlaylistTotal = null;
+      let currentPlaylistTotal = null;
       let nextPageTokens = {};
       let allVideosInCurrentPlaylist = new Map();
       let currentActiveVideo = null;
@@ -401,9 +405,10 @@
 
       async function fetchPlaylistTotal(playlistId) {
           try {
-              const url = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
+              const url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
               const resp = await fetch(url);
               const data = await resp.json();
+              console.log('Playlist total data:', data);
               if (resp.ok && data.items && data.items[0] && data.items[0].contentDetails && typeof data.items[0].contentDetails.itemCount === 'number') {
                   currentPlaylistTotal = data.items[0].contentDetails.itemCount;
               } else {
@@ -476,10 +481,15 @@
           const pageToken = nextPageTokens[page - 1] || '';
           try {
               videoGrid.innerHTML = '<p style="text-align: center; color: #E0E0FF;">Loading videos...</p>';
-              const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${currentPlaylistId}&maxResults=${MAX_VIDEOS_PER_PAGE}&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
+              let url = `${API_BASE_URL}/api/youtube?playlist=${currentPlaylistId}`;
+              if (pageToken) {
+                  url += `&pageToken=${pageToken}`;
+              }
+              url += `&maxResults=${MAX_VIDEOS_PER_PAGE}`;
 
               const response = await fetch(url);
               const data = await response.json();
+              console.log('Videos for page data:', data);
 
               if (response.ok) {
                   const videos = data.items;
@@ -503,8 +513,8 @@
                   updatePaginationHighlight();
                   updateHeaderText();
               } else {
-                  console.error(`Error fetching videos: ${data.error.message}`);
-                  videoGrid.innerHTML = `<p style="color: #f4d03f; text-align: center;">Error: ${data.error.message}</p>`;
+                  console.error(`Error fetching videos: ${data.error?.message || 'Unknown error'}`);
+                  videoGrid.innerHTML = `<p style="color: #f4d03f; text-align: center;">Error: ${data.error?.message || 'Failed to load videos'}</p>`;
                   paginationControls.innerHTML = '';
               }
           } catch (error) {
@@ -521,25 +531,30 @@
           let totalFetched = 0;
 
           try {
-              const playlistDetailsUrl = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
+              const playlistDetailsUrl = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
               const playlistDetailsResponse = await fetch(playlistDetailsUrl);
               const playlistDetailsData = await playlistDetailsResponse.json();
-              const totalPlaylistItems = playlistDetailsData.items[0]?.contentDetails?.itemCount || 0;
+              console.log('Playlist details:', playlistDetailsData);
+              const totalPlaylistItems = playlistDetailsData.pageInfo?.totalResults || playlistDetailsData.items?.[0]?.contentDetails?.itemCount || 0;
               currentPlaylistTotal = totalPlaylistItems;
 
               do {
-                  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}${pageToken ? `&pageToken=${pageToken}` : ''}`;
+                  let url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}&maxResults=50`;
+                  if (pageToken) {
+                      url += `&pageToken=${pageToken}`;
+                  }
                   const response = await fetch(url);
                   const data = await response.json();
+                  console.log('Batch of videos:', data);
 
                   if (response.ok) {
-                      data.items.forEach(item => {
+                      data.items?.forEach(item => {
                           allVideosInCurrentPlaylist.set(item.snippet.resourceId.videoId, item);
                       });
-                      totalFetched += data.items.length;
+                      totalFetched += data.items?.length || 0;
                       pageToken = data.nextPageToken;
                   } else {
-                      console.error(`Error fetching all videos: ${data.error.message}`);
+                      console.error(`Error fetching all videos: ${data.error?.message || 'Unknown error'}`);
                       break;
                   }
               } while (pageToken && totalFetched < totalPlaylistItems);

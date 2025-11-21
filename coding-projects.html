@@ -13,6 +13,13 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
   
   <style>
+
+    nav a:hover {
+    color: var(--color-accent-light-blue-3);
+    transform: translateY(-2px);
+    text-decoration: none;
+    }
+
     .bubblebody {
       background: #1A1A2A;
       color: #C7D0EF;
@@ -24,7 +31,21 @@
       font-family: 'JetBrains Mono', monospace;
       line-height: 1.6;
     }
-    
+
+    .bubblebody-large {
+      max-width: 1200px;
+      background: #1A1A2A;
+      color: #C7D0EF;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width: 90%;
+      margin: 20px auto;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.6;
+    }
+
+
     /* ===== INTRO ===== */
     .intro {
       display: flex;
@@ -55,40 +76,6 @@
     .intro p {
       padding-left: 10px;
     }
-    
-    /* ===== REQUEST FORM BUTTON ===== */
-    /* .request-form-button {
-        padding: 12px 25px;
-        background: linear-gradient(145deg, #1A1A2A, #0F0F13);
-        color: white;
-        border: 2px solid #3392ff;
-        border-radius: 8px;
-        cursor: pointer;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-        transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-        align-self: flex-end;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        display: block;
-        width: fit-content;
-        margin: 0 auto;
-    }
-
-    .request-form-button:hover {
-        background: linear-gradient(145deg, #0F0F13, #1A1A2A);
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(51, 146, 255, 0.6);
-    }
-
-    .user-id-display {
-        font-size: 0.8em;
-        color: #C7D0EF;
-        text-align: center;
-        margin-top: 1em;
-        margin-bottom: -1em;
-        word-wrap: break-word;
-        white-space: normal;
-    } */
 
     /* The image:text sections breakage */
     @media (max-width: 1000px) {
@@ -187,7 +174,7 @@
                     </div>
                 </div>
                 <hr class="acc-hr">
-                <a href="https://www.youtube.com/@kaziaidahhaque/playlists" class="accordion-link"><i class="fa-solid fa-table-cells-large"></i> Categorized Tutorial Playlists</a>
+                <a href="https://www.youtube.com/@kaziaidahhaque/playlists" class="accordion-link"><i class="fas fa-table-cells-large"></i> Categorized Tutorial Playlists</a>
                 <a href="https://www.youtube.com/@kazi_aidah" class="accordion-link"><i class="fas fa-star-of-life"></i> All My Animations! </a>
             </div>
         </div>
@@ -195,7 +182,177 @@
 
     <hr>
 
-    </div> <!-- End of bubblebody -->
+    </div> 
+
+    <!-- New Plugin Cards Section -->
+    <div class="bubblebody">
+      <h2 style="margin-top: 0; margin-bottom: 20px;"><i class="fas fa-plug"></i> Obsidian Plugins</h2>
+      
+      <div class="plugin-cards-container">
+        <!-- Plugin 1: Always Color Text -->
+        <div class="plugin-card">
+          <img src="https://github.com/user-attachments/assets/9c38d1f9-e2fb-4291-b68e-23d96837ebce" alt="Always Color Text" class="plugin-image">
+          <div class="plugin-content">
+            <h3 class="plugin-name">
+              <i class="fas fa-palette"></i>
+              Always Color Text
+            </h3>
+            <p class="plugin-description">
+              Color keywords, status words, dates, names, anything! Once assigned, colors trigger everywhere in your vault, in both Live Preview and Reading view. Features regex support, folder-specific styling, and custom swatches.
+            </p>
+            <div class="plugin-stats">
+              <span class="stat-badge">
+                <i class="fas fa-download"></i> 1,000+ downloads
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-star"></i> GitHub Stars
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-code"></i> JavaScript
+              </span>
+            </div>
+            <a href="https://github.com/Kazi-Aidah/always-color-text" class="plugin-link" target="_blank">
+              View on GitHub <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Plugin 2: SideCards -->
+        <div class="plugin-card">
+          <img src="https://github.com/user-attachments/assets/503eae84-0d7d-4385-9253-7b48d7bef43e" alt="SideCards" class="plugin-image">
+          <div class="plugin-content">
+            <h3 class="plugin-name">
+              <i class="fas fa-layer-group"></i>
+              SideCards
+            </h3>
+            <p class="plugin-description">
+              Quickly create cards in your Obsidian sidebar! Color, tag, and drag them straight into your notes. Features 10 customizable colors, inline editing, auto-save, and bidirectional sync with markdown notes.
+            </p>
+            <div class="plugin-stats">
+              <span class="stat-badge">
+                <i class="fas fa-code"></i> JavaScript
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-paint-brush"></i> 10 Colors
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-arrows-alt"></i> Drag & Drop
+              </span>
+            </div>
+            <a href="#" class="plugin-link">
+              Manual Installation <i class="fas fa-tools"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Plugin 3: Color Table Cells -->
+        <div class="plugin-card">
+          <img src="https://github.com/user-attachments/assets/6707f947-c07b-479a-b93c-244c5670d5e9" alt="Color Table Cells" class="plugin-image">
+          <div class="plugin-content">
+            <h3 class="plugin-name">
+              <i class="fas fa-table"></i>
+              Color Table Cells
+            </h3>
+            <p class="plugin-description">
+              A simple plugin that lets you color table cells in Obsidian! Supports both manual coloring and automatic rules based on text or numbers. Works in both Reading and Live Preview modes.
+            </p>
+            <div class="plugin-stats">
+              <span class="stat-badge">
+                <i class="fas fa-code"></i> JavaScript
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-magic"></i> Auto-Rules
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-mobile-alt"></i> Mobile Support
+              </span>
+            </div>
+            <a href="#" class="plugin-link">
+              Coming Soon <i class="fas fa-clock"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 40px; margin-bottom: 20px;"><i class="fas fa-globe"></i> Sites</h2>
+      
+      <div class="plugin-cards-container">
+        <!-- Site 1: Portfolio -->
+        <div class="plugin-card">
+          <img src="https://via.placeholder.com/400x180/1A1A2A/3392FF?text=Portfolio+Site" alt="Portfolio Website" class="plugin-image">
+          <div class="plugin-content">
+            <h3 class="plugin-name">
+              <i class="fas fa-user"></i>
+              Personal Portfolio
+            </h3>
+            <p class="plugin-description">
+              My personal website showcasing projects, tutorials, and creative work. Built with responsive design, modern animations, and optimized performance.
+            </p>
+            <div class="plugin-stats">
+              <span class="stat-badge">
+                <i class="fas fa-code"></i> HTML/CSS/JS
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-mobile-alt"></i> Responsive
+              </span>
+            </div>
+            <a href="../index.html" class="plugin-link" target="_blank">
+              Visit Site <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Site 2: Tutorial Hub -->
+        <div class="plugin-card">
+          <img src="https://via.placeholder.com/400x180/1A1A2A/3392FF?text=Tutorial+Hub" alt="Tutorial Hub" class="plugin-image">
+          <div class="plugin-content">
+            <h3 class="plugin-name">
+              <i class="fas fa-graduation-cap"></i>
+              Tutorial Hub
+            </h3>
+            <p class="plugin-description">
+              Comprehensive tutorial platform with categorized video guides, searchable content, and interactive examples. Features dark mode and smooth animations.
+            </p>
+            <div class="plugin-stats">
+              <span class="stat-badge">
+                <i class="fas fa-code"></i> React
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-database"></i> 100+ Tutorials
+              </span>
+            </div>
+            <a href="tutorials-page.html" class="plugin-link" target="_blank">
+              Explore Tutorials <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Site 3: Community Forum -->
+        <div class="plugin-card">
+          <img src="https://via.placeholder.com/400x180/1A1A2A/3392FF?text=Community+Forum" alt="Community Forum" class="plugin-image">
+          <div class="plugin-content">
+            <h3 class="plugin-name">
+              <i class="fas fa-comments"></i>
+              Community Forum
+            </h3>
+            <p class="plugin-description">
+              Interactive community platform for sharing tips, getting help, and connecting with other creators. Features real-time chat and resource sharing.
+            </p>
+            <div class="plugin-stats">
+              <span class="stat-badge">
+                <i class="fas fa-code"></i> Node.js
+              </span>
+              <span class="stat-badge">
+                <i class="fas fa-users"></i> 500+ Members
+              </span>
+            </div>
+            <a href="https://discord.gg/MQHdupwMXD" class="plugin-link" target="_blank">
+              Join Discord <i class="fas fa-discord"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
   <div class="footer-grid">
@@ -292,7 +449,7 @@
 
   <div class="modal-backdrop" id="projectsOptionsModal" aria-hidden="true" role="dialog" aria-label="Coding Projects options">
     <div class="modal-content">
-      <button class="modal-close-button" data-close="projectsOptionsModal">&times;</button>
+      <button class="modaWWWl-close-button" data-close="projectsOptionsModal">&times;</button>
       <h3 style="margin-top:0;color:var(--color-text-muted); margin-bottom:4px;">Coding Projects</h3>
       <div class="projects-options">
         <a class="projects-option" id="viewGithubBtn" href="https://github.com/Kazi-Aidah" target="_blank" rel="noopener" style="background-image: url('../images/alwayscolortext1.jpg');">

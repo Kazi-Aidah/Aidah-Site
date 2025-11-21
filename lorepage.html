@@ -18,6 +18,16 @@
   <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
   
   <style>
+    :root {
+    --color-accent-blue: #3392ff;
+    --color-discord: #8465ff;
+    --color-youtube-red: #ff6262;
+    --color-youtube-pink: #ff8cb4;
+    --color-instagram: #df87ff;
+    --color-facebook: #60a7ff;
+    --color-tiktok: #7acaff;
+    --color-plane: #c34bff;
+    }
     /* ===== GLOBAL STYLES ===== */
     html {
         scroll-behavior: smooth;
@@ -70,7 +80,7 @@
     }
 
     nav a:hover {
-        color: #3392ff;
+        color: var(--retro-green);
         transform: translateY(-2px);
         text-decoration: none;
     }
@@ -186,7 +196,7 @@
     .contact-list li i,
     .socials-list li i,
     .footer-section h3 i {
-        color: #3392ff;
+        color: var(--color-accent-blue);
         width: 20px;
         text-align: center;
     }
@@ -466,7 +476,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
             :root{
-      --bg:#0f1113; --card:#15171d; --accent:#3392ff; --text:#e0e0e0; --muted:#9aa3ad; --radius:10px;
+      --bg:#0f1113; --card:#15171d; --accent:var(--color-accent-blue); --text:#e0e0e0; --muted:#9aa3ad; --radius:10px;
     }
 
     .bubblebody {
@@ -493,7 +503,7 @@
     }
 
     .bubblebody::-webkit-scrollbar-thumb {
-        background-color: #3392ff;
+        background-color: var(--color-accent-blue);
         border-radius: 10px;
         border: 2px solid #1A1A2A;
         display: none;
@@ -1271,7 +1281,7 @@
     <div class="footer-section contact-section">
       <h3 style="margin-bottom: 5px;">Contact Me</h3>
       <ul class="contact-list">
-        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+        <li><i class="fas fa-envelope-circle-check" aria-hidden="true" style="color: var(--color-accent-blue)"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
         <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
         <li><i class="fa-solid fa-paper-plane" style="color: var(--color-plane)"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
       </ul>

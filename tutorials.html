@@ -878,14 +878,15 @@
           clearTimeout(searchTimeout);
           const query = this.value.trim();
           updateSearchIcon();
-          searchTimeout = setTimeout(() => {
-              if (query) {
+          
+          // Immediately load all tutorials if search box is emptied
+          if (query === '') {
+              performGlobalSearch('');
+          } else {
+              searchTimeout = setTimeout(() => {
                   performGlobalSearch(query);
-              } else {
-                  // Clear search
-                  highlightSearch('');
-              }
-          }, 300);
+              }, 300);
+          }
       });
 
       // --------- HANDLE ENTER KEY FOR SEARCH ----------

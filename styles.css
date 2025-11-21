@@ -641,7 +641,7 @@ h2.h2comm-me {
 .video-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    gap: 10px;
     padding: 0px 0px 20px 0;
     justify-content: center;
 }
@@ -728,8 +728,8 @@ h2.h2comm-me {
     background-color: var(--color-bg-dark);
     color: var(--color-text-tertiary);
     border: 2px solid var(--color-border-gray-primary);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9em;
+    font-family: 'Cascadia Mono', monospace;
+    font-size: 1.22em;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -2279,7 +2279,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     max-width: 2000px;
     margin: 2em auto;
     background-color: #0F0F13;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     overflow: hidden;
     transition: all 0.3s ease-out;
@@ -2341,6 +2341,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     border-radius: 6px;
     margin: 0px;
     transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out;
+        margin: 0 10px;
 }
 
 .accordion-content.show {

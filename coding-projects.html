@@ -32,19 +32,6 @@
       line-height: 1.6;
     }
 
-    .bubblebody-large {
-      max-width: 1200px;
-      background: #1A1A2A;
-      color: #C7D0EF;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      width: 90%;
-      margin: 20px auto;
-      font-family: 'JetBrains Mono', monospace;
-      line-height: 1.6;
-    }
-
 
     /* ===== INTRO ===== */
     .intro {
@@ -77,6 +64,461 @@
       padding-left: 10px;
     }
 
+    /* ===== PROJECT CARDS ===== */
+    .c-project-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 20px;
+        padding: 0px 0px 20px 0;
+        justify-content: center;
+    }
+
+    .c-project-card {
+        background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-bg-card-alt) 100%);
+        border: 3px solid var(--color-border-gray-primary);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        text-decoration: none;
+        display: block;
+        cursor: pointer;
+    }
+
+    .c-project-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        border-color: var(--color-retro-blue);
+        box-shadow: 0 12px 30px rgba(105, 147, 194, 0.3), 0 0 20px rgba(105, 147, 194, 0.2);
+    }
+
+    .c-project-card:active {
+        transform: translateY(-2px) scale(0.99);
+    }
+
+    .c-project-card a {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .c-project-card img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        display: block;
+        border-radius: 17px 17px 0 0;
+        transition: filter 0.3s ease;
+        border-bottom: 2px solid var(--color-border-gray-primary);
+    }
+
+    .c-project-card:hover img {
+        filter: brightness(1.1) contrast(1.05);
+    }
+
+    .c-project-card-content {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex-grow: 1;
+    }
+
+    /* .c-project-card h3 {
+        font-family: 'GeneralSans', sans-serif;
+        font-size: 1.5em;
+        font-weight: 700;
+        margin: 0;
+        color: var(--color-text-primary);
+        letter-spacing: 0.03em;
+        transition: color 0.3s ease;
+    } */
+
+    .c-project-card h3 {
+        font-family: 'GeneralSans', sans-serif;
+        font-size: 1.5em;
+        font-weight: 700;
+        margin: -6px;
+        margin-top: -12px;
+        color: var(--color-text-primary);
+        letter-spacing: 0.03em;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+    }
+
+    .c-project-card h3::before,
+    .c-project-card h3::after {
+      content: "";
+      flex-grow: 1;
+      height: 5px;
+      background-color: #5d678a;
+      opacity: 0.7;
+    }
+
+    .c-project-card:hover h3::before,
+    .c-project-card:hover h3::after {
+      content: "";
+      flex-grow: 1;
+      height: 2px;
+      background-color: var(--color-retro-orange);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+
+    .c-project-card:hover h3 {
+        color: var(--color-retro-green);
+        letter-spacing: 0.07em;
+        transition: all 0.3s ease;
+        gap: 0.7em;
+    }
+
+    .c-project-card p {
+        font-size: 0.95em;
+        color: var(--color-text-secondary);
+        margin: 0;
+        line-height: 1.6;
+        transition: color 0.3s ease;
+        font-weight: 300;
+    }
+
+    .c-project-card:hover p {
+        color: var(--color-text-light);
+    }
+
+    /* ===== PROJECT MODAL ===== */
+    .project-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(2px);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .project-modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .project-modal.closing {
+        animation: fadeOut 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    .project-modal-content {
+        background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-bg-card-alt) 100%);
+        border-radius: 25px;
+        border: 3px solid var(--color-retro-blue);
+        overflow: hidden;
+        max-width: 600px;
+        width: 90%;
+        max-height: 85vh;
+        /* box-shadow: 0 20px 60px rgba(51, 146, 255, 0.4); */
+        display: flex;
+        flex-direction: column;
+        animation: slideUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .project-modal.closing .project-modal-content {
+        animation: slideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes slideUp {
+        from { 
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideDown {
+        from { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to { 
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    }
+
+    .project-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
+        border-bottom: 2px solid var(--color-border-gray-primary);
+        background: linear-gradient(90deg, rgba(51, 146, 255, 0.1) 0%, rgba(105, 147, 194, 0.05) 100%);
+    }
+
+    .project-modal-header h2 {
+        margin: 0;
+        font-family: 'GeneralSans', sans-serif;
+        font-size: 1.8em;
+        color: var(--color-retro-blue);
+    }
+
+    .project-modal-close {
+        background: none;
+        border: 2px solid var(--color-border-gray-primary);
+        color: var(--color-text-secondary);
+        font-size: 1.5em;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .project-modal-close:hover {
+        background: var(--color-retro-blue);
+        color: white;
+        border-color: var(--color-retro-blue);
+    }
+
+    .project-modal-body {
+        overflow-y: auto;
+        padding: 30px;
+        flex-grow: 1;
+    }
+
+    .project-modal-body ul {
+        padding-left: 20px;
+        margin: 4px 0;
+    }
+
+    .project-modal-body li {
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+    .project-modal-body img {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+        margin-bottom: 0px;
+        border: 2px solid var(--color-border-gray-primary);
+    }
+
+    .project-modal-body h3 {
+        font-family: 'GeneralSans', sans-serif;
+        font-size: 1.5em;
+        color: var(--color-text-primary);
+        margin: 15px 0 0px 0;
+    }
+
+    .project-modal-body p {
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+        margin: 8px 0;
+        font-size: 0.95em;
+    }
+
+    .project-modal-body li {
+      list-style-type: disc;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin: 6px 0;
+      font-size: 0.95em;
+    }
+
+    .project-modal-body li::marker {
+      content: "+ ";
+      color: var(--color-retro-green);
+      font-weight: 600;
+    }
+
+    .project-modal-footer {
+        padding: 20px 30px;
+        border-top: 2px solid var(--color-border-gray-primary);
+        display: flex;
+        gap: 12px;
+        background: linear-gradient(90deg, rgba(51, 146, 255, 0.1) 0%, rgba(105, 147, 194, 0.05) 100%);
+    }
+
+    .project-modal-btn {
+        flex: 1;
+        padding: 12px 20px;
+        border: 2px solid var(--color-retro-blue);
+        background: transparent;
+        color: var(--color-retro-blue);
+        border-radius: 12px;
+        font-family: 'GeneralSans', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .project-modal-btn:hover {
+        background: var(--color-retro-blue);
+        color: var(--color-bg-card);
+        box-shadow: 0 8px 20px rgba(51, 146, 255, 0.3);
+    }
+
+    @media (max-width: 700px) {
+        .project-modal-content {
+            max-width: 95%;
+        }
+
+        .project-modal-header {
+            padding: 15px 20px;
+        }
+
+        .project-modal-header h2 {
+            font-size: 1.4em;
+        }
+
+        .project-modal-body {
+            padding: 20px;
+        }
+
+        .project-modal-footer {
+            padding: 15px 20px;
+            flex-direction: column;
+        }
+    }
+
+    .projects-section-title {
+        font-size: 1.6em;
+        font-family: 'GeneralSans', sans-serif;
+        font-weight: 700;
+        color: var(--color-text-secondary);
+        margin: -10px 0px 20px 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .accordion-container {
+            background: var(--color-bg-dark) !important;
+            padding: 0;
+    }
+    .accordion-content {
+      background-color: #181925;
+      border-radius: 14px;
+      padding-left: 18px !important;
+      padding-right: 18px !important;
+    }
+    /* ===== LEARNING SECTION ===== */
+    .learning-section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 12px;
+        background: #3538597b;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.408);
+        transition: all 0.3s ease;
+    }
+
+    .learning-section:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .learning-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1.1em;
+        font-weight: 700;
+        color: var(--color-text-light);
+        margin: 0 0 15px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--color-border-quaternary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .learning-title::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-retro-green);
+    }
+
+    .learning-item {
+        font-size: 0.95em;
+        color: var(--color-text-secondary);
+        margin: 12px 0;
+        line-height: 1.7;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        border-radius: 6px;
+        background-color: rgba(67, 81, 108, 0.416);
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+    }
+
+    .learning-item:hover {
+        background-color: rgba(79, 111, 166, 0.386);
+        transform: translateX(5px);
+        border-left: 3px solid var(--color-accent-blue);
+    }
+
+    .learning-item i {
+        min-width: 24px;
+        text-align: center;
+        font-size: 1.2em;
+        transition: all 0.3s ease;
+    }
+
+    .learning-item:hover i {
+        transform: scale(1.2);
+    }
+
+    .learning-item strong {
+        color: var(--color-text-light);
+        font-weight: 600;
+    }
+
+    .learning-item a {
+        color: var(--color-accent-light-blue);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+
+    .learning-item a:hover {
+        color: var(--color-accent-blue);
+        text-decoration: underline;
+    }
+
+    .learning-item a {
+      padding-left: -00px !important;
+      padding-bottom: 3px !important;
+    }
+
     /* The image:text sections breakage */
     @media (max-width: 1000px) {
       .intro, .process-text {
@@ -106,6 +548,42 @@
       }
     }
 
+    @media (max-width: 700px) {
+        .c-project-cards {
+            grid-template-columns: 1fr;
+            gap: 1.5em;
+        }
+
+        .c-project-card img {
+            height: 200px;
+        }
+
+        .c-project-card-content {
+            padding: 18px;
+            gap: 10px;
+        }
+
+        .c-project-card h3 {
+            font-size: 1.3em;
+        }
+
+        .c-project-card p {
+            font-size: 0.9em;
+        }
+
+        .projects-section-title {
+            font-size: 1.4em;
+        }
+    }
+
+    .project-modal-body img[src*="shields.io"] {
+      max-width: 210px;
+      height: auto;
+      justify-content: right !important;
+      display: block;
+    }
+
+
   </style>
   <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
@@ -122,95 +600,278 @@
     <section class="intro">
       <div class="intro-image" data-modal-title="My Intro Image"></div>
       <p>
-        As you can see, I have been using a computer since I was a baby! I have always been fascinated by technology and art, which is why I love making animations and coding just about anything.
+        As you can see, I have been using a computer since I was a baby! I have always been fascinated by technology and art, which is why I love making animations and recently got into coding.
         <br>
         <br>
-        On this page, you will find a collection of my coding projects that I have created over the years. Feel free to explore and learn more about my work!
+        On this page, you will find a collection of my coding projects that I have created over time. Feel free to explore and learn more about my work!
       </p>
     </section>
 
-    <hr>
-
+<hr>
+ 
     <div class="accordion-container">
         <div class="accordion-item">
-            <button class="accordion-header"><i class="fas fa-link"></i> QUICK LINKS <span class="arrow">->></span></button>
+            <button class="accordion-header"><i class="fas fa-graduation-cap"></i> LEARNING  <span class="arrow">→</span></button>
             <div class="accordion-content">
-
-                <!-- <div class="accordion-item nested-accordion-item">
-                    <button class="accordion-header"><i class="fa-solid fa-share"></i> Submit a Tutorial Request <span class="arrow">></span></button>
-                    <div class="accordion-content">
-                        <button type="button" class="request-form-button"
-                                data-tally-open="nW688P"
-                                data-tally-layout="modal"
-                                data-tally-width="600"
-                                data-tally-hide-title="1">
-                            Open Tutorial Request Form
-                        </button>
-                    </div>
-                </div> -->
-                <div class="accordion-item nested-accordion-item">
-                    <button class="accordion-header"><i class="fa-regular fa-circle-question"></i> Get Aidah's help! <span class="arrow">></span></button>
-                    <div class="accordion-content">
-                        <p class="accordion-text-item">
-                            You can get in contact with me through <a href="#contact">these socials!</a>
-                        </p>
-                        <p class="accordion-text-item accordion-text-item-with-icon">
-                            <i class="fa-brands fa-discord"></i> Or you could also ask in the <a href="https://discord.gg/hbn6Z3kreg">help-from-aidah</a> channel on my Discord Server.
-                        </p>
-                        <p class="accordion-text-item accordion-text-item-with-icon">
-                            <i class="fa-solid fa-star"></i>
-                            <b style="color: #ffffff;">Don't hesitate to text me!</b> And if you need help with something specific, or a cool effect you can't seem to figure out, just send me an image or video of what you're trying to achieve :D
-                        </p>
-                    </div>
+                <div class="learning-section">
+                    <h3 class="learning-title">Current Focus</h3>
+                    <p class="learning-item"><i class="fas fa-code" style="color: var(--color-accent-blue);"></i> <strong>Javascript</strong></p>
+                    <p class="learning-item"><i class="fas fa-terminal" style="color: var(--color-retro-green);"></i> <strong>Web Development</strong></p>
+                    <p class="learning-item"><i class="fas fa-shield-alt" style="color: var(--color-retro-orange);"></i> <strong>Cybersecurity Fundamentals</strong></p>
                 </div>
 
-                <div class="accordion-item nested-accordion-item">
-                    <button class="accordion-header"><i class="fas fa-folder"></i> Other Items  <span class="arrow">></span></button>
-                    <div class="accordion-content">
-                        <a href="tutorials-page.html" class="accordion-link"><i class="fas fa-search"></i> SEARCH ALL TUTORIALS </a>
-                        <a href="oldtutspage.html" class="accordion-link"><i class="fas fa-search-minus"></i> OLD Tutorials Search Page </a>
-                        <a href="VideoCardNoteLink.html" class="accordion-link"><i class="fa-solid fa-tv"></i> VideoCardNoteLink </a>
-                        <a href="#" class="accordion-link"><i class="fas fa-xmark"></i> Unavailable — Animations Showcase </a>
-                    </div>
+                <div class="learning-section">
+                    <h3 class="learning-title">Completed Courses</h3>
+                    <p class="learning-item">
+                        <i class="fas fa-check-circle" style="color: var(--color-retro-green);"></i>
+                        <a href="https://www.coursera.org/learn/foundations-of-cybersecurity?" target="_blank" rel="noopener">Google Foundations of Cybersecurity Course</a>
+                    </p>
+                    <!-- <p class="learning-item">
+                        <i class="fas fa-check-circle" style="color: var(--color-retro-green);"></i>
+                        <a href="https://www.freecodecamp.org/learn/2022/responsive-web-design/" target="_blank" rel="noopener">FreeCodeCamp Responsive Web Design</a>
+                    </p> -->
                 </div>
-                <hr class="acc-hr">
-                <a href="https://www.youtube.com/@kaziaidahhaque/playlists" class="accordion-link"><i class="fas fa-table-cells-large"></i> Categorized Tutorial Playlists</a>
-                <a href="https://www.youtube.com/@kazi_aidah" class="accordion-link"><i class="fas fa-star-of-life"></i> All My Animations! </a>
+
+                <div class="learning-section">
+                    <h3 class="learning-title">In Progress</h3>
+                    <p class="learning-item">
+                        <i class="fas fa-book" style="color: var(--color-retro-orange);"></i>
+                        <a href="https://learning.edx.org/course/course-v1:HarvardX+CS50+X/home" target="_blank" rel="noopener">Harvard CS50 Computer Science Course</a>
+                    </p>
+                    <p class="learning-item">
+                        <i class="fas fa-book" style="color: var(--color-retro-orange);"></i>
+                        <a href="https://learning.edx.org/course/course-v1:HarvardX+CS50CS+Cybersecurity/home" target="_blank" rel="noopener">Harvard CS50 Cybersecurity Course</a>
+                    </p>
+                </div>
+                
+                
             </div>
         </div>
-    </div>
+    </div> 
 
     <hr>
 
-    </div>
-    
-    <footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
-  <div class="footer-grid">
-    <div class="footer-section contact-section">
-      <h3 style="margin-bottom: 5px;">Contact Me</h3>
-      <ul class="contact-list">
-        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
-        <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
-        <li><i class="fa-solid fa-paper-plane" style="color: var(--color-plane)"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
-      </ul>
-    </div>
+  </div>
 
-    <div class="footer-section socials-section">
-      <h3 style="margin-bottom: 5px;">Social Medias</h3>
-      <ul class="socials-list">
-        <li><i class="fab fa-youtube" style="color: var(--color-youtube-red)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
-        <li><i class="fab fa-youtube" style="color: var(--color-youtube-pink)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
-        <li><i class="fab fa-instagram" style="color: var(--color-instagram)" aria-hidden="true"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
-        <li><i class="fab fa-facebook" style="color: var(--color-facebook)" aria-hidden="true"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
-        <li><i class="fab fa-tiktok" style="color: var(--color-tiktok)" aria-hidden="true"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
-      </ul>
+  <div class="bubblebody">
+    <h2 class="projects-section-title"><i class="fa-solid fa-cube"></i> Obsidian Plugins</h2>
+    <div class="c-project-cards">
+      <div class="c-project-card" data-project-id="always-color-text">
+        <img src="https://github.com/user-attachments/assets/905f5f4b-8b8b-440a-b00f-b32548e721db" alt="Always Color Text">
+        <div class="c-project-card-content">
+          <h3>Always Color Text</h3>
+          <p>Automatically color any word, phrase, or date across your vault. Supports regex patterns, custom color styles, and works in both Live Preview and Reading mode.</p>
+        </div>
+      </div>
+
+      <div class="c-project-card" data-project-id="sidecards">
+        <img src="https://github.com/user-attachments/assets/503eae84-0d7d-4385-9253-7b48d7bef43e" alt="SideCards">
+        <div class="c-project-card-content">
+          <h3>SideCards</h3>
+          <p>Create sidebar cards you can color, tag, and drag into notes. Perfect for fast, visual note-taking and organization.</p>
+        </div>
+      </div>
+
+      <div class="c-project-card" data-project-id="color-table-cell">
+        <img src="https://github.com/user-attachments/assets/3a8923c4-af87-4f2c-8505-6bc03a31aa6c" alt="Color Table Cell">
+        <div class="c-project-card-content">
+          <h3>Color Table Cell</h3>
+          <p>Color table cells manually or with rules based on keywords or numbers. Works in Live Preview, Reading mode, and on mobile.</p>
+        </div>
+      </div>
     </div>
   </div>
-</footer>
+
+  <!-- Project Modals -->
+  <div class="project-modal" id="modal-always-color-text">
+    <div class="project-modal-content">
+      <div class="project-modal-header">
+        <h2>Always Color Text</h2>
+        <button class="project-modal-close" onclick="closeProjectModal('modal-always-color-text')">&times;</button>
+      </div>
+      <div class="project-modal-body">
+        <img src="https://github.com/user-attachments/assets/905f5f4b-8b8b-440a-b00f-b32548e721db" alt="Always Color Text">
+        <img width="20px" src="https://img.shields.io/badge/dynamic/json?logo=obsidian&style=for-the-badge&label=downloads&labelColor=26233a&color=483699&query=%24%5B%22always-color-text%22%5D.downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json">
+        
+        <h3>Why I made it</h3>
+        <p>I was inspired by the colored "<span style="color: #ffd000;">warn</span> <span style="color: #0080ff;">deprecated</span>" text I saw in terminals. I thought it'd be so cool to have that in Obsidian. I wanted to mark daily tasks like DO: that I could turn into DONE: and it'd change colours automatically. That's why I made Always Color Text.</p>
+
+        <img src="https://github.com/user-attachments/assets/9c38d1f9-e2fb-4291-b68e-23d96837ebce">
+
+        
+        <h3>What it does</h3>
+        <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+          <li>Color any word or phrase anywhere in your vault</li>
+          <li>Works in Live Preview and Reading mode</li>
+          <li>Pick your own colors and save them as swatches</li>
+          <li>Optional regex patterns if you want more power!</li>
+        </ul>
+        
+        <h3>Cool features</h3>
+        <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+          <li>Different Coloring Styles can be set for different folders,</li>
+          <li>Right-click to Color Once or add to your always-colored list</li>
+          <li>Allows Text and background coloring together as well</li>
+          <li> Pick between 7 Background Highlight styles!</li>
+          <img src="https://github.com/user-attachments/assets/06202fbf-2562-4c30-98a5-a07f58c4942b">
+        </ul>
+      </div>
+      <div class="project-modal-footer">
+        <a href="https://github.com/Kazi-Aidah/always-color-text" target="_blank" rel="noopener" class="project-modal-btn"><i class="fab fa-github"></i> View on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-modal" id="modal-sidecards">
+    <div class="project-modal-content">
+      <div class="project-modal-header">
+        <h2>SideCards</h2>
+        <button class="project-modal-close" onclick="closeProjectModal('modal-sidecards')">&times;</button>
+      </div>
+      <div class="project-modal-body">
+        <img src="https://github.com/user-attachments/assets/503eae84-0d7d-4385-9253-7b48d7bef43e" alt="SideCards">
+        
+        <h3>Why I made it</h3>
+        <p>I'd randomly get a coding idea in the middle of making animation tutorials and I'd store all the ideas in a single document. The document got too long and it was annoying. I wanted an easier way to keep my ideas organized in Obsidian, so I made this SideCards plugin.</p>
+        
+        <h3>What it does</h3>
+        <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+          <li>Quickly create cards in your sidebar</li>
+          <li>Color and tag them to keep things visual</li>
+          <li>Drag cards straight into your notes</li>
+          <li>Edit cards right there without opening the note</li>
+        </ul>
+
+        <img alt="image" src="https://github.com/user-attachments/assets/3c8a5c77-89e9-4e6d-a434-17bce57c01e9" />
+
+        
+        <h3>Cool features</h3>
+        <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+          <li>Auto-saves as you type</li>
+          <li>Archive cards to clean up without losing them</li>
+          <li>Turn cards into full markdown notes with one click</li>
+          <li>Custom filters and styles to make your sidebar yours</li>
+          <li> Notes saved to Tomorrow Category end up in Today Category on local time change!</li>
+
+        </ul>
+      </div>
+      <div class="project-modal-footer">
+        <a href="https://github.com/Kazi-Aidah/sidecards" target="_blank" rel="noopener" class="project-modal-btn"><i class="fab fa-github"></i> View on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-modal" id="modal-color-table-cell">
+    <div class="project-modal-content">
+      <div class="project-modal-header">
+        <h2>Color Table Cell</h2>
+        <button class="project-modal-close" onclick="closeProjectModal('modal-color-table-cell')">&times;</button>
+      </div>
+      <div class="project-modal-body">
+        <img src="https://github.com/user-attachments/assets/3a8923c4-af87-4f2c-8505-6bc03a31aa6c" alt="Color Table Cell">
+        
+        <h3>Why I made it</h3>
+        <p>I made this plugin after wanting to color tables really badly and couldn't find a plugin to easily do so. I wanted something simple that works even on mobile.</p>
+        
+        <h3>What it does</h3>
+        <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+          <li>Color table cells (background or text)</li>
+          <li>Set rules to color cells automatically based on keywords or numbers</li>
+          <li>Colors stay even after reopening the note</li>
+        </ul>
+        
+        <h3>Cool features</h3>
+        <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+          <li>Works in Reading mode by default</li>
+          <li>Can enable in Live Preview if you want</li>
+          <li>Mobile-friendly</li>
+          <li>Keeps tables looking clean and readable</li>
+        </ul>
+      </div>
+      <div class="project-modal-footer">
+        <a href="https://github.com/Kazi-Aidah/color-table-cell" target="_blank" rel="noopener" class="project-modal-btn"><i class="fab fa-github"></i> View on GitHub</a>
+      </div>
+    </div>
+  </div>
+    
+  <footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
+    <div class="footer-grid">
+      <div class="footer-section contact-section">
+        <h3 style="margin-bottom: 5px;">Contact Me</h3>
+        <ul class="contact-list">
+          <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+          <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
+          <li><i class="fa-solid fa-paper-plane" style="color: var(--color-plane)"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section socials-section">
+        <h3 style="margin-bottom: 5px;">Social Medias</h3>
+        <ul class="socials-list">
+          <li><i class="fab fa-youtube" style="color: var(--color-youtube-red)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+          <li><i class="fab fa-youtube" style="color: var(--color-youtube-pink)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+          <li><i class="fab fa-instagram" style="color: var(--color-instagram)" aria-hidden="true"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+          <li><i class="fab fa-facebook" style="color: var(--color-facebook)" aria-hidden="true"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
+          <li><i class="fab fa-tiktok" style="color: var(--color-tiktok)" aria-hidden="true"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 
     
   <script>
+    // Project Modal Functions
+    function openProjectModal(projectId) {
+      const modalId = `modal-${projectId}`;
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('closing');
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeProjectModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('closing');
+        setTimeout(() => {
+          modal.classList.remove('show');
+          modal.classList.remove('closing');
+          document.body.style.overflow = '';
+        }, 300); // Match the animation duration
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+      // Project card click handlers
+      document.querySelectorAll('.c-project-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const projectId = this.getAttribute('data-project-id');
+          openProjectModal(projectId);
+        });
+      });
+
+      // Close modal when clicking on the modal backdrop
+      document.querySelectorAll('.project-modal').forEach(modal => {
+        modal.addEventListener('click', function(event) {
+          if (event.target === this) {
+            const modalId = this.getAttribute('id');
+            closeProjectModal(modalId);
+          }
+        });
+      });
+
+      // Close modal on escape key
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          document.querySelectorAll('.project-modal.show').forEach(modal => {
+            const modalId = modal.getAttribute('id');
+            closeProjectModal(modalId);
+          });
+        }
+      });
+
       const seeMoreCommissionBtn = document.getElementById('seeMoreCommissionBtn');
       const moreCommissionContent = document.getElementById('moreCommissionContent');
 
@@ -276,27 +937,6 @@
 
     });
   </script>
-
-  <div class="modal-backdrop" id="projectsOptionsModal" aria-hidden="true" role="dialog" aria-label="Coding Projects options">
-    <div class="modal-content">
-      <button class="modaWWWl-close-button" data-close="projectsOptionsModal">&times;</button>
-      <h3 style="margin-top:0;color:var(--color-text-muted); margin-bottom:4px;">Coding Projects</h3>
-      <div class="projects-options">
-        <a class="projects-option" id="viewGithubBtn" href="https://github.com/Kazi-Aidah" target="_blank" rel="noopener" style="background-image: url('../images/alwayscolortext1.jpg');">
-          <div class="tutorial-option-overlay">
-            <i class="fab fa-github tutorial-icon" aria-hidden="true"></i>
-            <div class="card-title card-title--large">View on GitHub</div>
-          </div>
-        </a>
-        <a class="projects-option" id="exploreProjectsBtn" href="#" style="background-color: var(--color-bg-card);">
-          <div class="tutorial-option-overlay">
-            <i class="fa-solid fa-code tutorial-icon" aria-hidden="true"></i>
-            <div class="card-title card-title--normal">Explore Projects</div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
 
   <script>
     (function() {

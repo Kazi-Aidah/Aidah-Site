@@ -338,9 +338,51 @@
       }
 
       // --------- YOUTUBE API INTEGRATION ----------
-      // Determine the API endpoint based on environment
-      const API_BASE_URL = window.location.hostname === 'localhost' 
-          ? 'https://aidah-site.pages.dev' 
+      // Determine how to fetch YouTube data:
+      // - Locally (localhost/127.0.0.1/Live Server): Use local API key from config.js
+      // - Deployed: Use Cloudflare Worker endpoint
+      
+      let API_KEY = null;
+      let USE_WORKER = true;
+      let API_KEY_LOADED = false;
+      
+      // Check if running locally (localhost, 127.0.0.1, or Live Server port 5500)
+      const isLocalhost = window.location.hostname === 'localhost' || 
+                          window.location.hostname === '127.0.0.1' ||
+                          window.location.hostname.includes('127.0.0.1');
+      
+      // Promise to track when API key is loaded
+      const apiKeyLoadPromise = new Promise((resolve) => {
+          // Try to load local API key if running locally
+          if (isLocalhost) {
+              fetch('../config.js')
+                  .then(r => r.text())
+                  .then(text => {
+                      // Extract API key from config.js using regex
+                      const match = text.match(/YT_API_KEY\s*=\s*['"]([^'"]+)['"]/);
+                      if (match && match[1]) {
+                          API_KEY = match[1];
+                          USE_WORKER = false;
+                          console.log('✓ Using local API key for development');
+                      } else {
+                          console.log('No API key found in config.js, using Worker');
+                      }
+                      API_KEY_LOADED = true;
+                      resolve();
+                  })
+                  .catch(err => {
+                      console.log('Local config.js not found, using Worker');
+                      API_KEY_LOADED = true;
+                      resolve();
+                  });
+          } else {
+              API_KEY_LOADED = true;
+              resolve();
+          }
+      });
+      
+      const API_BASE_URL = isLocalhost 
+          ? 'https://kaziaidah.pages.dev' 
           : '';
       
       let currentPlaylistId = 'PLJYnzg7Cheugz3JzxOIkcKNwVmVvwoObd';
@@ -405,7 +447,17 @@
 
       async function fetchPlaylistTotal(playlistId) {
           try {
-              const url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
+              let url;
+              
+              if (USE_WORKER) {
+                  url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
+              } else if (API_KEY) {
+                  url = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
+              } else {
+                  console.warn('No API key available and Worker not accessible');
+                  return;
+              }
+              
               const resp = await fetch(url);
               const data = await resp.json();
               console.log('Playlist total data:', data);
@@ -481,11 +533,20 @@
           const pageToken = nextPageTokens[page - 1] || '';
           try {
               videoGrid.innerHTML = '<p style="text-align: center; color: #E0E0FF;">Loading videos...</p>';
-              let url = `${API_BASE_URL}/api/youtube?playlist=${currentPlaylistId}`;
-              if (pageToken) {
-                  url += `&pageToken=${pageToken}`;
+              let url;
+              
+              if (USE_WORKER) {
+                  // Use Worker endpoint
+                  url = `${API_BASE_URL}/api/youtube?playlist=${currentPlaylistId}`;
+                  if (pageToken) url += `&pageToken=${pageToken}`;
+                  url += `&maxResults=${MAX_VIDEOS_PER_PAGE}`;
+              } else if (API_KEY) {
+                  // Use local YouTube API directly
+                  url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${currentPlaylistId}&maxResults=${MAX_VIDEOS_PER_PAGE}&key=${API_KEY}`;
+                  if (pageToken) url += `&pageToken=${pageToken}`;
+              } else {
+                  throw new Error('No API key available and Worker not accessible');
               }
-              url += `&maxResults=${MAX_VIDEOS_PER_PAGE}`;
 
               const response = await fetch(url);
               const data = await response.json();
@@ -531,7 +592,16 @@
           let totalFetched = 0;
 
           try {
-              const playlistDetailsUrl = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
+              let playlistDetailsUrl;
+              
+              if (USE_WORKER) {
+                  playlistDetailsUrl = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
+              } else if (API_KEY) {
+                  playlistDetailsUrl = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
+              } else {
+                  throw new Error('No API key available');
+              }
+              
               const playlistDetailsResponse = await fetch(playlistDetailsUrl);
               const playlistDetailsData = await playlistDetailsResponse.json();
               console.log('Playlist details:', playlistDetailsData);
@@ -539,10 +609,18 @@
               currentPlaylistTotal = totalPlaylistItems;
 
               do {
-                  let url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}&maxResults=50`;
-                  if (pageToken) {
-                      url += `&pageToken=${pageToken}`;
+                  let url;
+                  
+                  if (USE_WORKER) {
+                      url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}&maxResults=50`;
+                      if (pageToken) url += `&pageToken=${pageToken}`;
+                  } else if (API_KEY) {
+                      url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}`;
+                      if (pageToken) url += `&pageToken=${pageToken}`;
+                  } else {
+                      break;
                   }
+                  
                   const response = await fetch(url);
                   const data = await response.json();
                   console.log('Batch of videos:', data);
@@ -716,6 +794,9 @@
 
       // --------- PERFORMING GLOBAL SEARCH ----------
       async function performGlobalSearch(query) {
+          // Make sure API key is loaded before searching
+          await apiKeyLoadPromise;
+          
           deactivateAllFilters();
           paginationControls.style.display = 'none';
 
@@ -734,6 +815,7 @@
               }
               const filtered = filterVideosBySearch(Array.from(allVideosInCurrentPlaylist.values()), query);
               displayVideos(filtered);
+              updateHeaderText(filtered.length);
           }
           highlightSearch(query);
       }
@@ -795,9 +877,14 @@
       globalSearchInput.addEventListener('input', function() {
           clearTimeout(searchTimeout);
           const query = this.value.trim();
+          updateSearchIcon();
           searchTimeout = setTimeout(() => {
-              updateSearchIcon();
-              highlightSearch(query);
+              if (query) {
+                  performGlobalSearch(query);
+              } else {
+                  // Clear search
+                  highlightSearch('');
+              }
           }, 300);
       });
 
@@ -820,6 +907,7 @@
       });
 
             try {
+                    await apiKeyLoadPromise;
                     if (currentPlaylistId) await fetchPlaylistTotal(currentPlaylistId);
             } catch (err) {
                     console.warn('Could not fetch initial playlist total', err);

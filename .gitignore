@@ -17,3 +17,10 @@ data/.obsidian
 data/.smart-env
 data/.stfolder
 data/.trash
+
+# Ignore local environment variables
+.env.local
+.env
+
+# Ignore local API key configuration
+config.js

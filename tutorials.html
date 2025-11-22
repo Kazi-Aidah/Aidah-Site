@@ -73,6 +73,62 @@
             opacity: 0.4;
         }
 
+        .video-context-menu {
+            position: fixed;
+            background-color: #2a2a3e;
+            border: 2px solid #5d678a;
+            border-radius: 15px;
+            min-width: 250px;
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.737);
+        }
+
+        .video-context-menu.show {
+            display: flex;
+        }
+
+        .video-context-menu-item {
+            padding: 10px 16px;
+            color: #c5cee0;
+            cursor: pointer;
+            border: none;
+            background: none;
+            text-align: left;
+            font-family: inherit;
+            font-size: 0.95em;
+            transition: background-color 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .video-context-menu-item i {
+            width: 16px;
+            text-align: center;
+            color: #5d678a;
+            transition: color 0.15s ease;
+        }
+
+        .video-context-menu-item:hover {
+            background-color: #3a3a4e;
+            color: var(--color-retro-green);
+        }
+
+        .video-context-menu-item:hover i {
+            color: var(--color-retro-green);
+        }
+
+        .video-context-menu-item:first-child {
+            border-radius: 15px 15px 0 0;
+            padding-top: 12px;
+        }
+
+        .video-context-menu-item:last-child {
+            border-radius: 0 0 15px 15px;
+            padding-bottom: 12px;
+        }
 
     </style>
   <header>
@@ -226,8 +282,15 @@
   <div class="loading-modal-backdrop" id="loadingModal">
     <div class="loading-modal-content">
       <div class="loading-spinner"></div>
-      <span>Searching, please wait...</span>
+      <span>Searching, please wait (｡•̀ᴗ-)و ̑̑✧</span>
+      <span style="font-size: 0.7em; margin-top: -4px; color: var(--color-text-secondary)">First search is always a little slow :D</span>
     </div>
+  </div>
+
+  <div class="video-context-menu" id="videoContextMenu">
+    <button class="video-context-menu-item" data-action="open-new-tab"><i class="fas fa-external-link-alt"></i>Open in New Tab</button>
+    <button class="video-context-menu-item" data-action="copy-link"><i class="fas fa-clone"></i>Copy Link</button>
+    <button class="video-context-menu-item" data-action="open-thumbnail"><i class="fas fa-image"></i>Open Thumbnail in New Tab</button>
   </div>
 
     <script>
@@ -336,6 +399,142 @@
           loadingModal.classList.remove('show');
           document.body.style.overflow = '';
       }
+
+      // --------- VIDEO CONTEXT MENU FUNCTIONS ----------
+      const videoContextMenu = document.getElementById('videoContextMenu');
+      let currentContextMenuVideoElement = null;
+
+      function showVideoContextMenu(event, videoElement) {
+          currentContextMenuVideoElement = videoElement;
+          videoContextMenu.classList.add('show');
+          
+          // Position the menu using clientX/clientY (viewport-relative) since menu uses position: fixed
+          let x = event.clientX;
+          let y = event.clientY;
+          
+          // Get menu dimensions after it's displayed
+          const menuRect = videoContextMenu.getBoundingClientRect();
+          const menuWidth = menuRect.width || 200;
+          const menuHeight = menuRect.height || 150;
+          
+          // Get window/viewport dimensions
+          const windowWidth = window.innerWidth;
+          const windowHeight = window.innerHeight;
+          
+          // Adjust X position if menu goes off-screen to the right
+          if (x + menuWidth > windowWidth) {
+              x = windowWidth - menuWidth - 10;
+          }
+          
+          // Adjust Y position if menu goes off-screen at the bottom
+          if (y + menuHeight > windowHeight) {
+              y = windowHeight - menuHeight - 10;
+          }
+          
+          // Ensure menu doesn't go off-screen on the left
+          if (x < 10) {
+              x = 10;
+          }
+          
+          // Ensure menu doesn't go off-screen at the top
+          if (y < 10) {
+              y = 10;
+          }
+          
+          videoContextMenu.style.left = x + 'px';
+          videoContextMenu.style.top = y + 'px';
+      }
+
+      function hideVideoContextMenu() {
+          videoContextMenu.classList.remove('show');
+          currentContextMenuVideoElement = null;
+      }
+
+      // Handle context menu item clicks
+      document.querySelectorAll('.video-context-menu-item').forEach(item => {
+          item.addEventListener('click', async function() {
+              const action = this.dataset.action;
+              if (!currentContextMenuVideoElement) return;
+
+              const videoId = currentContextMenuVideoElement.dataset.videoId;
+              const videoTitle = currentContextMenuVideoElement.dataset.videoTitle;
+              const videoThumbnail = currentContextMenuVideoElement.dataset.videoThumbnail;
+              const videoUrl = `https://youtu.be/${videoId}`;
+
+              switch(action) {
+                  case 'open-new-tab':
+                      window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+                      break;
+                  case 'copy-link':
+                      await navigator.clipboard.writeText(videoUrl);
+                      // Show brief feedback
+                      const originalText = this.textContent;
+                      this.textContent = '✓ Copied!';
+                      setTimeout(() => {
+                          this.textContent = originalText;
+                      }, 1500);
+                      break;
+                  case 'open-thumbnail':
+                      window.open(videoThumbnail, '_blank');
+                      break;
+                  case 'copy-thumbnail':
+                      // Copy thumbnail image to clipboard
+                      try {
+                          const response = await fetch(videoThumbnail);
+                          const blob = await response.blob();
+                          
+                          // Ensure we have a valid image blob
+                          if (!blob.type.startsWith('image/')) {
+                              throw new Error('Invalid image blob');
+                          }
+                          
+                          await navigator.clipboard.write([
+                              new ClipboardItem({ [blob.type]: blob })
+                          ]);
+                          
+                          // Show success feedback
+                          const originalText = this.textContent;
+                          this.textContent = '✓ Copied!';
+                          setTimeout(() => {
+                              this.textContent = originalText;
+                          }, 1500);
+                      } catch (err) {
+                          console.error('Failed to copy thumbnail:', err);
+                          // Fallback: copy the thumbnail URL instead
+                          try {
+                              await navigator.clipboard.writeText(videoThumbnail);
+                              const originalText = this.textContent;
+                              this.textContent = '✓ URL Copied!';
+                              setTimeout(() => {
+                                  this.textContent = originalText;
+                              }, 1500);
+                          } catch (urlErr) {
+                              console.error('Failed to copy thumbnail URL:', urlErr);
+                              const originalText = this.textContent;
+                              this.textContent = '✗ Failed';
+                              setTimeout(() => {
+                                  this.textContent = originalText;
+                              }, 1500);
+                          }
+                      }
+                      break;
+              }
+
+              hideVideoContextMenu();
+          });
+      });
+
+      // Close context menu when clicking elsewhere
+      document.addEventListener('click', () => {
+          hideVideoContextMenu();
+      });
+
+      // Close context menu on Escape key
+      document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+              hideVideoContextMenu();
+          }
+      });
 
       // --------- YOUTUBE API INTEGRATION ----------
       // Determine how to fetch YouTube data:
@@ -649,10 +848,17 @@
               videosToDisplay.forEach(item => {
                   const videoId = item.snippet.resourceId.videoId;
                   const videoTitle = item.snippet.title;
-                  const videoThumbnail = item.snippet.thumbnails.high ? item.snippet.thumbnails.high.url : 'https://placehold.co/100%25x150/1A1A2A/ffffff?text=Video+Thumbnail';
+                  // Use maxres quality if available, otherwise high, then medium
+                  const videoThumbnail = item.snippet.thumbnails.maxres?.url || 
+                                        item.snippet.thumbnails.high?.url || 
+                                        item.snippet.thumbnails.medium?.url || 
+                                        'https://placehold.co/100%25x150/1A1A2A/ffffff?text=Video+Thumbnail';
 
                   const videoElement = document.createElement('div');
                   videoElement.classList.add('video');
+                  videoElement.dataset.videoId = videoId;
+                  videoElement.dataset.videoTitle = videoTitle;
+                  videoElement.dataset.videoThumbnail = videoThumbnail;
 
                   videoElement.innerHTML = `
                       <div class="video-thumbnail-container">
@@ -670,6 +876,11 @@
                       }
                       this.classList.add('active');
                       currentActiveVideo = this;
+                  });
+
+                  videoElement.addEventListener('contextmenu', function(e) {
+                      e.preventDefault();
+                      showVideoContextMenu(e, this);
                   });
               });
           } else {

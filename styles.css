@@ -641,7 +641,7 @@ h2.h2comm-me {
 .video-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
+    gap: 12px;
     padding: 0px 0px 20px 0;
     justify-content: center;
 }
@@ -706,7 +706,7 @@ h2.h2comm-me {
 }
 
 .highlight {
-    background-color: var(--color-retro-orange);
+    background-color: var(--color-retro-green);
     color: black;
     padding: 2px 4px;
     border-radius: 3px;
@@ -818,6 +818,13 @@ h2.h2comm-me {
 
 .global-search-input::placeholder {
     color: var(--color-neutral-blue);
+}
+
+input:-internal-autofill-selected { 
+    appearance: menulist-button;
+    background-image: none !important;
+    background-color: var(--color-bg-card) !important;
+    color: var(--color-text-light) !important;
 }
 
 .search-icon {
@@ -997,7 +1004,7 @@ h2.h2comm-me {
 
 .filter-btn:not(.active):hover {
     background-color: var(--color-bg-dark);
-    transform: translateY(-2px);
+    transform: translateY(0px) scale(1.05);
 }
 
 .section-divider {
@@ -2214,6 +2221,12 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
         flex-direction: column;
         align-items: center;
         transform: scale(0.80em);
+    }
+    .alltut {
+        font-size: 2.1em !important;
+    }
+    .by-me {
+        font-size: 1.2em !important;
     }
 }
 

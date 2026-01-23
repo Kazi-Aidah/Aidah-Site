@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Aidah's Animations</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <link rel="stylesheet" href="styles.css" />
+  <script src="intro-mobile"></script>
+  <script async src="https://tally.so/widgets/embed.js"></script>
+  <style>
+    #animation-search-input {
+        font-size: 18px !important;
+        border-radius: 18px !important;
+    }
+
+.filter-btn {
+  /* border-color: transparent !important; */
+  border-color: #27273d !important;
+  color: #8c95a9 !important;
+  font-size: 16px !important;
+  background: linear-gradient(
+    180deg,
+    #27273d,
+    #1a1a2a
+  );
+  transform: scale(1);
+  transition: filter 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.275);
+}
+
+.filter-btn:hover {
+  filter: brightness(1.2);
+  transform: scale(1.1) !important;
+    transition: filter 0.2s ease, transform 0.2s ease-out;
+    border-color: var(--color-border-secondary) !important;
+}
+
+.filter-btn:active {
+  filter: brightness(1.4);
+  transform: scale(0.9) !important;
+    transition: filter 0.2s ease, transform 0.2s ease-out;
+    border-color: var(--color-border-secondary) !important;
+}
+
+
+    nav {
+      padding-bottom: 0.6em;
+    }
+
+    header {
+      padding-bottom: 4px !important;
+    }
+
+    .video-context-menu {
+        position: fixed;
+        background-color: var(--color-bg-dark);
+        border: 2px solid #5d678a;
+        border-radius: 15px;
+        min-width: 250px;
+        z-index: 10000;
+        display: none;
+        flex-direction: column;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.737);
+    }
+
+    .video-context-menu.show {
+        display: flex;
+    }
+
+    .video-context-menu-item {
+        padding: 10px 16px;
+        color: #c5cee0;
+        cursor: pointer;
+        border: none;
+        background: none;
+        text-align: left;
+        font-family: inherit;
+        font-size: 0.95em;
+        transition: background-color 0.15s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .video-context-menu-item i {
+        width: 16px;
+        text-align: center;
+        color: #5d678a;
+        transition: color 0.15s ease;
+    }
+
+    .video-context-menu-item:hover {
+        background-color: var(--color-bg-card);
+    }
+
+    /* Specific hover colors for each item */
+    .video-context-menu-item[data-action="open-new-tab"]:hover,
+    .video-context-menu-item[data-action="open-new-tab"]:hover i {
+        color: var(--color-retro-orange);
+    }
+
+    .video-context-menu-item[data-action="copy-link"]:hover,
+    .video-context-menu-item[data-action="copy-link"]:hover i {
+        color: var(--color-retro-green);
+    }
+
+    .video-context-menu-item[data-action="open-thumbnail"]:hover,
+    .video-context-menu-item[data-action="open-thumbnail"]:hover i {
+        color: var(--color-retro-blue);
+    }
+
+    .video-context-menu-item:first-child {
+        border-radius: 15px 15px 0 0;
+        padding-top: 12px;
+    }
+
+    .video-context-menu-item:last-child {
+        border-radius: 0 0 15px 15px;
+        padding-bottom: 12px;
+    }
+
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
+        color: var(--color-text-primary);
+        font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .countdown-text {
+        font-size: 6rem;
+        font-weight: 700;
+        color: var(--color-retro-orange);
+        /* text-shadow: 0 0 20px rgba(138, 148, 191, 0.3); */
+        animation: countdownPulse 1s ease-in-out infinite;
+    }
+    
+    .loading-subtext {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        color: var(--color-text-secondary);
+        letter-spacing: 1px;
+    }
+
+    @keyframes countdownPulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+   <nav style="color: var(--color-text-secondary); font-weight: 500;">
+      <a href="index.html">
+        <i class="fas fa-home"></i>
+        HOME</a>
+      | </span>
+      <a href="#contact">
+        <i class="fa-solid fa-envelopes-bulk" href="#contact"></i>
+        CONTACT OPTIONS</a>
+      <!-- |
+      <a href="#contact">
+        <i class="fa-solid fa-border-top-left"></i>
+        FORMS</a  -->
+    </nav>
+    <div class="global-search-container" style="flex-direction: column; padding-bottom: 15px;">
+        <div class="search-input-wrapper" style="width: 100%; max-width: 600px;">
+            <i class="fas fa-search search-icon" id="animation-search-icon"></i>
+            <input type="text" id="animation-search-input" placeholder="Search animations..." class="global-search-input">
+        </div>
+        <div id="year-buttons-container" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 10px; width: 100%;"></div>
+    </div>
+  </header>
+
+  <div class="bubblebody">
+    <div id="animations-container"></div>
+  </div>
+
+  
+<footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
+  <div class="footer-grid">
+    <div class="footer-section contact-section">
+      <h3 style="margin-bottom: 5px;">Contact Me</h3>
+      <ul class="contact-list">
+        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+        <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
+        <li><i class="fa-solid fa-paper-plane" style="color: var(--color-plane)"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section socials-section">
+      <h3 style="margin-bottom: 5px;">Social Medias</h3>
+      <ul class="socials-list">
+        <li><i class="fab fa-youtube" style="color: var(--color-youtube-red)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+        <li><i class="fab fa-youtube" style="color: var(--color-youtube-pink)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+        <li><i class="fab fa-instagram" style="color: var(--color-instagram)"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+        <li><i class="fab fa-facebook" style="color: var(--color-facebook)"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
+        <li><i class="fab fa-tiktok" style="color: var(--color-tiktok)"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <div class="modal-backdrop" id="imageModal">
+    <div class="modal-content">
+      <button class="modal-close-button">&times;</button>
+      <img src="" class="modal-image" id="modalImage">
+    </div>
+  </div>
+
+  <div class="video-context-menu" id="videoContextMenu">
+    <button class="video-context-menu-item" data-action="open-new-tab"><i class="fas fa-external-link-alt"></i>Open in New Tab</button>
+    <button class="video-context-menu-item" data-action="copy-link"><i class="fas fa-copy"></i>Copy Link</button>
+    <button class="video-context-menu-item" data-action="open-thumbnail"><i class="fas fa-image"></i>Open Thumbnail in New Tab</button>
+  </div>
+
+
+  <script>
+    let API_KEY = null;
+    let USE_WORKER = true;
+    let API_KEY_LOADED = false;
+
+    const isLocalhost = window.location.hostname === 'localhost' ||
+                        window.location.hostname === '127.0.0.1' ||
+                        window.location.hostname.includes('127.0.0.1');
+
+    const apiKeyLoadPromise = new Promise((resolve) => {
+      if (isLocalhost) {
+        fetch('config.js')
+          .then(r => r.text())
+          .then(text => {
+            const match = text.match(/YT_API_KEY\s*=\s*['"]([^'"]+)['"]/);
+            if (match && match[1]) {
+              API_KEY = match[1];
+              USE_WORKER = false;
+            }
+            API_KEY_LOADED = true;
+            resolve();
+          })
+          .catch(() => {
+            API_KEY_LOADED = true;
+            resolve();
+          });
+      } else {
+        API_KEY_LOADED = true;
+        resolve();
+      }
+    });
+
+    const API_BASE_URL = isLocalhost ? 'https://kaziaidah.pages.dev' : '';
+
+    const ANIMATIONS_PLAYLIST_ID = 'PLJYnzg7CheuiRVW_zf3MbSPAX8PEtNtFQ';
+    
+    let allAnimationItems = []; // Store all fetched items for filtering
+
+    async function fetchAllVideosInPlaylist(playlistId) {
+      let items = [];
+      let pageToken = '';
+      let totalResults = null;
+
+      do {
+        let url;
+        if (USE_WORKER) {
+          url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}&maxResults=50`;
+          if (pageToken) url += `&pageToken=${pageToken}`;
+        } else if (API_KEY) {
+          url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,status,contentDetails&playlistId=${playlistId}&maxResults=50&key=${API_KEY}`;
+          if (pageToken) url += `&pageToken=${pageToken}`;
+        } else {
+          break;
+        }
+
+        const response = await fetch(url);
+        if (!response.ok) break;
+        const data = await response.json();
+        const batch = data.items || [];
+        
+        // Filter out private or deleted videos immediately
+        const filteredBatch = batch.filter(item => {
+            const title = item.snippet.title;
+            const isPrivate = title === 'Private video';
+            const isDeleted = title === 'Deleted video';
+            // Also check status if available (local API call includes 'status' part)
+            const privacyStatus = item.status ? item.status.privacyStatus : 'public';
+            return !isPrivate && !isDeleted && privacyStatus !== 'private';
+        });
+
+        items = items.concat(filteredBatch);
+        totalResults = data.pageInfo && data.pageInfo.totalResults ? data.pageInfo.totalResults : null;
+        pageToken = data.nextPageToken || '';
+      } while (pageToken);
+
+      return items;
+    }
+
+    // --------- VIDEO CONTEXT MENU FUNCTIONS ----------
+    const videoContextMenu = document.getElementById('videoContextMenu');
+    let currentContextMenuVideoElement = null;
+
+    function showVideoContextMenu(event, videoElement) {
+        currentContextMenuVideoElement = videoElement;
+        videoContextMenu.classList.add('show');
+        
+        // Position the menu using clientX/clientY (viewport-relative) since menu uses position: fixed
+        let x = event.clientX;
+        let y = event.clientY;
+        
+        // Get menu dimensions after it's displayed
+        const menuRect = videoContextMenu.getBoundingClientRect();
+        const menuWidth = menuRect.width || 200;
+        const menuHeight = menuRect.height || 150;
+        
+        // Get window/viewport dimensions
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        
+        // Adjust X position if menu goes off-screen to the right
+        if (x + menuWidth > windowWidth) {
+            x = windowWidth - menuWidth - 10;
+        }
+        
+        // Adjust Y position if menu goes off-screen at the bottom
+        if (y + menuHeight > windowHeight) {
+            y = windowHeight - menuHeight - 10;
+        }
+        
+        // Ensure menu doesn't go off-screen on the left
+        if (x < 10) {
+            x = 10;
+        }
+        
+        // Ensure menu doesn't go off-screen at the top
+        if (y < 10) {
+            y = 10;
+        }
+        
+        videoContextMenu.style.left = x + 'px';
+        videoContextMenu.style.top = y + 'px';
+    }
+
+    function hideVideoContextMenu() {
+        videoContextMenu.classList.remove('show');
+        currentContextMenuVideoElement = null;
+    }
+
+    // Handle context menu item clicks
+    document.querySelectorAll('.video-context-menu-item').forEach(item => {
+        item.addEventListener('click', async function() {
+            const action = this.dataset.action;
+            if (!currentContextMenuVideoElement) return;
+
+            const videoId = currentContextMenuVideoElement.dataset.videoId;
+            const videoTitle = currentContextMenuVideoElement.dataset.videoTitle;
+            const videoThumbnail = currentContextMenuVideoElement.dataset.videoThumbnail;
+            const videoUrl = `https://youtu.be/${videoId}`;
+
+            switch(action) {
+                case 'open-new-tab':
+                    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+                    break;
+                case 'copy-link':
+                    await navigator.clipboard.writeText(videoUrl);
+                    // Show brief feedback
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        this.innerHTML = originalHTML;
+                    }, 1500);
+                    break;
+                case 'open-thumbnail':
+                    window.open(videoThumbnail, '_blank');
+                    break;
+            }
+
+            hideVideoContextMenu();
+        });
+    });
+
+    // Close context menu when clicking elsewhere
+    document.addEventListener('click', () => {
+        hideVideoContextMenu();
+    });
+
+    // Close context menu on Escape key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            hideVideoContextMenu();
+        }
+    });
+
+    function renderYearButtons(years) {
+        const buttonContainer = document.getElementById('year-buttons-container');
+        if (!buttonContainer) return;
+        buttonContainer.innerHTML = '';
+        
+        years.forEach(year => {
+            const btn = document.createElement('button');
+            btn.textContent = year;
+            btn.className = 'filter-btn'; 
+            
+            btn.addEventListener('click', () => {
+                const yearSection = document.getElementById(`year-${year}`);
+                if (yearSection) {
+                     const header = document.querySelector('header');
+                     const headerHeight = header ? header.offsetHeight : 140;
+                     const yOffset = -(headerHeight + 20); 
+                     const y = yearSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                     window.scrollTo({top: y, behavior: 'smooth'});
+                }
+            });
+            
+            buttonContainer.appendChild(btn);
+        });
+    }
+
+    function renderGroupedByYear(items) {
+      const container = document.getElementById('animations-container');
+      container.innerHTML = '';
+      
+      // Always clear buttons if no items, or update them
+      const buttonContainer = document.getElementById('year-buttons-container');
+      if (buttonContainer) buttonContainer.innerHTML = '';
+
+      if (!items || !items.length) {
+        container.innerHTML = '<p style="text-align:center;color:#E0E0FF;">No animations found.</p>';
+        return;
+      }
+
+      const groups = new Map();
+      items.forEach(item => {
+        const publishedAt = item.contentDetails?.videoPublishedAt || item.snippet.publishedAt;
+        const d = new Date(publishedAt);
+        const y = d.getFullYear();
+        if (!groups.has(y)) groups.set(y, []);
+        groups.get(y).push(item);
+      });
+
+      const years = Array.from(groups.keys()).sort((a,b) => b - a);
+      
+      renderYearButtons(years);
+
+      years.forEach(y => {
+        const yearItems = groups.get(y).slice().sort((a,b) => {
+             const dateA = new Date(a.contentDetails?.videoPublishedAt || a.snippet.publishedAt);
+             const dateB = new Date(b.contentDetails?.videoPublishedAt || b.snippet.publishedAt);
+             return dateB - dateA;
+        });
+
+        const heading = document.createElement('div');
+        heading.className = 'heading-container';
+        heading.id = `year-${y}`; // Add ID for scrolling
+        heading.innerHTML = `<h2 class="checkoutprojects">${y}</h2><hr>`;
+        container.appendChild(heading);
+
+        const grid = document.createElement('div');
+        grid.className = 'video-grid';
+        container.appendChild(grid);
+
+        yearItems.forEach(item => {
+          const videoId = item.snippet.resourceId.videoId;
+          const title = item.snippet.title;
+          const thumb = item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url || '';
+          const el = document.createElement('div');
+          el.className = 'video';
+          el.dataset.videoId = videoId;
+          el.dataset.videoTitle = title;
+          el.dataset.videoThumbnail = thumb;
+
+          el.innerHTML = `
+            <div class="video-thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                <img src="${thumb}" alt="${title}" onerror="this.onerror=null;this.src='https://placehold.co/100%25x150/1A1A2A/ffffff?text=Video+Thumbnail';">
+              </a>
+            </div>
+            <p>${title}</p>
+          `;
+
+          el.addEventListener('contextmenu', function(e) {
+              e.preventDefault();
+              showVideoContextMenu(e, this);
+          });
+
+          grid.appendChild(el);
+        });
+      });
+    }
+
+    // Search Functionality
+    const searchInput = document.getElementById('animation-search-input');
+    const searchIcon = document.getElementById('animation-search-icon');
+
+    function performSearch(query) {
+        const lowerQuery = query.toLowerCase().trim();
+        if (!lowerQuery) {
+            renderGroupedByYear(allAnimationItems);
+            searchIcon.classList.remove('fa-times');
+            searchIcon.classList.add('fa-search');
+            return;
+        }
+
+        const filteredItems = allAnimationItems.filter(item => {
+            return item.snippet.title.toLowerCase().includes(lowerQuery);
+        });
+        
+        renderGroupedByYear(filteredItems);
+        searchIcon.classList.remove('fa-search');
+        searchIcon.classList.add('fa-times');
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        performSearch(e.target.value);
+    });
+    
+    searchIcon.addEventListener('click', () => {
+        if (searchIcon.classList.contains('fa-times')) {
+            searchInput.value = '';
+            performSearch('');
+        }
+    });
+
+    // Loading Screen Logic
+    let loadingInterval;
+    
+    function showLoading() {
+        const container = document.getElementById('animations-container');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="loading-container">
+                <div class="countdown-text" id="loading-countdown">3</div>
+                <div class="loading-subtext">Loading animations...</div>
+            </div>
+        `;
+        
+        let count = 3;
+        const countdownEl = document.getElementById('loading-countdown');
+        
+        if (loadingInterval) clearInterval(loadingInterval);
+        
+        loadingInterval = setInterval(() => {
+            count--;
+            if (count >= 1) {
+                if (countdownEl) countdownEl.textContent = count;
+            } else {
+                if (countdownEl) countdownEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                clearInterval(loadingInterval);
+            }
+        }, 1000);
+    }
+
+    (async function init() {
+      await apiKeyLoadPromise;
+      
+      showLoading();
+      
+      allAnimationItems = await fetchAllVideosInPlaylist(ANIMATIONS_PLAYLIST_ID);
+      
+      if (loadingInterval) clearInterval(loadingInterval);
+      renderGroupedByYear(allAnimationItems);
+    })();
+  </script>
+</body>
+</html>

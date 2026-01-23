@@ -45,7 +45,7 @@ Life is harsh and controlled; the people have little choice and face systemic op
 **Surname Examples:** n/a
 Architecture: Cramped tall buildings. Monotonous, some buildings have worn down colours. Lack of greenery.
 
-# ARETTE  <sub style="font-size: 22px;"><i>The hope</i></sub>
+# ARETTE <sub style="font-size: 22px;"><i>The hope</i></sub>
 Type: Constitutional Monarchy
 Country Name: KA (Kingdom of Arette)
 Government: Centralized monarchy with a council-based system

@@ -1,6 +1,5 @@
 /* ===== COLOR VARIABLES ===== */
 :root {
-    /* Primary Colors */
     --color-bg-dark: #0F0F13;
     --color-bg-card: #1A1A2A;
     --color-bg-card-alt: #15171d;
@@ -12,7 +11,6 @@
     --color-text-meta: #9aa3ad;
     --color-text-dim: #d5e1e5;
     
-    /* Accent Colors */
     --color-accent-blue: #3392ff;
     --color-accent-blue-alt: #2048be;
     --color-accent-blue-lighter: #2b56d5;
@@ -21,7 +19,6 @@
     --color-accent-light-blue-2: #60a7ff;
     --color-accent-light-blue-3: #6993c2;
     
-    /* Social & Icon Colors */
     --color-discord: #8465ff;
     --color-youtube-red: #ff6262;
     --color-youtube-pink: #ff8cb4;
@@ -30,21 +27,18 @@
     --color-tiktok: #7acaff;
     --color-plane: #c34bff;
     
-    /* Design Colors */
     --color-border: #343355;
     --color-border-secondary: #49506e;
     --color-border-tertiary: #4f5776;
     --color-border-quaternary: #364250;
     --color-border-light: #52636f;
     
-    /* Retro/Special Colors */
     --color-retro-green: #9fc387;
     --color-retro-orange: #e59c58;
     --color-retro-red: #d7614c;
     --color-retro-blue: #6993c2;
     --color-retro-yellow: #e8c64c;
     
-    /* Additional Colors */
     --color-neutral-gray: #7a8899;
     --color-neutral-blue: #5d678a;
     --color-neutral-blue-2: #3D3DFF;
@@ -53,10 +47,8 @@
     --color-brown-hover: #482e21;
     --color-brown-card: #3d3531;
     
-    /* Backgrounds for special elements */
     --color-modal-bg: #15171d;
     
-    /* New utility colors */
     --color-text-white: #ffffff;
     --color-text-light-link: #d8e3f9;
     --color-text-pure-white: #fff;
@@ -489,8 +481,9 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: -10px;
-    margin-left: 2px;
+    margin-bottom: -6px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: -15px;
 }
 
@@ -694,9 +687,9 @@ h2.h2comm-me {
 }
 
 .video p {
-    padding: 6px 15px;
+    padding: 6px 10px;
     font-size: 0.9em;
-    min-height: 4em;
+    /* min-height: 4em; */
     display: block;
     text-align: center;
     overflow: hidden;
@@ -1380,6 +1373,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
 .tutorial-option .card-title.card-title--normal { 
     font-size: 1.02em; 
     font-weight: 600; 
+    line-height: 1.2 !important;
 }
 
 /* ===== PROJECTS OPTIONS (Artworks, Lore, Commissions) ===== */

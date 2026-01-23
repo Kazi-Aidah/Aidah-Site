@@ -113,11 +113,22 @@
 
         .video-context-menu-item:hover {
             background-color: var(--color-bg-card);
+        }
+
+        /* Specific hover colors for each item */
+        .video-context-menu-item[data-action="open-new-tab"]:hover,
+        .video-context-menu-item[data-action="open-new-tab"]:hover i {
+            color: var(--color-retro-orange);
+        }
+
+        .video-context-menu-item[data-action="copy-link"]:hover,
+        .video-context-menu-item[data-action="copy-link"]:hover i {
             color: var(--color-retro-green);
         }
 
-        .video-context-menu-item:hover i {
-            color: var(--color-retro-green);
+        .video-context-menu-item[data-action="open-thumbnail"]:hover,
+        .video-context-menu-item[data-action="open-thumbnail"]:hover i {
+            color: var(--color-retro-blue);
         }
 
         .video-context-menu-item:first-child {
@@ -468,10 +479,10 @@
                   case 'copy-link':
                       await navigator.clipboard.writeText(videoUrl);
                       // Show brief feedback
-                      const originalText = this.textContent;
-                      this.textContent = '✓ Copied!';
+                      const originalHTML = this.innerHTML;
+                      this.innerHTML = '<i class="fas fa-check"></i> Copied!';
                       setTimeout(() => {
-                          this.textContent = originalText;
+                          this.innerHTML = originalHTML;
                       }, 1500);
                       break;
                   case 'open-thumbnail':
@@ -493,27 +504,27 @@
                           ]);
                           
                           // Show success feedback
-                          const originalText = this.textContent;
-                          this.textContent = '✓ Copied!';
+                          const originalHTML = this.innerHTML;
+                          this.innerHTML = '<i class="fas fa-check"></i> Copied!';
                           setTimeout(() => {
-                              this.textContent = originalText;
+                              this.innerHTML = originalHTML;
                           }, 1500);
                       } catch (err) {
                           console.error('Failed to copy thumbnail:', err);
                           // Fallback: copy the thumbnail URL instead
                           try {
                               await navigator.clipboard.writeText(videoThumbnail);
-                              const originalText = this.textContent;
-                              this.textContent = '✓ URL Copied!';
+                              const originalHTML = this.innerHTML;
+                              this.innerHTML = '<i class="fas fa-check"></i> URL Copied!';
                               setTimeout(() => {
-                                  this.textContent = originalText;
+                                  this.innerHTML = originalHTML;
                               }, 1500);
                           } catch (urlErr) {
                               console.error('Failed to copy thumbnail URL:', urlErr);
-                              const originalText = this.textContent;
-                              this.textContent = '✗ Failed';
+                              const originalHTML = this.innerHTML;
+                              this.innerHTML = '<i class="fas fa-times"></i> Failed';
                               setTimeout(() => {
-                                  this.textContent = originalText;
+                                  this.innerHTML = originalHTML;
                               }, 1500);
                           }
                       }
@@ -593,6 +604,11 @@
       let currentActiveVideo = null;
       let searchTimeout = null;
 
+      // Search optimization globals
+      let activeFetchPromise = null;
+      let activeFetchPlaylistId = null;
+      let isFetchComplete = false;
+
       const videoGrid = document.getElementById('video-grid');
       const paginationControls = document.getElementById('pagination-controls');
       const allTutHeader = document.getElementById('allTutHeader');
@@ -634,6 +650,45 @@
       const allFilterButtons = document.querySelectorAll('.filter-btn');
       const globalSearchInput = document.getElementById('global-search-input');
       const globalSearchIcon = document.getElementById('global-search-icon');
+
+      const searchRedirectMap = {
+          'mouth': 'mouth',
+          'lip': 'mouth',
+          'lips': 'mouth',
+          'magical': 'Magical',
+          'magic': 'Magical',
+          'glow': 'Glow',
+          'walking': 'walking/running',
+          'walk': 'walking/running',
+          'running': 'walking/running',
+          'run': 'walking/running',
+          'pose': 'posing',
+          'posing': 'posing',
+          'movements': 'movements',
+          'movement': 'movements',
+          'wings': 'Wings',
+          'wing': 'Wings',
+          'vehicles': 'Vehicles',
+          'vehicle': 'Vehicles',
+          'animal': 'Animals',
+          'animals': 'Animals',
+          'background': 'Backgrounds',
+          'backgrounds': 'Backgrounds',
+          'instruments': 'Instruments',
+          'instrument': 'Instruments',
+          'head': 'head/body turns',
+          'body': 'head/body turns',
+          'head turn': 'head/body turns',
+          'head turns': 'head/body turns',
+          'separation': 'separation',
+          'facial': 'facial',
+          'eyes': 'eyes',
+          'eye': 'eyes',
+          'hand': 'hands',
+          'hands': 'hands',
+          'hair': 'hair',
+          'beginner': 'Beginner'
+      };
 
       function deactivateAllFilters(excludeButton = null) {
           allFilterButtons.forEach(btn => {
@@ -693,15 +748,22 @@
               this.classList.add('active');
               this.setAttribute('aria-pressed', 'true');
 
-              globalSearchInput.value = '';
+              if (!window.skipClearSearchInput) {
+                  globalSearchInput.value = '';
+              }
               updateSearchIcon();
               highlightSearch('');
+
+              // Reset search cache
+              activeFetchPromise = null;
+              activeFetchPlaylistId = null;
+              isFetchComplete = false;
+              allVideosInCurrentPlaylist = new Map();
 
               await fetchPlaylistTotal(newPlaylistId);
               currentPlaylistId = newPlaylistId;
               currentPage = 1;
               nextPageTokens = {};
-              allVideosInCurrentPlaylist = new Map();
 
               await fetchVideosForPage(currentPage);
               updateHeaderText();
@@ -724,9 +786,24 @@
           }
 
           if (globalSearchInput.value.trim() !== '') {
-              await fetchAllVideosInPlaylist(currentPlaylistId);
-              displayVideos(filterVideosBySearch(Array.from(allVideosInCurrentPlaylist.values()), globalSearchInput.value.trim()));
-              return;
+              // If we are redirecting from a search keyword, we don't want to filter the videos by the search term again.
+              // We check if the current search term maps to the currently active playlist.
+              const currentTerm = globalSearchInput.value.trim().toLowerCase();
+              const activeFilterBtn = document.querySelector('.filter-btn.active');
+              const activeFilterName = activeFilterBtn ? activeFilterBtn.dataset.filter : null;
+              
+              const mappedFilterName = searchRedirectMap[currentTerm];
+              
+              // If the search term redirects to the current playlist, show ALL videos (don't filter)
+              if (mappedFilterName && mappedFilterName === activeFilterName) {
+                  // Do standard page fetch (show all videos in playlist)
+              } else if (window.skipClearSearchInput) {
+                  // Fallback for the transition period if logic above misses (though above should cover it)
+              } else {
+                  await fetchAllVideosInPlaylist(currentPlaylistId);
+                  displayVideos(filterVideosBySearch(Array.from(allVideosInCurrentPlaylist.values()), globalSearchInput.value.trim()));
+                  return;
+              }
           }
 
           const pageToken = nextPageTokens[page - 1] || '';
@@ -786,58 +863,84 @@
 
       // --------- FETCHALLVIDEOSINPLAYLIST ----------
       async function fetchAllVideosInPlaylist(playlistId) {
-          allVideosInCurrentPlaylist = new Map();
-          let pageToken = '';
-          let totalFetched = 0;
+          if (activeFetchPlaylistId === playlistId && activeFetchPromise) {
+              return activeFetchPromise;
+          }
 
-          try {
-              let playlistDetailsUrl;
-              
-              if (USE_WORKER) {
-                  playlistDetailsUrl = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
-              } else if (API_KEY) {
-                  playlistDetailsUrl = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
-              } else {
-                  throw new Error('No API key available');
-              }
-              
-              const playlistDetailsResponse = await fetch(playlistDetailsUrl);
-              const playlistDetailsData = await playlistDetailsResponse.json();
-              console.log('Playlist details:', playlistDetailsData);
-              const totalPlaylistItems = playlistDetailsData.pageInfo?.totalResults || playlistDetailsData.items?.[0]?.contentDetails?.itemCount || 0;
-              currentPlaylistTotal = totalPlaylistItems;
+          activeFetchPlaylistId = playlistId;
+          isFetchComplete = false;
+          
+          activeFetchPromise = (async () => {
+              allVideosInCurrentPlaylist = new Map();
+              let pageToken = '';
+              let totalFetched = 0;
 
-              do {
-                  let url;
+              try {
+                  let playlistDetailsUrl;
                   
                   if (USE_WORKER) {
-                      url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}&maxResults=50`;
-                      if (pageToken) url += `&pageToken=${pageToken}`;
+                      playlistDetailsUrl = `${API_BASE_URL}/api/youtube?playlist=${playlistId}`;
                   } else if (API_KEY) {
-                      url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}`;
-                      if (pageToken) url += `&pageToken=${pageToken}`;
+                      playlistDetailsUrl = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${playlistId}&key=${API_KEY}`;
                   } else {
-                      break;
+                      throw new Error('No API key available');
                   }
                   
-                  const response = await fetch(url);
-                  const data = await response.json();
-                  console.log('Batch of videos:', data);
-
-                  if (response.ok) {
-                      data.items?.forEach(item => {
-                          allVideosInCurrentPlaylist.set(item.snippet.resourceId.videoId, item);
-                      });
-                      totalFetched += data.items?.length || 0;
-                      pageToken = data.nextPageToken;
-                  } else {
-                      console.error(`Error fetching all videos: ${data.error?.message || 'Unknown error'}`);
-                      break;
+                  const playlistDetailsResponse = await fetch(playlistDetailsUrl);
+                  const playlistDetailsData = await playlistDetailsResponse.json();
+                  // console.log('Playlist details:', playlistDetailsData);
+                  // Prioritize itemCount from contentDetails (playlists endpoint)
+                  // pageInfo.totalResults is often 1 for the playlists endpoint itself
+                  const totalPlaylistItems = playlistDetailsData.items?.[0]?.contentDetails?.itemCount || playlistDetailsData.pageInfo?.totalResults || 0;
+                  
+                  if (currentPlaylistId === playlistId) {
+                      currentPlaylistTotal = totalPlaylistItems;
                   }
-              } while (pageToken && totalFetched < totalPlaylistItems);
-          } catch (error) {
-              console.error('Failed to fetch all videos in playlist:', error);
-          }
+
+                  do {
+                      // Abort if playlist changed
+                      if (currentPlaylistId !== playlistId) return;
+
+                      let url;
+                      
+                      if (USE_WORKER) {
+                          url = `${API_BASE_URL}/api/youtube?playlist=${playlistId}&maxResults=50`;
+                          if (pageToken) url += `&pageToken=${pageToken}`;
+                      } else if (API_KEY) {
+                          url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}`;
+                          if (pageToken) url += `&pageToken=${pageToken}`;
+                      } else {
+                          break;
+                      }
+                      
+                      const response = await fetch(url);
+                      const data = await response.json();
+                      // console.log('Batch of videos:', data);
+
+                      if (response.ok) {
+                          // Abort if playlist changed
+                          if (currentPlaylistId !== playlistId) return;
+
+                          data.items?.forEach(item => {
+                              allVideosInCurrentPlaylist.set(item.snippet.resourceId.videoId, item);
+                          });
+                          totalFetched += data.items?.length || 0;
+                          pageToken = data.nextPageToken;
+                      } else {
+                          console.error(`Error fetching all videos: ${data.error?.message || 'Unknown error'}`);
+                          break;
+                      }
+                  } while (pageToken && totalFetched < totalPlaylistItems);
+                  
+                  if (currentPlaylistId === playlistId) {
+                      isFetchComplete = true;
+                  }
+              } catch (error) {
+                  console.error('Failed to fetch all videos in playlist:', error);
+              }
+          })();
+
+          return activeFetchPromise;
       }
 
       function displayVideos(videosToDisplay) {
@@ -1005,6 +1108,33 @@
 
       // --------- PERFORMING GLOBAL SEARCH ----------
       async function performGlobalSearch(query) {
+          // Check for redirect keywords
+          const lowerQuery = query.toLowerCase().trim();
+          if (searchRedirectMap.hasOwnProperty(lowerQuery)) {
+              const filterName = searchRedirectMap[lowerQuery];
+              const filterBtn = document.querySelector(`.filter-btn[data-filter="${filterName}"]`);
+              if (filterBtn) {
+                  if (filterBtn.classList.contains('active')) {
+                       // Already active. Reset search to show full playlist.
+                       globalSearchInput.value = '';
+                       updateSearchIcon();
+                       // Just refresh the current page to ensure full list is shown
+                       fetchVideosForPage(1);
+                       return;
+                  } else {
+                      // Set a flag so the click handler knows NOT to clear the search input
+                      window.skipClearSearchInput = true;
+                      // Don't reset flag immediately, let the async operations in the click handler finish using it
+                      filterBtn.click();
+                      // We can reset it after a short delay to ensure the event loop has processed the click handler
+                      setTimeout(() => {
+                          window.skipClearSearchInput = false;
+                      }, 100);
+                      return;
+                  }
+              }
+          }
+
           // Make sure API key is loaded before searching
           await apiKeyLoadPromise;
           
@@ -1019,7 +1149,7 @@
                   allTutorialsBtn.classList.add('active');
               }
           } else {
-              if (allVideosInCurrentPlaylist.size === 0) {
+              if (!isFetchComplete || activeFetchPlaylistId !== currentPlaylistId) {
                   showLoadingModal();
                   await fetchAllVideosInPlaylist(currentPlaylistId);
                   hideLoadingModal();
@@ -1047,7 +1177,15 @@
       }
 
       function updateHeaderText(count = null) {
-          if (globalSearchInput.value.trim() !== '') {
+          // If we are showing a playlist via redirection (search input has text but skipClearSearchInput was used),
+          // we should behave as if we are in "filter mode" (else block), not "search mode" (if block).
+          // However, since we can't easily check skipClearSearchInput here (it resets quickly),
+          // we check if we are currently viewing a specific category filter.
+          
+          const activeFilterButton = document.querySelector('.filter-btn.active');
+          const isRedirectedPlaylistView = activeFilterButton && activeFilterButton.dataset.filter !== 'All Tutorials' && globalSearchInput.value.trim() !== '';
+
+          if (globalSearchInput.value.trim() !== '' && !isRedirectedPlaylistView) {
               allTutHeader.textContent = `${count} Tutorials found`;
               byMeSubheader.innerHTML = '<a href="#" id="clearSearchLink">Go back to All Tutorials</a>';
               document.getElementById('clearSearchLink').addEventListener('click', (event) => {
@@ -1057,7 +1195,6 @@
                   performGlobalSearch('');
               });
           } else {
-              const activeFilterButton = document.querySelector('.filter-btn.active');
               if (activeFilterButton && activeFilterButton.dataset.filter !== 'All Tutorials') {
                   allTutHeader.textContent = activeFilterButton.dataset.filter;
                   const total = (typeof currentPlaylistTotal === 'number' && currentPlaylistTotal >= 0) ? currentPlaylistTotal : count;
@@ -1125,6 +1262,14 @@
                     console.warn('Could not fetch initial playlist total', err);
             }
             fetchVideosForPage(currentPage);
+
+            // Background fetch for search optimization
+            setTimeout(() => {
+                if (currentPlaylistId) {
+                    // console.log('Starting background fetch for search optimization...');
+                    fetchAllVideosInPlaylist(currentPlaylistId);
+                }
+            }, 1000);
     });
   </script>
 </body>

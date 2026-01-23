@@ -175,3 +175,14 @@ https://colorhunt.co/palette/313647435663a3b087fff8d4
 ```palette
 https://colorhunt.co/palette/efece38fabd44a70a9000000
 ```
+
+
+
+```palette
+#e59cd8, #9fcc87, #6c93c2
+{"height": 20}
+```
+
+Hello! This is for setting the theme yay
+
+## Nora is a fish

@@ -24,7 +24,7 @@ export async function onRequest(context) {
     }
 
     // Build the YouTube API URL
-    let youtubeUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${playlistId}&key=${apiKey}`;
+    let youtubeUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails,status&maxResults=${maxResults}&playlistId=${playlistId}&key=${apiKey}`;
     
     // Add pageToken if provided
     if (pageToken) {

@@ -1,70 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,wdth,slnt@1..144,100..900,62.5..100,-10..0&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-  <title>Aidah's Coding Projects</title>
+  <title>Aidah's Portfolio</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="icon" type="image/png" href="images/favicon.png">
   
   <style>
-
-    nav a:hover {
-    color: var(--color-accent-light-blue-3);
-    transform: translateY(-2px);
-    text-decoration: none;
+    :root {
+      --color-text-primary-or: rgb(198, 213, 233);
     }
 
-    .bubblebody {
-      background: #1A1A2A;
-      color: #C7D0EF;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      max-width: 900px;
-      margin: 20px auto;
-      font-family: 'JetBrains Mono', monospace;
-      line-height: 1.6;
+    .portfolio-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      border: 2px solid var(--color-border);
+      background-color: var(--color-bg-dark);
+      display: block !important;
+      border-top: none;
     }
 
+    nav.grid-nav {
+      display: flex; 
+      border-bottom: 2px solid var(--color-border);
+      position: sticky;
+      top: 0px;
+      border-top: 2px solid var(--color-border) !important;
+      background-color: var(--color-bg-dark);
+      z-index: 1000;
+      width: 100%;
+    }
 
-    /* ===== INTRO ===== */
-    .intro {
+    nav.grid-nav > * {
+      border-right: 2px solid var(--color-border);
+      border-radius: 12%;
       display: flex;
-      gap: 1.5em;
-      margin-bottom: 2em;
-      color: #C7D0EF;
       align-items: center;
+      justify-content: center;
+      padding: 15px 25px;
+      text-decoration: none;
+      color: var(--color-text-secondary);
+      font-size: 0.9em;
+      margin: 0; 
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .intro-image {
-      min-width: 500px;
-      height: stretch;
-      background: #3D3DFF;
-      border-radius: 9px;
-      background-image: url('../images/babypic.jpg');
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    nav.grid-nav > *:last-child {
+      border-right: none;
+      flex-grow: 1;
+    }
+
+    nav.grid-nav .nav-name {
+      justify-content: flex-start;
+      padding-left: 25px;
+      font-weight: 600;
+      color: var(--color-text-primary-or);
+      margin-right: 0;
+    }
+
+    nav.grid-nav .menu-icon {
+      font-size: 1.2em;
+      padding: 15px 20px;
+      position: relative;
       cursor: pointer;
+    }
+
+    /* Menu Styles */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--color-bg-dark);
+      border: 2px solid var(--color-border);
+      border-left: none !important;
+      border-top: none;
+      min-width: 200px;
+      z-index: 2000;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      padding: 0 !important;
+    }
+
+    .dropdown-content a {
+      color: var(--color-text-secondary);
+      padding: 12px 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95em;
+      border-bottom: 1px solid var(--color-border);
       transition: all 0.2s ease;
     }
 
-    .intro-image:hover {
-        background-image: url('../images/babypic2.jpg');
-        transition: all 0.2s ease;
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+    .dropdown-content a:first-child:hover,
+    .dropdown-content a:first-child:hover i:first-child {
+      color: var(--color-retro-red) !important;
+      background-color: rgba(78, 24, 24, 0.649) !important;
     }
 
-    .intro p {
-      padding-left: 10px;
+    .dropdown-content a:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--color-retro-orange);
+      /* padding-left: 25px; */
     }
 
-    /* ===== PROJECT CARDS ===== */
+    .dropdown-content a i {
+      width: 20px;
+      text-align: center;
+      color: var(--color-retro-orange);
+    }
+
+    .menu-icon:hover .dropdown-content {
+      display: block;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 50px;
+      padding: 60px 40px;
+      align-items: start;
+      border-bottom: 2px solid var(--color-border);
+      height: 250px;
+    }
+
+    .hero-image-box {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1;
+      border: 2px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .hero-image-box:hover {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1;
+      border: 2px solid var(--color-retro-orange) !important;
+    }
+
+    .hero-image-box img {
+      width: 100%;
+      /* height: 80%; */
+      object-fit: cover;
+    }
+
+    .hero-content h1 {
+      font-family: 'Google Sans Flex';
+      margin-bottom: -10px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.07em !important;
+      font-size: 2.2em;
+      margin-top: 0;
+      /* color: var(--color-text-primary-or); */
+      color: var(--color-retro-orange);
+    }
+
+    .hello-tag {
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .hero-description {
+      line-height: 1.8;
+      font-size: 1.1em;
+      color: var(--color-text-secondary);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      padding: 60px 40px;
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    .info-section h2 {
+      font-size: 1.6em;
+      margin-bottom: 25px;
+      font-weight: 600;
+      color: var(--color-retro-orange);
+    }
+
+    .info-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .info-section ul li {
+      margin-bottom: 18px;
+      position: relative;
+      padding-left: 25px;
+      line-height: 1.6;
+      font-size: 1.05em;
+      color: var(--color-text-secondary);
+    }
+
+    .info-section ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--color-retro-orange);
+      font-size: 1.2em;
+    }
+
+    .sharp-section {
+      border-bottom: 2px solid var(--color-border);
+      padding: 40px; /* Reduced from 60px 40px */
+    }
+
+    #teaching.sharp-section {
+      padding-top: 0; /* Remove top padding to close gap with hero section */
+    }
+
+    /* Topbar Hover Colors */
+    nav.grid-nav > a:nth-of-type(2):hover {
+      color: var(--color-retro-orange) !important;
+    }
+
+    nav.grid-nav > a:nth-of-type(3):hover {
+      color: var(--color-retro-green) !important;
+    }
+
+    nav.grid-nav > a:nth-of-type(4):hover {
+      color: var(--color-retro-blue) !important;
+    }
+
+    .sharp-section h2 {
+      font-family: 'Google Sans Flex';
+      font-weight: 700 !important;
+      font-size: 1.8em;
+      margin-top: -10px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--color-text-primary-or);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sharp-section p {
+      line-height: 1.8;
+      font-size: 1.1em;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    .sharp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border: 2px solid var(--color-border);
+    }
+
+    .sharp-table th, .sharp-table td {
+      border: 2px solid var(--color-border);
+      padding: 15px 20px;
+      text-align: left;
+      font-size: 0.95em;
+    }
+
+    .sharp-table th {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--color-text-primary-or);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sharp-table td {
+      color: var(--color-text-secondary);
+    }
+
+    .skills-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .skill-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .skill-label {
+      font-size: 1em;
+      font-weight: 600;
+      color: var(--color-retro-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .skill-label::after {
+      content: "";
+      flex-grow: 1;
+      height: 2px;
+      background: var(--color-border);
+    }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .skill-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid var(--color-border);
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--color-text-secondary);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: default;
+    }
+
+    .skill-chip:hover {
+      background: rgba(84, 128, 178, 0.241);
+      border-color: var(--color-retro-blue);
+      color: var(--color-text-primary-or);
+      transform: translateY(-2px);
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .achievement-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid var(--color-border);
+      padding: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .achievement-card:hover {
+      border-color: var(--color-retro-green);
+      background: rgba(159, 195, 135, 0.03);
+    }
+
+    .achievement-icon {
+      color: var(--color-retro-green);
+      font-size: 1.4em;
+      margin-top: 2px;
+    }
+
+    .achievement-info h4 {
+      margin: 0 0 5px 0;
+      font-size: 1.05em;
+      color: var(--color-text-primary-or);
+    }
+
+    .achievement-info p {
+      margin: 0;
+      font-size: 0.9em;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== RESEARCH INTERESTS ===== */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .research-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-secondary);
+      font-size: 0.95em;
+      transition: all 0.2s ease;
+    }
+
+    .research-item i {
+      color: var(--color-retro-orange);
+      font-size: 1.2em;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .research-item:hover {
+      border-color: var(--color-retro-orange);
+      background: rgba(229, 156, 88, 0.03);
+      color: var(--color-text-primary-or);
+      transform: translateX(5px);
+    }
+
     .c-project-cards {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -76,7 +430,7 @@
     .c-project-card {
         background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-bg-card-alt) 100%);
         border: 3px solid var(--color-border-gray-primary);
-        border-radius: 20px;
+        border-radius: 2px;
         overflow: hidden;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -91,17 +445,6 @@
         box-shadow: 0 12px 30px rgba(105, 147, 194, 0.3), 0 0 20px rgba(105, 147, 194, 0.2);
     }
 
-    .c-project-card:active {
-        transform: translateY(-2px) scale(0.99);
-    }
-
-    .c-project-card a {
-        display: flex;
-        flex-direction: column;
-        text-decoration: none;
-        color: inherit;
-    }
-
     .c-project-card img {
         width: 100%;
         height: 240px;
@@ -110,10 +453,7 @@
         border-radius: 17px 17px 0 0;
         transition: filter 0.3s ease;
         border-bottom: 2px solid var(--color-border-gray-primary);
-    }
-
-    .c-project-card:hover img {
-        filter: brightness(1.1) contrast(1.05);
+        border-radius: 2px !important;
     }
 
     .c-project-card-content {
@@ -124,23 +464,13 @@
         flex-grow: 1;
     }
 
-    /* .c-project-card h3 {
-        font-family: 'GeneralSans', sans-serif;
-        font-size: 1.5em;
-        font-weight: 700;
-        margin: 0;
-        color: var(--color-text-primary);
-        letter-spacing: 0.03em;
-        transition: color 0.3s ease;
-    } */
-
     .c-project-card h3 {
         font-family: 'GeneralSans', sans-serif;
         font-size: 1.5em;
         font-weight: 700;
         margin: -6px;
         margin-top: -12px;
-        color: var(--color-text-primary);
+        color: var(--color-text-primary-or);
         letter-spacing: 0.03em;
         transition: all 0.3s ease;
         display: flex;
@@ -160,19 +490,13 @@
 
     .c-project-card:hover h3::before,
     .c-project-card:hover h3::after {
-      content: "";
-      flex-grow: 1;
-      height: 2px;
       background-color: var(--color-retro-orange);
-      opacity: 0.7;
-      transition: all 0.3s ease;
+      height: 2px;
     }
 
     .c-project-card:hover h3 {
         color: var(--color-retro-green);
         letter-spacing: 0.07em;
-        transition: all 0.3s ease;
-        gap: 0.7em;
     }
 
     .c-project-card p {
@@ -180,15 +504,9 @@
         color: var(--color-text-secondary);
         margin: 0;
         line-height: 1.6;
-        transition: color 0.3s ease;
         font-weight: 300;
     }
 
-    .c-project-card:hover p {
-        color: var(--color-text-light);
-    }
-
-    /* ===== PROJECT MODAL ===== */
     .project-modal {
         display: none;
         position: fixed;
@@ -208,20 +526,6 @@
         justify-content: center;
     }
 
-    .project-modal.closing {
-        animation: fadeOut 0.3s ease forwards;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-
     .project-modal-content {
         background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-bg-card-alt) 100%);
         border-radius: 25px;
@@ -230,36 +534,9 @@
         max-width: 600px;
         width: 90%;
         max-height: 85vh;
-        /* box-shadow: 0 20px 60px rgba(51, 146, 255, 0.4); */
         display: flex;
         flex-direction: column;
         animation: slideUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .project-modal.closing .project-modal-content {
-        animation: slideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    @keyframes slideUp {
-        from { 
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to { 
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideDown {
-        from { 
-            opacity: 1;
-            transform: translateY(0);
-        }
-        to { 
-            opacity: 0;
-            transform: translateY(30px);
-        }
     }
 
     .project-modal-header {
@@ -294,25 +571,15 @@
     }
 
     .project-modal-close:hover {
-        background: var(--color-retro-blue);
+        background: var(--color-retro-red);
         color: white;
-        border-color: var(--color-retro-blue);
+        border-color: var(--color-retro-red);
     }
 
     .project-modal-body {
         overflow-y: auto;
         padding: 30px;
         flex-grow: 1;
-    }
-
-    .project-modal-body ul {
-        padding-left: 20px;
-        margin: 4px 0;
-    }
-
-    .project-modal-body li {
-        margin-left: 0;
-        padding-left: 0;
     }
 
     .project-modal-body img {
@@ -326,7 +593,7 @@
     .project-modal-body h3 {
         font-family: 'GeneralSans', sans-serif;
         font-size: 1.5em;
-        color: var(--color-text-primary);
+        color: var(--color-text-primary-or);
         margin: 15px 0 0px 0;
     }
 
@@ -383,27 +650,15 @@
         box-shadow: 0 8px 20px rgba(51, 146, 255, 0.3);
     }
 
-    @media (max-width: 700px) {
-        .project-modal-content {
-            max-width: 95%;
-        }
-
-        .project-modal-header {
-            padding: 15px 20px;
-        }
-
-        .project-modal-header h2 {
-            font-size: 1.4em;
-        }
-
-        .project-modal-body {
-            padding: 20px;
-        }
-
-        .project-modal-footer {
-            padding: 15px 20px;
-            flex-direction: column;
-        }
+    .bubblebody {
+      display: block !important;
+      margin: 40px auto !important;
+      background: var(--color-bg-card);
+      width: 80%;
+      max-width: 900px;
+      padding: 10px 40px;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
     .projects-section-title {
@@ -411,284 +666,136 @@
         font-family: 'GeneralSans', sans-serif;
         font-weight: 700;
         color: var(--color-text-secondary);
-        margin: -10px 0px 20px 10px;
+        margin: 20px 0px 20px 10px;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
-    .accordion-container {
-            background: var(--color-bg-dark) !important;
-            padding: 0;
-    }
-    .accordion-content {
-      background-color: #181925;
-      border-radius: 14px;
-      padding-left: 18px !important;
-      padding-right: 18px !important;
-    }
-    /* ===== LEARNING SECTION ===== */
-    .learning-section {
-        margin-bottom: 20px;
-        padding: 15px;
-        border-radius: 12px;
-        background: #3538597b;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.408);
-        transition: all 0.3s ease;
+    footer {
+      display: flex !important;
+      justify-content: center;
+      width: 100%;
     }
 
-    .learning-section:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        transform: translateY(-2px);
-    }
-
-    .learning-title {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 1.1em;
-        font-weight: 700;
-        color: var(--color-text-light);
-        margin: 0 0 15px 0;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        text-decoration: none;
-        padding-bottom: 10px;
-        border-bottom: 2px solid var(--color-border-quaternary);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .learning-title::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--color-retro-green);
-    }
-
-    .learning-item {
-        font-size: 0.95em;
-        color: var(--color-text-secondary);
-        margin: 12px 0;
-        line-height: 1.7;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 15px;
-        border-radius: 6px;
-        background-color: rgba(67, 81, 108, 0.416);
-        transition: all 0.3s ease;
-        border-left: 3px solid transparent;
-    }
-
-    .learning-item:hover {
-        background-color: rgba(79, 111, 166, 0.386);
-        transform: translateX(5px);
-        border-left: 3px solid var(--color-accent-blue);
-    }
-
-    .learning-item i {
-        min-width: 24px;
-        text-align: center;
-        font-size: 1.2em;
-        transition: all 0.3s ease;
-    }
-
-    .learning-item:hover i {
-        transform: scale(1.2);
-    }
-
-    .learning-item strong {
-        color: var(--color-text-light);
-        font-weight: 600;
-    }
-
-    .learning-item a {
-        color: var(--color-accent-light-blue);
-        text-decoration: none;
-        transition: all 0.2s ease;
-        font-weight: 500;
-    }
-
-    .learning-item a:hover {
-        color: var(--color-accent-blue);
-        text-decoration: underline;
-    }
-
-    .learning-item a {
-      padding-left: -00px !important;
-      padding-bottom: 3px !important;
-    }
-
-    /* The image:text sections breakage */
-    @media (max-width: 1000px) {
-      .intro, .process-text {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-      .intro p {
-        text-align: left;
-      }
-      .intro-image, .process-image {
-        min-width: unset;
-        width: 90%;
-        max-width: 400px;
-        height: 300px;
-        margin-bottom: -10px;
-      }
-      .bubblebody {
-        width: 85%;
-        padding: 15px;
-        max-width: 1000px;
-      }
-      .intro-image {
-        width: 100%;
-        max-width: 800px;
-        max-height: 400px;
-      }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 700px) {
-        .c-project-cards {
-            grid-template-columns: 1fr;
-            gap: 1.5em;
-        }
-
-        .c-project-card img {
-            height: 200px;
-        }
-
-        .c-project-card-content {
-            padding: 18px;
-            gap: 10px;
-        }
-
-        .c-project-card h3 {
-            font-size: 1.3em;
-        }
-
-        .c-project-card p {
-            font-size: 0.9em;
-        }
-
-        .projects-section-title {
-            font-size: 1.4em;
-        }
+      nav.grid-nav {
+        grid-template-columns: 60px 1fr;
+      }
+      nav.grid-nav > *:not(.menu-icon):not(.nav-name) {
+        display: none;
+      }
+      nav.grid-nav .nav-name {
+        border-right: none !important;
+      }
+      .hero, .info-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-image-box {
+        max-width: 300px;
+        margin: 0 auto;
+      }
     }
-
-    .project-modal-body img[src*="shields.io"] {
-      max-width: 210px;
-      height: auto;
-      justify-content: right !important;
-      display: block;
-    }
-
-
   </style>
   <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body>
-  <header>
-    <nav style="color: var(--color-text-secondary); font-weight: 500; font-size: 1.0em;">
-      <a href="../index.html"><i class="fas fa-home"></i> HOME</a> |
-      <a href="#contact"><i class="fas fa-phone"></i> </a> |
-      <a href="https://github.com/Kazi-Aidah"><i class="fab fa-github"></i> GITHUB </a>
+  <div class="portfolio-container">
+    <nav class="grid-nav">
+      <div class="menu-icon">
+        <i class="fas fa-bars"></i>
+        <div class="dropdown-content">
+          <a href="../index.html"><i class="fas fa-home"></i> Go Home</a>
+          <a href="#"><i class="fas fa-user"></i> About</a>
+          <a href="#obsidian-plugins"><i class="fa-solid fa-cube"></i> Projects</a>
+          <a href="#teaching"><i class="fa-solid fa-heart"></i> Teaching</a>
+          <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+        </div>
+      </div>
+      <a href="../index.html" class="nav-name">Kazi Aidah Haque</a>
+      <a href="#">About</a>
+      <a href="#obsidian-plugins">Projects</a>
+      <a href="#teaching">Teaching</a>
+      <!-- <a href="#">Publications</a> -->
+      <a href="#contact">Contact</a>
+      <div></div>
     </nav>
-  </header>
 
-  <div class="bubblebody">
-    <section class="intro">
-      <div class="intro-image" data-modal-title="My Intro Image"></div>
-      <p>
-        As you can see, I have been using a computer since I was a baby! I have always been fascinated by technology and art, which is why I love making animations and recently got into coding.
-        <br>
-        <br>
-        On this page, you will find a collection of my coding projects that I have created over time. Feel free to explore and learn more about my work!
-      </p>
+    <section class="hero">
+      <div class="hero-image-box">
+        <img src="../images/babypic.jpg" alt="Aidah">
+      </div>
+      <div class="hero-content">
+        <h1>Aidah's Portfolio</h1>
+        <p class="hero-description">
+          <span class="hello-tag">Hello</span>, I'm Aidah! I like solving problems, helping people, and making things both beautiful and easy to use. Currently doing my Bachelors in CSE, aiming for cybersecurity.
+        </p>
+      </div>
     </section>
 
-<hr>
- 
-    <div class="accordion-container">
-        <div class="accordion-item">
-            <button class="accordion-header"><i class="fas fa-graduation-cap"></i> LEARNING  <span class="arrow">→</span></button>
-            <div class="accordion-content">
-                <div class="learning-section">
-                    <h3 class="learning-title">Current Focus</h3>
-                    <p class="learning-item"><i class="fas fa-code" style="color: var(--color-accent-blue);"></i> <strong>Javascript</strong></p>
-                    <p class="learning-item"><i class="fas fa-terminal" style="color: var(--color-retro-green);"></i> <strong>Web Development</strong></p>
-                    <p class="learning-item"><i class="fas fa-shield-alt" style="color: var(--color-retro-orange);"></i> <strong>Cybersecurity Fundamentals</strong></p>
-                </div>
-
-                <div class="learning-section">
-                    <h3 class="learning-title">Completed Courses</h3>
-                    <p class="learning-item">
-                        <i class="fas fa-check-circle" style="color: var(--color-retro-green);"></i>
-                        <a href="https://www.coursera.org/learn/foundations-of-cybersecurity?" target="_blank" rel="noopener">Google Foundations of Cybersecurity Course</a>
-                    </p>
-                    <!-- <p class="learning-item">
-                        <i class="fas fa-check-circle" style="color: var(--color-retro-green);"></i>
-                        <a href="https://www.freecodecamp.org/learn/2022/responsive-web-design/" target="_blank" rel="noopener">FreeCodeCamp Responsive Web Design</a>
-                    </p> -->
-                </div>
-
-                <div class="learning-section">
-                    <h3 class="learning-title">In Progress</h3>
-                    <p class="learning-item">
-                        <i class="fas fa-book" style="color: var(--color-retro-orange);"></i>
-                        <a href="https://learning.edx.org/course/course-v1:HarvardX+CS50+X/home" target="_blank" rel="noopener">Harvard CS50 Computer Science Course</a>
-                    </p>
-                    <p class="learning-item">
-                        <i class="fas fa-book" style="color: var(--color-retro-orange);"></i>
-                        <a href="https://learning.edx.org/course/course-v1:HarvardX+CS50CS+Cybersecurity/home" target="_blank" rel="noopener">Harvard CS50 Cybersecurity Course</a>
-                    </p>
-                </div>
-                
-                
-            </div>
-        </div>
-    </div> 
-
-    <hr>
-
-  </div>
-
-  <div class="bubblebody">
-    
-  <div class="bubblebody">
-    <h2 class="projects-section-title"><i class="fa-solid fa-cube"></i> Obsidian Plugins</h2>
-    <div class="c-project-cards">
-      <div class="c-project-card" data-project-id="always-color-text">
-        <img src="https://github.com/user-attachments/assets/905f5f4b-8b8b-440a-b00f-b32548e721db" alt="Always Color Text">
-        <div class="c-project-card-content">
-          <h3>Always Color Text</h3>
-          <p>Automatically color any word, phrase, or date across your vault. Supports regex patterns, custom color styles, and works in both Live Preview and Reading mode.</p>
-        </div>
+    <section class="sharp-section" id="teaching">
+      <br>
+      <h2><i class="fa-solid fa-heart"></i> Creative Showcase</h2>
+      <p>A glimpse into my journey as an animator and tutorial creator.
+        <!-- I've been making and sharing these since I was 11. -->
+      </p>
+      
+      <div class="c-project-cards" style="margin-top: 30px; display: flex; flex-wrap: wrap; gap: 20px;">
+        <a href="animations.html" class="c-project-card" style="flex: 1; min-width: 300px;">
+          <img src="images/ciel_move.gif" alt="Animations" onerror="this.src='https://placehold.co/600x337/1A1A2A/ffffff?text=Animation+Showcase'">
+          <div class="c-project-card-content">
+            <h3>2D Animations</h3>
+            <p>I started animating in 2019. Here's a collection of all my animations over the years!</p>
+          </div>
+        </a>
+        <a href="tutorials.html" class="c-project-card" style="flex: 1; min-width: 300px;">
+          <img src="images/aidahstar.gif" alt="Tutorials" onerror="this.src='https://placehold.co/600x337/1A1A2A/ffffff?text=Tutorial+Showcase'">
+          <div class="c-project-card-content">
+            <h3>Tutorials</h3>
+            <p>400+ simple videos teaching how to animate mainly on mobile, in Alight Motion.</p>
+          </div>
+        </a>
       </div>
+    </section>
 
-      <div class="c-project-card" data-project-id="sidecards">
-        <img src="https://github.com/user-attachments/assets/503eae84-0d7d-4385-9253-7b48d7bef43e" alt="SideCards">
-        <div class="c-project-card-content">
-          <h3>SideCards</h3>
-          <p>Create sidebar cards you can color, tag, and drag into notes. Perfect for fast, visual note-taking and organization.</p>
+    <section class="sharp-section" id="obsidian-plugins">
+      <h2><i class="fa-solid fa-cube"></i> Obsidian Plugins</h2>
+      <p>I try to build tools that both solve a problem and are easy to use, designed with accessibility in mind.</p>
+      <div class="c-project-cards" style="margin-top: 30px;">
+        <div class="c-project-card" data-project-id="always-color-text">
+          <img src="https://github.com/user-attachments/assets/905f5f4b-8b8b-440a-b00f-b32548e721db" alt="Always Color Text">
+          <div class="c-project-card-content">
+            <h3>Always Color Text</h3>
+            <p>Automatically color any word, phrase, or date across your vault. Supports regex patterns and custom styles.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="c-project-card" data-project-id="color-table-cell">
-        <img src="https://github.com/user-attachments/assets/3a8923c4-af87-4f2c-8505-6bc03a31aa6c" alt="Color Table Cell">
-        <div class="c-project-card-content">
-          <h3>Color Table Cell</h3>
-          <p>Color table cells manually or with rules based on keywords or numbers. Works in Live Preview, Reading mode, and on mobile.</p>
+        <div class="c-project-card" data-project-id="sidecards">
+          <img src="https://github.com/user-attachments/assets/503eae84-0d7d-4385-9253-7b48d7bef43e" alt="SideCards">
+          <div class="c-project-card-content">
+            <h3>SideCards</h3>
+            <p>Visual sidebar cards for quick note-taking. Perfect for capturing ideas without leaving your current work.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="c-project-card" data-project-id="dayble-calendar">
-        <img src="https://github.com/Kazi-Aidah/dayble-calendar/blob/main/assets/banner.gif?raw=true" alt="Dayble Calendar" onerror="this.src='https://opengraph.githubassets.com/1/Kazi-Aidah/Dayble-Calendar'">
-        <div class="c-project-card-content">
-          <h3>Dayble Calendar</h3>
-          <p>A fast, customizable calendar for Obsidian that stores events as monthly JSON files. Features categories, triggers, and mobile support.</p>
+        <div class="c-project-card" data-project-id="color-table-cell">
+          <!-- <img src="https://github.com/user-attachments/assets/3a8923c4-af87-4f2c-8505-6bc03a31aa6c" alt="Color Table Cell"> -->
+           <img src="images/table-earn.png" alt="Color Table Cell">
+          <div class="c-project-card-content">
+            <h3>Color Table Cell</h3>
+            <p>Simple, mobile-friendly table cell coloring. Rules-based automation for keywords or numbers.</p>
+          </div>
         </div>
-      </div>
+
+        <div class="c-project-card" data-project-id="dayble-calendar">
+          <img src="https://github.com/Kazi-Aidah/dayble-calendar/blob/main/assets/banner.gif?raw=true" alt="Dayble Calendar" onerror="this.src='https://opengraph.githubassets.com/1/Kazi-Aidah/Dayble-Calendar'">
+          <div class="c-project-card-content">
+            <h3>Dayble Calendar</h3>
+            <p>Non-intrusive, customizable calendar. Stores events in clean JSON files directly inside your vault.</p>
+          </div>
+        </div>
 
         <div class="c-project-card" data-project-id="emoticon-picker">
           <!-- <img src="https://private-user-images.githubusercontent.com/184947673/519569289-2ba64383-576d-4657-adfd-06d20024af3c.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzI0NzI0OTgsIm5iZiI6MTc3MjQ3MjE5OCwicGF0aCI6Ii8xODQ5NDc2NzMvNTE5NTY5Mjg5LTJiYTY0MzgzLTU3NmQtNDY1Ny1hZGZkLTA2ZDIwMDI0YWYzYy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzAyJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMwMlQxNzIzMThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lZTE3NWM1ZGVlZmFiN2E5NmIxZDU4MmMyMzE5NzIxMWYyMDc3MGNjYzk5M2IzM2M2ZmY2NzEwMTllYTg5OWRmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.N9I0ajTaGbkblodB_gQc0elo7vmOAmx-bjqxPXSV-g0" alt="Emoticon Picker" onerror="this.src='https://opengraph.githubassets.com/1/Kazi-Aidah/Emoticon-Picker'"> -->
@@ -699,17 +806,143 @@
           </div>
         </div>
 
-      <div class="c-project-card" data-project-id="blobob-theme">
-        <img src="https://github.com/Kazi-Aidah/blobob/raw/main/assets/screenshot-HQ.png" alt="Blobob Theme" onerror="this.src='https://opengraph.githubassets.com/1/Kazi-Aidah/blobob'">
-        <div class="c-project-card-content">
-          <h3>Blobob Theme</h3>
-          <p>An animated theme for Obsidian with 60+ color options. Features ease-in-ease-out animations and extensive customization via Style Settings.</p>
+        <div class="c-project-card" data-project-id="blobob-theme">
+          <img src="https://github.com/Kazi-Aidah/blobob/raw/main/assets/screenshot-HQ.png" alt="Blobob Theme" onerror="this.src='https://opengraph.githubassets.com/1/Kazi-Aidah/blobob'">
+          <div class="c-project-card-content">
+            <h3>Blobob Theme</h3>
+            <p>Animated theme with 60+ colors. Designed to make your workspace feel alive and playful.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- Project Modals -->
+    <section class="sharp-section">
+      <h2><i class="fa-solid fa-angles-right"></i> Goals</h2>
+      <p>
+        Why did I choose cybersecurity? At first, the name just sounded cool, and it matched something that's always mattered to me: helping people. But it became personal when my YouTube channel was hacked and sold six different times.
+        <br><br>
+        Each time, I fought to get it back. Going through that over and over showed me how vulnerable we really are online, and how frustrating it feels to have your hard work taken away in seconds.
+        <br><br>
+        After the first time I recovered my channel, I knew cybersecurity was what I wanted to pursue. Now, my goal is to help prevent those kinds of attacks so other people don't have to experience what I did. My channel is running well today, and that experience is exactly why I'm here, determined.
+      </p>
+    </section>
+
+    <section class="sharp-section">
+      <h2><i class="fas fa-graduation-cap"></i> Education & Certifications</h2>
+      <p>First semester of B.Sc in CSE. I'm teaching myself the things I need for my ambitions.</p>
+      
+      <div style="overflow-x: auto; margin-top: 30px;">
+        <table class="sharp-table">
+          <thead>
+            <tr>
+              <th>Certificate</th>
+              <th>Issuer</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Foundations of Cybersecurity</td>
+              <td>Google (Coursera)</td>
+              <td><span style="color: var(--color-retro-green);">Completed</span></td>
+            </tr>
+            <tr>
+              <td>CS50: Introduction to Computer Science</td>
+              <td>Harvard University (edX)</td>
+              <td><span style="color: var(--color-retro-orange);">In Progress</span></td>
+            </tr>
+            <tr>
+              <td>CS50: Introduction to Cybersecurity</td>
+              <td>Harvard University (edX)</td>
+              <td><span style="color: var(--color-retro-orange);">In Progress</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sharp-section">
+      <h2><i class="fas fa-microscope"></i> Research Interests</h2>
+      <div class="research-grid">
+        <div class="research-item">
+          <i class="fas fa-robot"></i>
+          <span>AI in Cybersecurity: Risks & Opportunities</span>
+        </div>
+        <div class="research-item">
+          <i class="fas fa-shield-virus"></i>
+          <span>Cybersafety & Practical Actions</span>
+        </div>
+        <div class="research-item">
+          <i class="fas fa-brain"></i>
+          <span>Psychological Effects of Cyber Incidents</span>
+        </div>
+        <div class="research-item">
+          <i class="fas fa-users-gear"></i>
+          <span>Human Factors & Interactibility in Security</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sharp-section" style="border-bottom: none;">
+      <h2><i class="fas fa-tools"></i> Skills & Achievements</h2>
+      
+      <div class="skills-showcase">
+        <div class="skill-group">
+          <div class="skill-label">Creative Skills</div>
+          <div class="skill-chips">
+            <span class="skill-chip">2D Animation</span>
+            <span class="skill-chip">Character Animation</span>
+            <span class="skill-chip">Motion Graphics</span>
+            <span class="skill-chip">Graphic Design</span>
+            <span class="skill-chip">Video Editing</span>
+            <span class="skill-chip">Tutorial Creation</span>
+          </div>
+        </div>
+        
+        <div class="skill-group">
+          <div class="skill-label" style="color: var(--color-retro-green)">Technical Stack</div>
+          <div class="skill-chips">
+            <span class="skill-chip">UI/UX Design</span>
+            <span class="skill-chip">HTML + CSS</span>
+            <span class="skill-chip">JavaScript</span>
+            <span class="skill-chip">Cybersecurity Foundations</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="achievements-grid">
+        <div class="achievement-card">
+          <div class="achievement-icon"><i class="fas fa-download"></i></div>
+          <div class="achievement-info">
+            <h4>Software Reach</h4>
+            <p>Over 6,000 downloads across various Obsidian plugins.</p>
+          </div>
+        </div>
+        
+        <div class="achievement-card">
+          <div class="achievement-icon"><i class="fas fa-person-running"></i></div>
+          <div class="achievement-info">
+            <h4>Animation Expertise</h4>
+            <p>Over 7 years of experience in 2D and character animation.</p>
+          </div>
+        </div>
+
+        <div class="achievement-card">
+          <div class="achievement-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="achievement-info">
+            <h4>Digital Resilience</h4>
+            <p>Successfully recovered my channel from 6 different hacking attempts.</p>
+          </div>
+        </div>
+
+        <div class="achievement-card">
+          <div class="achievement-icon"><i class="fas fa-hourglass-start"></i></div>
+          <div class="achievement-info">
+            <h4>Started Young</h4>
+            <p>Sharing animation tutorials on YouTube since I was 11, now at 290,000 subscribers.</p>
+          </div>
+        </div>
+
   <div class="project-modal" id="modal-always-color-text">
     <div class="project-modal-content">
       <div class="project-modal-header">
@@ -910,7 +1143,7 @@
         <ul style="color: var(--color-text-secondary); line-height: 1.8;">
           <li>Lots of custom checkboxes</li>
           <li>Custom property styles and metadata colors</li>
-          <li>Focus mode to hide distractions</li
+          <li>Focus mode to hide distractions</li>
         </ul>
       </div>
       <div class="project-modal-footer">
@@ -918,6 +1151,9 @@
       </div>
     </div>
   </div>
+</section>
+</section>
+</div>
     
   <footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
     <div class="footer-grid">
@@ -945,7 +1181,6 @@
 
     
   <script>
-    // Project Modal Functions
     function openProjectModal(projectId) {
       const modalId = `modal-${projectId}`;
       const modal = document.getElementById(modalId);
@@ -964,12 +1199,11 @@
           modal.classList.remove('show');
           modal.classList.remove('closing');
           document.body.style.overflow = '';
-        }, 300); // Match the animation duration
+        }, 300);
       }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      // Project card click handlers
       document.querySelectorAll('.c-project-card').forEach(card => {
         card.addEventListener('click', function() {
           const projectId = this.getAttribute('data-project-id');
@@ -977,7 +1211,6 @@
         });
       });
 
-      // Close modal when clicking on the modal backdrop
       document.querySelectorAll('.project-modal').forEach(modal => {
         modal.addEventListener('click', function(event) {
           if (event.target === this) {
@@ -987,7 +1220,6 @@
         });
       });
 
-      // Close modal on escape key
       document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
           document.querySelectorAll('.project-modal.show').forEach(modal => {
@@ -1102,7 +1334,6 @@
         }
       });
 
-      // Make the intro image clickable to open the modal
       const introImage = document.querySelector('.intro-image');
       if (introImage) {
         introImage.style.cursor = 'pointer';
@@ -1112,5 +1343,6 @@
       }
     })();
   </script>
+  </div>
 </body>
 </html>

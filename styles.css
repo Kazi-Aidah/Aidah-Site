@@ -1780,7 +1780,8 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     color: var(--color-text-primary);
     flex-wrap: wrap;
     gap: 20px;
-    margin-left: calc(30% - 200px);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .footer-section {
@@ -2090,7 +2091,6 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     
     .footer { 
         padding: 28px 22px 40px 22px; 
-        margin-left: 0;
     }
     
     .footer-grid { 

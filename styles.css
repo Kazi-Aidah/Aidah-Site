@@ -709,6 +709,19 @@ mark {
     box-decoration-break: clone;
 }
 
+und {
+    color: #ffe19c;
+    padding: 0 2px;
+    box-decoration-break: clone;
+
+    text-decoration: underline;
+    text-decoration-color: hsla(29, 100%, 70%, 0.589);
+    text-decoration-thickness: 1.6px;
+    text-underline-offset: 5px;
+
+}
+
+
 .highlight {
     background-color: hsla(29, 100%, 70%, 0.277);
     color: #ffe19c;

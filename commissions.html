@@ -443,13 +443,20 @@
     z-index: 2; 
     border-radius: 12px; 
     box-shadow: 0 20px 40px rgba(0,0,0,0.6); 
-    overflow: hidden; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
 }
 
-.image-modal__img { max-width: 100%; max-height: 100%; display: block; }
+.image-modal__img { 
+    display: block; 
+    max-width: 92vw; 
+    max-height: 92vh; 
+    width: auto; 
+    height: auto; 
+    border-radius: 12px;
+    object-fit: contain;
+}
 .image-modal__close { 
     position: absolute; 
     top: 8px; 
@@ -469,14 +476,23 @@
 }
 
 .image-modal__close:hover { 
-    background: rgba(0, 0, 0, 0.351); 
+    background: rgb(42, 11, 11); 
+    box-shadow: 0px 6px 10px rgb(148, 34, 34) !important;
+    color: var(--color-retro-red);
+    /* border: 2px solid var(--color-retro-red) !important; */
+    outline: 2px solid var(--color-retro-red) !important;
     transition: all 0.3s ease; 
 }
-.image-modal__close:focus { outline: 2px solid #3392ff; transition: all 0.3s ease; }
+
+
+.image-modal__close:focus { 
+  outline: 2px solid var(--color-accent-light-blue); 
+  transition: all 0.3s ease; 
+}
 @media (max-width:600px) { 
-    .image-modal__panel { 
+    .image-modal__img { 
         max-width: 96vw; 
-        max-height: 84vh; 
+        max-height: 88vh; 
     } 
 }
 
@@ -589,9 +605,11 @@
   <div class="intro-cols">
     
     <div class="intro-text">
-      <p>I'm a self-taught animator who's been animating since January 2019! I love animating, but I've also realized I really enjoy rigging. It's super engaging.</p>
-      <p>My strongest points are <mark>360° character rigging</mark> and <mark>animating fingers</mark>, which can come in handy if you want a more detailed model.</p>
-      <p>Since I've been animating for so long, I've also built up some extra skills you can commission me for:</p>
+<p>I'm a self-taught animator who has been animating since January 2019! <i style="color: var(--color-text-muted);">(7+ years)</i> I love animating, but I've also realized that I really enjoy rigging, t's super engaging.</p>
+
+<p>My strongest skills are <und>360° character rigging</und> and <und>animating fingers</und>, which can be especially useful if you want a more detailed model.</p>
+
+<p>Since I've been animating for so long, I've also developed some additional skills that you can commission me for:</p>
       <div class="skill-pills">
         <span class="skill-pill"><i class="fas fa-user"></i> Front-facing PSD</span>
         <span class="skill-pill"><i class="fas fa-cut"></i> Character Cutting / PSD</span>
@@ -620,6 +638,8 @@
     </div>
   </div>
 </div>
+
+
 
 <!-- What I Offer -->
 <!-- <div class="bubblebody">
@@ -659,7 +679,7 @@
 
 <!-- Character -->
 <div class="bubblebody">
-  <h2 class="h2-2" style="--h2-color:#5d678a">CHARACTER</h6>
+  <h2 class="h2-2" style="--h2-color:#5d678a">CHARACTER WORKS</h6>
   <!-- <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person" style="margin-right: 7px;"></i>Character Design & Cutting</h3> -->
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
@@ -683,7 +703,7 @@
 
 <!-- Rigging -->
 <div class="bubblebody">
-  <h2 class="h2-2" style="--h2-color:#5d678a">Rigging</h6>
+  <h2 class="h2-2" style="--h2-color:#5d678a">RIGGING</h6>
   <!-- <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="far fa-image" style="margin-right: 7px;"></i>Character Rigging</h3> -->
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
@@ -703,7 +723,7 @@
 
 <!-- Animation -->
 <div class="bubblebody">
-  <h2 class="h2-2" style="--h2-color:#5d678a">Animation</h6>
+  <h2 class="h2-2" style="--h2-color:#5d678a">ANIMATION</h6>
   <!-- <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person-walking" style="margin-right: 7px;"></i>Animations</h3> -->
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
@@ -776,7 +796,7 @@
     <div class="footer-section contact-section">
       <h3 style="margin-bottom: 5px;">Contact Me</h3>
       <ul class="contact-list">
-        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">Email</a></li>
         <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;<a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Discord</a></li>
         <li><i class="fab fa-instagram" style="color: var(--color-instagram)" aria-hidden="true"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah" target="_blank" rel="noopener">Instagram</a></li>
       </ul>

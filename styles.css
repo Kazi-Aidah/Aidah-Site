@@ -64,6 +64,8 @@
 /* ===== GLOBAL STYLES ===== */
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
 }
 
 body {
@@ -698,11 +700,22 @@ h2.h2comm-me {
     word-wrap: break-word;
 }
 
+mark {
+    background-color: hsla(29, 100%, 70%, 0.277);
+    color: #ffe19c;
+    border: 2px solid hsla(29, 100%, 70%, 0.589);
+    padding: 2px 6px;
+    border-radius: 8px;
+    box-decoration-break: clone;
+}
+
 .highlight {
-    background-color: var(--color-retro-green);
-    color: black;
-    padding: 2px 4px;
-    border-radius: 3px;
+    background-color: hsla(29, 100%, 70%, 0.277);
+    color: #ffe19c;
+    border: 2px solid hsla(29, 100%, 70%, 0.589);
+    padding: 2px 6px;
+    border-radius: 8px;
+    box-decoration-break: clone;
 }
 
 /* ===== PAGINATION ===== */
@@ -1782,6 +1795,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     gap: 20px;
     width: 100%;
     box-sizing: border-box;
+    transition: margin 0.2s ease;
 }
 
 .footer-section {
@@ -2467,5 +2481,18 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     }
     .nested-accordion-item .accordion-header i {
         margin-right: 10px;
+    }
+}
+
+
+@media (min-width: 700px) {
+    .footer {
+        margin-left: 30px !important;
+    }
+}
+
+@media (min-width: 900px) {
+    .footer {
+        margin-left: 100px !important;
     }
 }

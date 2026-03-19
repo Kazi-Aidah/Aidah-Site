@@ -119,6 +119,7 @@
     margin: -23px;
     margin-top: -12px !important;
     padding-bottom: 10px;
+    margin-bottom: 18px !important;
   }
 
 
@@ -148,6 +149,74 @@
       box-shadow: 0 6px 15px rgba(51, 146, 255, 0.6);
       /* border: 4px solid #3392ff; */
       transition: all 0.3s ease;
+  }
+
+  /* ===== INTRO COLUMNS ===== */
+  .intro-cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-top: 16px;
+  }
+  @media (min-width: 700px) {
+    .intro-cols {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+    }
+  }
+  .intro-gif {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 16px;
+    border: 3px solid #49506e;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    display: block;
+    margin: 0 auto;
+  }
+  @media (min-width: 700px) {
+    .intro-gif {
+      width: 220px;
+      margin: 0;
+    }
+  }
+  .intro-text p {
+    color: #c5cee0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em;
+    line-height: 1.75;
+    margin: 0 0 14px 0;
+  }
+  .intro-text .highlight {
+    color: #EAF0FF;
+    font-weight: 600;
+  }
+
+  /* ===== SKILL PILLS ===== */
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .skill-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1b1e31;
+    border: 2px solid #515a86;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+    color: #85b8f2;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  .skill-pill:hover {
+    background-color: hsla(29, 100%, 70%, 0.277);
+    color: #ffe19c;
+    border: 2px solid hsla(29, 100%, 70%, 0.589);
   }
 
   /* ===== COMMISSIONS GRID ===== */
@@ -291,7 +360,64 @@
     transform: translateY(0) scale(1);
   }
 
- /* ===== MODAL STUFF ===== */
+ /* ===== CONTACT CARDS ===== */
+  .contact-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .contact-card {
+    background: #1b1e31;
+    border: 2px solid #49506e;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s ease;
+    text-decoration: none;
+    min-width: 200px;
+  }
+  .contact-card:hover { border-color: #7dbaff; }
+  .contact-card i {
+    color: #7dbaff;
+    font-size: 1.2em;
+    flex-shrink: 0;
+  }
+  .contact-card__title {
+    color: #EAF0FF;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+  .contact-card__sub {
+    color: #8892aa;
+    font-size: 0.78em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ===== STATUS BADGE ===== */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #1b1e31;
+    border: 2px solid #3a9e5f;
+    border-radius: 10%;
+    padding: 8px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1em;
+    color: #6ddc9a;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .status-badge i { font-size: 0.7em; }
+  .status-wrap {
+    display: flex;
+    justify-content: center;
+  }
 .image-modal { 
     position: fixed; 
     inset: 0; 
@@ -353,6 +479,94 @@
         max-height: 84vh; 
     } 
 }
+
+.c-project-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 20px;
+        padding: 0px 0px 20px 0;
+        justify-content: center;
+    }
+
+    .c-project-card {
+        background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-bg-card-alt) 100%);
+        border: 3px solid var(--color-border-gray-primary);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        text-decoration: none;
+        display: block;
+        cursor: pointer;
+    }
+
+    .c-project-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        border-color: var(--color-retro-blue);
+        box-shadow: 0 12px 30px rgba(105, 147, 194, 0.3), 0 0 20px rgba(105, 147, 194, 0.2);
+    }
+
+    .c-project-card img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        display: block;
+        border-radius: 17px 17px 0 0;
+        transition: filter 0.3s ease;
+        border-bottom: 2px solid var(--color-border-gray-primary);
+        border-radius: 2px !important;
+    }
+
+    .c-project-card-content {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex-grow: 1;
+    }
+
+    .c-project-card h3 {
+        font-family: 'GeneralSans', sans-serif;
+        font-size: 1.5em;
+        font-weight: 700;
+        margin: -6px;
+        margin-top: -12px;
+        color: var(--color-text-primary-or);
+        letter-spacing: 0.03em;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+    }
+
+    .c-project-card h3::before,
+    .c-project-card h3::after {
+      content: "";
+      flex-grow: 1;
+      height: 5px;
+      background-color: #5d678a;
+      opacity: 0.7;
+    }
+
+    .c-project-card:hover h3::before,
+    .c-project-card:hover h3::after {
+      background-color: var(--color-retro-orange);
+      height: 2px;
+    }
+
+    .c-project-card:hover h3 {
+        color: var(--color-retro-green);
+        letter-spacing: 0.07em;
+    }
+
+    .c-project-card p {
+        font-size: 0.95em;
+        color: var(--color-text-secondary);
+        margin: 0;
+        line-height: 1.6;
+        font-weight: 300;
+    }
 </style>
 </head>
 <body>
@@ -364,35 +578,57 @@
   </nav>
 </header>
 
+<h1 style="color: red; text-align: center; width: 100%;"> work in progress </h1>
+
 <!-- COMMISSIONS  -->
 <!-- Intro -->
 <div class="bubblebody">
-      <div class="hero-commissions">
-    <h1 class="hero-commissions"><span>COMMISSIONS</span></h1>
-  </div>
-  <h2 style="color: red; text-align: center; display: block;"> THIS PAGE IS A WORK-IN-PROGRESS</h2>
-  <br>
-  <div class="comm-grid">
-    <section class="intro">
-      <div class="commissions-container">
-        <h3 style="text-align: center; margin: -6px;">I've been a self taught animator for <strong>6 years</strong> now.</h3>
-        <p class="contentheh">This is the current state of my character animation:</p>
-        <img src="../images/aidahstar.gif" alt="animation preview" class="preview" />
-        <p class="contentheh" style="margin-top:10px;">I prefer to work with <strong>chibi</strong> characters. I'm open to any commission on a chibi character, ranging from artworks and character design to rigging and animation. Rigging and animation are my strongest points.</p>
+  <h1 class="h2-2" style="margin-top: -4px !important;"><span>COMMISSIONS</span></h1>
+
+  <img src="../images/commBanner.gif" alt="animation preview" class="intro-gif" style="width: 100% !important;"/>
+  <div class="intro-cols">
+    
+    <div class="intro-text">
+      <p>I'm a self-taught animator who's been animating since January 2019! I love animating, but I've also realized I really enjoy rigging. It's super engaging.</p>
+      <p>My strongest points are <mark>360° character rigging</mark> and <mark>animating fingers</mark>, which can come in handy if you want a more detailed model.</p>
+      <p>Since I've been animating for so long, I've also built up some extra skills you can commission me for:</p>
+      <div class="skill-pills">
+        <span class="skill-pill"><i class="fas fa-user"></i> Front-facing PSD</span>
+        <span class="skill-pill"><i class="fas fa-cut"></i> Character Cutting / PSD</span>
+        <span class="skill-pill"><i class="fas fa-star"></i> Animated Emotes</span>
+        <span class="skill-pill"><i class="fas fa-chalkboard-teacher"></i> Teaching Animation</span>
+        <span class="skill-pill"><i class="fas fa-person-rays"></i> Character Rigging</span>
+        <span class="skill-pill"><i class="fas fa-person-walking"></i> Character Animation</span>
       </div>
-    </section>
+
+      <div class="c-project-cards" style="margin-top: 30px; display: flex; flex-wrap: wrap; gap: 20px;">
+        <a href="animations.html" class="c-project-card" style="flex: 1; min-width: 300px;">
+          <img src="images/ciel_move.gif" alt="Animations" onerror="this.src='https://placehold.co/600x337/1A1A2A/ffffff?text=Animation+Showcase'">
+          <div class="c-project-card-content">
+            <h3>2D Animations</h3>
+            <p>I started animating in 2019. Here's a collection of all my animations over the years!</p>
+          </div>
+        </a>
+        <a href="tutorials.html" class="c-project-card" style="flex: 1; min-width: 300px;">
+          <img src="images/aidahstar.gif" alt="Tutorials" onerror="this.src='https://placehold.co/600x337/1A1A2A/ffffff?text=Tutorial+Showcase'">
+          <div class="c-project-card-content">
+            <h3>Tutorials</h3>
+            <p>400+ simple videos teaching how to animate mainly on mobile, in Alight Motion.</p>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- What I Offer -->
-<div class="bubblebody">
+<!-- <div class="bubblebody">
   <h2 class="h2-2" style="--h2-color:#5d678a">WHAT I OFFER</h6>
 
   <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;"><i class="fas fa-wrench" style="margin-right: 7px;"></i>COMPLEX SERVICE TYPES</h3>
   <table class="offer-table">
     <thead>
       <tr><th>COMPLEX SERVICE TYPES</th><th>DESCRIPTION</th>
-        <!-- <th>PRICING</th> -->
       </tr>
     </thead>
     <tbody>
@@ -405,7 +641,7 @@
       <tr><td>Character 2D Animation</td><td></td></tr>
     </tbody>
   </table>
-  <p class="contentheh"> Please check out their prices on my Vgen.</p>
+  <p class="contentheh"> Please check out their prices by contacting me directly.</p>
 
   <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif;"><i class="fas fa-disease" style="margin-right: 7px;"></i>SIMPLE SERVICE TYPES</h3>
   <table class="offer-table">
@@ -419,19 +655,17 @@
     </tbody>
   </table>
     <h3 style="color:#C7D0EF; font-family: 'GeneralSans', sans-serif; margin-top: 20px;"> <i class="fas fa-star" style="margin-right: 7px;"></i>CUSTOM SERVICES ARE ALSO WELCOME!</h3>
-</div>
+</div> -->
 
-<!-- Portfolio: Character Design -->
+<!-- Character -->
 <div class="bubblebody">
-  <h2 class="h2-2" style="--h2-color:#5d678a">PORTFOLIO</h6>
-  <p class="contentheh">These are some of my best works from each category. Click arrows to browse.</p>
-
-  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person" style="margin-right: 7px;"></i>Character Design</h3>
+  <h2 class="h2-2" style="--h2-color:#5d678a">CHARACTER</h6>
+  <!-- <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person" style="margin-right: 7px;"></i>Character Design & Cutting</h3> -->
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
       <div class="carousel-track">
-        <img src="../images/adoravamp.png" alt="design 1">
-        <img src="../images/emowillow.png" alt="design 2">
+        <img src="../images/commWintermain.png" alt="design 1">
+        <img src="../images/commWinter.png" alt="design 2">
         <img src="../images/aidahguide.png" alt="design 3">
         <img src="../images/black.png" alt="design 4">
         <img src="../images/hellome.png" alt="design 1">
@@ -447,9 +681,10 @@
   </div>
 </div>
 
-<!-- Portfolio: Illustration -->
+<!-- Rigging -->
 <div class="bubblebody">
-  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="far fa-image" style="margin-right: 7px;"></i>Illustration / Artworks</h3>
+  <h2 class="h2-2" style="--h2-color:#5d678a">Rigging</h6>
+  <!-- <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="far fa-image" style="margin-right: 7px;"></i>Character Rigging</h3> -->
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
       <div class="carousel-track">
@@ -466,9 +701,10 @@
   </div>
 </div>
 
-<!-- Portfolio: Animation -->
+<!-- Animation -->
 <div class="bubblebody">
-  <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person-walking" style="margin-right: 7px;"></i>Animation / Rigging</h3>
+  <h2 class="h2-2" style="--h2-color:#5d678a">Animation</h6>
+  <!-- <h3 style="font-family:'GeneralSans',sans-serif; color:#C7D0EF;"><i class="fas fa-person-walking" style="margin-right: 7px;"></i>Animations</h3> -->
   <div class="carousel" data-carousel>
     <div class="carousel-viewport">
       <div class="carousel-track">
@@ -483,28 +719,79 @@
   </div>
 </div>
 
-<!-- STATUS & PAYMENTS -->
-<div class="bubblebody">
-  <h2 class="h2-2" style="--h2-color:#5d678a">STATUS & PAYMENTS</h6>
-    <h3> <b style="color: #7dbaff;"><i class="fas fa-battery-full" style="margin-right: 7px;"></i>STATUS:</b> Happily accepting commissions! </h3>
-    <hr>
-    <p class="contentheh">Click the button to open a quick commission form.</p>
-  <ul class="contact-list">
-    <li><strong>Preferred:</strong> Vgen</li>
-    <li>Email: <a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
-    <li>Discord: <span style="color:var(--color-text-tertiary)">kazi_aidah</span></li>
-    <li>Instagram: <a href="https://instagram.com/kazi_aidah" target="_blank" rel="noopener">@kazi_aidah</a></li>
+<!-- STATUS & PAYMENT -->
+<!-- <div class="bubblebody">
+  <h2 class="h2-2" style="--h2-color:#5d678a">STATUS & PAYMENT</h2>
+
+  <div class="status-wrap">
+    <span class="status-badge">
+      <i class="fas fa-circle"></i> OPEN FOR COMMISSIONS
+    </span>
+  </div>
+
+  <hr style="border-color:#343355; margin: 14px 0;">
+
+  <h3 style="width: 100%; text-align: center; color:#C7D0EF; font-family:'GeneralSans',sans-serif; margin-bottom:10px;"><i class="fas fa-credit-card" style="margin-right:10px;"></i>PAYMENT INFO</h3>
+
+  <ul class="contact-list" style="margin-bottom:0;">
+    <li><i class="fas fa-money-bill-wave" style="color: var(--color-retro-green); margin-right:6px;"></i>Payment is taken upfront via PayPal.</li>
+    <li><i class="fas fa-rotate-left" style="color: var(--color-retro-red); margin-right:6px;"></i>Refunds are only available before work has started.</li>
+    <li><i class="fas fa-clock" style="color: var(--color-retro-yellow); margin-right:6px;"></i>Turnaround time varies by complexity. I will give you an estimate when you reach out.</li>
   </ul>
+</div> -->
 
-  <hr class="section-divider">
+<!-- COMMISSION ME -->
+<div class="bubblebody" id="contact">
+  <h2 class="h2-2" style="--h2-color:#7dbaff">COMMISSION ME</h2>
 
-  <section id="contact">
-    <h2 class="h2wall-LB">COMMISSION ME</h2>
-    <p class="contentheh">Click the button to open a quick commission form.</p>
-    <button><i class="fas fa-eye"></i> CHECK OUT AIDAH'S SERVICES <i class="fas fa-eye"></i></button>
+  <p class="contentheh" style="margin-top:14px;"> <b>Want to commission me?</b> <br> Contact me on any of the platforms below to discuss!</p>
+
+  <div class="contact-cards">
+    <a href="mailto:kaziaidahhaque@gmail.com" class="contact-card">
+      <i class="fas fa-envelope"></i>
+      <div>
+        <div class="contact-card__title">Email</div>
+        <div class="contact-card__sub">kaziaidahhaque@gmail.com</div>
+      </div>
+    </a>
+    <div class="contact-card">
+      <i class="fab fa-discord"></i>
+      <div>
+        <div class="contact-card__title">Discord</div>
+        <div class="contact-card__sub">@Kazi_Aidah</div>
+      </div>
     </div>
-  </section>
+    <a href="https://instagram.com/kazi_aidah" target="_blank" rel="noopener" class="contact-card">
+      <i class="fab fa-instagram"></i>
+      <div>
+        <div class="contact-card__title">Instagram</div>
+        <div class="contact-card__sub">@Kazi_Aidah</div>
+      </div>
+    </a>
+  </div>
 </div>
+
+<footer class="footer" role="contentinfo" aria-label="Contact and social links">
+  <div class="footer-grid">
+    <div class="footer-section contact-section">
+      <h3 style="margin-bottom: 5px;">Contact Me</h3>
+      <ul class="contact-list">
+        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+        <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;<a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Discord</a></li>
+        <li><i class="fab fa-instagram" style="color: var(--color-instagram)" aria-hidden="true"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="footer-section socials-section">
+      <h3 style="margin-bottom: 5px;">Social Medias</h3>
+      <ul class="socials-list">
+        <li><i class="fab fa-youtube" style="color: var(--color-youtube-red)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+        <li><i class="fab fa-youtube" style="color: var(--color-youtube-pink)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+        <li><i class="fab fa-instagram" style="color: var(--color-instagram)"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+        <li><i class="fab fa-tiktok" style="color: var(--color-tiktok)"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
 
 <script>
   // Carousel behavior: paged by visible columns (3 on wide screens, 1 on small)
@@ -669,62 +956,10 @@
     });
   })();
 
-  // Commission options modal
-  (function() {
-      const modal = document.getElementById('commissionOptionsModal');
-      const backdrop = document.getElementById('commissionBackdrop');
+  // Commission options modal - removed (modal no longer used)
 
-      function showModal() {
-          modal.style.display = 'block';
-          backdrop.style.display = 'block';
-      }
-
-      function hideModal() {
-          modal.style.display = 'none';
-          backdrop.style.display = 'none';
-      }
-
-      // Make page title clickable
-      const pageTitle = document.querySelector('h1');
-      if (pageTitle) {
-          pageTitle.style.cursor = 'pointer';
-          pageTitle.addEventListener('click', showModal);
-      }
-
-      // Close button
-      modal.querySelector('.close-modal').addEventListener('click', hideModal);
-
-      // Escape key
-      document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') hideModal();
-      });
-
-      // Click outside to close
-      backdrop.addEventListener('click', hideModal);
-      modal.addEventListener('click', (e) => e.stopPropagation());
-  })();
   </script>
 
-  <!-- Commission Options Modal -->
-  <div id="commissionOptionsModal" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background: linear-gradient(135deg, var(--color-background-dark) 0%, var(--color-background-darker) 100%); border: 2px solid var(--color-border-primary); border-radius: 12px; padding: 40px 30px; z-index: 1001; max-width: 600px; width: 90%; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); max-height: 80vh; overflow-y: auto; display: none;">
-      <button class="close-modal" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; color: var(--color-text-secondary); cursor: pointer; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">&times;</button>
-      <h3 style="color: var(--color-accent-primary); margin: 0 0 30px 0; text-align: center; font-size: 24px;">Commission Info</h3>
-      <div class="commission-options">
-          <div class="commission-option" style="background-image: url('images/modal-bg-1.jpg'); cursor: pointer;">
-              <div class="tutorial-option-overlay">
-                  <i class="fas fa-palette tutorial-icon"></i>
-                  <span class="card-title">View Portfolio</span>
-              </div>
-          </div>
-          <div class="commission-option" style="background-image: url('images/modal-bg-2.jpg'); cursor: pointer;">
-              <div class="tutorial-option-overlay">
-                  <i class="fas fa-file-contract tutorial-icon"></i>
-                  <span class="card-title">Request Commission</span>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div id="commissionBackdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 1000; display: none;"></div>
 
 </body>
 </html>

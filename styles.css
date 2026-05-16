@@ -76,6 +76,18 @@ body {
     background-color: var(--color-bg-dark);
     color: var(--color-text-primary);
     overflow-x: hidden;
+    animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===== FONT DEFINITIONS ===== */
@@ -2508,4 +2520,14 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     .footer {
         margin-left: 100px !important;
     }
+}
+
+
+/* ===== PAGE TRANSITIONS ===== */
+body.page-exiting {
+    animation: none;
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    pointer-events: none;
 }

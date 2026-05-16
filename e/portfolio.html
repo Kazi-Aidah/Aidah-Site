@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aidah's Portfolio</title>
+    <link rel="stylesheet" href="e.css" />
+</head>
+<body data-page="about">
+
+    <!-- ── TOPBAR ─────────────────────────────────────────── -->
+    <header class="topbar">
+        <span class="topbar__brand">
+            <span style="color:var(--color-retro-blue)">A</span><span style="color:var(--color-retro-green)">I</span><span style="color:var(--color-retro-orange)">D</span><span style="color:var(--color-retro-green)">A</span><span style="color:var(--color-retro-blue)">H</span>
+        </span>
+
+
+        <nav aria-label="Main navigation">
+            <ul class="topbar__nav">
+                <li><a href="portfolio.html" class="active">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="certifications.html">Certifications</a></li>
+                <!-- <li><a href="../blog.html">Blog</a></li> -->
+                <!-- <li><a href="#contact">Contact</a></li> -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ── MAIN ───────────────────────────────────────────── -->
+    <main class="page-wrapper">
+
+        <section class="hero" aria-label="Introduction">
+            <h1 class="hero__heading">Hello, I'm <span class="name">Aidah!</span></h1>
+            <p class="hero__tagline">
+                I like solving problems, helping people, and making things pretty.
+            </p>
+
+            <div class="social-links" aria-label="Find me on">
+                <a class="social-link"
+                   href="https://www.youtube.com/c/KaziAidahHaque"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+                    </svg>
+                    YouTube
+                </a>
+
+                <a class="social-link"
+                   href="https://github.com/Kazi-Aidah"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5.1 18 5.4 18 5.4c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/>
+                    </svg>
+                    GitHub
+                </a>
+
+                <button class="social-link" id="btn-email" aria-label="Copy email address">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="m2 7 10 7 10-7"/>
+                    </svg>
+                    Email
+                </button>
+
+                <button class="social-link" id="btn-discord" aria-label="Copy Discord username">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20.3 4.4A19.2 19.2 0 0 0 15.6 3c-.2.4-.5.9-.6 1.3a17.8 17.8 0 0 0-5.9 0A13 13 0 0 0 8.4 3 19.4 19.4 0 0 0 3.7 4.4C.5 9.2-.3 13.9.1 18.5a19.5 19.5 0 0 0 5.9 3c.5-.6.9-1.3 1.3-2a12.6 12.6 0 0 1-2-.9l.5-.4a13.9 13.9 0 0 0 11.9 0l.5.4c-.6.4-1.3.7-2 .9.4.7.8 1.4 1.3 2a19.4 19.4 0 0 0 5.9-3c.5-5.2-.9-9.8-3.9-14.1zM8.5 15.6c-1.3 0-2.3-1.2-2.3-2.6s1-2.6 2.3-2.6 2.3 1.2 2.3 2.6-1 2.6-2.3 2.6zm7 0c-1.3 0-2.3-1.2-2.3-2.6s1-2.6 2.3-2.6 2.3 1.2 2.3 2.6-1 2.6-2.3 2.6z"/>
+                    </svg>
+                    Discord
+                </button>
+            </div>
+        </section>
+
+        <div class="toast" id="toast" aria-live="polite"></div>
+
+    </main>
+
+    <script src="e.js"></script>
+    <script>
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('toast--show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('toast--show'), 2500);
+        }
+
+        document.getElementById('btn-email').addEventListener('click', () => {
+            navigator.clipboard.writeText('kaziaidahhaque@gmail.com');
+            showToast('Email copied!');
+        });
+
+        document.getElementById('btn-discord').addEventListener('click', () => {
+            navigator.clipboard.writeText('@Kazi_Aidah');
+            showToast('Username copied: @Kazi_Aidah');
+        });
+    </script>
+
+</body>
+</html>

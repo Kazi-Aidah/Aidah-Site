@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aidah's Certifications</title>
+    <link rel="stylesheet" href="e.css" />
+    <style>
+
+        h2, h3 {
+            color: var(--color-retro-blue) !important;
+        }
+        /* PDF thumbnail canvas inside each card */
+        .cert-card__canvas-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f5f5f5;
+            position: relative;
+        }
+
+        .cert-card__canvas-wrap canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Skeleton shimmer shown while PDF renders */
+        .cert-card__skeleton {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                #e8e8e8 25%,
+                #f5f5f5 50%,
+                #e8e8e8 75%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Hide the hover overlay entirely */
+        .cert-card__overlay {
+            display: none !important;
+        }
+
+        /* Error state fallback (keeps original icon look) */
+        .cert-card__pdf-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            height: 100%;
+            color: currentColor;
+            opacity: 0.55;
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .cert-card__pdf-preview svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Modal uses an <object> tag which browsers render natively */
+        .pdf-lightbox__object {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body data-page="certifications">
+
+    <header class="topbar">
+        <span class="topbar__brand">
+            <span style="color:var(--color-retro-blue)">A</span><span style="color:var(--color-retro-green)">I</span><span style="color:var(--color-retro-orange)">D</span><span style="color:var(--color-retro-green)">A</span><span style="color:var(--color-retro-blue)">H</span>
+        </span>
+        
+        <nav aria-label="Main navigation">
+            <ul class="topbar__nav">
+                <li><a href="portfolio.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="certifications.html" class="active">Certifications</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-wrapper">
+
+        <section class="projects-hero">
+            <h1>Certifications</h1>
+            <p class="section-sub">Why cybersecurity? When my YouTube channel was hacked and sold six times, I fought to get it back each time. That experience made it personal, now I want to help others avoid what I went through.</p>
+        </section>
+
+        <section class="project-group">
+            <h2 class="group-label" href="https://www.coursera.org/professional-certificates/google-cybersecurity">Google Cybersecurity Certificate</h2>
+            <p class="group-desc">Completed via Coursera. An 8 course professional certificate covering core cybersecurity skills.</p>
+
+            <div class="cert-grid">
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera 7LJXLN3D7EKN.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                            <!-- canvas injected by JS -->
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Tools of the Trade: Linux & SQL</p>
+                </div>
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera G3YMC5SGAHNE.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Play it Safe:: Manage Security Risks</p>
+                </div>
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera GNO8R7589A3E.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Connect and Protect: Networks and Network Security</p>
+                </div>
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera IG2GNANSECCS.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Assets, Threats, and Vulnerabilities</p>
+                </div>
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera KBDUF9U28X7K.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Foundations of Cybersecurity</p>
+                </div>
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera NDAOJKTNSWX4.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Automate Cybersecurity Tasks with Python</p>
+                </div>
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera RQFWCUPFMP2E.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Put It to Work: Prepare for Cybersecurity Jobs</p>
+                </div>
+
+                <div class="cert-card" data-pdf="assets/google-cybersecurity/Coursera VV5TDYBIJ8EC.pdf">
+                    <div class="cert-card__frame">
+                        <div class="cert-card__canvas-wrap">
+                            <div class="cert-card__skeleton"></div>
+                        </div>
+                        <div class="cert-card__overlay"><span>View PDF</span></div>
+                    </div>
+                    <p class="cert-card__label">Sound the Alarm: Detection and Response</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="project-group">
+            <h2 class="group-label">In Progress</h2>
+            <div class="in-progress-list">
+                <div class="in-progress-item">
+                    <div class="in-progress-item__dot"></div>
+                    <div>
+                        <p class="in-progress-item__name">CS50: Introduction to Cybersecurity</p>
+                        <p class="in-progress-item__issuer">Harvard University — edX</p>
+                    </div>
+                </div>
+                <div class="in-progress-item">
+                    <div class="in-progress-item__dot"></div>
+                    <div>
+                        <p class="in-progress-item__name">IBM Cybersecurity Analyst Professional Certificate</p>
+                        <p class="in-progress-item__issuer">IBM — Coursera</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PDF Lightbox -->
+    <div class="pdf-lightbox" id="pdf-lightbox" role="dialog" aria-modal="true" aria-label="Certificate viewer">
+        <div class="pdf-lightbox__backdrop" id="lightbox-backdrop"></div>
+        <div class="pdf-lightbox__window">
+            <button class="pdf-lightbox__close" id="lightbox-close" aria-label="Close">✕</button>
+            <object class="pdf-lightbox__object" id="lightbox-object" type="application/pdf">
+                <p style="padding:2rem;text-align:center">
+                    Your browser cannot display PDFs inline.
+                    <a id="lightbox-fallback-link" href="#" target="_blank">Open PDF in new tab</a>
+                </p>
+            </object>
+        </div>
+    </div>
+
+    <!-- PDF.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="e.js"></script>
+    <script>
+        /* ── Lightbox ── */
+        const lightbox      = document.getElementById('pdf-lightbox');
+        const pdfObject     = document.getElementById('lightbox-object');
+        const fallbackLink  = document.getElementById('lightbox-fallback-link');
+        const closeBtn      = document.getElementById('lightbox-close');
+        const backdrop      = document.getElementById('lightbox-backdrop');
+
+        document.querySelectorAll('.cert-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const src = card.dataset.pdf;
+                pdfObject.data = src;
+                if (fallbackLink) fallbackLink.href = src;
+                lightbox.classList.add('pdf-lightbox--open');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('pdf-lightbox--open');
+            pdfObject.data = '';
+            document.body.style.overflow = '';
+        }
+        closeBtn.addEventListener('click', closeLightbox);
+        backdrop.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+        /* ── PDF.js thumbnail rendering ── */
+
+        // Point the worker at the matching CDN version
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        /**
+         * Render the first page of a PDF into a <canvas> and inject it
+         * into the given wrapper element, removing the skeleton loader.
+         */
+        async function renderPdfThumbnail(pdfPath, wrapEl) {
+            try {
+                const loadingTask = pdfjsLib.getDocument(pdfPath);
+                const pdf  = await loadingTask.promise;
+                const page = await pdf.getPage(1);
+
+                // Scale to fill the card width nicely (≈ 2× device pixel ratio for sharpness)
+                const dpr       = window.devicePixelRatio || 1;
+                const viewport  = page.getViewport({ scale: 1 });
+                const cardW     = wrapEl.clientWidth  || 280;
+                const cardH     = wrapEl.clientHeight || 200;
+                const scaleByW  = (cardW  / viewport.width)  * dpr;
+                const scaleByH  = (cardH  / viewport.height) * dpr;
+                const scale     = Math.min(scaleByW, scaleByH, 2 * dpr); // cap at 2× DPR
+                const scaled    = page.getViewport({ scale });
+
+                const canvas = document.createElement('canvas');
+                canvas.width  = scaled.width;
+                canvas.height = scaled.height;
+                // CSS size = logical pixels (divide out DPR)
+                canvas.style.width  = `${scaled.width  / dpr}px`;
+                canvas.style.height = `${scaled.height / dpr}px`;
+
+                const ctx = canvas.getContext('2d');
+                await page.render({ canvasContext: ctx, viewport: scaled }).promise;
+
+                // Remove skeleton, insert canvas
+                wrapEl.querySelector('.cert-card__skeleton')?.remove();
+                wrapEl.appendChild(canvas);
+
+            } catch (err) {
+                console.warn('PDF thumbnail failed for', pdfPath, err);
+
+                // Graceful fallback: replace skeleton with the original icon UI
+                wrapEl.querySelector('.cert-card__skeleton')?.remove();
+                const filename = pdfPath.split('/').pop().replace('.pdf', '');
+                wrapEl.innerHTML = `
+                    <div class="cert-card__pdf-preview">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        <span>${filename}</span>
+                    </div>`;
+            }
+        }
+
+        // Kick off thumbnail renders for every card using IntersectionObserver
+        // so off-screen cards don't block the page load.
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                obs.unobserve(entry.target);
+
+                const card   = entry.target;
+                const pdfPath = card.dataset.pdf;
+                const wrapEl  = card.querySelector('.cert-card__canvas-wrap');
+                if (wrapEl && pdfPath) renderPdfThumbnail(pdfPath, wrapEl);
+            });
+        }, { rootMargin: '200px' }); // start loading 200px before the card enters view
+
+        document.querySelectorAll('.cert-card').forEach(card => observer.observe(card));
+    </script>
+
+</body>
+</html>

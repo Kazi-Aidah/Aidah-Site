@@ -2252,12 +2252,12 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
         /* Re-added overflow: hidden and added border-radius as requested */
         border-radius: 23px;
         overflow: hidden;
-        position: relative; /* Ensure clipping works for absolute children if any */
+        position: relative;
     }
 
     /* "?" icon overlay for mobile collapsed state */
     .intro::after {
-        content: "\f128";
+        content: "\2b";
         font-family: "Font Awesome 6 Free";
         font-weight: 900;
         position: absolute;
@@ -2398,6 +2398,14 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
         box-sizing: border-box;
         border: 3px solid #49506e;
     }
+    
+    /* Overriding the broken state from lines 2345-2351 to allow swiping to work */
+    /* .intro:is(.is-swiped) .intro-text-container {
+        width: calc(15% - 4px) !important;
+        flex: 0 0 calc(15% - 4px) !important;
+        opacity: 0.5 !important;
+        padding: 10px !important;
+    } */
     
     .project-card .project-card-overlay {
         background: linear-gradient(

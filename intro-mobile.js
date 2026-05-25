@@ -3,29 +3,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!introSection) return;
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
 
     introSection.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
     }, { passive: true });
 
     introSection.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
         handleSwipe();
     }, { passive: true });
 
     function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-        const threshold = 40; // Minimum distance for a swipe
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+        const threshold = 50; // Minimum distance for a swipe
+        const restraint = 100; // Maximum distance allowed in the other axis
 
-        if (swipeDistance > threshold) {
-            // Right swipe (finger moves ->)
-            // User said: "On right swipe, the intro image's width must lesson"
-            introSection.classList.add('is-swiped');
-        } else if (swipeDistance < -threshold) {
-            // Left swipe (finger moves <-)
-            // Reverse of right swipe
-            introSection.classList.remove('is-swiped');
+        // Check if swipe is horizontal and meets threshold
+        if (Math.abs(deltaX) >= threshold && Math.abs(deltaY) <= restraint) {
+            if (deltaX > 0) {
+                // Right swipe (finger moves ->)
+                // Expand text, shrink image
+                introSection.classList.add('is-swiped');
+            } else {
+                // Left swipe (finger moves <-)
+                // Expand image, shrink text
+                introSection.classList.remove('is-swiped');
+            }
         }
     }
 

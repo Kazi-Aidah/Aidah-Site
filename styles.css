@@ -2232,16 +2232,143 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
         display: none;
     }
 
+    .intro-bubblebody {
+        border-top-left-radius: 30px !important;
+        border-top-right-radius: 30px !important;
+    }
     .intro {
+        border-radius: 20px !important;
+    }
+
+    .intro {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: 8px;
+        height: 320px;
+        margin-bottom: 1.5em;
+        width: 100%;
+        box-sizing: border-box;
+        /* Re-added overflow: hidden and added border-radius as requested */
+        border-radius: 23px;
+        overflow: hidden;
+        position: relative; /* Ensure clipping works for absolute children if any */
+    }
+
+    /* "?" icon overlay for mobile collapsed state */
+    .intro::after {
+        content: "\f128";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        top: 50%;
+        right: 7.5%;
+        transform: translate(50%, -50%);
+        font-size: 1.5em;
+        /* color: var(--color-text-secondary); */
+         color: #677099;
+        opacity: 1;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .intro.is-swiped::after {
+        opacity: 0;
+    }
+
+    .intro-image {
+        width: calc(85% - 4px);
+        flex: 0 0 calc(85% - 4px);
+        min-width: 0;
+        height: 100%;
+        margin: 0 !important;
+        border-radius: 23px; 
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        display: block !important;
+        opacity: 1;
+        object-fit: cover;
+    }
+
+    .intro-text-container {
+        width: calc(15% - 4px);
+        flex: 0 0 calc(15% - 4px);
+        min-width: 0;
+        height: 100%;
+        margin: 0 !important;
+        padding: 10px;
+        background-color: var(--bg-ter);
+        border-radius: 23px;
+        opacity: 0.5;
+        overflow: hidden;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex !important;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        justify-content: center;
+        text-align: left;
+        box-sizing: border-box;
+    }
+
+    .intro-text-container * {
+        transition: opacity 0.4s ease;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Swiped state (Text Expanded) */
+    .intro.is-swiped .intro-image {
+        width: calc(15% - 4px);
+        flex: 0 0 calc(15% - 4px);
+        opacity: 0.5;
+    }
+
+    .intro.is-swiped .intro-text-container {
+        width: calc(85% - 4px);
+        flex: 0 0 calc(85% - 4px);
+        opacity: 1;
+        padding: 20px;
+    }
+
+    .intro.is-swiped .intro-text-container * {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* important - swiped to unswiped animation */
+    .intro:not(.is-swiped) .intro-text-container {
+        width: calc(85% - 4px);
+        flex: 0 0 calc(85% - 4px);
+        opacity: 1;
+        padding: 20px;
     }
 
     .intro-text {
-        margin-top: 20px;
-        max-width: stretch;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        /* font-size: 0.9em; */
+        line-height: 1.4;
     }
+
+    /* .intro-title {
+        font-size: 1.2em;
+    } */
+
+    .intro-icons {
+        margin-top: 10px;
+        padding-left: 0;
+        gap: 16px;
+    }
+
+    .intro-hr {
+        margin-left: 0px !important;
+    }
+
+    /* .intro-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9em;
+    } */
 
     .heading-container h2 {
         font-size: 1.5em;
@@ -2249,34 +2376,9 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
         margin-left: 10px;
     }
 
-    .intro-image, .process-image {
-        height: 300px;
-        margin-top: 20px;
-        margin-bottom: -10px;
-    }
-
-    .bubblebody, .wider-bubblebody {
-        width: 85%;
-        padding: 30px;
-    }
-
-    .heading-container {
-        justify-content: center;
-    }
-
-    .intro-image {
-        min-width: 290px;
-        width: 100%;
-        margin-top: 20px;
-        margin-bottom: -10px;
-    }
-
-    .intro-text-container {
-        padding-left: 0;
-        margin-left: 65px; /* FOR ARROW SPACE */
-        text-align: left;
-        height: stretch;
-        margin-top: -10px;
+    .bubblebody, .wider-bubblebody, .intro-bubblebody {
+        width: 90%;
+        padding: 20px;
     }
     
     .project-cards {
@@ -2358,37 +2460,6 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     
     .footer-section h3 { 
         font-size: 1.1em; 
-    }
-    
-    .intro-bubblebody {
-        width: 92%;
-        padding: 10px;
-        justify-content: center;
-    }
-
-    .wider-bubblebody {
-        width: 92%;
-        padding: 10px 5px 10px 15px;
-        justify-content: center;
-        margin: -30px auto 1.5em;
-        border-radius: 0 0 20px 20px;
-    }
-
-    .intro-image {
-        min-width: 290px;
-        width: 100%;
-        height: 300px;
-        margin-top: 0;
-        margin-bottom: -10px;
-        border-radius: 12px;
-    }
-
-    .intro-text-container {
-        transform: none;
-        opacity: 1;
-        height: stretch;
-        width: stretch;
-        padding-right: 10px;
     }
     
     .intro-icons { 
@@ -2500,6 +2571,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
         height: 150px;
     }
 }
+
 
 @media (max-width: 900px) {
     header {
@@ -2758,3 +2830,4 @@ body.page-exiting .page-wrapper {
     transition: opacity 0.22s ease, transform 0.22s ease;
     pointer-events: none;
 }
+

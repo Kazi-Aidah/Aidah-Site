@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
 
   <link rel="stylesheet" href="styles.css?v=2" />
-  <script src="intro-mobile"></script>
+  <script src="intro-mobile.js"></script>
   <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body>
@@ -674,124 +674,9 @@
     })();
   </script>
 
+<!-- Old mobile intro script removed in favor of intro-mobile.js -->
 <script>
-  // Handles instant show/hide for intro section on mobile screens
-  (function () {
-    function isMobile() {
-      return window.innerWidth <= 701;
-    }
-
-    let currentState = 0; // 0: show image, 1: show text
-    let lastIsMobile = isMobile();
-
-    function updateArrows() {
-      const rightArrow = document.querySelector('.intro-arrow-right');
-      const leftArrow = document.querySelector('.intro-arrow-left');
-      if (!rightArrow || !leftArrow) return;
-
-      if (isMobile()) {
-        if (currentState === 0) {
-          rightArrow.classList.add("visible");
-          leftArrow.classList.remove("visible");
-        } else {
-          rightArrow.classList.remove("visible");
-          leftArrow.classList.add("visible");
-        }
-      } else {
-        rightArrow.classList.remove("visible");
-        leftArrow.classList.remove("visible");
-      }
-    }
-
-    function showImage() {
-      const img = document.querySelector('.intro-image');
-      const textContainer = document.querySelector('.intro-text-container');
-      if (!img || !textContainer) return;
-
-      textContainer.style.display = 'none';
-      img.style.display = '';
-
-      currentState = 0;
-      updateArrows();
-    }
-
-    function showText() {
-      const img = document.querySelector('.intro-image');
-      const textContainer = document.querySelector('.intro-text-container');
-      if (!img || !textContainer) return;
-
-      img.style.display = 'none';
-      textContainer.style.display = '';
-
-      currentState = 1;
-      updateArrows();
-    }
-
-    function handleResize() {
-      const nowIsMobile = isMobile();
-
-      if (nowIsMobile && !lastIsMobile) {
-        currentState = 0;
-        showImage();
-      } else if (!nowIsMobile && lastIsMobile) {
-        const img = document.querySelector('.intro-image');
-        const textContainer = document.querySelector('.intro-text-container');
-
-        if (img) img.style.display = '';
-        if (textContainer) textContainer.style.display = '';
-
-        const rightArrow = document.querySelector('.intro-arrow-right');
-        const leftArrow = document.querySelector('.intro-arrow-left');
-        if (rightArrow) rightArrow.classList.remove("visible");
-        if (leftArrow) leftArrow.classList.remove("visible");
-      }
-
-      lastIsMobile = nowIsMobile;
-    }
-
-    function initIntro() {
-      if (!document.querySelector('.intro')) return;
-
-      if (isMobile()) {
-        currentState = 0;
-        showImage();
-      } else {
-        const img = document.querySelector('.intro-image');
-        const textContainer = document.querySelector('.intro-text-container');
-        if (img) img.style.display = '';
-        if (textContainer) textContainer.style.display = '';
-      }
-
-      const rightArrow = document.querySelector('.intro-arrow-right');
-      const leftArrow = document.querySelector('.intro-arrow-left');
-
-      if (rightArrow) {
-        rightArrow.addEventListener('click', function () {
-          if (isMobile()) showText();
-        });
-      }
-
-      if (leftArrow) {
-        leftArrow.addEventListener('click', function () {
-          if (isMobile()) showImage();
-        });
-      }
-
-      updateArrows();
-      window.addEventListener('resize', handleResize);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initIntro);
-    } else {
-      initIntro();
-    }
-  })();
-</script>
-
-
-<!-- Small script: shift About Me content lower on very tall viewports for aesthetic spacing -->
-<script>
+  // Keeping this one as it's for desktop vertical offset
   (function () {
     function applyIntroVerticalOffset() {
       var container = document.querySelector('.intro-text-container');

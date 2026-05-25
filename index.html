@@ -16,6 +16,7 @@
   <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body>
+  <div class="page-wrapper">
   <header>
    <nav style="color: var(--color-text-secondary); font-weight: 500;">
       <a href="#">
@@ -52,17 +53,17 @@
           </p>
           <hr class="intro-hr"> 
           <div class="intro-icons">
-            <a id="emailCopy" class="intro-icon" href="#" role="button" aria-label="Copy email">
+            <a id="emailCopy" class="intro-icon email" href="#" role="button" aria-label="Copy email">
               <i class="fas fa-envelope" aria-hidden="true"></i>
               <span class="custom-tooltip">Copy<br>Email</span>
             </a>
 
-            <a id="githubOpen" class="intro-icon" href="#" role="button" aria-label="Open GitHub">
+            <a id="githubOpen" class="intro-icon github" href="#" role="button" aria-label="Open GitHub">
               <i class="fab fa-github-alt" aria-hidden="true"></i>
               <span class="custom-tooltip">GitHub</span>
             </a>
 
-            <a id="youtubeChooser" class="intro-icon" href="#" role="button" aria-label="Open YouTube selector">
+            <a id="youtubeChooser" class="intro-icon yt" href="#" role="button" aria-label="Open YouTube selector">
               <i class="fab fa-youtube" aria-hidden="true"></i>
               <span class="custom-tooltip">YouTube</span>
             </a>
@@ -86,7 +87,7 @@
     </div>
   </div>
 
-  <div class="wider-bubblebody">
+  <!-- <div class="wider-bubblebody">
     <section class="cardies">
       <div class="project-cards">
   <a class="project-card" href="animations.html" style="background-image: url('images/etio.gif');">
@@ -102,6 +103,32 @@
         <a class="project-card" href="#" style="background-image: url('images/calendar1.png');">
           <div class="project-card-overlay">
             <span class="project-card-title">OTHER PROJECTS</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div> -->
+
+  <div class="wider-bubblebody">
+    <section class="cardies">
+      <div class="project-cards">
+        <!-- animations -->
+        <a class="project-card orange" href="animations.html" style="background-image: url('images/etio.gif');">
+          <div class="project-card-overlay">
+            <span class="project-card-title">Animations</span>
+          </div>
+        </a>
+        <!-- tutorials -->
+         <!-- <a class="project-card blue" id="tutorialsCard" href="#" style="background-image: url('images/aidahstar.gif');"> -->
+        <a class="project-card blue" href="tutorials.html" style="background-image: url('images/aidahstar.gif');">
+          <div class="project-card-overlay">
+            <span class="project-card-title">Tutorials</span>
+          </div>
+        </a>
+        <!-- programming -->
+        <a class="project-card green" id="codeLog" href="#" style="background-image: url('images/Obsidian-Checkboxes.gif');">
+          <div class="project-card-overlay">
+            <span class="project-card-title">CodeLog</span>
           </div>
         </a>
       </div>
@@ -134,7 +161,8 @@
       </ul>
     </div>
   </div>
-</footer>
+  </footer>
+  </div>
 
   <div class="modal-backdrop" id="imageModal">
     <div class="modal-content">
@@ -150,7 +178,7 @@
   <div class="modal-backdrop" id="youtubeModal" aria-hidden="true" role="dialog" aria-label="Choose YouTube channel">
     <div class="modal-content">
       <button class="modal-close-button" data-close="youtubeModal">&times;</button>
-      <h3 style="margin-top:0;color:#cde6ff; margin-bottom: 1px;">Choose a channel</h3>
+      <h3 style="margin-top:0;color:#cde6ff; font-family: var(--fnt-bold) !important; margin-bottom: 1px;">Choose a channel</h3>
   <div class="yt-list" style="margin-top:12px">
         <div class="yt-channel" data-channel-url="https://www.youtube.com/c/KaziAidahHaque" data-fixed-name="Kazi Aidah Haque">
           <img class="yt-avatar" src="images/pfp.png" alt="Kazi Aidah Haque avatar">

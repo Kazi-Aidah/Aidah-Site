@@ -96,8 +96,8 @@
 /* ===== GLOBAL STYLES ===== */
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
-    scrollbar-gutter: stable;
+    overflow: hidden;
+    height: 100%;
 }
 
 body {
@@ -107,7 +107,16 @@ body {
     line-height: 1.6;
     background-color: var(--bg-pri);
     color: var(--txt-n);
+    overflow: hidden;
+    height: 100%;
+}
+
+.page-wrapper {
+    height: 100%;
+    overflow-y: auto;
     overflow-x: hidden;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
     animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -227,7 +236,9 @@ button {
 .checkoutprojects {
     margin-bottom: 10px;
     font-size: 1.8em; 
-    font-family: 'GeneralSans', sans-serif;
+    /* font-family: 'GeneralSans', sans-serif; */
+    font-family: var(--fnt-hand);
+    letter-spacing: 0.03em;
     font-weight: 500;
     text-align: center;
     padding-bottom: 10px;
@@ -236,7 +247,7 @@ button {
 
 .alltut {
     font-size: 2.5em;
-    font-family: 'GeneralSans', sans-serif;
+    font-family: var(--fnt-h);
     font-weight: 900;
     color: var(--color-text-light);
     margin-top: -20px !important;
@@ -348,6 +359,36 @@ button {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     transition: all 0.3s ease;
     margin-top: 0px !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Rounded corners between intro and project cards */
+.intro-bubblebody::before,
+.intro-bubblebody::after {
+    content: "";
+    position: absolute;
+    bottom: calc(50px - 1.5em);
+    width: 25px;
+    height: 60px;
+    background-color: var(--bg-sec);
+    mask-image: url('data:image/svg+xml;utf8,<svg width="49" height="64" viewBox="0 0 49 64" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M49 0C49 0 49.0004 0.0743808 49 0.217301V64H0C0 64 29.3748 55.6629 39.5 42C48.679 29.6139 48.9919 2.89411 49 0.217301V0Z" fill="black"/></svg>');
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg width="49" height="64" viewBox="0 0 49 64" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M49 0C49 0 49.0004 0.0743808 49 0.217301V64H0C0 64 29.3748 55.6629 39.5 42C48.679 29.6139 48.9919 2.89411 49 0.217301V0Z" fill="black"/></svg>');
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.intro-bubblebody::before {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.intro-bubblebody::after {
+    right: 0;
+    transform: translateX(100%) scaleX(-1);
 }
 
 .wider-bubblebody {
@@ -358,6 +399,8 @@ button {
     padding: 20px;
     border-radius: 30px;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 5;
 }
 
 .bubblebody {
@@ -385,6 +428,13 @@ button {
     background-color: var(--color-accent-blue);
     border-radius: 10px;
     border: 2px solid var(--bg-sec);
+}
+
+@media screen and (min-width: 700px) and (max-width: 900px) {
+    .intro-bubblebody::before,
+    .intro-bubblebody::after {
+    bottom: calc(40px - 1.4em);
+}
 }
 
 /* ===== INTRO SECTION ===== */
@@ -520,12 +570,17 @@ button {
     justify-content: center;
     text-decoration: none;
     color: #677099;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 2.275), box-shadow 0.18s ease, background 0.18s ease;
     font-size: 1.7em;
     position: relative;
 }
 .intro-icon:hover {
-    transform: scale(1.04);
+    transform: scale(1.1);
+    color: var(--txt-m);
+}
+.intro-icon:active {
+    transform: scale(0.8);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     color: var(--txt-m);
 }
 
@@ -574,6 +629,19 @@ button {
     opacity: 1;
     transform: translateX(-50%) scale(1);
     transition-delay: 0.08s;
+}
+
+
+
+
+.intro-icon.github:hover {
+    color: #65d286 !important;
+}
+.intro-icon.email:hover {
+    color: #3d5bb6 !important;
+}
+.intro-icon.yt:hover {
+    color: #a23434 !important;
 }
 
 /* ===== HEADINGS ===== */
@@ -648,7 +716,7 @@ h2.h2comm-me {
     align-items: center;
     justify-content: center;
     text-decoration: bolder;
-    transition: transform 0.18s, box-shadow 0.18s;
+    transition: transform 0.18s cubic-bezier(0.175, 0.885, 0.32, 2.275), box-shadow 0.18s;
     border: 2.5px solid var(--color-border-secondary);
 }
 
@@ -705,19 +773,19 @@ h2.h2comm-me {
 }
 
 .project-card-title {
-    font-family: 'GeneralSans', sans-serif;
-    font-size: 1.22em;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-family: var(--fnt-h);
+    font-size: 1.32em;
+    font-weight: 500;
+    letter-spacing: 0.05em;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.2em;
-    text-shadow: 0 2px 5px var(--color-accent-blue-darker);
+    text-shadow: 0 2px 5px black;
     width: 100%;
     text-align: center;
     margin-bottom: 0;
-    color: #ebeef6;
+    color: #e1e5f0;
     transition: all 0.2s ease;
 }
 
@@ -727,8 +795,67 @@ h2.h2comm-me {
     font-weight: 700;
     color: var(--color-text-pure-white);
     text-shadow: 0 2px 2px var(--color-text-pure-black);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, font-size 0.3s cubic-bezier(0.175, 0.885, 0.32, 2.275);
 }
+
+
+/* green - #76c88e */
+.project-card.green:hover {
+    border: 4px solid #76c88e;
+    box-shadow: 0 8px 10px rgba(0, 255, 55, 0.299);
+}
+
+.project-card.green:hover .project-card-title {
+    color: #76c88e;
+}
+
+.project-card.green:hover .project-card-overlay {
+    background: linear-gradient(
+        0deg,
+        rgba(24, 41, 20, 0.732) 50%,
+        rgba(108, 187, 122, 0.449) 100%
+    );
+}
+
+/* orange */
+.project-card.orange:hover{
+    filter: saturate(1.2);
+    border: 4px solid rgb(216, 165, 110);
+    box-shadow: 0 8px 10px rgba(255, 204, 0, 0.299);
+}
+
+.project-card.orange:hover .project-card-title {
+    color: rgb(216, 165, 110);
+}
+
+.project-card.orange:hover .project-card-overlay {
+    background: linear-gradient(
+        0deg,
+        rgba(41, 33, 20, 0.732) 50%,
+        rgba(187, 149, 108, 0.449) 100%
+    );
+}
+
+/* blue */
+.project-card.blue:hover {
+    filter: saturate(1.2);
+    border: 4px solid rgb(121, 188, 219);
+    box-shadow: 0 8px 10px rgba(46, 138, 181, 0.299);
+}
+
+.project-card.blue:hover .project-card-title {
+    color: rgb(121, 188, 219);
+}
+
+.project-card.blue:hover .project-card-overlay {
+    background: linear-gradient(
+        0deg,
+        rgba(20, 20, 41, 0.732) 50%,
+        rgba(108, 108, 187, 0.449) 100%
+    );
+}
+
+
 
 /* ===== VIDEO GRID ===== */
 .video-grid {
@@ -1253,7 +1380,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
 }
 
 .modal-close-button:hover {
-    color: var(--color-accent-blue);
+    color: var(--color-retro-red);
     transform: rotate(90deg);
 }
 
@@ -1471,7 +1598,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     padding: 8px 12px;
     text-align: center;
     font-weight: 700;
-    font-family: 'GeneralSans', sans-serif;
+    font-family: var(--fnt-h);
     letter-spacing: 0.01em;
     box-sizing: border-box;
     transition: all 0.3s ease;
@@ -1841,7 +1968,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     padding:14px 18px;
     border-radius:12px;
     background:var(--bg-pri);
-    border: 2px solid var(--color-accent-blue-lighter);
+    border: 2px solid var(--color-border-secondary);
     cursor:pointer;
     width:stretch;
     min-width:300px;
@@ -1923,7 +2050,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: 'GeneralSans', sans-serif;
+    font-family: var(--fnt-h);
 }
 
 .footer-section p {
@@ -2098,6 +2225,11 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
 }
 
 @media (max-width: 700px) {
+    .intro-bubblebody::before,
+    .intro-bubblebody::after {
+        display: none;
+    }
+
     .intro {
         flex-direction: column;
         align-items: center;
@@ -2346,6 +2478,13 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
     }
     .by-me {
         font-size: 1.2em !important;
+    }
+}
+
+
+@media (max-width: 700px) {
+    .project-cards {
+        margin-right: 10px;
     }
 }
 
@@ -2610,7 +2749,7 @@ html::-webkit-scrollbar-thumb { background: var(--color-border-quaternary); bord
 
 
 /* ===== PAGE TRANSITIONS ===== */
-body.page-exiting {
+body.page-exiting .page-wrapper {
     animation: none;
     opacity: 0;
     transform: translateY(-12px);

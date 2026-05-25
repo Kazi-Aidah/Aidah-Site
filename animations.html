@@ -159,6 +159,7 @@
   </style>
 </head>
 <body>
+  <div class="page-wrapper">
   <header>
    <nav style="color: var(--color-text-secondary); font-weight: 500;">
       <a href="index.html">
@@ -210,6 +211,7 @@
     </div>
   </div>
 </footer>
+</div>
 
   <div class="modal-backdrop" id="imageModal">
     <div class="modal-content">
@@ -413,9 +415,11 @@
                 if (yearSection) {
                      const header = document.querySelector('header');
                      const headerHeight = header ? header.offsetHeight : 140;
-                     const yOffset = -(headerHeight + 20); 
-                     const y = yearSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                     window.scrollTo({top: y, behavior: 'smooth'});
+                     const wrapper = document.querySelector('.page-wrapper');
+                     if (wrapper) {
+                         const y = yearSection.getBoundingClientRect().top + wrapper.scrollTop - headerHeight - 20;
+                         wrapper.scrollTo({top: y, behavior: 'smooth'});
+                     }
                 }
             });
             

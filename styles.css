@@ -51,13 +51,13 @@
     --color-accent-light-blue-2: #60a7ff;
     --color-accent-light-blue-3: #6993c2;
     
-    --color-discord: #8465ff;
+    --color-discord: #7662c9;
     --color-youtube-red: #ff6262;
     --color-youtube-pink: #ff8cb4;
     --color-instagram: #df87ff;
     --color-facebook: #60a7ff;
     --color-tiktok: #7acaff;
-    --color-plane: #c34bff;
+    --color-plane: #be5750;
     
     --color-border: #343355;
     --color-border-secondary: #49506e;
@@ -224,7 +224,8 @@ button {
 
 .intro-title {
     font-size: 1.5em;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 0.03em;
     color: var(--color-text-secondary);
     font-family: var(--fnt-h);
 }
@@ -337,12 +338,13 @@ button {
 
 .i-am {
     font-size: 20px;
+    font-family: var(--fnt-hand) !important;
 }
 
 .aidah-highlight {
     font-family: var(--fnt-hand) !important;
     font-weight: 600;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     background-color: #2048be70;
     border-radius: 8px;
     padding: 0px 4px;

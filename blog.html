@@ -17,6 +17,8 @@
 </head>
 <body>
   <div class="page-wrapper">
+  <div class="top-spacer" id="topSpacer"></div>
+  <div class="content-wrapper">
   <header>
     <nav style="color: var(--color-text-secondary); font-weight: 500; font-size: 1.0em;">
       <a href="index.html"><i class="fas fa-home"></i> HOME</a> |
@@ -29,6 +31,7 @@
     <!-- Blog content DOM structure will be added in task 5.2 -->
   </main>
 
+  </div>
   <footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
     <div class="footer-grid">
       <div class="footer-section contact-section">
@@ -57,145 +60,3 @@
 <script src="page-transition.js"></script>
 </body>
 </html>
-
-<script>
-  // blog.js — Client-side blog page logic
-// No framework, no build step. Plain JavaScript.
-
-// ---------------------------------------------------------------------------
-// FilenameParser
-// ---------------------------------------------------------------------------
-
-const FILENAME_REGEX = /^(\d{2}-[A-Za-z]{3}-\d{4})---([a-z0-9][a-z0-9-]*)\.md$/;
-
-/**
- * Parses a post filename into its date and title components.
- * @param {string} filename - e.g. "10-May-2026---my-first-post.md"
- * @returns {{ date: string, title: string, slug: string }}
- *   date  → "10 May 2026"  (human-readable)
- *   title → "My First Post" (title-cased)
- *   slug  → "10-May-2026---my-first-post" (filename without .md, used for hash)
- * On invalid input returns { date: "Unknown Date", title: "Untitled Post", slug: filename }
- */
-function parseFilename(filename) {
-    const match = FILENAME_REGEX.exec(filename);
-    if (!match) {
-        return { date: 'Unknown Date', title: 'Untitled Post', slug: filename };
-    }
-    const datePart = match[1]; // e.g. "10-May-2026"
-    const slugPart = match[2]; // e.g. "my-first-post"
-
-    const date = datePart.replace(/-/g, ' '); // "10 May 2026"
-    const title = slugPart
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-    const slug = filename.replace(/\.md$/, '');
-
-    return { date, title, slug };
-}
-
-// ---------------------------------------------------------------------------
-// ExcerptExtractor
-// ---------------------------------------------------------------------------
-
-/**
- * Extracts a plain-text excerpt from raw Markdown content.
- * Strips Markdown syntax, then truncates to 150 characters.
- * @param {string} markdown - Raw Markdown string
- * @returns {string} Plain text excerpt, with "…" appended if truncated
- */
-function extractExcerpt(markdown) {
-    if (typeof markdown !== 'string' || markdown.trim() === '') {
-        return '';
-    }
-
-    let text = markdown;
-
-    // 1. Remove fenced code blocks (``` ... ``` or ~~~ ... ~~~)
-    text = text.replace(/^```[\s\S]*?^```/gm, '');
-    text = text.replace(/^~~~[\s\S]*?^~~~/gm, '');
-
-    // 2. Remove images: ![alt](url)
-    text = text.replace(/!\[([^\]]*)\]\([^)]*\)/g, '');
-
-    // 3. Replace links: [text](url) → text
-    text = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1');
-
-    // 4. Remove heading markers (# at start of line)
-    text = text.replace(/^#{1,6}\s+/gm, '');
-
-    // 5. Remove bold/italic markers: **, *, __, _
-    text = text.replace(/\*\*([^*]*)\*\*/g, '$1');
-    text = text.replace(/__([^_]*)__/g, '$1');
-    text = text.replace(/\*([^*]*)\*/g, '$1');
-    text = text.replace(/_([^_]*)_/g, '$1');
-
-    // 6. Remove blockquote markers (> at start of line)
-    text = text.replace(/^>\s*/gm, '');
-
-    // 7. Remove list markers (-, *, or 1. at start of line)
-    text = text.replace(/^[-*]\s+/gm, '');
-    text = text.replace(/^\d+\.\s+/gm, '');
-
-    // 8. Collapse whitespace and trim
-    text = text.replace(/\s+/g, ' ').trim();
-
-    if (text === '') {
-        return '';
-    }
-
-    // 9. Truncate to 150 characters; append "…" only if text exceeded 150 chars
-    if (text.length > 150) {
-        return text.slice(0, 150) + '…';
-    }
-
-    return text;
-}
-
-// ---------------------------------------------------------------------------
-// Post Sorting
-// ---------------------------------------------------------------------------
-
-/**
- * Parses the DD-Mon-YYYY date portion of a filename into a Date object.
- * Returns null if the filename does not match the expected format or the
- * resulting date is invalid.
- * @param {string} filename
- * @returns {Date|null}
- */
-function parseDateFromFilename(filename) {
-    const match = FILENAME_REGEX.exec(filename);
-    if (!match) return null;
-
-    const datePart = match[1]; // e.g. "10-May-2026"
-    // Replace hyphens with spaces so the Date constructor can parse "10 May 2026"
-    const dateObj = new Date(datePart.replace(/-/g, ' '));
-    // Guard against invalid dates (e.g. day 32)
-    return isNaN(dateObj.getTime()) ? null : dateObj;
-}
-
-/**
- * Sorts an array of post filenames by date descending (newest first).
- * Filenames that fail to parse sort to the end of the array.
- * Returns a new sorted array; does not mutate the original.
- * @param {string[]} filenames
- * @returns {string[]}
- */
-function sortByDateDescending(filenames) {
-    return [...filenames].sort((a, b) => {
-        const dateA = parseDateFromFilename(a);
-        const dateB = parseDateFromFilename(b);
-
-        // Both unparseable — preserve relative order
-        if (dateA === null && dateB === null) return 0;
-        // Unparseable sorts to the end
-        if (dateA === null) return 1;
-        if (dateB === null) return -1;
-
-        // Descending: newer date (larger timestamp) comes first
-        return dateB.getTime() - dateA.getTime();
-    });
-}
-
-</script>

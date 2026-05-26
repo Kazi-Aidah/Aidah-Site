@@ -9,6 +9,7 @@
     if (!anchor) return;
 
     var href = anchor.getAttribute('href');
+    console.log('Clicking link:', href);
     if (!href) return;
 
     // Skip: new tab, external, hash-only, javascript:, mailto:, tel:
@@ -20,15 +21,28 @@
       href.startsWith('javascript') ||
       href.startsWith('mailto') ||
       href.startsWith('tel')
-    ) return;
+    ) {
+      console.log('Skipping link');
+      return;
+    }
 
     // Skip if modifier keys are held (open in new tab, etc.)
     if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
 
+    // Navigate directly without animation for codelog.html
+    if (href === 'codelog.html') {
+      console.log('Navigating directly to codelog.html');
+      e.preventDefault();
+      window.location.href = href;
+      return;
+    }
+
     e.preventDefault();
+    console.log('Adding page-exiting class');
     document.body.classList.add('page-exiting');
 
     setTimeout(function () {
+      console.log('Navigating to:', href);
       window.location.href = href;
     }, 230);
   });

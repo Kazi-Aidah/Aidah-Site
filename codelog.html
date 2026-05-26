@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght{300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Aidah's Site</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <link rel="stylesheet" href="styles.css?v=2" />
+  <script src="intro-mobile.js"></script>
+  <script async src="https://tally.so/widgets/embed.js"></script>
+</head>
+<style>
+    .cc-bubblebody {
+        background: var(--bg-sec);
+        border-top: 2px solid var(--brdr-1);
+        width: 80%;
+        max-width: auto !important;
+        margin: 0 auto 1.5em;
+        padding: 20px;
+        border-radius: 24px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+        margin-top: 0px !important;
+        padding-bottom: 10px;
+    }
+    .cc-blog {
+        margin: 0 auto 1.5em;
+        padding: 20px;
+        padding-left: 28px;
+        width: 86%;
+    }
+    .global-search-container {
+        background-color: var(--bg-pri);
+        border: none !important;
+        margin: 0px !important;
+        padding: 0px !important;
+        /* padding-left: 10px !important; */
+        padding-bottom: 0px !important;
+    }
+    .search-input-wrapper {
+        width: 100% !important;
+        min-width: 100%;
+    }
+    .filter-toggle-btn {
+        margin-right: -10px;
+        display: none; /* TBC */
+    }
+    .filter-toggle-btn:hover {
+        color: var(--clr-g);
+        border: 2px solid var(--clr-g);
+        background-color: #9fc38733;
+    }
+    .blog-h {
+        font-size: 1.8em; 
+        /* font-family: 'GeneralSans', sans-serif; */
+        font-family: var(--fnt-g);
+        letter-spacing: 0.03em;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* .heading-container {
+        margin-bottom: 20px;
+    } */
+
+    /* blog items */
+    .blog-item {
+        margin-bottom: 20px;
+    }
+    .blog-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 20px;
+    }
+    .blog-img {
+        width: 100%;
+        height: 160px !important;
+    }
+    .blog-title {
+        margin-top: 0px;
+        font-family: var(--fnt-h);
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-bottom: 0px !important;
+        line-height: 1.2;
+    }
+    .blog-desc {
+        font-family: var(--fnt-j);
+        font-size: 1em;
+        font-weight: 400;
+        margin-top: -2px;
+        margin-bottom: 0px !important;
+    }
+    .blog-date {
+        font-size: small;
+        color: var(--color-text-secondary)
+    }
+    .blog-readmore {
+        font-family: var(--fnt-p);
+        font-size: 1em;
+        font-weight: 400;
+        margin-top: -2px;
+        margin-bottom: 0px !important;
+    }
+    
+    /* Simple Custom Carousel */
+    .custom-carousel {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 20px;
+    }
+    
+    .custom-carousel-track {
+        display: flex;
+        gap: 15px;
+        transition: transform 0.5s ease;
+        padding: 10px 0;
+    }
+    
+    .custom-carousel .proj-card {
+        background: var(--bg-ter);
+        border: 2px solid var(--brdr-1);
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+        width: 300px;
+        flex: 0 0 auto;
+    }
+    
+    .custom-carousel .proj-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    
+    .custom-carousel .proj-card-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-bottom: 2px solid var(--brdr-1);
+    }
+    
+    .custom-carousel .proj-card-content {
+        padding: 15px;
+        padding-top: 10px;
+        /* padding-bottom: 0px; */
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .custom-carousel .proj-card-title {
+        font-family: var(--fnt-h);
+        font-size: 1.3em;
+        font-weight: 600;
+        color: var(--txt-n);
+        margin: 0;
+    }
+    
+    .custom-carousel .proj-card-desc {
+        font-family: var(--fnt-j);
+        font-size: 0.9em;
+        color: var(--txt-m);
+        margin: 0;
+        line-height: 1.5;
+    }
+    
+    .custom-carousel .proj-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 5px;
+    }
+    
+    .card-tag {
+        font-family: var(--fnt-j);
+        font-size: 0.8em;
+        padding: 4px 10px;
+        border-radius: 8px;
+        background: var(--bg-sec);
+        color: var(--txt-m);
+    }
+
+    .card-tag.tag-obsidian-plugin {
+        background: rgb(139, 92, 246, 0.2);
+        color: rgb(196, 181, 253);
+    }
+
+    .card-tag.tag-obsidian-theme {
+        background: rgb(59, 130, 246, 0.2);
+        color: rgb(147, 197, 253);
+    }
+
+    .card-tag.tag-coloring {
+        background: rgb(236, 72, 153, 0.2);
+        color: rgb(249, 168, 212);
+    }
+
+    .card-tag.tag-productivity {
+        background: rgb(34, 197, 94, 0.2);
+        color: rgb(167, 243, 208);
+    }
+
+    .card-tag.tag-utility {
+        background: rgb(14, 165, 233, 0.2);
+        color: rgb(125, 211, 252);
+    }
+
+    .card-tag.tag-customization {
+        background: rgb(249, 115, 22, 0.2);
+        color: rgb(253, 186, 116);
+    }
+    
+    .custom-carousel-controls {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        padding: 0 10px;
+        box-sizing: border-box;
+        z-index: 10;
+    }
+    
+    .custom-carousel-btn {
+        pointer-events: auto;
+        background: #1a1a2a40;
+        backdrop-filter: blur(2px);
+        color: #c5cee0;
+        border: 1px solid #49506e;
+        border-radius: 20px;
+        width: 40px;
+        height: 50px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+    
+    .custom-carousel-btn.hidden {
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    .custom-carousel-btn:hover {
+        background-color: #49506e40;
+        border: 2px solid var(--clr-o);
+        color: var(--clr-o);
+        transform: scale(1.05);
+    }
+
+    .custom-carousel-btn:active {
+        background-color: #49506e40;
+        border: 2px solid var(--clr-b);
+        color: var(--clr-b);
+        transform: scale(0.9);
+    }
+    
+    .blog-item {
+        background: var(--bg-ter);
+        border-top: 2px solid var(--brdr-1);
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        width: 100%;
+        transition: all 0.3s ease;
+        align-items: stretch;
+    }
+    
+    .blog-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+    
+    .blog-img-wrapper {
+        flex: 0 0 280px;
+        overflow: hidden;
+    }
+    
+    .blog-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        /* border-right: 2px solid var(--brdr-1); */
+    }
+    
+    .blog-content {
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+        padding-bottom: 20px;
+    }
+    
+    .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 5px;
+    }
+    
+    /* .blog-tag {
+        font-family: var(--fnt-j);
+        font-size: 0.85em;
+        padding: 3px 8px;
+        border-radius: 8px;
+        background: var(--bg-sec);
+        color: var(--txt-m);
+    } */
+    
+    @media (max-width: 700px) {
+        .blog-item {
+            flex-direction: column;
+        }
+        
+        .blog-img-wrapper {
+            flex: 0 0 auto;
+            width: 100%;
+            /* min-height: 200px; */
+        }
+        
+        .blog-img {
+            width: 100%;
+            height: 100%;
+            border-right: none;
+            /* border-bottom: 2px solid var(--brdr-1); */
+        }
+    }
+</style>
+
+<body>
+  <div class="page-wrapper">
+  <div class="top-spacer" id="topSpacer"></div>
+  <div class="content-wrapper">
+  <header>
+   <nav style="color: var(--color-text-secondary); font-weight: 500;">
+      <a href="../index.html">
+        <i class="fas fa-home"></i>
+        HOME</a>
+      | 
+      <a href="#contact">
+        <i class="fa-solid fa-envelopes-bulk" href="#contact"></i>
+        CONTACT</a>
+    </nav>
+  </header>
+
+  <div class="cc-bubblebody">
+    <div class="heading-container">
+        <h2 class="checkoutprojects">Projects</h2>
+        <hr>
+    </div>
+    <div class="custom-carousel" id="projectsCarousel">
+        <div class="custom-carousel-track" id="carouselTrack">
+          <a href="https://github.com/kazi-aidah/always-color-text" class="proj-card" data-project-id="always-color-text" target="_blank">
+            <img src="https://github.com/user-attachments/assets/905f5f4b-8b8b-440a-b00f-b32548e721db" alt="Always Color Text" class="proj-card-img">
+            <div class="proj-card-content">
+              <h3 class="proj-card-title">Always Color Text</h3>
+              <p class="proj-card-desc">Automatically color any word, phrase, or date across your vault.</p>
+              <div class="proj-card-tags">
+                <span class="card-tag">Obsidian Plugin</span>
+                <span class="card-tag">Coloring</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://github.com/kazi-aidah/sidecards" class="proj-card" data-project-id="sidecards" target="_blank">
+            <img src="https://github.com/user-attachments/assets/503eae84-0d7d-4385-9253-7b48d7bef43e" alt="SideCards" class="proj-card-img">
+            <div class="proj-card-content">
+              <h3 class="proj-card-title">SideCards</h3>
+              <p class="proj-card-desc">Create sidebar cards you can color, tag, and drag into notes.</p>
+              <div class="proj-card-tags">
+                <span class="card-tag">Obsidian Plugin</span>
+                <span class="card-tag">Productivity</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://github.com/kazi-aidah/dayble-calendar" class="proj-card" data-project-id="dayble-calendar" target="_blank">
+            <img src="https://github.com/Kazi-Aidah/dayble-calendar/blob/main/assets/banner.gif?raw=true" alt="Dayble Calendar" class="proj-card-img">
+            <div class="proj-card-content">
+              <h3 class="proj-card-title">Dayble Calendar</h3>
+              <p class="proj-card-desc">A fast, customizable calendar for Obsidian that stores events as monthly JSON files.</p>
+              <div class="proj-card-tags">
+                <span class="card-tag">Obsidian Plugin</span>
+                <span class="card-tag">Productivity</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://github.com/kazi-aidah/color-table-cell" class="proj-card" data-project-id="color-table-cell" target="_blank">
+            <img src="https://github.com/user-attachments/assets/3a8923c4-af87-4f2c-8505-6bc03a31aa6c" alt="Color Table Cell" class="proj-card-img">
+            <div class="proj-card-content">
+              <h3 class="proj-card-title">Color Table Cell</h3>
+              <p class="proj-card-desc">Color table cells manually or with rules based on keywords or numbers.</p>
+              <div class="proj-card-tags">
+                <span class="card-tag">Obsidian Plugin</span>
+                <span class="card-tag">Coloring</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://github.com/kazi-aidah/emoticon-picker" class="proj-card" data-project-id="emoticon-picker" target="_blank">
+            <img src="images/emoticon-picker.png" alt="Emoticon Picker" class="proj-card-img">
+            <div class="proj-card-content">
+              <h3 class="proj-card-title">Emoticon Picker</h3>
+              <p class="proj-card-desc">Instant emoticon insertion with favorites and search.</p>
+              <div class="proj-card-tags">
+                <span class="card-tag">Obsidian Plugin</span>
+                <span class="card-tag">Utility</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://github.com/kazi-aidah/blobob" class="proj-card" data-project-id="blobob-theme" target="_blank">
+            <img src="https://github.com/Kazi-Aidah/blobob/raw/main/assets/screenshot-HQ.png" alt="Blobob Theme" class="proj-card-img">
+            <div class="proj-card-content">
+              <h3 class="proj-card-title">Blobob Theme</h3>
+              <p class="proj-card-desc">An animated theme for Obsidian with 60+ color options.</p>
+              <div class="proj-card-tags">
+                <span class="card-tag">Obsidian Theme</span>
+                <span class="card-tag">Customization</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="custom-carousel-controls">
+            <button class="custom-carousel-btn hidden" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button class="custom-carousel-btn hidden" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+  </div>
+
+  <div class="cc-blog">
+    <div class="heading-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+        <h2 class="blog-h"><a href="blog.html" style="color: inherit; text-decoration: none;">Blog</a></h2>
+        <div class="global-search-container">
+          <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon" id="global-search-icon"></i>
+              <input type="text" id="global-search-input" placeholder="|" class="global-search-input">
+          </div>
+          <button id="filter-toggle-button" class="filter-toggle-btn"><i class="fas fa-filter"></i> Filter</button>
+        </div>
+    </div>
+
+    <div class="blog-container">
+        <div class="blog-item" onclick="window.location.href='blog.html#with-markdown'" style="cursor: pointer;">
+            <div class="blog-img-wrapper">
+                <img class="blog-img" src="images/alwayscolortext1.jpg" alt="Blog Image">
+            </div>
+            <div class="blog-content">
+                <div class="blog-meta">
+                    <span class="card-tag">Obsidian Plugin</span>
+                    <span class="card-tag">Backstory</span>
+                </div>
+                <h3 class="blog-title">Always Color Text?</h3>
+                <p class="blog-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <span class="blog-date">2025 May 26</span>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple Custom Carousel
+    const carousel = document.getElementById('projectsCarousel');
+    const track = document.getElementById('carouselTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentPosition = 0;
+    const cardWidth = 295; // card width (280px) + gap (15px)
+
+    // Get max scrollable position
+    function getMaxPosition() {
+        const viewportWidth = carousel.clientWidth;
+        const trackWidth = track.scrollWidth;
+        return Math.max(0, trackWidth - viewportWidth);
+    }
+
+    // Update arrow visibility
+    function updateArrows() {
+        const maxPosition = getMaxPosition();
+        
+        // Show left arrow only if we can go left
+        if (currentPosition > 0) {
+            prevBtn.classList.remove('hidden');
+        } else {
+            prevBtn.classList.add('hidden');
+        }
+        
+        // Show right arrow only if we can go right
+        if (currentPosition < maxPosition) {
+            nextBtn.classList.remove('hidden');
+        } else {
+            nextBtn.classList.add('hidden');
+        }
+    }
+
+    // Update carousel position
+    function updateCarousel() {
+        track.style.transform = `translateX(-${currentPosition}px)`;
+        updateArrows();
+    }
+
+    nextBtn.addEventListener('click', () => {
+        const maxPosition = getMaxPosition();
+        currentPosition = Math.min(currentPosition + cardWidth, maxPosition);
+        updateCarousel();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentPosition = Math.max(currentPosition - cardWidth, 0);
+        updateCarousel();
+    });
+
+    // Initial update when DOM is ready and when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        updateArrows();
+    });
+    window.addEventListener('load', () => {
+        updateArrows();
+    });
+    
+    // Update on window resize
+    window.addEventListener('resize', () => {
+        currentPosition = Math.min(currentPosition, getMaxPosition());
+        updateCarousel();
+    });
+
+    // Style tags based on their text content
+    function styleTags() {
+        const tags = document.querySelectorAll('.card-tag');
+        tags.forEach(tag => {
+            const text = tag.textContent.toLowerCase().trim();
+            if (text === 'obsidian plugin') {
+                tag.classList.add('tag-obsidian-plugin');
+            } else if (text === 'obsidian theme') {
+                tag.classList.add('tag-obsidian-theme');
+            } else if (text === 'coloring') {
+                tag.classList.add('tag-coloring');
+            } else if (text === 'productivity') {
+                tag.classList.add('tag-productivity');
+            } else if (text === 'utility') {
+                tag.classList.add('tag-utility');
+            } else if (text === 'customization') {
+                tag.classList.add('tag-customization');
+            }
+        });
+    }
+
+    // Blog loading and rendering for codelog.html
+    function parseFrontmatter(content) {
+        const frontmatterRegex = /^---[\r\n]+([\s\S]*?)[\r\n]+---[\r\n]+([\s\S]*)$/;
+        const match = frontmatterRegex.exec(content);
+        
+        if (!match) {
+            return {
+                metadata: {},
+                content: content
+            };
+        }
+        
+        const frontmatterStr = match[1];
+        const contentStr = match[2];
+        
+        const metadata = {};
+        const lines = frontmatterStr.split(/\r?\n/);
+        let currentKey = null;
+        
+        for (let line of lines) {
+            line = line.trim();
+            if (!line) continue;
+            
+            if (line.startsWith('- ')) {
+                if (currentKey && Array.isArray(metadata[currentKey])) {
+                    metadata[currentKey].push(line.slice(2).trim());
+                }
+                continue;
+            }
+            
+            const colonIndex = line.indexOf(':');
+            if (colonIndex === -1) continue;
+            
+            const key = line.slice(0, colonIndex).trim();
+            let value = line.slice(colonIndex + 1).trim();
+            
+            if (!value) {
+                metadata[key] = [];
+                currentKey = key;
+            } else {
+                metadata[key] = value;
+                currentKey = null;
+            }
+        }
+        
+        return {
+            metadata,
+            content: contentStr
+        };
+    }
+
+    function extractExcerpt(markdown) {
+        if (typeof markdown !== 'string' || markdown.trim() === '') {
+            return '';
+        }
+
+        let text = markdown;
+
+        text = text.replace(/^```[\s\S]*?^```/gm, '');
+        text = text.replace(/^~~~[\s\S]*?^~~~/gm, '');
+        text = text.replace(/!\[([^\]]*)\]\([^)]*\)/g, '');
+        text = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1');
+        text = text.replace(/^#{1,6}\s+/gm, '');
+        text = text.replace(/\*\*([^*]*)\*\*/g, '$1');
+        text = text.replace(/__([^_]*)__/g, '$1');
+        text = text.replace(/\*([^*]*)\*/g, '$1');
+        text = text.replace(/_([^_]*)_/g, '$1');
+        text = text.replace(/^>\s*/gm, '');
+        text = text.replace(/^[-*]\s+/gm, '');
+        text = text.replace(/^\d+\.\s+/gm, '');
+        text = text.replace(/\s+/g, ' ').trim();
+
+        if (text === '') {
+            return '';
+        }
+
+        if (text.length > 150) {
+            return text.slice(0, 150) + '…';
+        }
+
+        return text;
+    }
+
+    function parseDate(dateStr) {
+        const dateObj = new Date(dateStr);
+        if (isNaN(dateObj.getTime())) {
+            return 'Unknown Date';
+        }
+        
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return dateObj.toLocaleDateString('en-US', options);
+    }
+
+    async function loadBlogPostsForCodelog() {
+        try {
+            const response = await fetch('blog/manifest.json');
+            if (!response.ok) throw new Error('Failed to load manifest');
+            const filenames = await response.json();
+            
+            const posts = await Promise.all(filenames.map(async filename => {
+                try {
+                    const contentResponse = await fetch(`blog/${filename}`);
+                    if (!contentResponse.ok) return null;
+                    const content = await contentResponse.text();
+                    const { metadata, content: markdownContent } = parseFrontmatter(content);
+                    const excerpt = extractExcerpt(markdownContent);
+                    const slug = filename.replace(/\.md$/, '');
+                    
+                    return {
+                        slug,
+                        filename,
+                        title: metadata.title || 'Untitled Post',
+                        date: parseDate(metadata.date || filename),
+                        image: metadata.image,
+                        tags: metadata.tags || [],
+                        content: markdownContent,
+                        excerpt
+                    };
+                } catch {
+                    return null;
+                }
+            }));
+            
+            const validPosts = posts.filter(p => p !== null);
+            renderBlogPostsInCodelog(validPosts);
+            return validPosts;
+        } catch (error) {
+            console.error('Error loading blog posts:', error);
+            return [];
+        }
+    }
+
+    function renderBlogPostsInCodelog(posts) {
+        const container = document.querySelector('.blog-container');
+        if (!container) return;
+        
+        container.innerHTML = posts.map(post => `
+            <div class="blog-item" onclick="window.location.href='blog.html#${post.slug}'" style="cursor: pointer;">
+                ${post.image ? `
+                    <div class="blog-img-wrapper">
+                        <img class="blog-img" src="${post.image}" alt="${post.title}">
+                    </div>
+                ` : `
+                    <div class="blog-img-wrapper">
+                        <img class="blog-img" src="images/alwayscolortext1.jpg" alt="Blog Image">
+                    </div>
+                `}
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        ${post.tags.map(tag => `<span class="card-tag">${tag}</span>`).join('')}
+                    </div>
+                    <h3 class="blog-title">${post.title}</h3>
+                    <p class="blog-desc">${post.excerpt}</p>
+                    <span class="blog-date">${post.date}</span>
+                </div>
+            </div>
+        `).join('');
+        
+        styleTags();
+    }
+
+    document.addEventListener('DOMContentLoaded', styleTags);
+    window.addEventListener('load', styleTags);
+    document.addEventListener('DOMContentLoaded', loadBlogPostsForCodelog);
+  </script>
+
+
+<!-- python3 -m http.server 8000 -->

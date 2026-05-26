@@ -123,6 +123,26 @@ async function loadPost(filename) {
     return response.text();
 }
 
+function styleTags() {
+    const tags = document.querySelectorAll('.card-tag');
+    tags.forEach(tag => {
+        const text = tag.textContent.toLowerCase().trim();
+        if (text === 'obsidian plugin' || text === 'obsidian') {
+            tag.classList.add('tag-obsidian-plugin');
+        } else if (text === 'obsidian theme') {
+            tag.classList.add('tag-obsidian-theme');
+        } else if (text === 'coloring') {
+            tag.classList.add('tag-coloring');
+        } else if (text === 'productivity') {
+            tag.classList.add('tag-productivity');
+        } else if (text === 'utility') {
+            tag.classList.add('tag-utility');
+        } else if (text === 'customization') {
+            tag.classList.add('tag-customization');
+        }
+    });
+}
+
 function renderPostList(posts) {
     const main = document.querySelector('main');
     main.innerHTML = `
@@ -137,6 +157,7 @@ function renderPostList(posts) {
                     <div class="blog-content" style="padding: 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; padding-bottom: 20px;">
                         <div class="blog-meta" style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
                             <span style="font-family: var(--fnt-j); font-size: 0.8em; padding: 4px 10px; border-radius: 8px; background: var(--bg-sec); color: var(--txt-m);">${post.date}</span>
+                            ${post.tags.map(tag => `<span class="card-tag">${tag}</span>`).join('')}
                         </div>
                         <h3 style="margin-top: 0px; font-family: var(--fnt-h); font-size: 1.5em; font-weight: 600; margin-bottom: 0px !important;">${post.title}</h3>
                         <p style="font-family: var(--fnt-j); font-size: 1em; font-weight: 400; margin-top: -2px; margin-bottom: 0px !important;">${post.excerpt}</p>
@@ -152,6 +173,8 @@ function renderPostList(posts) {
             window.location.hash = slug;
         });
     });
+    
+    styleTags();
 }
 
 function renderPostView(post, content) {

@@ -166,6 +166,7 @@
         font-weight: 600;
         color: var(--txt-n);
         margin: 0;
+        margin-top: 4px;
     }
     
     .custom-carousel .proj-card-desc {
@@ -341,6 +342,19 @@
             border-right: none;
             /* border-bottom: 2px solid var(--brdr-1); */
         }
+
+        .cc-bubblebody {
+            width: 96%;
+        }
+
+        .cc-blog {
+            width: 100%;
+            margin: 0px !important;
+        }
+
+        .blog-container {
+            width: 100%;
+        }
     }
 </style>
 
@@ -466,10 +480,10 @@
             <div class="blog-content">
                 <div class="blog-meta">
                     <span class="card-tag">Obsidian Plugin</span>
-                    <span class="card-tag">Backstory</span>
+                    <span class="card-tag">Productivity</span>
                 </div>
-                <h3 class="blog-title">Always Color Text?</h3>
-                <p class="blog-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <h3 class="blog-title">Title</h3>
+                <p class="blog-desc">hi, me aidah</p>
                 <span class="blog-date">2025 May 26</span>
             </div>
         </div>
@@ -547,7 +561,7 @@
         const tags = document.querySelectorAll('.card-tag');
         tags.forEach(tag => {
             const text = tag.textContent.toLowerCase().trim();
-            if (text === 'obsidian plugin') {
+            if (text === 'obsidian plugin' || text === 'obsidian') {
                 tag.classList.add('tag-obsidian-plugin');
             } else if (text === 'obsidian theme') {
                 tag.classList.add('tag-obsidian-theme');

@@ -1,8 +1,9 @@
 ---
 title: Title
 tags:
-  - obsidian
-  - tags need color
+  - Obsidian Plugin
+  - Productivity
+  - Utility
 date: 2026-05-26
 image: blog/img/adoravamp.png
 ---

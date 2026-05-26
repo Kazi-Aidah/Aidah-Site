@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 @font-face {
     font-family: "Google Sans Flex";
     src: url("fonts/GoogleSansFlex-Variable.ttf") format("truetype");
@@ -14,6 +18,13 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "GeneralSans";
+    src: url("fonts/GeneralSans-Variable.ttf") format("truetype");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
 /* ===== COLOR VARIABLES ===== */
 :root {
     /* new color variables */
@@ -22,14 +33,17 @@
     --bg-ter: #232B4A;
     --txt-n: #E9EBF4;
     --txt-m: #BCC7DE;
+    --initial-top-spacer-height: 90px;
+    --initial-bottom-spacer-height: 100px;
 
     --clr-o: #E59C58;
     --clr-c: #9FC387;
     --clr-b: #6892C1;
 
     --fnt-h: "Google Sans Flex", sans-serif;
-    --fnt-b: "Jetbrains Mono", monospace;
-    --fnt-hand: "Pally", sans-serif;
+    --fnt-j: "Jetbrains Mono", monospace;
+    --fnt-p: "Pally", sans-serif;
+    --fnt-g: "GeneralSans", sans-serif;
 
     /* old dumb color variables */
     /* --color-bg-dark: #0F0F13;
@@ -118,6 +132,16 @@ body {
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
     animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.content-wrapper {
+    flex-shrink: 0;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }
 
 @keyframes pageEnter {
@@ -156,6 +180,15 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.top-spacer, .bottom-spacer {
+    /* transition: height 0.15s cubic-bezier(0.175, 0.885, 0.32, 2.275); */
+    transition: height 0.2s ease-out;
+    flex-shrink: 0;
+    width: 100%;
 }
 
 nav {
@@ -224,7 +257,7 @@ button {
 
 .intro-title {
     font-size: 1.5em;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.03em;
     color: var(--color-text-secondary);
     font-family: var(--fnt-h);
@@ -238,7 +271,7 @@ button {
     margin-bottom: 10px;
     font-size: 1.8em; 
     /* font-family: 'GeneralSans', sans-serif; */
-    font-family: var(--fnt-hand);
+    font-family: var(--fnt-g);
     letter-spacing: 0.03em;
     font-weight: 500;
     text-align: center;
@@ -338,11 +371,11 @@ button {
 
 .i-am {
     font-size: 20px;
-    font-family: var(--fnt-hand) !important;
+    font-family: var(--fnt-p) !important;
 }
 
 .aidah-highlight {
-    font-family: var(--fnt-hand) !important;
+    font-family: var(--fnt-p) !important;
     font-weight: 600;
     letter-spacing: 0.03em;
     background-color: #2048be70;
@@ -840,9 +873,8 @@ h2.h2comm-me {
 
 /* blue */
 .project-card.blue:hover {
-    filter: saturate(1.2);
     border: 4px solid rgb(121, 188, 219);
-    box-shadow: 0 8px 10px rgba(46, 138, 181, 0.299);
+    box-shadow: 0 8px 10px rgba(41, 140, 186, 0.498);
 }
 
 .project-card.blue:hover .project-card-title {
@@ -852,8 +884,8 @@ h2.h2comm-me {
 .project-card.blue:hover .project-card-overlay {
     background: linear-gradient(
         0deg,
-        rgba(20, 20, 41, 0.732) 50%,
-        rgba(108, 108, 187, 0.449) 100%
+        rgba(19, 46, 53, 0.732) 50%,
+        rgba(114, 173, 221, 0.449) 100%
     );
 }
 

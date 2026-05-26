@@ -17,6 +17,8 @@
 </head>
 <body>
   <div class="page-wrapper">
+  <div class="top-spacer" id="topSpacer"></div>
+  <div class="content-wrapper">
   <header>
    <nav style="color: var(--color-text-secondary); font-weight: 500;">
       <a href="#">
@@ -135,6 +137,7 @@
     </section>
   </div>
 
+  <div class="bottom-spacer" id="bottomSpacer"></div>
 <footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
   <div class="footer-grid">
     <div class="footer-section contact-section">
@@ -162,6 +165,7 @@
     </div>
   </div>
   </footer>
+  </div>
   </div>
 
   <div class="modal-backdrop" id="imageModal">
@@ -726,6 +730,85 @@
     });
     window.addEventListener('orientationchange', function () {
       setTimeout(applyIntroVerticalOffset, 200);
+    });
+  })();
+</script>
+<script>
+  (function() {
+    const pageWrapper = document.querySelector('.page-wrapper');
+    const topSpacer = document.getElementById('topSpacer');
+    const bottomSpacer = document.getElementById('bottomSpacer');
+    const minWidth = 701; // Apply only on desktop (width > 700px)
+    const homeLink = document.querySelector('nav a[href="#"]');
+    const contactLink = document.querySelector('nav a[href="#contact"]');
+
+    function getInitialSpacerHeight(variableName) {
+      const style = getComputedStyle(document.documentElement);
+      const value = style.getPropertyValue(variableName).trim();
+      return parseFloat(value) || 100;
+    }
+
+    function updateSpacers() {
+      const w = window.innerWidth;
+      
+      if (w <= minWidth) {
+        topSpacer.style.height = '0px';
+        bottomSpacer.style.height = '0px';
+        return;
+      }
+
+      const initialTopHeight = getInitialSpacerHeight('--initial-top-spacer-height');
+      const initialBottomHeight = getInitialSpacerHeight('--initial-bottom-spacer-height');
+      const scrollTop = pageWrapper.scrollTop;
+      
+      const topHeight = Math.max(0, initialTopHeight - scrollTop);
+      const bottomHeight = Math.max(0, initialBottomHeight - scrollTop);
+      
+      topSpacer.style.height = topHeight + 'px';
+      bottomSpacer.style.height = bottomHeight + 'px';
+    }
+
+    // HOME link click handler
+    if (homeLink) {
+      homeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        pageWrapper.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // CONTACT link click handler
+    if (contactLink) {
+      contactLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        const footer = document.getElementById('contact');
+        if (footer) {
+          const footerTop = footer.offsetTop;
+          pageWrapper.scrollTo({
+            top: footerTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    }
+
+    // Run on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', updateSpacers);
+    } else {
+      updateSpacers();
+    }
+
+    // Listen for scroll events on page wrapper
+    pageWrapper.addEventListener('scroll', updateSpacers, { passive: true });
+
+    // Listen for resize events
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateSpacers, 100);
     });
   })();
 </script>

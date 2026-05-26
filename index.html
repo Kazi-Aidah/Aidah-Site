@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <title>Kazi Aidah's Site</title>
+  <title>Aidah's Site</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
 
   <link rel="stylesheet" href="styles.css?v=2" />
@@ -190,7 +190,7 @@
             <div class="yt-name">Kazi Aidah Haque</div>
           </div>
         </div>
-        <div class="yt-channel" data-channel-url="https://www.youtube.com/@kazi_aidah" data-fixed-name="Kazi Aidah's Animations">
+        <div class="yt-channel" data-channel-url="https://www.youtube.com/@kazi_aidah" data-fixed-name="???">
           <img class="yt-avatar" src="images/aidahstar.gif" alt="Kazi Aidah avatar">
           <div class="yt-meta">
             <div class="yt-name">Kazi Aidah's Animations </div>
@@ -741,6 +741,11 @@
     const minWidth = 701; // Apply only on desktop (width > 700px)
     const homeLink = document.querySelector('nav a[href="#"]');
     const contactLink = document.querySelector('nav a[href="#contact"]');
+    const scrollMultiplier = 2.5; // Adjust this to make scroll more/less sensitive
+
+    let isScrolling = false;
+    let animationFrameId = null;
+    let targetScrollTop = 0;
 
     function getInitialSpacerHeight(variableName) {
       const style = getComputedStyle(document.documentElement);
@@ -768,14 +773,66 @@
       bottomSpacer.style.height = bottomHeight + 'px';
     }
 
+    function smoothScrollTo(target) {
+      const currentScrollTop = pageWrapper.scrollTop;
+      const isScrollingDown = target > currentScrollTop;
+      
+      if (isScrollingDown) {
+        pageWrapper.scrollTo({
+          top: target,
+          behavior: 'smooth'
+        });
+      } else {
+        targetScrollTop = target;
+        if (!animationFrameId) {
+          animationFrameId = requestAnimationFrame(performScroll);
+        }
+      }
+    }
+
+    function performScroll() {
+      const currentScrollTop = pageWrapper.scrollTop;
+      const diff = targetScrollTop - currentScrollTop;
+      
+      if (Math.abs(diff) < 1) {
+        pageWrapper.scrollTop = targetScrollTop;
+        animationFrameId = null;
+        return;
+      }
+
+      // Smoothly interpolate to target (faster = higher number)
+      pageWrapper.scrollTop = currentScrollTop + diff * 2.4;
+      animationFrameId = requestAnimationFrame(performScroll);
+    }
+
+    // Custom wheel handler with multiplier (only for scrolling UP)
+    function handleWheel(e) {
+      if (window.innerWidth <= minWidth) return; // Don't apply on mobile
+      
+      const deltaY = e.deltaY;
+      const isScrollingUp = deltaY < 0;
+      
+      if (isScrollingUp) {
+        e.preventDefault();
+        const scrollAmount = deltaY * scrollMultiplier;
+        
+        targetScrollTop = pageWrapper.scrollTop + scrollAmount;
+        // Clamp targetScrollTop to valid range
+        const maxScroll = pageWrapper.scrollHeight - pageWrapper.clientHeight;
+        targetScrollTop = Math.max(0, Math.min(targetScrollTop, maxScroll));
+        
+        if (!animationFrameId) {
+          animationFrameId = requestAnimationFrame(performScroll);
+        }
+      }
+      // If scrolling down, let native scrolling happen
+    }
+
     // HOME link click handler
     if (homeLink) {
       homeLink.addEventListener('click', function(e) {
         e.preventDefault();
-        pageWrapper.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+        smoothScrollTo(0);
       });
     }
 
@@ -786,23 +843,27 @@
         const footer = document.getElementById('contact');
         if (footer) {
           const footerTop = footer.offsetTop;
-          pageWrapper.scrollTo({
-            top: footerTop,
-            behavior: 'smooth'
-          });
+          smoothScrollTo(footerTop);
         }
       });
     }
 
     // Run on load
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', updateSpacers);
+      document.addEventListener('DOMContentLoaded', function() {
+        targetScrollTop = pageWrapper.scrollTop;
+        updateSpacers();
+      });
     } else {
+      targetScrollTop = pageWrapper.scrollTop;
       updateSpacers();
     }
 
     // Listen for scroll events on page wrapper
     pageWrapper.addEventListener('scroll', updateSpacers, { passive: true });
+
+    // Listen for wheel events on page wrapper
+    pageWrapper.addEventListener('wheel', handleWheel, { passive: false });
 
     // Listen for resize events
     let resizeTimer;

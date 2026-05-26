@@ -789,6 +789,7 @@ h2.h2comm-me {
 }
 
 .project-card .project-card-overlay {
+    background-blend-mode: multiply;
     background: linear-gradient(
         0deg,
         rgba(15, 15, 19, 0.496) 50%,

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Aidah's Site</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <link rel="stylesheet" href="styles.css?v=2" />
+  <script src="intro-mobile.js"></script>
+  <script async src="https://tally.so/widgets/embed.js"></script>
+</head>
+
+<style>
+    :root {
+        --clr-blue: #344d97;
+        --clr-blue-light: #586fb6;
+        --clr-blue-text: #A6BCFF;
+    }
+
+    * {
+        font-family: var(--fnt-d);
+        border-radius: 12px;
+        corner-shape: squircle;
+    }
+
+    .file-explorer {
+        background-color: var(--bg-sec);
+        margin: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+    
+    .file-explorer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        background-color: var(--clr-blue);
+        border-top: 4px solid var(--clr-blue-light);
+        border-bottom: 6px solid var(--bg-pri);
+        padding: 4px;
+        height: 46px;
+    }
+    .file-explorer-header p {
+        font-family: var(--fnt-d);
+        color: var(--clr-blue-text);
+        font-size: 16px;
+    }
+    .header-left {
+        display: flex;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    .header-right {
+        display: flex;
+        align-items: flex-end;
+    }
+    .header-left, .header-right, .close-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .file-explorer-body {
+        padding: 10px;
+        background-color: var(--bg-sec);
+        height: 300px;
+    }
+
+    .grouped-by {
+        background-color: var(--bg-ter);
+        margin-bottom: 6px;
+        padding: 4px 10px;
+    }
+
+    .grouped-by::before {
+        content: "";
+        display: inline-block;
+        width: 7px;
+        height: 12px;
+        background-image: url("assets/file-exp-chevron.png");
+        background-size: cover;
+        background-position: center;
+        margin-right: 10px;
+        margin-left: 4px;
+    }
+
+    .is-collapsed::before {
+        transform: rotate(90deg);
+        margin-right: 14px;
+        margin-left: 4px;
+    }
+</style>
+
+<body>
+  <div class="page-wrapper">
+    <div class="file-explorer">
+
+      <div class="file-explorer-header">
+        <div class="header-left">
+            <img src="assets/file-exp-leftarrow.png" alt="Close" class="close-btn" />
+            <img src="assets/file-exp-rightarrow.png" alt="Close" class="close-btn" />
+        </div>
+        <div class="header-center">
+            <p>File Explorer</p>
+        </div>
+        <div class="header-right">
+            <img src="assets/file-exp-close.png" alt="Close" class="close-btn" />
+        </div>
+      </div>
+
+      <div class="file-explorer-body">
+        <div class="grouped-by">Knights</div>
+        <div class="grouped-by is-collapsed">Ranks
+            <div class="grouped-by-content">
+                <div class="grouped-by-item">Knight 1</div>
+                <div class="grouped-by-item">Knight 2</div>
+                <div class="grouped-by-item">Knight 3</div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    
+
+</body>
+</html>

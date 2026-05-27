@@ -25,6 +25,14 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: "Departure Mono";
+    src: url("fonts/DepartureMono-Regular.otf") format("opentype");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
 /* ===== COLOR VARIABLES ===== */
 :root {
     /* new color variables */
@@ -45,6 +53,7 @@
     --fnt-j: "Jetbrains Mono", monospace;
     --fnt-p: "Pally", sans-serif;
     --fnt-g: "GeneralSans", sans-serif;
+    --fnt-d: "Departure Mono", monospace;
 
     /* old dumb color variables */
     /* --color-bg-dark: #0F0F13;

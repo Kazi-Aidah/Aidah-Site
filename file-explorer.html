@@ -25,7 +25,7 @@
 
     * {
         font-family: var(--fnt-d);
-        border-radius: 12px;
+        border-radius: 0px;
         corner-shape: squircle;
     }
 
@@ -60,7 +60,7 @@
     .header-left {
         display: flex;
         align-items: flex-start;
-        gap: 4px;
+        gap: 3px;
     }
     .header-right {
         display: flex;
@@ -69,18 +69,40 @@
     .header-left, .header-right, .close-btn {
         width: 30px;
         height: 30px;
+
+        transform: all 2s ease;
     }
+    .header-left img, .header-right img, .close-btn img {
+        cursor: hand;
+        transform: scale(0.9);
+        filter: brightness(1.1);
+    }
+    .header-left img:hover, .header-right img:hover, .close-btn img:hover {
+        cursor: pointer;
+        transform: scale(1);
+        filter: brightness(1);
+        border: 2px solid var(--clr-blue-light);
+    }
+    .header-left img:active, .header-right img:active, .close-btn img:active {
+        cursor: pointer;
+        transform: scale(1);
+        filter: brightness(0.8);
+        border: 3px inset var(--clr-blue-light);
+    }
+
 
     .file-explorer-body {
         padding: 10px;
         background-color: var(--bg-sec);
-        height: 300px;
+        min-height: 300px;
+        height: auto;
     }
 
     .grouped-by {
         background-color: var(--bg-ter);
         margin-bottom: 6px;
         padding: 4px 10px;
+        cursor: pointer;
     }
 
     .grouped-by::before {
@@ -93,6 +115,7 @@
         background-position: center;
         margin-right: 10px;
         margin-left: 4px;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .is-collapsed::before {
@@ -100,6 +123,104 @@
         margin-right: 14px;
         margin-left: 4px;
     }
+
+    .grouped-by-content {
+        display: block;
+        padding: 5px 0 5px 25px;
+    }
+
+    .grouped-by.icons .grouped-by-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .grouped-by.is-collapsed .grouped-by-content {
+        display: none;
+    }
+
+    .grouped-by.is-collapsed::before {
+        transform: rotate(90deg);
+        margin-right: 14px;
+        margin-left: 4px;
+    }
+
+    .grouped-by.icons .grouped-by-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        text-align: center;
+        gap: 8px;
+        padding: 10px 5px;
+        border: 2px solid transparent;
+    }
+
+    .grouped-by.icons .grouped-by-item img {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+    }
+
+    .grouped-by.icons .grouped-by-item span {
+        word-break: break-word;
+        font-size: 12px;
+    }
+
+    .grouped-by-item {
+        padding: 4px 8px;
+        font-size: 14px;
+        color: var(--txt-m);
+        transition: all 0.2s;
+        border: 2px solid transparent;
+
+        transition: margin 0.2s step-start;
+    }
+
+    .grouped-by-item:hover {
+        background-color: #1a1a2a80;
+        color: var(--txt-n);
+        border: 2px solid var(--clr-blue-light);
+    }
+
+    .grouped-by-item:active {
+        background-color: #1a1a2a;
+        color: var(--txt-n);
+        border: 2px solid var(--bg-ter);
+        margin-left: 1px;
+    }
+
+    .grouped-by.icons .grouped-by-item:hover {
+        background-color: #1a1a2a80;
+        color: var(--txt-n);
+        border: 2px solid var(--clr-blue-light);
+    }
+
+    .grouped-by.icons .grouped-by-item:active {
+        background-color: #1a1a2a;
+        color: var(--txt-n);
+        border: 2px solid var(--bg-ter);
+        margin-left: 0px !important;
+    }
+
+    /* .grouped-by-item img {
+        min-width: 60px;
+        min-height: 60px;
+    } */
+
+    /* .grouped-by-item:active::before {
+        content: "|";
+        display: inline-block;
+        color: var(--txt-m);
+        width: 7px;
+        height: 12px;
+        margin-right: 10px;
+        margin-left: 4px;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    } */
+
 </style>
 
 <body>
@@ -120,7 +241,29 @@
       </div>
 
       <div class="file-explorer-body">
-        <div class="grouped-by">Knights</div>
+        <div class="grouped-by icons">Favorites
+            <div class="grouped-by-content">
+                <div class="grouped-by-item">
+                    <img src="images/pfp.png" alt="Icon" />
+                    <span>pfp</span>
+                </div>
+                <div class="grouped-by-item">
+                    <img src="images/favicon.png" alt="Icon" />
+                    <span>pfp circle</span>
+                </div>
+                <div class="grouped-by-item">
+                    <img src="images/aidahstar.gif" alt="Icon" />
+                    <span>star</span>
+                </div>
+            </div>
+        </div>
+        <div class="grouped-by">Knights
+            <div class="grouped-by-content">
+                <div class="grouped-by-item">Knight 1</div>
+                <div class="grouped-by-item">Knight 2</div>
+                <div class="grouped-by-item">Knight 3</div>
+            </div>
+        </div>
         <div class="grouped-by is-collapsed">Ranks
             <div class="grouped-by-content">
                 <div class="grouped-by-item">Knight 1</div>
@@ -132,7 +275,15 @@
 
     </div>
 
-    
-
+    <script>
+        document.querySelectorAll('.grouped-by').forEach(group => {
+            group.addEventListener('click', (e) => {
+                // Toggle only if the click is on the group itself, not on items or content
+                if (!e.target.closest('.grouped-by-content')) {
+                    group.classList.toggle('is-collapsed');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

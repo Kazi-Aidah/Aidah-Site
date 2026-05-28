@@ -117,6 +117,10 @@
     --color-button-orange-special: #d26704;
 }
 
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* ===== GLOBAL STYLES ===== */
 html {
     scroll-behavior: smooth;

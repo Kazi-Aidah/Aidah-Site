@@ -87,9 +87,15 @@ export async function onRequestGet(context) {
   // Verify endpoint: send password, get back whether it's valid.
   // Used by the browser to test the password before showing admin UI.
   const { ADMIN_PASSWORD } = context.env;
+
+  // Temporary debug — remove after confirming password works
+  if (!ADMIN_PASSWORD) {
+    return json({ ok: false, debug: 'ADMIN_PASSWORD env var is not set' }, 401);
+  }
+
   const provided = context.request.headers.get('x-admin-password');
   if (!provided || provided !== ADMIN_PASSWORD) {
-    return json({ ok: false }, 401);
+    return json({ ok: false, debug: `expected length ${ADMIN_PASSWORD.length}, got length ${provided?.length ?? 0}` }, 401);
   }
   return json({ ok: true }, 200);
 }

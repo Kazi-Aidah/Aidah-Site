@@ -378,16 +378,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Load data
   try {
+    console.log('Fetching from Supabase...');
     allRequests = await loadRequests();
-    if (!Array.isArray(allRequests)) allRequests = [];
+    console.log('Raw response:', allRequests);
+    if (!Array.isArray(allRequests)) {
+      console.warn('Response was not an array:', allRequests);
+      allRequests = [];
+    }
+    console.log(`Loaded ${allRequests.length} requests`);
     applyFilters();
   } catch (err) {
+    console.error('Load error:', err);
     grid.innerHTML = `
       <div class="state-msg">
         <i class="fa-solid fa-triangle-exclamation"></i>
         Could not load requests.<br>
         <span style="font-size:0.85em; opacity:0.7">${escapeHTML(err.message)}</span>
       </div>`;
-    console.error(err);
   }
 });

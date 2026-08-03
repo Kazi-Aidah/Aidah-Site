@@ -7,13 +7,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>Tutorial Requests — Aidah's Site</title>
+  <title>Tutorial Requests!</title>
   <link rel="stylesheet" href="styles.css?v=2">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <script async src="https://tally.so/widgets/embed.js"></script>
   <style>
     /* ===== NAV ===== */
     nav a:hover { color: var(--color-accent-light-blue-3); transform: translateY(-2px); }
+    header { border-bottom: 2px dashed var(--color-border);}
 
     /* ===== HERO ===== */
     .tut-req-hero {
@@ -27,6 +28,7 @@
       margin: 0 0 8px;
       color: var(--txt-n);
       letter-spacing: 0.04em;
+      margin-bottom: -6px;
     }
     .tut-req-hero p {
       font-family: var(--fnt-j);
@@ -35,14 +37,16 @@
       margin: 0 auto;
       max-width: 560px;
       line-height: 1.7;
+      margin-bottom: -10px;
     }
     .submit-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       margin-top: 18px;
+      margin-bottom: 20px;
       padding: 10px 22px;
-      background: var(--color-accent-blue);
+      background: #274eab;
       color: #fff;
       border-radius: 10px;
       font-family: var(--fnt-j);
@@ -53,7 +57,7 @@
       transition: background 0.2s, transform 0.15s;
       text-decoration: none;
     }
-    .submit-btn:hover { background: var(--color-accent-blue-lighter); transform: translateY(-2px); }
+    .submit-btn:hover { background: #1e3d8a; transform: translateY(-2px); }
 
     /* ===== CONTROLS BAR ===== */
     .controls-bar {
@@ -65,43 +69,75 @@
       max-width: 1100px;
       margin: 0 auto 18px;
     }
-    .search-input {
+    .search-wrap {
       flex: 1;
       min-width: 200px;
-      padding: 9px 14px;
-      border-radius: 10px;
-      border: 2px solid var(--brdr-1);
+      display: flex;
+      align-items: center;
       background: var(--bg-sec);
+      border: 2px solid var(--color-border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .search-wrap:focus-within { border-color: var(--color-accent-blue); }
+    .search-icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      color: var(--txt-m);
+      font-size: 0.85em;
+      flex-shrink: 0;
+    }
+    .search-input {
+      flex: 1;
+      padding: 9px 14px 9px 0;
+      border: none;
+      background: transparent;
       color: var(--txt-n);
       font-family: var(--fnt-j);
       font-size: 0.9em;
       outline: none;
-      transition: border-color 0.2s;
+      min-width: 0;
     }
-    .search-input:focus { border-color: var(--color-accent-blue); }
+    .search-input::placeholder { color: var(--txt-m); opacity: 0.6; }
+    /* Style the native clear (×) button red */
+    .search-input::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      margin-right: 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M1 1l12 12M13 1L1 13' stroke='%23d7614c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
     .filter-btn {
       padding: 8px 14px;
       border-radius: 8px;
-      border: 2px solid var(--brdr-1);
+      border: 2px solid var(--color-border);
       background: var(--bg-sec);
       color: var(--txt-m);
       font-family: var(--fnt-j);
       font-size: 0.82em;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+      text-transform: uppercase;
     }
-    .filter-btn:hover, .filter-btn.active {
+    .filter-btn:hover {
       border-color: var(--color-accent-blue);
-      color: var(--txt-n);
+      color: var(--color-accent-light-blue);
       background: var(--bg-ter);
     }
+    /* hover colours per status button */
+    .filter-btn[data-status="pending"]:hover     { border-color: #9aa3ad; color: #9aa3ad; }
+    .filter-btn[data-status="accepted"]:hover    { border-color: #e59c58; color: #e59c58; }
+    .filter-btn[data-status="in progress"]:hover { border-color: #e8c64c; color: #e8c64c; }
+    .filter-btn[data-status="done"]:hover        { border-color: #9fc387; color: #9fc387; }
+    .filter-btn[data-status="declined"]:hover    { border-color: #d7614c; color: #d7614c; }
     .filter-btn.active { color: var(--color-accent-light-blue); }
-    .count-badge {
-      font-family: var(--fnt-j);
-      font-size: 0.82em;
-      color: var(--txt-m);
-      margin-left: auto;
-    }
 
     /* ===== REQUESTS GRID ===== */
     .requests-grid {
@@ -122,53 +158,63 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-      cursor: default;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.375), 
+                  border-color 0.2s, 
+                  box-shadow 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.375);
+      cursor: pointer;
     }
     .req-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.35);
     }
 
-    /* Color accent left-border per card color */
+    /* Color accent left-border per status-driven color */
     .req-card[data-color="red"]    { border-left: 4px solid #d7614c; }
     .req-card[data-color="orange"] { border-left: 4px solid #e59c58; }
     .req-card[data-color="yellow"] { border-left: 4px solid #e8c64c; }
     .req-card[data-color="green"]  { border-left: 4px solid #9fc387; }
+    .req-card[data-color="grey"]   { border-left: 4px solid #6b7280; }
     .req-card[data-color="blue"]   { border-left: 4px solid #6892c1; }
     .req-card[data-color="purple"] { border-left: 4px solid #a78fd6; }
     .req-card[data-color="slate"]  { border-left: 4px solid var(--brdr-1); }
 
     .req-card-title {
-      font-family: var(--fnt-h);
+      font-family: var(--fnt-g);
       font-size: 1.05em;
-      font-weight: 700;
+      font-weight: 600;
+      letter-spacing: 0.04em !important;
       color: var(--txt-n);
       margin: 0;
       line-height: 1.4;
+      text-transform: capitalize;
     }
     .req-card-desc {
-      font-family: var(--fnt-j);
-      font-size: 0.82em;
+      font-family: var(--fnt-g);
+      font-size: 0.88em;
+      letter-spacing: 0.01em;
       color: var(--txt-m);
       margin: 0;
-      line-height: 1.6;
+      line-height: 1.65;
       display: -webkit-box;
       -webkit-line-clamp: 3;
+      line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      flex-grow: 1;
     }
     .req-card-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-top: 4px;
+      margin-top: auto;
+      padding-top: 8px;
     }
     .req-date {
       font-family: var(--fnt-j);
       font-size: 0.75em;
       color: var(--color-text-meta);
+      margin-right: 4px;
     }
 
     /* ===== STATUS BADGES ===== */
@@ -184,11 +230,19 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-    .status-pending   { background: rgba(116,116,140,0.18); color: #9aa3ad; }
-    .status-reviewing { background: rgba(104,146,193,0.18); color: #7dbaff; }
-    .status-filming   { background: rgba(229,156,88,0.18);  color: #e59c58; }
-    .status-published { background: rgba(159,195,135,0.18); color: #9fc387; }
-    .status-declined  { background: rgba(215,97,76,0.18);   color: #d7614c; }
+    .status-pending     { background: rgba(116,116,140,0.18); color: #9aa3ad; }
+    .status-accepted    { background: rgba(229,156,88,0.18);  color: #e59c58; }
+    .status-in-progress { background: rgba(232,198,76,0.18);  color: #e8c64c; }
+    .status-done        { background: rgba(159,195,135,0.18); color: #9fc387; }
+    .status-declined    { background: rgba(215,97,76,0.18);   color: #d7614c; }
+
+    /* ===== FILTER BUTTONS — colored when active ===== */
+    .filter-btn[data-status="all"].active         { border-color: var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); }
+    .filter-btn[data-status="pending"].active     { border-color: #9aa3ad; color: #9aa3ad; background: rgba(116,116,140,0.12); }
+    .filter-btn[data-status="accepted"].active    { border-color: #e59c58; color: #e59c58; background: rgba(229,156,88,0.12); }
+    .filter-btn[data-status="in progress"].active { border-color: #e8c64c; color: #e8c64c; background: rgba(232,198,76,0.12); }
+    .filter-btn[data-status="done"].active        { border-color: #9fc387; color: #9fc387; background: rgba(159,195,135,0.12); }
+    .filter-btn[data-status="declined"].active    { border-color: #d7614c; color: #d7614c; background: rgba(215,97,76,0.12); }
 
     /* ===== EMPTY / LOADING STATES ===== */
     .state-msg {
@@ -329,23 +383,174 @@
       word-break: break-word;
     }
 
-    /* ===== ADMIN TOGGLE BUTTON ===== */
-    .admin-toggle-btn {
-      display: inline-flex;
+    /* ===== REQUEST DETAIL MODAL ===== */
+    .req-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--brdr-1);
-      background: transparent;
-      color: var(--txt-m);
-      font-family: var(--fnt-j);
-      font-size: 0.8em;
-      cursor: pointer;
-      transition: all 0.2s;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s;
     }
-    .admin-toggle-btn:hover { border-color: var(--color-accent-blue); color: var(--txt-n); }
-    .admin-toggle-btn.active { border-color: var(--color-retro-orange); color: var(--color-retro-orange); }
+    .req-modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .req-modal {
+      background: var(--bg-sec);
+      border: 2px solid var(--brdr-1);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 28px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.22s;
+      box-sizing: border-box;
+    }
+    .req-modal-backdrop.open .req-modal { transform: translateY(0); }
+    .req-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(35,43,74,0.5);
+      color: var(--txt-m);
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .req-modal-close:hover {
+      background: rgba(215,97,76,0.22);
+      color: var(--color-retro-red);
+    }
+    .req-modal-title {
+      font-family: var(--fnt-g);
+      font-size: 1.4em;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: var(--txt-n);
+      margin: 0 36px 10px 0;
+      line-height: 1.3;
+    }
+    .req-modal-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .req-modal-date {
+      font-family: var(--fnt-j);
+      font-size: 0.78em;
+      color: var(--color-text-meta);
+      padding-left: 10px;
+    }
+    .req-modal-divider {
+      border: none;
+      border-top: 2px solid rgba(73,80,110,0.45);
+      margin: 16px 0;
+      border-radius: 999px;
+    }
+    .req-modal-label {
+      font-family: var(--fnt-p);
+      font-size: 1em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-retro-green);
+      margin-bottom: 6px;
+    }
+    .req-modal-desc {
+      font-family: var(--fnt-g);
+      font-size: 0.95em;
+      letter-spacing: 0.01em;
+      color: var(--txt-m);
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+    }
+    /* clickable links inside description + notes */
+    .req-modal-desc a, .req-modal-notes-text a {
+      color: var(--color-accent-light-blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.15s;
+    }
+    .req-modal-desc a:hover, .req-modal-notes-text a:hover { color: var(--txt-n); }
+
+    .req-modal-attachments { display: flex; flex-wrap: wrap; gap: 10px; }
+    /* image attachments */
+    .req-modal-img {
+      max-width: 100%;
+      max-height: 260px;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .req-modal-img:hover { opacity: 0.85; }
+    /* video attachments */
+    .req-modal-video {
+      max-width: 100%;
+      border-radius: 10px;
+      display: block;
+      background: #000;
+    }
+
+    /* Notes — Aidah's Response */
+    .req-modal-notes-wrap {
+      border: 2px solid #527cd1;
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: rgba(43,113,169,0.15);
+      margin-top: 20px;
+    }
+    .req-modal-notes-label {
+      font-family: var(--fnt-p);
+      font-size: 1em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #709cf4;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .req-modal-notes-label img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid #527cd1;
+      margin-right: 2px;
+    }
+    .req-modal-notes-text {
+      font-family: var(--fnt-p);
+      font-size: 1.05em;
+      letter-spacing: 0.02em;
+      color: var(--txt-n);
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+    }
 
     /* ===== TOAST ===== */
     .toast {
@@ -375,21 +580,32 @@
     .page-btn {
       padding: 6px 14px;
       border-radius: 8px;
-      border: 1px solid var(--brdr-1);
+      border: 2px solid var(--brdr-1);
       background: var(--bg-sec);
       color: var(--txt-m);
       font-family: var(--fnt-j);
       font-size: 0.82em;
       cursor: pointer;
       transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    .page-btn:hover, .page-btn.active { border-color: var(--color-accent-blue); color: var(--txt-n); background: var(--bg-ter); }
+    .page-btn:hover { border-color: var(--color-accent-blue); color: var(--txt-n); background: var(--bg-ter); }
+    .page-btn.active { border: 3px solid var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); font-weight: 600; }
     .page-btn:disabled { opacity: 0.35; cursor: default; }
 
     @media (max-width: 700px) {
       .tut-req-hero h1 { font-size: 1.7em; }
       .requests-grid { grid-template-columns: 1fr; width: 94%; }
       .controls-bar { width: 94%; }
+      .search-wrap { flex: 0 0 100%; min-width: 0; width: 100%; }
+      .req-modal { padding: 20px; }
+    }
+    @media (max-width: 900px) {
+      .requests-grid { grid-template-columns: 1fr; }
+      .search-wrap { flex: 0 0 100%; }
     }
   </style>
 </head>
@@ -407,8 +623,8 @@
   </header>
 
   <section class="tut-req-hero">
-    <h1><i class="fa-solid fa-lightbulb" style="color: var(--color-retro-yellow); font-size: 0.8em;"></i> Tutorial Requests</h1>
-    <p>All the tutorial ideas people have sent in — tracked from request to published video. Got something you want me to cover?</p>
+    <h1>Tutorial Requests</h1>
+    <p>Send in your tutorial requests!</p>
     <a class="submit-btn" href="#" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1">
       <i class="fa-solid fa-paper-plane"></i> Submit a Request
     </a>
@@ -416,17 +632,16 @@
 
   <!-- Controls -->
   <div class="controls-bar">
-    <input class="search-input" id="searchInput" type="search" placeholder="Search requests…" aria-label="Search requests">
+    <div class="search-wrap">
+      <span class="search-icon-box"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <input class="search-input" id="searchInput" type="search" placeholder="Search requests…" aria-label="Search requests">
+    </div>
     <button class="filter-btn active" data-status="all">All</button>
     <button class="filter-btn" data-status="pending">Pending</button>
-    <button class="filter-btn" data-status="reviewing">Reviewing</button>
-    <button class="filter-btn" data-status="filming">Filming</button>
-    <button class="filter-btn" data-status="published">Published</button>
+    <button class="filter-btn" data-status="accepted">Accepted</button>
+    <button class="filter-btn" data-status="in progress">In Progress</button>
+    <button class="filter-btn" data-status="done">Done</button>
     <button class="filter-btn" data-status="declined">Declined</button>
-    <span class="count-badge" id="countBadge"></span>
-    <button class="admin-toggle-btn" id="adminToggleBtn" title="Admin login">
-      <i class="fa-solid fa-lock"></i> Admin
-    </button>
   </div>
 
   <!-- Admin login panel -->
@@ -473,6 +688,14 @@
       </div>
     </div>
   </footer>
+  </div>
+
+  <!-- Request detail modal -->
+  <div class="req-modal-backdrop" id="reqModalBackdrop" role="dialog" aria-modal="true" aria-label="Request details">
+    <div class="req-modal" id="reqModal">
+      <button class="req-modal-close" id="reqModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <div id="reqModalBody"></div>
+    </div>
   </div>
 
   <!-- Toast container -->

@@ -18,15 +18,24 @@ const ADMIN_PASSWORD = 'YOUR_ADMIN_PASSWORD'; // ← set this to whatever you wa
 const PAGE_SIZE = 24;
 
 const STATUS_ICONS = {
-  pending:   'fa-solid fa-clock',
-  reviewing: 'fa-solid fa-magnifying-glass',
-  filming:   'fa-solid fa-video',
-  published: 'fa-solid fa-circle-check',
-  declined:  'fa-solid fa-circle-xmark',
+  pending:       'fa-solid fa-clock',
+  accepted:      'fa-solid fa-thumbs-up',
+  'in progress': 'fa-solid fa-video',
+  done:          'fa-solid fa-check',
+  declined:      'fa-solid fa-xmark',
 };
 
-const COLOR_OPTIONS = ['slate','red','orange','yellow','green','blue','purple'];
-const STATUS_OPTIONS = ['pending','reviewing','filming','published','declined'];
+// Status drives the card's left-border color automatically
+const STATUS_COLORS = {
+  pending:       'slate',
+  accepted:      'orange',
+  'in progress': 'yellow',
+  done:          'green',
+  declined:      'red',
+};
+
+const COLOR_OPTIONS  = ['slate','red','orange','yellow','green','blue','grey','purple'];
+const STATUS_OPTIONS = ['pending','accepted','in progress','done','declined'];
 
 // ---------------------------------------------------------------------------
 // STATE
@@ -41,9 +50,9 @@ let isAdmin      = false;
 // ---------------------------------------------------------------------------
 // DOM REFS (set after DOMContentLoaded)
 // ---------------------------------------------------------------------------
-let grid, pagination, countBadge, stateMsg;
+let grid, pagination, stateMsg;
 let searchInput, filterBtns;
-let adminToggleBtn, adminLoginWrap, adminPasswordInput, adminLoginBtn, adminLoginError;
+let adminLoginWrap, adminPasswordInput, adminLoginBtn, adminLoginError;
 
 // ---------------------------------------------------------------------------
 // SUPABASE HELPERS
@@ -92,9 +101,15 @@ function formatDate(iso) {
 }
 
 function statusBadgeHTML(status) {
-  const s = status || 'pending';
+  const s    = (status || 'pending').toLowerCase();
   const icon = STATUS_ICONS[s] || STATUS_ICONS.pending;
-  return `<span class="status-badge status-${s}"><i class="${icon}"></i>${s}</span>`;
+  return `<span class="status-badge status-${s.replace(' ','-')}"><i class="${icon}"></i>${s}</span>`;
+}
+
+// Derive card color from status
+function colorFromStatus(status) {
+  const s = (status || 'pending').toLowerCase();
+  return STATUS_COLORS[s] || 'slate';
 }
 
 function attachmentsHTML(attachments) {
@@ -145,7 +160,7 @@ function escapeHTML(str) {
 function buildCard(req) {
   const div = document.createElement('div');
   div.className = 'req-card';
-  div.dataset.color = req.color || 'slate';
+  div.dataset.color = colorFromStatus(req.status);
   div.dataset.id = req.id;
 
   const desc = req.description
@@ -168,9 +183,125 @@ function buildCard(req) {
     saveBtn.addEventListener('click', () => handleSave(req, controls, div));
   }
 
+  // Open modal on card click (but not when clicking admin controls)
+  div.addEventListener('click', e => {
+    if (e.target.closest('.admin-controls')) return;
+    openModal(req);
+  });
+
   return div;
 }
 
+// ---------------------------------------------------------------------------
+// MODAL HELPERS
+// ---------------------------------------------------------------------------
+
+/** Turn plain URLs in text into clickable <a> tags. */
+function linkify(text) {
+  const escaped = escapeHTML(text);
+  return escaped.replace(
+    /(https?:\/\/[^\s<>"]+)/g,
+    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+}
+
+const IMAGE_EXTS    = /\.(jpe?g|png|gif|webp|avif|svg)(\?|$)/i;
+const IMAGE_MIMES   = /^image\//i;
+const VIDEO_EXTS    = /\.(mp4|webm|ogg|mov)(\?|$)/i;
+const VIDEO_MIMES   = /^video\//i;
+
+/** Render attachments for the modal — images/videos inline, others as chips. */
+function modalAttachmentsHTML(attachments) {
+  // Normalise: could be null, a string, an array, or a JSON string
+  let items = attachments;
+  if (!items) return '';
+  if (typeof items === 'string') {
+    try { items = JSON.parse(items); } catch { return ''; }
+  }
+  if (!Array.isArray(items)) items = [items];
+  items = items.filter(Boolean);
+  if (items.length === 0) return '';
+
+  console.log('[attachments raw]', JSON.stringify(items));
+
+  return items.map(a => {
+    // Handle both {url, name} and plain string URLs
+    const url  = (typeof a === 'string') ? a : (a.url || a.link || a.fileUrl || '');
+    const name = (typeof a === 'string') ? url.split('/').pop() : (a.name || a.fileName || url.split('/').pop() || 'file');
+    const mime = (typeof a === 'object') ? (a.mimeType || a.mime_type || a.type || '') : '';
+
+    if (!url) return '';
+
+    const isImage = IMAGE_EXTS.test(url) || IMAGE_MIMES.test(mime);
+    const isVideo = VIDEO_EXTS.test(url) || VIDEO_MIMES.test(mime);
+
+    if (isImage) {
+      return `<a href="${url}" target="_blank" rel="noopener" style="display:block;width:100%;">
+        <img class="req-modal-img" src="${url}" alt="${escapeHTML(name)}" loading="lazy">
+      </a>`;
+    }
+    if (isVideo) {
+      return `<video class="req-modal-video" src="${url}" controls preload="metadata"></video>`;
+    }
+    // Show as a chip — still clickable to open/download
+    return `<a class="attachment-chip" href="${url}" target="_blank" rel="noopener">
+      <i class="fa-solid fa-paperclip"></i>${escapeHTML(name)}
+    </a>`;
+  }).join('');
+}
+
+// ---------------------------------------------------------------------------
+// MODAL
+// ---------------------------------------------------------------------------
+function openModal(req) {
+  const backdrop = document.getElementById('reqModalBackdrop');
+  const body     = document.getElementById('reqModalBody');
+
+  const richAttachments = modalAttachmentsHTML(req.attachments);
+
+  const notesHTML = req.notes ? `
+    <div class="req-modal-notes-wrap">
+      <div class="req-modal-notes-label">
+        <img src="images/pfp.png" alt="Aidah" onerror="this.src='images/favicon.png'">
+        Aidah's Response
+      </div>
+      <p class="req-modal-notes-text">${linkify(req.notes)}</p>
+    </div>` : '';
+
+  const descHTML = req.description ? `
+    <hr class="req-modal-divider">
+    <div class="req-modal-label">Description</div>
+    <p class="req-modal-desc">${linkify(req.description)}</p>` : '';
+
+  const attHTML = richAttachments ? `
+    <hr class="req-modal-divider">
+    <div class="req-modal-label">Attachments</div>
+    <div class="req-modal-attachments">${richAttachments}</div>` : '';
+
+  body.innerHTML = `
+    <h2 class="req-modal-title">${escapeHTML(req.title)}</h2>
+    <div class="req-modal-meta">
+      ${statusBadgeHTML(req.status)}
+      <span class="req-modal-date"><i class="fa-regular fa-calendar"></i> ${formatDate(req.created_at)}</span>
+    </div>
+    ${descHTML}
+    ${attHTML}
+    ${notesHTML}
+  `;
+
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const backdrop = document.getElementById('reqModalBackdrop');
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ---------------------------------------------------------------------------
+// RENDER PAGE
+// ---------------------------------------------------------------------------
 function renderPage() {
   grid.innerHTML = '';
 
@@ -195,7 +326,8 @@ function renderPage() {
   if (totalPages > 1) {
     const prev = document.createElement('button');
     prev.className = 'page-btn';
-    prev.textContent = '← Prev';
+    prev.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+    prev.setAttribute('aria-label', 'Previous page');
     prev.disabled = currentPage === 1;
     prev.addEventListener('click', () => { currentPage--; renderPage(); scrollToGrid(); });
     pagination.appendChild(prev);
@@ -210,7 +342,8 @@ function renderPage() {
 
     const next = document.createElement('button');
     next.className = 'page-btn';
-    next.textContent = 'Next →';
+    next.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+    next.setAttribute('aria-label', 'Next page');
     next.disabled = currentPage === totalPages;
     next.addEventListener('click', () => { currentPage++; renderPage(); scrollToGrid(); });
     pagination.appendChild(next);
@@ -227,19 +360,19 @@ function scrollToGrid() {
 function applyFilters() {
   const q = searchQuery.trim().toLowerCase();
   filtered = allRequests.filter(r => {
-    const matchesStatus = activeFilter === 'all' || r.status === activeFilter;
+    const s = (r.status || 'pending').toLowerCase();
+    const matchesStatus = activeFilter === 'all' || s === activeFilter;
     const matchesSearch = !q
       || r.title.toLowerCase().includes(q)
       || (r.description && r.description.toLowerCase().includes(q));
     return matchesStatus && matchesSearch;
   });
   currentPage = 1;
-  updateCountBadge();
   renderPage();
 }
 
 function updateCountBadge() {
-  countBadge.textContent = `${filtered.length} of ${allRequests.length} requests`;
+  // count badge removed from public UI
 }
 
 // ---------------------------------------------------------------------------
@@ -313,15 +446,20 @@ function showToast(msg, isError = false) {
 document.addEventListener('DOMContentLoaded', async () => {
   grid           = document.getElementById('requestsGrid');
   pagination     = document.getElementById('pagination');
-  countBadge     = document.getElementById('countBadge');
   stateMsg       = document.getElementById('stateMsg');
   searchInput    = document.getElementById('searchInput');
   filterBtns     = document.querySelectorAll('.filter-btn');
-  adminToggleBtn = document.getElementById('adminToggleBtn');
   adminLoginWrap = document.getElementById('adminLoginWrap');
   adminPasswordInput = document.getElementById('adminPassword');
   adminLoginBtn  = document.getElementById('adminLoginBtn');
   adminLoginError= document.getElementById('adminLoginError');
+
+  // Modal close
+  document.getElementById('reqModalClose').addEventListener('click', closeModal);
+  document.getElementById('reqModalBackdrop').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   // Search
   searchInput.addEventListener('input', e => {
@@ -339,22 +477,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Admin toggle
-  adminToggleBtn.addEventListener('click', () => {
-    if (isAdmin) {
-      // Log out
-      isAdmin = false;
-      adminToggleBtn.classList.remove('active');
-      adminToggleBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Admin';
-      adminLoginWrap.classList.remove('visible');
-      renderPage(); // re-render without admin controls
-      showToast('Logged out.');
-    } else {
-      adminLoginWrap.classList.toggle('visible');
-    }
-  });
-
-  // Admin login
+  // Admin login (panel stays hidden; can be triggered by secret keypress if needed)
   adminLoginBtn.addEventListener('click', attemptLogin);
   adminPasswordInput.addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
 
@@ -362,11 +485,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (adminPasswordInput.value === ADMIN_PASSWORD) {
       isAdmin = true;
       adminLoginWrap.classList.remove('visible');
-      adminToggleBtn.classList.add('active');
-      adminToggleBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Admin';
       adminLoginError.style.display = 'none';
       adminPasswordInput.value = '';
-      renderPage(); // re-render with admin controls
+      renderPage();
       showToast('Admin mode on.');
     } else {
       adminLoginError.textContent = 'Wrong password.';

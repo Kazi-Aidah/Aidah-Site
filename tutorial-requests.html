@@ -14,7 +14,7 @@
   <style>
     /* ===== NAV ===== */
     nav a:hover { color: var(--color-accent-light-blue-3); transform: translateY(-2px); }
-    header { border-bottom: 2px dashed var(--color-border);}
+    header { border-bottom: 2px solid var(--color-border); padding: 8px; }
 
     /* ===== HERO ===== */
     .tut-req-hero {
@@ -42,22 +42,30 @@
     .submit-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       margin-top: 18px;
       margin-bottom: 20px;
       padding: 10px 22px;
       background: #274eab;
       color: #fff;
       border-radius: 10px;
+      corner-shape: bevel;
       font-family: var(--fnt-j);
       font-size: 0.9em;
       font-weight: 600;
       cursor: pointer;
       border: none;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-decoration: none;
     }
-    .submit-btn:hover { background: #1e3d8a; transform: translateY(-2px); }
+    .submit-btn:hover {
+      background: #1e3d8a;
+      transform: scale(1.05);
+    }
+    .submit-btn:active {
+      background: #2b3f6f;
+      transform: scale(0.97);
+    }
 
     /* ===== CONTROLS BAR ===== */
     .controls-bar {
@@ -92,7 +100,7 @@
     }
     .search-input {
       flex: 1;
-      padding: 9px 14px 9px 0;
+      padding: 9px 0;
       border: none;
       background: transparent;
       color: var(--txt-n);
@@ -102,18 +110,34 @@
       min-width: 0;
     }
     .search-input::placeholder { color: var(--txt-m); opacity: 0.6; }
-    /* Style the native clear (×) button red */
-    .search-input::-webkit-search-cancel-button {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 14px;
-      height: 14px;
+    /* Kill the native browser clear button */
+    .search-input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+    .search-input::-ms-clear { display: none; }
+
+    /* Custom clear button */
+    .search-clear-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
       margin-right: 10px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M1 1l12 12M13 1L1 13' stroke='%23d7614c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(215, 97, 76, 0.25);
+      border: none;
       cursor: pointer;
+      color: #d7614c;
+      font-size: 0.65em;
+      transition: background 0.15s, color 0.15s;
+      line-height: 1;
+      padding: 0;
     }
+    .search-clear-btn:hover {
+      background: rgba(215, 97, 76, 0.45);
+      color: #ff8a74;
+    }
+    .search-clear-btn.visible { display: flex; }
     .filter-btn {
       padding: 8px 14px;
       border-radius: 8px;
@@ -142,11 +166,12 @@
     /* ===== REQUESTS GRID ===== */
     .requests-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
       gap: 16px;
       width: 88%;
       max-width: 1100px;
       margin: 0 auto 40px;
+      box-sizing: border-box;
     }
 
     /* ===== REQUEST CARD ===== */
@@ -162,6 +187,9 @@
                   border-color 0.2s, 
                   box-shadow 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.375);
       cursor: pointer;
+      min-width: 0;
+      overflow: hidden;
+      box-sizing: border-box;
     }
     .req-card:hover {
       transform: translateY(-4px);
@@ -183,10 +211,12 @@
       font-size: 1.05em;
       font-weight: 600;
       letter-spacing: 0.04em !important;
-      color: var(--txt-n);
+      color: var(--txt-n2);
       margin: 0;
       line-height: 1.4;
       text-transform: capitalize;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
     .req-card-desc {
       font-family: var(--fnt-g);
@@ -201,6 +231,8 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       flex-grow: 1;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
     .req-card-footer {
       display: flex;
@@ -423,7 +455,7 @@
       height: 32px;
       border-radius: 8px;
       border: none;
-      background: rgba(35,43,74,0.5);
+      background: rgba(62, 71, 107, 0.5);
       color: var(--txt-m);
       font-size: 1em;
       cursor: pointer;
@@ -441,7 +473,7 @@
       font-size: 1.4em;
       font-weight: 800;
       letter-spacing: 0.01em;
-      color: var(--txt-n);
+      color: var(--txt-n2);
       margin: 0 36px 10px 0;
       line-height: 1.3;
     }
@@ -596,16 +628,18 @@
     .page-btn.active { border: 3px solid var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); font-weight: 600; }
     .page-btn:disabled { opacity: 0.35; cursor: default; }
 
+    @media (max-width: 900px) {
+      .requests-grid {
+        grid-template-columns: 1fr;
+        width: 94%;
+      }
+      .search-wrap { flex: 0 0 100%; }
+    }
     @media (max-width: 700px) {
       .tut-req-hero h1 { font-size: 1.7em; }
-      .requests-grid { grid-template-columns: 1fr; width: 94%; }
       .controls-bar { width: 94%; }
       .search-wrap { flex: 0 0 100%; min-width: 0; width: 100%; }
       .req-modal { padding: 20px; }
-    }
-    @media (max-width: 900px) {
-      .requests-grid { grid-template-columns: 1fr; }
-      .search-wrap { flex: 0 0 100%; }
     }
   </style>
 </head>
@@ -635,6 +669,7 @@
     <div class="search-wrap">
       <span class="search-icon-box"><i class="fa-solid fa-magnifying-glass"></i></span>
       <input class="search-input" id="searchInput" type="search" placeholder="Search requests…" aria-label="Search requests">
+      <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <button class="filter-btn active" data-status="all">All</button>
     <button class="filter-btn" data-status="pending">Pending</button>

@@ -8,9 +8,10 @@
 const SUPABASE_URL      = 'https://wbvauewrkouaexcaqbyu.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndidmF1ZXdya291YWV4Y2FxYnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NjA1MDUsImV4cCI6MjEwMTMzNjUwNX0.POvFUVTFMo4BF73nZklnlT2yM51rtTOIlhJPybeSdTw';
 
-// Admin password is checked client-side only — fine for a personal site.
-// This is NOT a security boundary; it just hides the controls from casual visitors.
-const ADMIN_PASSWORD = 'YOUR_ADMIN_PASSWORD'; // ← set this to whatever you want
+// Admin password is validated server-side via /api/admin-update.
+// It is never stored here — the user types it and it is sent in a request header.
+// Nothing sensitive lives in this file.
+let adminSessionPassword = null; // holds password in memory for the session only
 
 // ---------------------------------------------------------------------------
 // CONSTANTS
@@ -85,10 +86,30 @@ async function loadRequests() {
 }
 
 async function updateRequest(id, patch) {
-  return supabaseFetch(
-    `tutorial_requests?id=eq.${id}`,
-    { method: 'PATCH', body: JSON.stringify(patch) }
-  );
+  // All admin writes go through the server-side Cloudflare function.
+  // The password is validated there — never in client-side code.
+  const res = await fetch('/api/admin-update', {
+    method: 'POST',
+    headers: {
+      'Content-Type':     'application/json',
+      'x-admin-password': adminSessionPassword,
+    },
+    body: JSON.stringify({ id, ...patch }),
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || `Server error ${res.status}`);
+  }
+  return res.json();
+}
+
+async function verifyAdminPassword(password) {
+  // Asks the server if the password is correct — no comparison in the browser.
+  const res = await fetch('/api/admin-update', {
+    method: 'GET',
+    headers: { 'x-admin-password': password },
+  });
+  return res.ok;
 }
 
 // ---------------------------------------------------------------------------
@@ -205,45 +226,89 @@ function linkify(text) {
   );
 }
 
-const IMAGE_EXTS    = /\.(jpe?g|png|gif|webp|avif|svg)(\?|$)/i;
-const IMAGE_MIMES   = /^image\//i;
-const VIDEO_EXTS    = /\.(mp4|webm|ogg|mov)(\?|$)/i;
-const VIDEO_MIMES   = /^video\//i;
+const IMAGE_EXTS = /\.(jpe?g|png|gif|webp|avif|svg|bmp)(\?|#|$)/i;
+const IMAGE_MIMES = /^image\//i;
+const VIDEO_EXTS = /\.(mp4|webm|ogg|mov|m4v|avi)(\?|#|$)/i;
+const VIDEO_MIMES = /^video\//i;
 
-/** Render attachments for the modal — images/videos inline, others as chips. */
-function modalAttachmentsHTML(attachments) {
-  // Normalise: could be null, a string, an array, or a JSON string
-  let items = attachments;
-  if (!items) return '';
-  if (typeof items === 'string') {
-    try { items = JSON.parse(items); } catch { return ''; }
+/** Normalise the raw attachments value into an array of {url, name, mime} objects. */
+function normaliseAttachments(raw) {
+  if (!raw) return [];
+
+  // Already a proper array of objects
+  if (Array.isArray(raw)) {
+    return raw.filter(Boolean).map(a =>
+      typeof a === 'string'
+        ? { url: a, name: filenameFromUrl(a), mime: '' }
+        : { url: a.url || a.link || a.fileUrl || '', name: a.name || a.fileName || filenameFromUrl(a.url || ''), mime: a.mimeType || a.mime_type || a.type || '' }
+    ).filter(a => a.url);
   }
-  if (!Array.isArray(items)) items = [items];
-  items = items.filter(Boolean);
+
+  // Plain string — could be:
+  // 1. A single URL
+  // 2. Multiple URLs separated by newlines
+  // 3. A JSON string
+  if (typeof raw === 'string') {
+    const trimmed = raw.trim();
+    if (!trimmed) return [];
+
+    // Try JSON first
+    if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        return normaliseAttachments(parsed);
+      } catch { /* not JSON, fall through */ }
+    }
+
+    // Treat as URL(s) — split on newlines or spaces between URLs
+    const urls = trimmed
+      .split(/\s+/)
+      .map(s => s.trim())
+      .filter(s => s.startsWith('http'));
+
+    if (urls.length > 0) {
+      return urls.map(url => ({ url, name: filenameFromUrl(url), mime: '' }));
+    }
+  }
+
+  return [];
+}
+
+function filenameFromUrl(url) {
+  if (!url) return 'file';
+  try {
+    const path = new URL(url).pathname;
+    const parts = path.split('/');
+    const name = decodeURIComponent(parts[parts.length - 1] || 'file');
+    return name.length > 60 ? name.slice(0, 57) + '…' : name;
+  } catch {
+    return 'file';
+  }
+}
+
+/** Render attachments for the modal — images/videos inline, others as download chips. */
+function modalAttachmentsHTML(attachments) {
+  const items = normaliseAttachments(attachments);
   if (items.length === 0) return '';
 
-  console.log('[attachments raw]', JSON.stringify(items));
-
-  return items.map(a => {
-    // Handle both {url, name} and plain string URLs
-    const url  = (typeof a === 'string') ? a : (a.url || a.link || a.fileUrl || '');
-    const name = (typeof a === 'string') ? url.split('/').pop() : (a.name || a.fileName || url.split('/').pop() || 'file');
-    const mime = (typeof a === 'object') ? (a.mimeType || a.mime_type || a.type || '') : '';
-
-    if (!url) return '';
-
+  return items.map(({ url, name, mime }) => {
     const isImage = IMAGE_EXTS.test(url) || IMAGE_MIMES.test(mime);
     const isVideo = VIDEO_EXTS.test(url) || VIDEO_MIMES.test(mime);
 
     if (isImage) {
       return `<a href="${url}" target="_blank" rel="noopener" style="display:block;width:100%;">
-        <img class="req-modal-img" src="${url}" alt="${escapeHTML(name)}" loading="lazy">
+        <img class="req-modal-img" src="${url}" alt="${escapeHTML(name)}" loading="lazy"
+             onerror="this.parentElement.style.display='none'">
       </a>`;
     }
     if (isVideo) {
-      return `<video class="req-modal-video" src="${url}" controls preload="metadata"></video>`;
+      return `<video class="req-modal-video" controls preload="metadata">
+        <source src="${url}">
+        <a class="attachment-chip" href="${url}" target="_blank" rel="noopener">
+          <i class="fa-solid fa-film"></i> ${escapeHTML(name)}
+        </a>
+      </video>`;
     }
-    // Show as a chip — still clickable to open/download
     return `<a class="attachment-chip" href="${url}" target="_blank" rel="noopener">
       <i class="fa-solid fa-paperclip"></i>${escapeHTML(name)}
     </a>`;
@@ -459,11 +524,28 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('reqModalBackdrop').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeModal();
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (document.getElementById('reqModalBackdrop').classList.contains('open')) {
+        closeModal();
+      } else {
+        adminLoginWrap.classList.remove('visible');
+      }
+    }
+  });
 
   // Search
+  const clearBtn = document.getElementById('searchClearBtn');
   searchInput.addEventListener('input', e => {
     searchQuery = e.target.value;
+    clearBtn.classList.toggle('visible', searchQuery.length > 0);
+    applyFilters();
+  });
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    searchQuery = '';
+    clearBtn.classList.remove('visible');
+    searchInput.focus();
     applyFilters();
   });
 
@@ -477,24 +559,70 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Admin login (panel stays hidden; can be triggered by secret keypress if needed)
+  // Secret triple-A keystroke opens admin login panel
+  // (only when not typing in an input)
+  let adminKeySeq = 0, adminKeyTimer = null;
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key.toLowerCase() === 'a') {
+      adminKeySeq++;
+      clearTimeout(adminKeyTimer);
+      if (adminKeySeq >= 3) {
+        adminKeySeq = 0;
+        if (isAdmin) {
+          isAdmin = false;
+          adminSessionPassword = null;
+          adminLoginWrap.classList.remove('visible');
+          renderPage();
+          showToast('Admin mode off.');
+        } else {
+          adminLoginWrap.classList.toggle('visible');
+          if (adminLoginWrap.classList.contains('visible')) {
+            adminPasswordInput.focus();
+          }
+        }
+      } else {
+        adminKeyTimer = setTimeout(() => { adminKeySeq = 0; }, 600);
+      }
+    } else {
+      adminKeySeq = 0;
+    }
+  });
+
+  // Admin login (panel stays hidden; triggered by triple-A)
   adminLoginBtn.addEventListener('click', attemptLogin);
   adminPasswordInput.addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
 
   function attemptLogin() {
-    if (adminPasswordInput.value === ADMIN_PASSWORD) {
-      isAdmin = true;
-      adminLoginWrap.classList.remove('visible');
-      adminLoginError.style.display = 'none';
-      adminPasswordInput.value = '';
-      renderPage();
-      showToast('Admin mode on.');
-    } else {
-      adminLoginError.textContent = 'Wrong password.';
+    const typed = adminPasswordInput.value;
+    adminPasswordInput.value = '';
+
+    // Verify server-side — password is never compared in the browser
+    adminLoginBtn.disabled = true;
+    adminLoginBtn.textContent = 'Checking…';
+
+    verifyAdminPassword(typed).then(valid => {
+      adminLoginBtn.disabled = false;
+      adminLoginBtn.textContent = 'Unlock';
+
+      if (valid) {
+        adminSessionPassword = typed; // keep in memory for this session only
+        isAdmin = true;
+        adminLoginWrap.classList.remove('visible');
+        adminLoginError.style.display = 'none';
+        renderPage();
+        showToast('Admin mode on.');
+      } else {
+        adminLoginError.textContent = 'Wrong password.';
+        adminLoginError.style.display = 'block';
+        adminPasswordInput.focus();
+      }
+    }).catch(() => {
+      adminLoginBtn.disabled = false;
+      adminLoginBtn.textContent = 'Unlock';
+      adminLoginError.textContent = 'Could not reach server. Try again.';
       adminLoginError.style.display = 'block';
-      adminPasswordInput.value = '';
-      adminPasswordInput.focus();
-    }
+    });
   }
 
   // Load data

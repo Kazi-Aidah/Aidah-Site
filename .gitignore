@@ -28,3 +28,10 @@ config.js
 .netlify
 
 node.html
+
+# One-off import script (contains keys, not needed in repo)
+import-requests.mjs
+
+# Tally CSV export (contains viewer submissions/personal data)
+tally-export.csv
+*.csv

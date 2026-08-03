@@ -343,6 +343,27 @@ function openModal(req) {
     <div class="req-modal-label">Attachments</div>
     <div class="req-modal-attachments">${richAttachments}</div>` : '';
 
+  // Admin controls inside modal — only rendered when logged in
+  const adminHTML = isAdmin ? (() => {
+    const statusOpts = STATUS_OPTIONS.map(s =>
+      `<option value="${s}" ${(req.status || 'pending') === s ? 'selected' : ''}>${s}</option>`
+    ).join('');
+    const colorOpts = COLOR_OPTIONS.map(c =>
+      `<option value="${c}" ${(req.color || 'slate') === c ? 'selected' : ''}>${c}</option>`
+    ).join('');
+    return `
+      <hr class="req-modal-divider">
+      <div class="req-modal-admin" data-id="${req.id}">
+        <div class="req-modal-label">Admin</div>
+        <div class="req-modal-admin-row">
+          <select class="admin-select admin-status" title="Status">${statusOpts}</select>
+          <select class="admin-select admin-color" title="Color">${colorOpts}</select>
+        </div>
+        <textarea class="admin-notes-area" placeholder="Type your response…">${escapeHTML(req.notes || '')}</textarea>
+        <button class="admin-save-btn modal-save-btn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+      </div>`;
+  })() : '';
+
   body.innerHTML = `
     <h2 class="req-modal-title">${escapeHTML(req.title)}</h2>
     <div class="req-modal-meta">
@@ -352,10 +373,81 @@ function openModal(req) {
     ${descHTML}
     ${attHTML}
     ${notesHTML}
+    ${adminHTML}
   `;
+
+  // Wire up the modal save button
+  if (isAdmin) {
+    const adminSection = body.querySelector('.req-modal-admin');
+    const saveBtn = adminSection.querySelector('.modal-save-btn');
+    saveBtn.addEventListener('click', () => handleModalSave(req, adminSection, body));
+  }
 
   backdrop.classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+async function handleModalSave(req, adminSection, body) {
+  const newStatus = adminSection.querySelector('.admin-status').value;
+  const newColor  = adminSection.querySelector('.admin-color').value;
+  const newNotes  = adminSection.querySelector('.admin-notes-area').value;
+
+  const saveBtn = adminSection.querySelector('.modal-save-btn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
+
+  try {
+    await updateRequest(req.id, { status: newStatus, color: newColor, notes: newNotes });
+
+    // Update local cache
+    const cached = allRequests.find(r => r.id === req.id);
+    if (cached) {
+      cached.status = newStatus;
+      cached.color  = newColor;
+      cached.notes  = newNotes;
+    }
+
+    // Update the status badge in the modal header live
+    const badge = body.querySelector('.status-badge');
+    if (badge) badge.outerHTML = statusBadgeHTML(newStatus);
+
+    // Refresh the notes display if notes exist
+    const existingNotesWrap = body.querySelector('.req-modal-notes-wrap');
+    if (newNotes.trim()) {
+      const newNotesHTML = `
+        <div class="req-modal-notes-wrap">
+          <div class="req-modal-notes-label">
+            <img src="images/pfp.png" alt="Aidah" onerror="this.src='images/favicon.png'">
+            Aidah's Response
+          </div>
+          <p class="req-modal-notes-text">${linkify(newNotes)}</p>
+        </div>`;
+      if (existingNotesWrap) {
+        existingNotesWrap.outerHTML = newNotesHTML;
+      } else {
+        // Insert before the admin section
+        adminSection.parentElement.insertAdjacentHTML('beforeend', newNotesHTML);
+        // Move it before the admin divider
+        const divider = adminSection.previousElementSibling;
+        if (divider?.classList.contains('req-modal-divider')) {
+          divider.insertAdjacentHTML('beforebegin', newNotesHTML);
+          body.querySelector('.req-modal-notes-wrap:last-of-type')?.remove();
+        }
+      }
+    } else if (existingNotesWrap) {
+      existingNotesWrap.remove();
+    }
+
+    // Re-render the card grid so the card reflects the new status too
+    renderPage();
+    showToast('✓ Saved!');
+  } catch (err) {
+    showToast('⚠ Save failed: ' + err.message, true);
+    console.error(err);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save';
+  }
 }
 
 function closeModal() {

@@ -163,7 +163,7 @@ function adminControlsHTML(req) {
     <div class="admin-controls" data-id="${req.id}">
       <select class="admin-select admin-status" title="Status">${statusOpts}</select>
       <select class="admin-select admin-color" title="Color">${colorOpts}</select>
-      <textarea class="admin-notes-area" placeholder="Private notes…">${escapeHTML(req.notes || '')}</textarea>
+      <textarea class="admin-notes-area" placeholder="Type your response…">${escapeHTML(req.notes || '')}</textarea>
       ${notesDisplay}
       <button class="admin-save-btn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
     </div>

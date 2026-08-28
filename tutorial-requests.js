@@ -664,6 +664,18 @@ function showToast(msg, isError = false) {
 }
 
 // ---------------------------------------------------------------------------
+// DEEP-LINK: open a request's modal when the URL has #req-<id>
+// (used by the reply email so requesters land straight on their request)
+// ---------------------------------------------------------------------------
+function maybeOpenFromHash() {
+  const h = location.hash || '';
+  if (!h.startsWith('#req-')) return;
+  const rid = h.slice(5);
+  const req = allRequests.find(r => r.id === rid);
+  if (req) openModal(req);
+}
+
+// ---------------------------------------------------------------------------
 // INIT
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', async () => {
@@ -819,6 +831,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     console.log(`Loaded ${allRequests.length} requests`);
     applyFilters();
+
+    // Open a specific request's modal if the URL has #req-<id> (used by the
+    // reply email link so requesters land straight on their request).
+    maybeOpenFromHash();
+    window.addEventListener('hashchange', maybeOpenFromHash);
 
     // Begin auto-refresh so new Tally submissions show up without a reload.
     setInterval(refreshRequests, REFRESH_INTERVAL_MS);

@@ -61,6 +61,7 @@ export async function onRequestPost(context) {
 
     const title       = getFieldValue(fields, 'title') ?? getFieldValue(fields, 'tutorial title') ?? '(no title)';
     const description = getFieldValue(fields, 'description') ?? getFieldValue(fields, 'details') ?? null;
+    const email       = getFieldValue(fields, 'email') ?? getFieldValue(fields, 'e-mail') ?? getFieldValue(fields, 'their emails') ?? getFieldValue(fields, 'their email') ?? null;
 
     const attachmentField = fields.find(f =>
       f.type === 'FILE_UPLOAD' ||
@@ -78,6 +79,7 @@ export async function onRequestPost(context) {
       title,
       description,
       ...(attachments ? { attachments } : {}),
+      ...(email ? { email } : {}),
       status:     'pending',
       color:      'slate',
       notes:      null,

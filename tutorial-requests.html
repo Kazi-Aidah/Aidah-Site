@@ -150,7 +150,10 @@
       font-family: var(--fnt-j);
       font-size: 0.82em;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                  background-color 0.18s ease,
+                  border-color 0.18s ease,
+                  color 0.18s ease;
       text-transform: uppercase;
     }
     .filter-btn:hover {
@@ -243,13 +246,14 @@
       justify-content: space-between;
       gap: 8px;
       margin-top: auto;
-      padding-top: 8px;
+      padding-top: 0;
     }
     .req-date {
       font-family: var(--fnt-j);
       font-size: 0.75em;
       color: var(--color-text-meta);
       margin-right: 4px;
+      align-self: flex-end;
     }
 
     /* ===== STATUS BADGES ===== */
@@ -257,23 +261,22 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 0;
-      border-radius: 0;
-      background: transparent;
+      padding: 6px 8px;
+      border-radius: 8px;
       font-family: var(--fnt-j);
       font-size: 0.75em;
       font-weight: 600;
-      text-transform: uppercase;
+      text-transform: capitalize;
       letter-spacing: 0.05em;
       vertical-align: middle;
       align-self: center;
       line-height: 1;
     }
-    .status-pending     { color: #9aa3ad; }
-    .status-accepted    { color: #e59c58; }
-    .status-in-progress { color: #e8c64c; }
-    .status-done        { color: #9fc387; }
-    .status-declined    { color: #d7614c; }
+    .status-pending     { background: #9aa3ad; color: #11151c; }
+    .status-accepted    { background: #e59c58; color: #11151c; }
+    .status-in-progress { background: #e8c64c; color: #11151c; }
+    .status-done        { background: #9fc387; color: #11151c; }
+    .status-declined    { background: #d7614c; color: #11151c; }
 
     /* ===== FILTER BUTTONS — colored when active ===== */
     .filter-btn[data-status="all"].active         { border-color: var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); }
@@ -504,7 +507,7 @@
     .req-modal-meta {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 4px;
       flex-wrap: wrap;
       margin-bottom: 18px;
     }

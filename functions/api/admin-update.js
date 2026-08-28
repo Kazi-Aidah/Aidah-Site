@@ -78,8 +78,17 @@ export async function onRequestPost(context) {
     return json({ error: 'Request not found' }, 404);
   }
 
+  // Capture requester email + prior notes BEFORE mutating (for the reply email).
+  const requesterEmail = items[idx].email;
+  const hadNotes = items[idx].notes;
+
   items[idx] = { ...items[idx], ...patch };
   await writeAll(TUTORIAL_KV, items);
+
+  // Email the requester the first time a reply (notes) is added.
+  if (notes !== undefined && notes.trim() && !hadNotes && requesterEmail) {
+    await sendReplyEmail(context, requesterEmail, notes, id);
+  }
 
   return json({ ok: true }, 200);
 }
@@ -114,4 +123,46 @@ function corsHeaders() {
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, x-admin-password',
   };
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/**
+ * Best-effort reply email via Resend. Only fires when RESEND_API_KEY is set.
+ * Sends the first time a reply (notes) is added to a request that has an email.
+ */
+async function sendReplyEmail(context, to, notes, id) {
+  const { RESEND_API_KEY, RESEND_FROM, SITE_URL } = context.env;
+  if (!RESEND_API_KEY || !to) return;
+
+  const from = RESEND_FROM || 'Aidah <onboarding@resend.dev>';
+  const site = (SITE_URL || 'https://kaziaidah.pages.dev/tutorial-requests') + (id ? `#req-${id}` : '');
+
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type':  'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to,
+        subject: 'Aidah responded to your tutorial request!',
+        html: `<p>Hi! Aidah has replied to your tutorial request:</p>
+               <blockquote>${escapeHtml(notes)}</blockquote>
+               <p><a href="${site}">Check it out here</a></p>`,
+        text: `Aidah responded to your tutorial request:\n\n${notes}\n\nCheck it out: ${site}`,
+      }),
+    });
+    if (!res.ok) console.error('Resend error:', await res.text());
+  } catch (e) {
+    console.error('Reply email failed:', e);
+  }
 }

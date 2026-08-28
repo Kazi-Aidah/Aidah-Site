@@ -26,6 +26,9 @@ export async function onRequestGet(context) {
 
   let items = await readAll(kv);
 
+  // Never expose requester emails publicly — strip them from the response.
+  items = items.map(({ email, ...rest }) => rest);
+
   // Newest first — keeps the page's ordering stable.
   items.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 

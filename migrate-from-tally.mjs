@@ -106,6 +106,9 @@ async function main() {
   const BATCH_SIZE = 100;
   let total = 0;
 
+  // Merge (not replace) per batch: each batch upserts by Tally submission id,
+  // so batches accumulate instead of overwriting each other, and re-runs are
+  // idempotent.
   for (let i = 0; i < items.length; i += BATCH_SIZE) {
     const batch = items.slice(i, i + BATCH_SIZE);
     const res = await fetch(API_URL, {

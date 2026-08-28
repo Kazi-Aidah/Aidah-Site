@@ -16,56 +16,80 @@
     nav a:hover { color: var(--color-accent-light-blue-3); transform: translateY(-2px); }
     header { border-bottom: 2px solid var(--color-border); padding: 8px; }
 
-    /* ===== HERO ===== */
-    .tut-req-hero {
-      text-align: center;
-      padding: 32px 20px 18px;
-    }
-    .tut-req-hero h1 {
-      font-family: var(--fnt-h);
-      font-size: 2.4em;
-      font-weight: 800;
-      margin: 0 0 8px;
-      color: var(--txt-n);
-      letter-spacing: 0.04em;
-      margin-bottom: -6px;
-    }
-    .tut-req-hero p {
-      font-family: var(--fnt-j);
-      font-size: 0.95em;
-      color: var(--txt-m);
+    /* ===== PAGE WRAPPER ===== */
+    .tut-req-page {
+      width: 100%;
+      max-width: 780px;
       margin: 0 auto;
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: -10px;
+      padding: 32px 20px 60px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ===== HERO CARD ===== */
+    .tut-req-hero {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      background: var(--bg-sec);
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .tut-req-hero-avatar {
+      width: 210px;
+      flex-shrink: 0;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border-right: none;
+    }
+    .tut-req-hero-body {
+      padding: 28px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    .tut-req-hero-body h1 {
+      font-family: var(--fnt-h);
+      font-size: 2.2em;
+      font-weight: 800;
+      color: var(--txt-n);
+      margin: 0;
+      line-height: 1.15;
+    }
+    .tut-req-hero-body p {
+      font-family: var(--fnt-j);
+      font-size: 0.88em;
+      color: var(--txt-m);
+      margin: 0;
+      line-height: 1.6;
     }
     .submit-btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 18px;
-      margin-bottom: 20px;
-      padding: 10px 22px;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 24px;
       background: #274eab;
       color: #fff;
-      border-radius: 10px;
-      corner-shape: bevel;
+      border-radius: 8px;
       font-family: var(--fnt-j);
-      font-size: 0.9em;
-      font-weight: 600;
+      font-size: 0.82em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       cursor: pointer;
       border: none;
-      transition: background 0.2s, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-decoration: none;
+      width: fit-content;
+      transition: background 0.2s, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .submit-btn:hover {
-      background: #1e3d8a;
-      transform: scale(1.05);
-    }
-    .submit-btn:active {
-      background: #2b3f6f;
-      transform: scale(0.97);
-    }
+    .submit-btn:hover  { background: #1e3d8a; transform: scale(1.04); }
+    .submit-btn:active { background: #2b3f6f; transform: scale(0.97); }
 
     /* ===== CONTROLS BAR ===== */
     .controls-bar {
@@ -73,17 +97,23 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
-      width: 88%;
-      max-width: 1100px;
-      margin: 0 auto 18px;
+    }
+    /* thin vertical divider between search and pills */
+    .controls-divider {
+      width: 2px;
+      height: 20px;
+      background: var(--brdr-1);
+      opacity: 0.5;
+      border-radius: 2px;
+      flex-shrink: 0;
     }
     .search-wrap {
       flex: 1;
-      min-width: 200px;
+      min-width: 180px;
       display: flex;
       align-items: center;
       background: var(--bg-sec);
-      border: 2px solid var(--color-border);
+      border: 2px solid var(--brdr-1);
       border-radius: 10px;
       overflow: hidden;
       transition: border-color 0.2s;
@@ -97,7 +127,7 @@
       color: var(--txt-m);
       font-size: 0.85em;
       flex-shrink: 0;
-      opacity: 0.5;
+      opacity: 0.55;
       transition: opacity 0.2s;
     }
     .search-wrap:focus-within .search-icon-box { opacity: 1; }
@@ -108,16 +138,13 @@
       background: transparent;
       color: var(--txt-n);
       font-family: var(--fnt-j);
-      font-size: 0.9em;
+      font-size: 0.88em;
       outline: none;
       min-width: 0;
     }
-    .search-input::placeholder { color: var(--txt-m); opacity: 0.6; }
-    /* Kill the native browser clear button */
+    .search-input::placeholder { color: var(--txt-m); opacity: 0.55; }
     .search-input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
     .search-input::-ms-clear { display: none; }
-
-    /* Custom clear button */
     .search-clear-btn {
       display: none;
       align-items: center;
@@ -136,98 +163,129 @@
       line-height: 1;
       padding: 0;
     }
-    .search-clear-btn:hover {
-      background: rgba(215, 97, 76, 0.45);
-      color: #ff8a74;
-    }
+    .search-clear-btn:hover { background: rgba(215, 97, 76, 0.45); color: #ff8a74; }
     .search-clear-btn.visible { display: flex; }
+
+    /* ===== FILTER PILLS ===== */
     .filter-btn {
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 8px;
-      border: 2px solid var(--color-border);
-      background: var(--bg-sec);
-      color: var(--txt-m);
+      border: 2px solid transparent;
       font-family: var(--fnt-j);
       font-size: 0.82em;
+      font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                  background-color 0.18s ease,
-                  border-color 0.18s ease,
-                  color 0.18s ease;
-      text-transform: uppercase;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      letter-spacing: 0.02em;
     }
-    .filter-btn:hover {
-      border-color: var(--color-accent-blue);
-      color: var(--color-accent-light-blue);
-      background: var(--bg-ter);
-    }
-    /* hover colours per status button — show the active background colour */
-    .filter-btn[data-status="pending"]:hover     { border-color: #9aa3ad; color: #9aa3ad; background: rgba(116,116,140,0.12); }
-    .filter-btn[data-status="accepted"]:hover    { border-color: #e59c58; color: #e59c58; background: rgba(229,156,88,0.12); }
-    .filter-btn[data-status="in progress"]:hover { border-color: #e8c64c; color: #e8c64c; background: rgba(232,198,76,0.12); }
-    .filter-btn[data-status="done"]:hover        { border-color: #9fc387; color: #9fc387; background: rgba(159,195,135,0.12); }
-    .filter-btn[data-status="declined"]:hover    { border-color: #d7614c; color: #d7614c; background: rgba(215,97,76,0.12); }
-    .filter-btn.active { color: var(--color-accent-light-blue); }
+    /* override the global .filter-btn:hover scale (scale 1.05) coming from styles.css */
+    .filter-btn[data-status]:hover  { transform: none !important; }
+    .filter-btn[data-status]:active { transform: none !important; }
 
-    /* ===== REQUESTS GRID ===== */
+    /* per-status pill colours — filled by default */
+    /* per-status pill colours — consistent tinted pills, solid when active */
+    .filter-btn[data-status="all"]         { background: rgba(104,146,193,0.14); color: #6892c1; border-color: rgba(104,146,193,0.55); }
+    .filter-btn[data-status="pending"]     { background: rgba(154,163,173,0.14); color: #9aa3ad; border-color: rgba(154,163,173,0.55); }
+    .filter-btn[data-status="accepted"]    { background: rgba(232,198,76,0.14);  color: #e8c64c; border-color: rgba(232,198,76,0.55); }
+    .filter-btn[data-status="in progress"] { background: rgba(229,156,88,0.14);  color: #e59c58; border-color: rgba(229,156,88,0.55); }
+    .filter-btn[data-status="done"]        { background: rgba(159,195,135,0.14); color: #9fc387; border-color: rgba(159,195,135,0.55); }
+    .filter-btn[data-status="declined"]    { background: rgba(130,168,200,0.14); color: #82a8c8; border-color: rgba(130,168,200,0.55); }
+
+    /* hover keeps the resting tint — no ugly flash */
+    .filter-btn[data-status="all"]:hover         { background: rgba(104,146,193,0.22); }
+    .filter-btn[data-status="pending"]:hover     { background: rgba(154,163,173,0.22); }
+    .filter-btn[data-status="accepted"]:hover    { background: rgba(232,198,76,0.22); }
+    .filter-btn[data-status="in progress"]:hover { background: rgba(229,156,88,0.22); }
+    .filter-btn[data-status="done"]:hover        { background: rgba(159,195,135,0.22); }
+    .filter-btn[data-status="declined"]:hover    { background: rgba(130,168,200,0.22); }
+
+    /* active state: solid status colour + dark text (matches the badge) */
+    .filter-btn[data-status="all"].active         { background: var(--color-accent-blue); color: #fff; border-color: var(--color-accent-blue); }
+    .filter-btn[data-status="pending"].active     { background: #9aa3ad; color: #11151c; border-color: #9aa3ad; }
+    .filter-btn[data-status="accepted"].active    { background: #e8c64c; color: #11151c; border-color: #e8c64c; }
+    .filter-btn[data-status="in progress"].active { background: #e59c58; color: #11151c; border-color: #e59c58; }
+    .filter-btn[data-status="done"].active        { background: #9fc387; color: #11151c; border-color: #9fc387; }
+    .filter-btn[data-status="declined"].active    { background: #82a8c8; color: #11151c; border-color: #82a8c8; }
+
+    /* hide the less-prominent filters that aren't in the mockup's top bar */
+    .filter-btn[data-status="all"],
+    .filter-btn[data-status="pending"],
+    .filter-btn[data-status="accepted"] { display: none; }
+
+    /* ===== REQUESTS LIST ===== */
     .requests-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
-      gap: 16px;
-      width: 88%;
-      max-width: 1100px;
-      margin: 0 auto 40px;
-      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
+
+    /* ===== SPOTLIGHT ===== */
+    .requests-grid.focus-mode .req-card { opacity: 0.3; transition: opacity 0.35s ease; }
+    .requests-grid.focus-mode .req-card:hover { opacity: 1; }
 
     /* ===== REQUEST CARD ===== */
     .req-card {
+      position: relative;
       background: var(--bg-sec);
       border: 2px solid var(--brdr-1);
       border-radius: 14px;
-      padding: 16px 18px;
+      padding: 20px 22px 18px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.375), 
-                  border-color 0.2s, 
-                  box-shadow 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.375);
+      gap: 6px;
       cursor: pointer;
       min-width: 0;
       overflow: hidden;
       box-sizing: border-box;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.375),
+                  border-color 0.2s,
+                  box-shadow 0.2s;
     }
     .req-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.38);
+      border-color: #5a6080;
+    }
+    /* placeholder card only shows in dev/empty mode (no real requests) */
+    .req-card.placeholder-card {
+      cursor: default;
+    }
+    .req-card.placeholder-card::after {
+      content: 'preview';
+      position: absolute;
+      top: 10px; right: 12px;
+      font-size: 0.6em;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--txt-m);
+      opacity: 0.55;
     }
 
-    /* Color accent left-border per status-driven color */
-    .req-card[data-color="red"]    { border-left: 4px solid #d7614c; }
-    .req-card[data-color="orange"] { border-left: 4px solid #e59c58; }
-    .req-card[data-color="yellow"] { border-left: 4px solid #e8c64c; }
-    .req-card[data-color="green"]  { border-left: 4px solid #9fc387; }
-    .req-card[data-color="grey"]   { border-left: 4px solid #6b7280; }
-    .req-card[data-color="blue"]   { border-left: 4px solid #6892c1; }
-    .req-card[data-color="purple"] { border-left: 4px solid #a78fd6; }
-    .req-card[data-color="slate"]  { border-left: 4px solid var(--brdr-1); }
+    /* left-border accent (kept subtle — mockup doesn't emphasise it) */
+    .req-card[data-color="red"]    { border-left: 3px solid #d7614c; }
+    .req-card[data-color="orange"] { border-left: 3px solid #e59c58; }
+    .req-card[data-color="yellow"] { border-left: 3px solid #e8c64c; }
+    .req-card[data-color="green"]  { border-left: 3px solid #9fc387; }
+    .req-card[data-color="grey"]   { border-left: 3px solid #6b7280; }
+    .req-card[data-color="blue"]   { border-left: 3px solid #6892c1; }
+    .req-card[data-color="purple"] { border-left: 3px solid #a78fd6; }
+    .req-card[data-color="slate"]  { border-left: 3px solid var(--brdr-1); }
 
     .req-card-title {
       font-family: var(--fnt-g);
-      font-size: 1.05em;
+      font-size: 1.15em;
       font-weight: 600;
-      letter-spacing: 0.04em !important;
-      color: var(--txt-n2);
+      color: var(--txt-mm);
       margin: 0;
       line-height: 1.4;
-      text-transform: capitalize;
       overflow-wrap: break-word;
       word-break: break-word;
+      /* leave room for the top-right badge */
+      padding-right: 110px;
     }
     .req-card-desc {
       font-family: var(--fnt-g);
       font-size: 0.88em;
-      letter-spacing: 0.01em;
       color: var(--txt-m);
       margin: 0;
       line-height: 1.65;
@@ -236,59 +294,62 @@
       line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      flex-grow: 1;
       overflow-wrap: break-word;
       word-break: break-word;
     }
-    .req-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: auto;
-      padding-top: 0;
-    }
-    .req-date {
-      font-family: var(--fnt-j);
-      font-size: 0.75em;
-      color: var(--color-text-meta);
-      margin-right: 4px;
-      align-self: flex-end;
-    }
 
-    /* ===== STATUS BADGES ===== */
+    /* hide the bottom footer row — date & badge are repositioned */
+    .req-card-footer { display: none; }
+
+    /* ===== STATUS BADGE — top-right corner ===== */
     .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 8px;
-      border-radius: 8px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-radius: 0 12px 0 10px;
+      padding: 5px 12px;
       font-family: var(--fnt-j);
       font-size: 0.75em;
       font-weight: 600;
-      text-transform: capitalize;
-      letter-spacing: 0.05em;
-      vertical-align: middle;
-      align-self: center;
+      letter-spacing: 0.04em;
       line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
-    .status-pending     { background: #9aa3ad; color: #11151c; }
-    .status-accepted    { background: #e59c58; color: #11151c; }
-    .status-in-progress { background: #e8c64c; color: #11151c; }
-    .status-done        { background: #9fc387; color: #11151c; }
-    .status-declined    { background: #d7614c; color: #11151c; }
+    /* badge colours */
+    .status-pending     { background: #2e333c; color: #9aa3ad; }
+    .status-accepted    { background: #4a3d12; color: #e8c64c; }
+    .status-in-progress { background: #4a3110; color: #e59c58; }
+    .status-done        { background: #234a23; color: #9fc387; }
+    .status-declined    { background: #1e3040; color: #82a8c8; }
 
-    /* ===== FILTER BUTTONS — colored when active ===== */
-    .filter-btn[data-status="all"].active         { border-color: var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); }
-    .filter-btn[data-status="pending"].active     { border-color: #9aa3ad; color: #9aa3ad; background: rgba(116,116,140,0.12); }
-    .filter-btn[data-status="accepted"].active    { border-color: #e59c58; color: #e59c58; background: rgba(229,156,88,0.12); }
-    .filter-btn[data-status="in progress"].active { border-color: #e8c64c; color: #e8c64c; background: rgba(232,198,76,0.12); }
-    .filter-btn[data-status="done"].active        { border-color: #9fc387; color: #9fc387; background: rgba(159,195,135,0.12); }
-    .filter-btn[data-status="declined"].active    { border-color: #d7614c; color: #d7614c; background: rgba(215,97,76,0.12); }
+    /* ===== ATTACHMENTS (card) ===== */
+    .req-attachments {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .attachment-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 0;
+      background: transparent;
+      color: var(--color-accent-light-blue);
+      font-family: var(--fnt-j);
+      font-size: 0.8em;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      border: none;
+      transition: color 0.15s;
+    }
+    .attachment-chip:hover { color: var(--txt-n); }
+    .attachment-chip i { display: none; }
 
     /* ===== EMPTY / LOADING STATES ===== */
     .state-msg {
-      grid-column: 1 / -1;
       text-align: center;
       padding: 60px 20px;
       font-family: var(--fnt-j);
@@ -297,33 +358,8 @@
     }
     .state-msg i { font-size: 2em; display: block; margin-bottom: 12px; opacity: 0.5; }
 
-    /* ===== ATTACHMENTS ===== */
-    .req-attachments {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .attachment-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 9px;
-      border-radius: 6px;
-      background: var(--bg-ter);
-      color: var(--color-accent-light-blue);
-      font-family: var(--fnt-j);
-      font-size: 0.75em;
-      text-decoration: none;
-      border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
-      transition: background 0.15s;
-    }
-    .attachment-chip:hover { background: var(--color-accent-blue-darker); }
-
     /* ===== ADMIN PANEL ===== */
     .admin-login-wrap {
-      width: 88%;
-      max-width: 400px;
-      margin: 0 auto 40px;
       background: var(--bg-sec);
       border: 2px solid var(--brdr-1);
       border-radius: 14px;
@@ -366,8 +402,6 @@
       transition: background 0.2s;
     }
     .admin-submit-btn:hover { background: var(--color-accent-blue-lighter); }
-
-    /* ===== ADMIN CARD CONTROLS ===== */
     .admin-controls {
       display: flex;
       flex-wrap: wrap;
@@ -400,10 +434,7 @@
       box-sizing: border-box;
       outline: none;
     }
-    .admin-notes-area::placeholder {
-      color: var(--txt-m);
-      opacity: 0.6;
-    }
+    .admin-notes-area::placeholder { color: var(--txt-m); opacity: 0.6; }
     .admin-save-btn {
       padding: 5px 14px;
       border-radius: 7px;
@@ -491,10 +522,7 @@
       justify-content: center;
       transition: background 0.2s, color 0.2s;
     }
-    .req-modal-close:hover {
-      background: rgba(215,97,76,0.22);
-      color: var(--color-retro-red);
-    }
+    .req-modal-close:hover { background: rgba(215,97,76,0.22); color: var(--color-retro-red); }
     .req-modal-title {
       font-family: var(--fnt-g);
       font-size: 1.4em;
@@ -510,6 +538,11 @@
       gap: 4px;
       flex-wrap: wrap;
       margin-bottom: 18px;
+    }
+    /* override the absolute positioning inside the modal — badges sit inline there */
+    .req-modal-meta .status-badge {
+      position: static;
+      border-radius: 8px;
     }
     .req-modal-date {
       font-family: var(--fnt-j);
@@ -542,7 +575,6 @@
       word-break: break-word;
       margin: 0;
     }
-    /* clickable links inside description + notes */
     .req-modal-desc a, .req-modal-notes-text a {
       color: var(--color-accent-light-blue);
       text-decoration: underline;
@@ -550,21 +582,19 @@
       transition: color 0.15s;
     }
     .req-modal-desc a:hover, .req-modal-notes-text a:hover { color: var(--txt-n); }
-
     .req-modal-attachments { display: flex; flex-wrap: wrap; gap: 10px; }
-
-    /* ===== MODAL ADMIN CONTROLS ===== */
-    .req-modal-admin {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    /* modal attachment chips — restore icon and styled look */
+    .req-modal-attachments .attachment-chip {
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: var(--bg-ter);
+      border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+      text-decoration: none;
     }
-    .req-modal-admin-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    /* image attachments */
+    .req-modal-attachments .attachment-chip i { display: inline; }
+    .req-modal-attachments .attachment-chip:hover { background: var(--color-accent-blue-darker); }
+    .req-modal-admin { display: flex; flex-direction: column; gap: 8px; }
+    .req-modal-admin-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .req-modal-img {
       max-width: 100%;
       max-height: 260px;
@@ -575,15 +605,12 @@
       transition: opacity 0.15s;
     }
     .req-modal-img:hover { opacity: 0.85; }
-    /* video attachments */
     .req-modal-video {
       max-width: 100%;
       border-radius: 10px;
       display: block;
       background: #000;
     }
-
-    /* Notes — Aidah's Response */
     .req-modal-notes-wrap {
       border: 2px solid #527cd1;
       border-radius: 10px;
@@ -646,7 +673,7 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
-      padding: 10px 0 30px;
+      padding: 4px 0 10px;
     }
     .page-btn {
       padding: 6px 14px;
@@ -667,18 +694,13 @@
     .page-btn.active { border: 3px solid var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); font-weight: 600; }
     .page-btn:disabled { opacity: 0.35; cursor: default; }
 
-    @media (max-width: 900px) {
-      .requests-grid {
-        grid-template-columns: 1fr;
-        width: 94%;
-      }
-      .search-wrap { flex: 0 0 100%; }
-    }
-    @media (max-width: 700px) {
-      .tut-req-hero h1 { font-size: 1.7em; }
-      .controls-bar { width: 94%; }
-      .search-wrap { flex: 0 0 100%; min-width: 0; width: 100%; }
-      .req-modal { padding: 20px; }
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .tut-req-hero { flex-direction: column; }
+      .tut-req-hero-avatar { width: 100%; height: 180px; border-right: none; border-bottom: 2px solid var(--brdr-1); }
+      .tut-req-hero-body h1 { font-size: 1.6em; }
+      .req-card-title { padding-right: 90px; }
+      .tut-req-page { padding: 20px 14px 50px; }
     }
   </style>
 </head>
@@ -695,47 +717,58 @@
     </nav>
   </header>
 
-  <section class="tut-req-hero">
-    <h1>Tutorial Requests</h1>
-    <p>Send in your tutorial requests!</p>
-    <a class="submit-btn" href="#" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1">
-      <i class="fa-solid fa-paper-plane"></i> Submit a Request
-    </a>
-  </section>
+  <div class="tut-req-page">
 
-  <!-- Controls -->
-  <div class="controls-bar">
-    <div class="search-wrap">
-      <span class="search-icon-box"><i class="fa-solid fa-magnifying-glass"></i></span>
-      <input class="search-input" id="searchInput" type="search" placeholder="Search requests…" aria-label="Search requests">
-      <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
+    <!-- Hero card -->
+    <section class="tut-req-hero" aria-label="Tutorial Requests header">
+      <img class="tut-req-hero-avatar" src="images/tutu.png" alt="Aidah" onerror="this.src='images/favicon.png'">
+      <div class="tut-req-hero-body">
+        <h1>Tutorial Requests</h1>
+        <p>Hello! Send your tutorial requests here :D</p>
+        <a class="submit-btn" href="#" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1">
+          SUBMIT A REQUEST
+        </a>
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+      <div class="search-wrap">
+        <span class="search-icon-box"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input class="search-input" id="searchInput" type="search" placeholder="Search all blogs" aria-label="Search requests">
+        <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="controls-divider" aria-hidden="true"></div>
+      <!-- visible pills matching the mockup -->
+      <button class="filter-btn" data-status="in progress">Progressing</button>
+      <button class="filter-btn" data-status="done">Solved</button>
+      <button class="filter-btn" data-status="declined">Rejected</button>
+      <!-- hidden but kept so JS filter logic still works -->
+      <button class="filter-btn" data-status="all" style="display:none">All</button>
+      <button class="filter-btn" data-status="pending" style="display:none">Pending</button>
+      <button class="filter-btn" data-status="accepted" style="display:none">Accepted</button>
     </div>
-    <button class="filter-btn active" data-status="all">All</button>
-    <button class="filter-btn" data-status="pending">Pending</button>
-    <button class="filter-btn" data-status="accepted">Accepted</button>
-    <button class="filter-btn" data-status="in progress">In Progress</button>
-    <button class="filter-btn" data-status="done">Done</button>
-    <button class="filter-btn" data-status="declined">Declined</button>
-  </div>
 
-  <!-- Admin login panel -->
-  <div class="admin-login-wrap" id="adminLoginWrap">
-    <h3><i class="fa-solid fa-key"></i> Admin Access</h3>
-    <input class="admin-field" id="adminPassword" type="password" placeholder="Password" autocomplete="current-password">
-    <button class="admin-submit-btn" id="adminLoginBtn">Unlock</button>
-    <p id="adminLoginError" style="color: var(--color-retro-red); font-family: var(--fnt-j); font-size: 0.82em; margin: 8px 0 0; display:none;"></p>
-  </div>
-
-  <!-- Requests grid -->
-  <div class="requests-grid" id="requestsGrid">
-    <div class="state-msg" id="stateMsg">
-      <i class="fa-solid fa-spinner fa-spin"></i>
-      Loading requests…
+    <!-- Admin login panel -->
+    <div class="admin-login-wrap" id="adminLoginWrap">
+      <h3><i class="fa-solid fa-key"></i> Admin Access</h3>
+      <input class="admin-field" id="adminPassword" type="password" placeholder="Password" autocomplete="current-password">
+      <button class="admin-submit-btn" id="adminLoginBtn">Unlock</button>
+      <p id="adminLoginError" style="color: var(--color-retro-red); font-family: var(--fnt-j); font-size: 0.82em; margin: 8px 0 0; display:none;"></p>
     </div>
-  </div>
 
-  <!-- Pagination -->
-  <div class="pagination" id="pagination"></div>
+    <!-- Requests list -->
+    <div class="requests-grid" id="requestsGrid">
+      <div class="state-msg" id="stateMsg">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Loading requests…
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+
+  </div><!-- /.tut-req-page -->
 
   <div class="bottom-spacer" id="bottomSpacer"></div>
   </div>

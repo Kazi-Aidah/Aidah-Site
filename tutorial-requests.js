@@ -31,10 +31,10 @@ const STATUS_ICONS = {
 // Status drives the card's left-border color automatically
 const STATUS_COLORS = {
   pending:       'slate',
-  accepted:      'orange',
-  'in progress': 'yellow',
+  accepted:      'yellow',
+  'in progress': 'orange',
   done:          'green',
-  declined:      'red',
+  declined:      'blue',
 };
 
 const COLOR_OPTIONS  = ['slate','red','orange','yellow','green','blue','grey','purple'];
@@ -43,14 +43,14 @@ const STATUS_OPTIONS = ['pending','accepted','in progress','done','declined'];
 // Hex used to tint the admin <select> elements by their current value.
 const STATUS_HEX = {
   pending:     '#9aa3ad',
-  accepted:    '#e59c58',
-  'in progress': '#e8c64c',
+  accepted:    '#e8c64c',
+  'in progress': '#e59c58',
   done:        '#9fc387',
-  declined:    '#d7614c',
+  declined:    '#82a8c8',
 };
 const COLOR_HEX = {
   slate: '#6b7280', red: '#d7614c', orange: '#e59c58', yellow: '#e8c64c',
-  green: '#9fc387', blue: '#6892c1', grey: '#6b7280', purple: '#a78fd6',
+  green: '#9fc387', blue: '#82a8c8', grey: '#6b7280', purple: '#a78fd6',
 };
 
 /** Paint a status/color <select> with its current value's colour (no border). */
@@ -69,7 +69,7 @@ function styleAdminSelect(sel) {
 let allRequests  = [];
 let filtered     = [];
 let currentPage  = 1;
-let activeFilter = 'all';
+let activeFilter = 'pending';
 let searchQuery  = '';
 let isAdmin      = false;
 
@@ -184,10 +184,21 @@ function formatDate(iso) {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-function statusBadgeHTML(status) {
-  const s    = (status || 'pending').toLowerCase();
-  const icon = STATUS_ICONS[s] || STATUS_ICONS.pending;
-  return `<span class="status-badge status-${s.replace(' ','-')}"><i class="${icon}"></i>${s}</span>`;
+// Human-readable labels shown on cards and in the modal
+const STATUS_LABELS = {
+  pending:       'Pending',
+  accepted:      'Accepted',
+  'in progress': 'Progressing',
+  done:          'Solved',
+  declined:      'Rejected',
+};
+
+/** Badge for use inside cards (no icon — matches the mockup corner badge). */
+function statusBadgeHTML(status, withIcon = false) {
+  const s     = (status || 'pending').toLowerCase();
+  const label = STATUS_LABELS[s] || s;
+  const icon  = withIcon ? `<i class="${STATUS_ICONS[s] || STATUS_ICONS.pending}"></i>` : '';
+  return `<span class="status-badge status-${s.replace(' ','-')}">${icon}${label}</span>`;
 }
 
 // Derive card color from status
@@ -232,19 +243,38 @@ function buildCard(req) {
     ? `<p class="req-card-desc">${escapeHTML(req.description)}</p>` : '';
 
   div.innerHTML = `
+    ${statusBadgeHTML(req.status)}
     <h3 class="req-card-title">${escapeHTML(req.title)}</h3>
     ${desc}
     ${attachmentsHTML(req.attachments)}
-    <div class="req-card-footer">
-      ${statusBadgeHTML(req.status)}
-      <span class="req-date">${formatDate(req.created_at)}</span>
-    </div>
   `;
 
   // Admin editing now lives in the modal (opened on card click).
   div.addEventListener('click', () => openModal(req));
 
+  // Spotlight: after hovering a card for ~3s, dim all other cards.
+  let hoverTimer = null;
+  div.addEventListener('mouseenter', () => {
+    hoverTimer = setTimeout(() => grid.classList.add('focus-mode'), 3000);
+  });
+  div.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+
   return div;
+}
+
+/** Sample card rendered only when no real requests exist (dev/empty mode). */
+function buildPlaceholderCard() {
+  const placeholder = {
+    id: 'placeholder',
+    title: 'Example Tutorial Request',
+    description: 'This is a placeholder card shown in development mode when no real requests are loaded. It disappears automatically once live requests are fetched.',
+    status: 'pending',
+    color: 'slate',
+    attachments: [],
+  };
+  const card = buildCard(placeholder);
+  card.classList.add('placeholder-card');
+  return card;
 }
 
 // ---------------------------------------------------------------------------
@@ -403,7 +433,7 @@ function openModal(req) {
   body.innerHTML = `
     <h2 class="req-modal-title">${escapeHTML(req.title)}</h2>
     <div class="req-modal-meta">
-      ${statusBadgeHTML(req.status)}
+      ${statusBadgeHTML(req.status, true)}
       <span class="req-modal-date"><i class="fa-regular fa-calendar"></i> ${formatDate(req.created_at)}</span>
     </div>
     ${descHTML}
@@ -453,7 +483,7 @@ async function handleModalSave(req, adminSection, body) {
 
     // Update the status badge in the modal header live
     const badge = body.querySelector('.status-badge');
-    if (badge) badge.outerHTML = statusBadgeHTML(newStatus);
+    if (badge) badge.outerHTML = statusBadgeHTML(newStatus, true);
 
     // Refresh the notes display if notes exist
     const existingNotesWrap = body.querySelector('.req-modal-notes-wrap');
@@ -498,6 +528,7 @@ function closeModal() {
   const backdrop = document.getElementById('reqModalBackdrop');
   backdrop.classList.remove('open');
   document.body.style.overflow = '';
+  if (grid) grid.classList.remove('focus-mode');
 }
 
 // ---------------------------------------------------------------------------
@@ -505,6 +536,15 @@ function closeModal() {
 // ---------------------------------------------------------------------------
 function renderPage() {
   grid.innerHTML = '';
+
+  // Development / empty mode: show one placeholder request card. It only
+  // appears when there are NO real requests at all, so it never shows
+  // alongside live data.
+  if (allRequests.length === 0) {
+    grid.appendChild(buildPlaceholderCard());
+    pagination.innerHTML = '';
+    return;
+  }
 
   if (filtered.length === 0) {
     const msg = document.createElement('div');
@@ -680,6 +720,8 @@ function maybeOpenFromHash() {
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', async () => {
   grid           = document.getElementById('requestsGrid');
+  // Leave the grid → clear spotlight dimming.
+  grid.addEventListener('mouseleave', () => grid.classList.remove('focus-mode'));
   pagination     = document.getElementById('pagination');
   stateMsg       = document.getElementById('stateMsg');
   searchInput    = document.getElementById('searchInput');
@@ -747,6 +789,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Status filters
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+      // Clicking an already-active chip turns the filter off → back to pending.
+      if (btn.classList.contains('active')) {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        activeFilter = 'pending';
+        applyFilters();
+        return;
+      }
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeFilter = btn.dataset.status;

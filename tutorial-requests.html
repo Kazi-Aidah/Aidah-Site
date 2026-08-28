@@ -97,7 +97,10 @@
       color: var(--txt-m);
       font-size: 0.85em;
       flex-shrink: 0;
+      opacity: 0.5;
+      transition: opacity 0.2s;
     }
+    .search-wrap:focus-within .search-icon-box { opacity: 1; }
     .search-input {
       flex: 1;
       padding: 9px 0;
@@ -155,12 +158,12 @@
       color: var(--color-accent-light-blue);
       background: var(--bg-ter);
     }
-    /* hover colours per status button */
-    .filter-btn[data-status="pending"]:hover     { border-color: #9aa3ad; color: #9aa3ad; }
-    .filter-btn[data-status="accepted"]:hover    { border-color: #e59c58; color: #e59c58; }
-    .filter-btn[data-status="in progress"]:hover { border-color: #e8c64c; color: #e8c64c; }
-    .filter-btn[data-status="done"]:hover        { border-color: #9fc387; color: #9fc387; }
-    .filter-btn[data-status="declined"]:hover    { border-color: #d7614c; color: #d7614c; }
+    /* hover colours per status button — show the active background colour */
+    .filter-btn[data-status="pending"]:hover     { border-color: #9aa3ad; color: #9aa3ad; background: rgba(116,116,140,0.12); }
+    .filter-btn[data-status="accepted"]:hover    { border-color: #e59c58; color: #e59c58; background: rgba(229,156,88,0.12); }
+    .filter-btn[data-status="in progress"]:hover { border-color: #e8c64c; color: #e8c64c; background: rgba(232,198,76,0.12); }
+    .filter-btn[data-status="done"]:hover        { border-color: #9fc387; color: #9fc387; background: rgba(159,195,135,0.12); }
+    .filter-btn[data-status="declined"]:hover    { border-color: #d7614c; color: #d7614c; background: rgba(215,97,76,0.12); }
     .filter-btn.active { color: var(--color-accent-light-blue); }
 
     /* ===== REQUESTS GRID ===== */
@@ -254,19 +257,21 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 3px 10px;
-      border-radius: 20px;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
       font-family: var(--fnt-j);
       font-size: 0.75em;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      vertical-align: middle;
     }
-    .status-pending     { background: rgba(116,116,140,0.18); color: #9aa3ad; }
-    .status-accepted    { background: rgba(229,156,88,0.18);  color: #e59c58; }
-    .status-in-progress { background: rgba(232,198,76,0.18);  color: #e8c64c; }
-    .status-done        { background: rgba(159,195,135,0.18); color: #9fc387; }
-    .status-declined    { background: rgba(215,97,76,0.18);   color: #d7614c; }
+    .status-pending     { color: #9aa3ad; }
+    .status-accepted    { color: #e59c58; }
+    .status-in-progress { color: #e8c64c; }
+    .status-done        { color: #9fc387; }
+    .status-declined    { color: #d7614c; }
 
     /* ===== FILTER BUTTONS — colored when active ===== */
     .filter-btn[data-status="all"].active         { border-color: var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); }
@@ -304,7 +309,7 @@
       font-family: var(--fnt-j);
       font-size: 0.75em;
       text-decoration: none;
-      border: 1px solid var(--color-border-secondary);
+      border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
       transition: background 0.15s;
     }
     .attachment-chip:hover { background: var(--color-accent-blue-darker); }
@@ -407,6 +412,19 @@
       transition: opacity 0.2s;
     }
     .admin-save-btn:hover { opacity: 0.82; }
+    .admin-delete-btn {
+      padding: 5px 14px;
+      border-radius: 7px;
+      border: none;
+      background: var(--color-retro-red);
+      color: #fff;
+      font-family: var(--fnt-j);
+      font-size: 0.78em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .admin-delete-btn:hover { opacity: 0.82; }
     .admin-notes-display {
       font-family: var(--fnt-j);
       font-size: 0.8em;

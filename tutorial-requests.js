@@ -98,6 +98,23 @@ async function verifyAdminPassword(password) {
   return res.ok;
 }
 
+async function deleteRequest(id) {
+  // All admin writes go through the server-side Cloudflare function.
+  const res = await fetch('/api/delete-request', {
+    method: 'POST',
+    headers: {
+      'Content-Type':     'application/json',
+      'x-admin-password': adminSessionPassword,
+    },
+    body: JSON.stringify({ id }),
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || `Server error ${res.status}`);
+  }
+  return res.json();
+}
+
 // ---------------------------------------------------------------------------
 // AUTO-REFRESH — silently check for new/updated requests every interval.
 // New rows are prepended; changed rows (e.g. your notes) are updated live.
@@ -159,13 +176,19 @@ function colorFromStatus(status) {
 function attachmentsHTML(attachments) {
   if (!Array.isArray(attachments) || attachments.length === 0) return '';
   const chips = attachments.map(a => {
-    const name = a.name || 'file';
     const url  = a.url  || '#';
     return `<a class="attachment-chip" href="${url}" target="_blank" rel="noopener">
-      <i class="fa-solid fa-paperclip"></i>${name}
+      <i class="fa-solid fa-paperclip"></i>${attachmentType(a.url, a.mime)}
     </a>`;
   }).join('');
   return `<div class="req-attachments">${chips}</div>`;
+}
+
+/** Generic, privacy-safe label — never reveals the real file name. */
+function attachmentType(url, mime) {
+  if (IMAGE_EXTS.test(url) || IMAGE_MIMES.test(mime)) return 'image';
+  if (VIDEO_EXTS.test(url) || VIDEO_MIMES.test(mime)) return 'video';
+  return 'document';
 }
 
 function adminControlsHTML(req) {
@@ -189,6 +212,7 @@ function adminControlsHTML(req) {
       <textarea class="admin-notes-area" placeholder="Type your response…">${escapeHTML(req.notes || '')}</textarea>
       ${notesDisplay}
       <button class="admin-save-btn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+      <button class="admin-delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
     </div>
   `;
 }
@@ -225,6 +249,8 @@ function buildCard(req) {
     const controls = div.querySelector('.admin-controls');
     const saveBtn  = controls.querySelector('.admin-save-btn');
     saveBtn.addEventListener('click', () => handleSave(req, controls, div));
+    const delBtn = controls.querySelector('.admin-delete-btn');
+    delBtn.addEventListener('click', () => handleDelete(req));
   }
 
   // Open modal on card click (but not when clicking admin controls)
@@ -317,10 +343,11 @@ function modalAttachmentsHTML(attachments) {
   return items.map(({ url, name, mime }) => {
     const isImage = IMAGE_EXTS.test(url) || IMAGE_MIMES.test(mime);
     const isVideo = VIDEO_EXTS.test(url) || VIDEO_MIMES.test(mime);
+    const type = attachmentType(url, mime);
 
     if (isImage) {
       return `<a href="${url}" target="_blank" rel="noopener" style="display:block;width:100%;">
-        <img class="req-modal-img" src="${url}" alt="${escapeHTML(name)}" loading="lazy"
+        <img class="req-modal-img" src="${url}" alt="image attachment" loading="lazy"
              onerror="this.parentElement.style.display='none'">
       </a>`;
     }
@@ -328,12 +355,12 @@ function modalAttachmentsHTML(attachments) {
       return `<video class="req-modal-video" controls preload="metadata">
         <source src="${url}">
         <a class="attachment-chip" href="${url}" target="_blank" rel="noopener">
-          <i class="fa-solid fa-film"></i> ${escapeHTML(name)}
+          <i class="fa-solid fa-film"></i> ${type}
         </a>
       </video>`;
     }
     return `<a class="attachment-chip" href="${url}" target="_blank" rel="noopener">
-      <i class="fa-solid fa-paperclip"></i>${escapeHTML(name)}
+      <i class="fa-solid fa-paperclip"></i>${type}
     </a>`;
   }).join('');
 }
@@ -384,6 +411,7 @@ function openModal(req) {
         </div>
         <textarea class="admin-notes-area" placeholder="Type your response…">${escapeHTML(req.notes || '')}</textarea>
         <button class="admin-save-btn modal-save-btn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+        <button class="admin-delete-btn modal-delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
       </div>`;
   })() : '';
 
@@ -399,11 +427,13 @@ function openModal(req) {
     ${adminHTML}
   `;
 
-  // Wire up the modal save button
+  // Wire up the modal admin buttons
   if (isAdmin) {
     const adminSection = body.querySelector('.req-modal-admin');
     const saveBtn = adminSection.querySelector('.modal-save-btn');
     saveBtn.addEventListener('click', () => handleModalSave(req, adminSection, body));
+    const delBtn = adminSection.querySelector('.modal-delete-btn');
+    delBtn.addEventListener('click', () => handleDelete(req));
   }
 
   backdrop.classList.add('open');
@@ -558,6 +588,28 @@ function updateCountBadge() {
 // ---------------------------------------------------------------------------
 // ADMIN SAVE
 // ---------------------------------------------------------------------------
+async function handleDelete(req) {
+  if (!confirm(`Delete "${req.title}"? This cannot be undone.`)) return;
+
+  // Optimistically remove from the local view.
+  allRequests = allRequests.filter(r => r.id !== req.id);
+  renderPage();
+  closeModal();
+
+  try {
+    await deleteRequest(req.id);
+    showToast('✓ Deleted');
+  } catch (err) {
+    showToast('⚠ Delete failed: ' + err.message, true);
+    console.error(err);
+    // Restore by reloading from the server.
+    try {
+      allRequests = await loadRequests();
+      applyFilters();
+    } catch { /* leave as-is */ }
+  }
+}
+
 async function handleSave(req, controls, card) {
   const newStatus = controls.querySelector('.admin-status').value;
   const newColor  = controls.querySelector('.admin-color').value;
@@ -651,9 +703,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Search
   const clearBtn = document.getElementById('searchClearBtn');
+  let lastAdminAttempt = '';
   searchInput.addEventListener('input', e => {
-    searchQuery = e.target.value;
-    clearBtn.classList.toggle('visible', searchQuery.length > 0);
+    const raw = e.target.value;
+    const lower = raw.trim().toLowerCase();
+
+    // Typing "admin: <password>" in the search box unlocks admin mode.
+    if (lower.startsWith('admin:')) {
+      const pw = raw.slice(raw.toLowerCase().indexOf('admin:') + 6).trim();
+      if (pw && pw !== lastAdminAttempt) {
+        lastAdminAttempt = pw;
+        verifyAdminPassword(pw).then(valid => {
+          if (valid) {
+            adminSessionPassword = pw;
+            isAdmin = true;
+            searchInput.value = '';
+            searchQuery = '';
+            clearBtn.classList.remove('visible');
+            applyFilters();
+            showToast('Admin mode on.');
+          }
+        });
+      }
+      return; // don't treat the unlock phrase as a search
+    }
+    lastAdminAttempt = '';
+
+    searchQuery = raw;
+    clearBtn.classList.toggle('visible', raw.length > 0);
     applyFilters();
   });
   clearBtn.addEventListener('click', () => {

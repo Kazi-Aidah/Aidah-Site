@@ -1,18 +1,43 @@
 // functions/api/tally-webhook.js
-// Receives POST requests from Tally webhooks and inserts into Supabase.
+// Receives POST requests from Tally webhooks and inserts into Cloudflare KV.
 //
-// Cloudflare Pages environment variables to set in your Pages dashboard:
-//   SUPABASE_URL      — https://wbvauewrkouaexcaqbyu.supabase.co
-//   SUPABASE_KEY      — your anon public key
-//   TALLY_SECRET      — any string you choose; paste the same one into Tally's webhook secret field
+// Cloudflare Pages settings required:
+//   • KV binding named TUTORIAL_KV (Settings ▸ Functions ▸ KV namespace bindings)
+//   • Env var TALLY_SECRET (any string; paste the same value into Tally's
+//     webhook secret field). Leave it unset to skip signature verification.
+//
+// Unlike the old Supabase version, KV never pauses for inactivity, so the
+// endpoint responds quickly and Tally won't report "didn't respond".
+
+const KV_KEY = 'requests';
+
+async function readAll(kv) {
+  const raw = await kv.get(KV_KEY);
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+
+async function writeAll(kv, arr) {
+  await kv.put(KV_KEY, JSON.stringify(arr));
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+  });
+}
 
 export async function onRequestPost(context) {
   try {
-    const { SUPABASE_URL, SUPABASE_KEY, TALLY_SECRET } = context.env;
+    const { TUTORIAL_KV, TALLY_SECRET } = context.env;
+
+    if (!TUTORIAL_KV) {
+      return json({ error: 'KV binding TUTORIAL_KV is not configured.' }, 500);
+    }
 
     // -----------------------------------------------------------------------
     // 1. Verify Tally webhook signature (optional but recommended)
-    //    Tally sends X-Tally-Signature: sha256=<hmac> when you set a secret.
     // -----------------------------------------------------------------------
     if (TALLY_SECRET) {
       const signature = context.request.headers.get('x-tally-signature');
@@ -25,27 +50,18 @@ export async function onRequestPost(context) {
 
     // -----------------------------------------------------------------------
     // 2. Parse Tally payload
-    //    Tally sends: { eventType, createdAt, data: { fields: [...] } }
     // -----------------------------------------------------------------------
     const payload = await context.request.json();
 
-    // Only handle new submissions
     if (payload.eventType !== 'FORM_RESPONSE') {
       return json({ ok: true, skipped: true }, 200);
     }
 
     const fields = payload.data?.fields ?? [];
 
-    // -----------------------------------------------------------------------
-    // 3. Map Tally fields → your table columns
-    //    Tally field labels (case-insensitive) drive the mapping.
-    //    Adjust the label strings below to match exactly what you named
-    //    your fields inside the Tally form builder.
-    // -----------------------------------------------------------------------
-    const title       = getFieldValue(fields, 'title')       ?? getFieldValue(fields, 'tutorial title') ?? '(no title)';
-    const description = getFieldValue(fields, 'description') ?? getFieldValue(fields, 'details')        ?? null;
+    const title       = getFieldValue(fields, 'title') ?? getFieldValue(fields, 'tutorial title') ?? '(no title)';
+    const description = getFieldValue(fields, 'description') ?? getFieldValue(fields, 'details') ?? null;
 
-    // Attachments: Tally returns file fields as arrays of { url, name, mimeType, size }
     const attachmentField = fields.find(f =>
       f.type === 'FILE_UPLOAD' ||
       f.label?.toLowerCase().includes('attachment') ||
@@ -55,42 +71,27 @@ export async function onRequestPost(context) {
       ? attachmentField.value.map(f => ({ name: f.name, url: f.url }))
       : null;
 
-    // -----------------------------------------------------------------------
-    // 4. Insert into Supabase
-    // -----------------------------------------------------------------------
-    const row = {
+    const items = await readAll(TUTORIAL_KV);
+    const record = {
+      id:         crypto.randomUUID(),
+      created_at: new Date().toISOString(),
       title,
       description,
       ...(attachments ? { attachments } : {}),
-      // status/color/notes will use their column defaults (pending / slate / null)
+      status:     'pending',
+      color:      'slate',
+      notes:      null,
     };
+    items.push(record);
+    await writeAll(TUTORIAL_KV, items);
 
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/tutorial_requests`, {
-      method:  'POST',
-      headers: {
-        'apikey':        SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type':  'application/json',
-        'Prefer':        'return=minimal',
-      },
-      body: JSON.stringify(row),
-    });
-
-    if (!res.ok) {
-      const err = await res.text();
-      console.error('Supabase insert error:', err);
-      return json({ error: 'Supabase insert failed', details: err }, 500);
-    }
-
-    return json({ ok: true }, 200);
-
+    return json({ ok: true, id: record.id }, 200);
   } catch (err) {
     console.error('Webhook error:', err);
     return json({ error: 'Internal server error', message: err.message }, 500);
   }
 }
 
-// Handle OPTIONS preflight (shouldn't be needed for webhooks but just in case)
 export async function onRequestOptions() {
   return new Response(null, {
     status: 204,
@@ -105,35 +106,18 @@ export async function onRequestOptions() {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
-}
-
-/**
- * Find a field by label (case-insensitive) and return its value as a string.
- * Handles Tally's INPUT_TEXT, TEXTAREA, and similar single-value field types.
- */
 function getFieldValue(fields, labelSubstring) {
   const field = fields.find(f =>
     f.label?.toLowerCase().includes(labelSubstring.toLowerCase())
   );
   if (!field) return undefined;
-  // Arrays (multi-select, checkboxes) → join; primitives → stringify
   if (Array.isArray(field.value)) return field.value.join(', ') || null;
   return field.value != null ? String(field.value) : null;
 }
 
-/**
- * Verify Tally's HMAC-SHA256 webhook signature.
- * signature header format: "sha256=<hex>"
- */
 async function verifySignature(body, signatureHeader, secret) {
   if (!signatureHeader?.startsWith('sha256=')) return false;
-  const expected = signatureHeader.slice(7); // strip "sha256="
+  const expected = signatureHeader.slice(7);
 
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(

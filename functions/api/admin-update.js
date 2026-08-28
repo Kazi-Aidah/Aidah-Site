@@ -1,21 +1,33 @@
 // functions/api/admin-update.js
-// Handles authenticated admin updates to tutorial_requests.
-// The browser sends the admin password in a header — this function
-// validates it server-side before writing to Supabase with the service key.
+// Handles authenticated admin updates to tutorial requests stored in KV.
 //
-// Cloudflare Pages environment variables required (set in Pages dashboard):
-//   ADMIN_PASSWORD   — the password you choose (never exposed to the browser)
-//   SUPABASE_URL     — https://wbvauewrkouaexcaqbyu.supabase.co
-//   SUPABASE_SERVICE_KEY — your Supabase service role key (sb_secret_...)
-//                          this has full DB access so keep it server-side only
+// Cloudflare Pages settings required:
+//   • KV binding named TUTORIAL_KV
+//   • Env var ADMIN_PASSWORD — never exposed to the browser
+
+const KV_KEY = 'requests';
+
+async function readAll(kv) {
+  const raw = await kv.get(KV_KEY);
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+
+async function writeAll(kv, arr) {
+  await kv.put(KV_KEY, JSON.stringify(arr));
+}
 
 export async function onRequestPost(context) {
-  const { ADMIN_PASSWORD, SUPABASE_URL, SUPABASE_SERVICE_KEY } = context.env;
+  const { ADMIN_PASSWORD, TUTORIAL_KV } = context.env;
 
   // ── 1. Validate admin password ───────────────────────────────────────────
   const providedPassword = context.request.headers.get('x-admin-password');
   if (!providedPassword || providedPassword !== ADMIN_PASSWORD) {
     return json({ error: 'Unauthorized' }, 401);
+  }
+
+  if (!TUTORIAL_KV) {
+    return json({ error: 'KV binding TUTORIAL_KV is not configured.' }, 500);
   }
 
   // ── 2. Parse request body ────────────────────────────────────────────────
@@ -32,7 +44,7 @@ export async function onRequestPost(context) {
     return json({ error: 'Missing required field: id' }, 400);
   }
 
-  // ── 3. Validate allowed fields (never let the browser overwrite anything else) ──
+  // ── 3. Validate allowed fields ───────────────────────────────────────────
   const patch = {};
   if (status !== undefined) {
     const ALLOWED_STATUSES = ['pending', 'accepted', 'in progress', 'done', 'declined'];
@@ -59,26 +71,15 @@ export async function onRequestPost(context) {
     return json({ error: 'No valid fields to update' }, 400);
   }
 
-  // ── 4. Write to Supabase using service key (server-side only) ───────────
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/tutorial_requests?id=eq.${encodeURIComponent(id)}`,
-    {
-      method: 'PATCH',
-      headers: {
-        'apikey':        SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Content-Type':  'application/json',
-        'Prefer':        'return=minimal',
-      },
-      body: JSON.stringify(patch),
-    }
-  );
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error('Supabase update error:', err);
-    return json({ error: 'Database update failed' }, 500);
+  // ── 4. Read-modify-write in KV ────────────────────────────────────────────
+  const items = await readAll(TUTORIAL_KV);
+  const idx = items.findIndex(r => r.id === id);
+  if (idx === -1) {
+    return json({ error: 'Request not found' }, 404);
   }
+
+  items[idx] = { ...items[idx], ...patch };
+  await writeAll(TUTORIAL_KV, items);
 
   return json({ ok: true }, 200);
 }
@@ -103,10 +104,7 @@ export async function onRequestOptions() {
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: {
-      'Content-Type': 'application/json',
-      ...corsHeaders(),
-    },
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...corsHeaders() },
   });
 }
 

@@ -3,10 +3,12 @@
 // Admin panel allows updating status, color, and notes.
 
 // ---------------------------------------------------------------------------
-// CONFIG — fill these in before deploying
+// CONFIG
 // ---------------------------------------------------------------------------
-const SUPABASE_URL      = 'https://wbvauewrkouaexcaqbyu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndidmF1ZXdya291YWV4Y2FxYnl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NjA1MDUsImV4cCI6MjEwMTMzNjUwNX0.POvFUVTFMo4BF73nZklnlT2yM51rtTOIlhJPybeSdTw';
+// Data now lives in Cloudflare KV, served by /api/get-requests.
+// No client-side keys are needed — all reads/writes go through functions.
+
+const REFRESH_INTERVAL_MS = 60000; // auto-check for new requests every 60s
 
 // Admin password is validated server-side via /api/admin-update.
 // It is never stored here — the user types it and it is sent in a request header.
@@ -56,33 +58,17 @@ let searchInput, filterBtns;
 let adminLoginWrap, adminPasswordInput, adminLoginBtn, adminLoginError;
 
 // ---------------------------------------------------------------------------
-// SUPABASE HELPERS
+// DATA HELPERS
 // ---------------------------------------------------------------------------
-async function supabaseFetch(path, options = {}) {
-  const url = `${SUPABASE_URL}/rest/v1/${path}`;
-  const res = await fetch(url, {
-    headers: {
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=minimal',
-      ...options.headers,
-    },
-    ...options,
-  });
+async function loadRequests() {
+  // KV-backed endpoint returns the full array, newest first.
+  const res = await fetch('/api/get-requests', { headers: { 'Accept': 'application/json' } });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Supabase error ${res.status}: ${text}`);
+    throw new Error(`Server error ${res.status}: ${text}`);
   }
-  if (res.status === 204 || res.headers.get('content-length') === '0') return null;
-  return res.json();
-}
-
-async function loadRequests() {
-  // Fetch all rows, ordered newest first. Select only public-safe fields + internal ones.
-  return supabaseFetch(
-    'tutorial_requests?select=id,created_at,title,description,attachments,status,color,notes&order=created_at.desc'
-  );
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
 }
 
 async function updateRequest(id, patch) {
@@ -110,6 +96,43 @@ async function verifyAdminPassword(password) {
     headers: { 'x-admin-password': password },
   });
   return res.ok;
+}
+
+// ---------------------------------------------------------------------------
+// AUTO-REFRESH — silently check for new/updated requests every interval.
+// New rows are prepended; changed rows (e.g. your notes) are updated live.
+// ---------------------------------------------------------------------------
+async function refreshRequests() {
+  try {
+    const latest = await loadRequests();
+    const byId = new Map(latest.map(r => [r.id, r]));
+    const known = new Set(allRequests.map(r => r.id));
+
+    const added = latest.filter(r => !known.has(r.id));
+    let changed = false;
+
+    // Merge any changes to existing rows (without disturbing admin editing).
+    allRequests = allRequests.map(old => {
+      const nw = byId.get(old.id);
+      if (nw && JSON.stringify(nw) !== JSON.stringify(old)) {
+        changed = true;
+        return nw;
+      }
+      return old;
+    });
+
+    if (added.length) {
+      added.forEach(a => allRequests.push(a));
+      allRequests.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+      applyFilters();
+      showToast(`✨ ${added.length} new request${added.length > 1 ? 's' : ''}!`);
+    } else if (changed) {
+      applyFilters();
+    }
+  } catch (err) {
+    // Swallow refresh errors — the manual load error UI stays as-is.
+    console.warn('Auto-refresh skipped:', err.message);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -728,6 +751,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     console.log(`Loaded ${allRequests.length} requests`);
     applyFilters();
+
+    // Begin auto-refresh so new Tally submissions show up without a reload.
+    setInterval(refreshRequests, REFRESH_INTERVAL_MS);
   } catch (err) {
     console.error('Load error:', err);
     grid.innerHTML = `

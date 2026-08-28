@@ -742,7 +742,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Load data
   try {
-    console.log('Fetching from Supabase...');
+    console.log('Fetching requests from KV...');
     allRequests = await loadRequests();
     console.log('Raw response:', allRequests);
     if (!Array.isArray(allRequests)) {

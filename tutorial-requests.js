@@ -40,6 +40,29 @@ const STATUS_COLORS = {
 const COLOR_OPTIONS  = ['slate','red','orange','yellow','green','blue','grey','purple'];
 const STATUS_OPTIONS = ['pending','accepted','in progress','done','declined'];
 
+// Hex used to tint the admin <select> elements by their current value.
+const STATUS_HEX = {
+  pending:     '#9aa3ad',
+  accepted:    '#e59c58',
+  'in progress': '#e8c64c',
+  done:        '#9fc387',
+  declined:    '#d7614c',
+};
+const COLOR_HEX = {
+  slate: '#6b7280', red: '#d7614c', orange: '#e59c58', yellow: '#e8c64c',
+  green: '#9fc387', blue: '#6892c1', grey: '#6b7280', purple: '#a78fd6',
+};
+
+/** Paint a status/color <select> with its current value's colour (no border). */
+function styleAdminSelect(sel) {
+  const hex = sel.classList.contains('admin-status')
+    ? (STATUS_HEX[sel.value] || '#9aa3ad')
+    : (COLOR_HEX[sel.value] || '#6b7280');
+  sel.style.background = hex;
+  sel.style.color = '#11151c';
+  sel.style.border = 'none';
+}
+
 // ---------------------------------------------------------------------------
 // STATE
 // ---------------------------------------------------------------------------
@@ -191,32 +214,6 @@ function attachmentType(url, mime) {
   return 'document';
 }
 
-function adminControlsHTML(req) {
-  if (!isAdmin) return '';
-
-  const statusOpts = STATUS_OPTIONS.map(s =>
-    `<option value="${s}" ${req.status === s ? 'selected' : ''}>${s}</option>`
-  ).join('');
-
-  const colorOpts = COLOR_OPTIONS.map(c =>
-    `<option value="${c}" ${req.color === c ? 'selected' : ''}>${c}</option>`
-  ).join('');
-
-  const notesDisplay = req.notes
-    ? `<div class="admin-notes-display">${escapeHTML(req.notes)}</div>` : '';
-
-  return `
-    <div class="admin-controls" data-id="${req.id}">
-      <select class="admin-select admin-status" title="Status">${statusOpts}</select>
-      <select class="admin-select admin-color" title="Color">${colorOpts}</select>
-      <textarea class="admin-notes-area" placeholder="Type your response…">${escapeHTML(req.notes || '')}</textarea>
-      ${notesDisplay}
-      <button class="admin-save-btn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-      <button class="admin-delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
-    </div>
-  `;
-}
-
 function escapeHTML(str) {
   return String(str)
     .replace(/&/g,'&amp;')
@@ -242,22 +239,10 @@ function buildCard(req) {
       ${statusBadgeHTML(req.status)}
       <span class="req-date">${formatDate(req.created_at)}</span>
     </div>
-    ${adminControlsHTML(req)}
   `;
 
-  if (isAdmin) {
-    const controls = div.querySelector('.admin-controls');
-    const saveBtn  = controls.querySelector('.admin-save-btn');
-    saveBtn.addEventListener('click', () => handleSave(req, controls, div));
-    const delBtn = controls.querySelector('.admin-delete-btn');
-    delBtn.addEventListener('click', () => handleDelete(req));
-  }
-
-  // Open modal on card click (but not when clicking admin controls)
-  div.addEventListener('click', e => {
-    if (e.target.closest('.admin-controls')) return;
-    openModal(req);
-  });
+  // Admin editing now lives in the modal (opened on card click).
+  div.addEventListener('click', () => openModal(req));
 
   return div;
 }
@@ -434,6 +419,12 @@ function openModal(req) {
     saveBtn.addEventListener('click', () => handleModalSave(req, adminSection, body));
     const delBtn = adminSection.querySelector('.modal-delete-btn');
     delBtn.addEventListener('click', () => handleDelete(req));
+
+    // Tint the status/color selects with their current colour.
+    adminSection.querySelectorAll('.admin-select').forEach(sel => {
+      styleAdminSelect(sel);
+      sel.addEventListener('change', () => styleAdminSelect(sel));
+    });
   }
 
   backdrop.classList.add('open');

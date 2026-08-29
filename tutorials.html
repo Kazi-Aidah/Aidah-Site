@@ -1011,8 +1011,11 @@
               paginationControls.style.display = 'flex';
           }
 
+          if (totalPages <= 1) return;
+
           const prevButton = document.createElement('button');
-          prevButton.textContent = 'Prev';
+          prevButton.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+          prevButton.setAttribute('aria-label', 'Previous page');
           prevButton.classList.add('pagination-btn');
           prevButton.disabled = currentPage === 1;
           prevButton.addEventListener('click', () => {
@@ -1023,34 +1026,26 @@
           });
           paginationControls.appendChild(prevButton);
 
-          let startPage = Math.max(1, currentPage - 2);
-          let endPage = Math.min(totalPages, currentPage + 2);
-
-          if (startPage > 1) {
-              const firstPageButton = document.createElement('button');
-              firstPageButton.textContent = '1';
-              firstPageButton.classList.add('pagination-btn');
-              firstPageButton.addEventListener('click', () => {
-                  currentPage = 1;
-                  fetchVideosForPage(currentPage);
-              });
-              paginationControls.appendChild(firstPageButton);
-              if (startPage > 2) {
-                  const ellipsis = document.createElement('span');
-                  ellipsis.textContent = '...';
-                  ellipsis.style.color = '#c5cee0';
-                  ellipsis.style.margin = '0 5px';
-                  paginationControls.appendChild(ellipsis);
+          // On narrow viewports show a sliding window of 5 pages; on wider screens show all.
+          const isMobile = window.innerWidth <= 600;
+          const WINDOW = 5;
+          let pageStart = 1;
+          let pageEnd = totalPages;
+          if (isMobile && totalPages > WINDOW) {
+              const half = Math.floor(WINDOW / 2);
+              pageStart = Math.max(1, currentPage - half);
+              pageEnd = pageStart + WINDOW - 1;
+              if (pageEnd > totalPages) {
+                  pageEnd = totalPages;
+                  pageStart = Math.max(1, pageEnd - WINDOW + 1);
               }
           }
 
-          for (let i = startPage; i <= endPage; i++) {
+          for (let i = pageStart; i <= pageEnd; i++) {
               const pageButton = document.createElement('button');
               pageButton.textContent = i;
               pageButton.classList.add('pagination-btn');
-              if (i === currentPage) {
-                  pageButton.classList.add('active');
-              }
+              if (i === currentPage) pageButton.classList.add('active');
               pageButton.addEventListener('click', () => {
                   currentPage = i;
                   fetchVideosForPage(currentPage);
@@ -1058,26 +1053,9 @@
               paginationControls.appendChild(pageButton);
           }
 
-          if (endPage < totalPages) {
-              if (endPage < totalPages - 1) {
-                  const ellipsis = document.createElement('span');
-                  ellipsis.textContent = '...';
-                  ellipsis.style.color = '#c5cee0';
-                  ellipsis.style.margin = '0 5px';
-                  paginationControls.appendChild(ellipsis);
-              }
-              const lastPageButton = document.createElement('button');
-              lastPageButton.textContent = totalPages;
-              lastPageButton.classList.add('pagination-btn');
-              lastPageButton.addEventListener('click', () => {
-                  currentPage = totalPages;
-                  fetchVideosForPage(currentPage);
-              });
-              paginationControls.appendChild(lastPageButton);
-          }
-
           const nextButton = document.createElement('button');
-          nextButton.textContent = 'Next';
+          nextButton.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+          nextButton.setAttribute('aria-label', 'Next page');
           nextButton.classList.add('pagination-btn');
           nextButton.disabled = currentPage === totalPages;
           nextButton.addEventListener('click', () => {
@@ -1087,23 +1065,18 @@
               }
           });
           paginationControls.appendChild(nextButton);
-          updatePaginationHighlight();
       }
 
       function updatePaginationHighlight() {
           const buttons = paginationControls.querySelectorAll('.pagination-btn');
-          buttons.forEach(button => button.classList.remove('active'));
-
+          buttons.forEach(btn => btn.classList.remove('active'));
           const currentPageButton = Array.from(buttons).find(
-              button => button.textContent === String(currentPage)
+              btn => btn.textContent === String(currentPage)
           );
-          if (currentPageButton) {
-              currentPageButton.classList.add('active');
-          }
-          const prevButton = Array.from(buttons).find(button => button.textContent === 'Prev');
-          const nextButton = Array.from(buttons).find(button => button.textContent === 'Next');
-          if (prevButton) prevButton.disabled = currentPage === 1;
-          if (nextButton) nextButton.disabled = currentPage === totalPages;
+          if (currentPageButton) currentPageButton.classList.add('active');
+          const [prevBtn, nextBtn] = [buttons[0], buttons[buttons.length - 1]];
+          if (prevBtn) prevBtn.disabled = currentPage === 1;
+          if (nextBtn) nextBtn.disabled = currentPage === totalPages;
       }
 
       function filterVideosBySearch(videos, query) {

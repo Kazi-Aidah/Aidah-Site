@@ -573,7 +573,22 @@ function renderPage() {
     prev.addEventListener('click', () => { currentPage--; renderPage(); scrollToGrid(); });
     pagination.appendChild(prev);
 
-    for (let p = 1; p <= totalPages; p++) {
+    // On narrow viewports show a sliding window of 5 pages; on wider screens show all.
+    const isMobile = window.innerWidth <= 600;
+    const WINDOW   = 5;
+    let pageStart  = 1;
+    let pageEnd    = totalPages;
+    if (isMobile && totalPages > WINDOW) {
+      const half = Math.floor(WINDOW / 2);          // 2
+      pageStart  = Math.max(1, currentPage - half);
+      pageEnd    = pageStart + WINDOW - 1;
+      if (pageEnd > totalPages) {                   // clamp to end
+        pageEnd   = totalPages;
+        pageStart = Math.max(1, pageEnd - WINDOW + 1);
+      }
+    }
+
+    for (let p = pageStart; p <= pageEnd; p++) {
       const btn = document.createElement('button');
       btn.className = `page-btn${p === currentPage ? ' active' : ''}`;
       btn.textContent = p;

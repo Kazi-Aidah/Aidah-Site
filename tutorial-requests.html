@@ -97,7 +97,7 @@
       flex-wrap: wrap;
       gap: 10px;
       position: sticky;
-      top: 0;
+      top: var(--controls-top, 0);
       z-index: 100;
       background: var(--bg-pri);
       padding: 12px 0;
@@ -223,6 +223,7 @@
         width: 100%;
         min-width: 0;
       }
+      .filter-btn { align-self: flex-start; }
       .controls-divider { display: none; }
     }
 

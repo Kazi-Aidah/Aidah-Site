@@ -255,7 +255,7 @@ function buildCard(req) {
   // Spotlight: after hovering a card for ~3s, dim all other cards.
   let hoverTimer = null;
   div.addEventListener('mouseenter', () => {
-    hoverTimer = setTimeout(() => grid.classList.add('focus-mode'), 3000);
+    hoverTimer = setTimeout(() => grid.classList.add('focus-mode'), 2000);
   });
   div.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
 
@@ -727,6 +727,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   grid.addEventListener('mouseleave', () => grid.classList.remove('focus-mode'));
   pagination     = document.getElementById('pagination');
   stateMsg       = document.getElementById('stateMsg');
+
+  // Keep the sticky controls bar pinned just below the sticky header.
+  function syncControlsTop() {
+    const header = document.querySelector('header');
+    const h = header ? header.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--controls-top', h + 'px');
+  }
+  syncControlsTop();
+  window.addEventListener('resize', syncControlsTop);
   searchInput    = document.getElementById('searchInput');
   filterBtns     = document.querySelectorAll('.filter-btn');
   adminLoginWrap = document.getElementById('adminLoginWrap');

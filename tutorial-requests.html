@@ -102,6 +102,16 @@
       background: var(--bg-pri);
       padding: 12px 0;
     }
+    .controls-bar::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 32px;
+      background: linear-gradient(to bottom, var(--bg-pri), transparent);
+      pointer-events: none;
+    }
     /* thin vertical divider between search and pills */
     .controls-divider {
       width: 2px;
@@ -171,6 +181,12 @@
     .search-clear-btn.visible { display: flex; }
 
     /* ===== FILTER PILLS ===== */
+    .filter-pills {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
     .filter-btn {
       padding: 8px 16px;
       border-radius: 8px;
@@ -223,7 +239,6 @@
         width: 100%;
         min-width: 0;
       }
-      .filter-btn { align-self: flex-start; }
       .controls-divider { display: none; }
     }
 
@@ -759,14 +774,16 @@
         <button class="search-clear-btn" id="searchClearBtn" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="controls-divider" aria-hidden="true"></div>
-      <!-- visible pills matching the mockup -->
-      <button class="filter-btn" data-status="in progress">Progressing</button>
-      <button class="filter-btn" data-status="done">Solved</button>
-      <button class="filter-btn" data-status="declined">Rejected</button>
-      <!-- hidden but kept so JS filter logic still works -->
-      <button class="filter-btn" data-status="all" style="display:none">All</button>
-      <button class="filter-btn" data-status="pending" style="display:none">Pending</button>
-      <button class="filter-btn" data-status="accepted" style="display:none">Accepted</button>
+      <div class="filter-pills">
+        <!-- visible pills matching the mockup -->
+        <button class="filter-btn" data-status="in progress">Progressing</button>
+        <button class="filter-btn" data-status="done">Solved</button>
+        <button class="filter-btn" data-status="declined">Rejected</button>
+        <!-- hidden but kept so JS filter logic still works -->
+        <button class="filter-btn" data-status="all" style="display:none">All</button>
+        <button class="filter-btn" data-status="pending" style="display:none">Pending</button>
+        <button class="filter-btn" data-status="accepted" style="display:none">Accepted</button>
+      </div>
     </div>
 
     <!-- Admin login panel -->

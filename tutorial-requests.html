@@ -23,10 +23,8 @@
       margin: 0 auto;
       padding: 32px 20px 60px;
       box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
     }
+    .tut-req-page > * + * { margin-top: 20px; }
 
     /* ===== HERO CARD ===== */
     .tut-req-hero {
@@ -86,6 +84,7 @@
       border: none;
       text-decoration: none;
       width: fit-content;
+      margin-top: 4px;
       transition: background 0.2s, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .submit-btn:hover  { background: #1e3d8a; transform: scale(1.04); }
@@ -97,6 +96,11 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-pri);
+      padding: 12px 0;
     }
     /* thin vertical divider between search and pills */
     .controls-divider {
@@ -207,6 +211,21 @@
     .filter-btn[data-status="done"].active        { background: #9fc387; color: #11151c; border-color: #9fc387; }
     .filter-btn[data-status="declined"].active    { background: #82a8c8; color: #11151c; border-color: #82a8c8; }
 
+    /* ===== MOBILE: search full-width, divider hidden, pills wrap below ===== */
+    @media (max-width: 600px) {
+      .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .search-wrap {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+      }
+      .controls-divider { display: none; }
+    }
+
     /* hide the less-prominent filters that aren't in the mockup's top bar */
     .filter-btn[data-status="all"],
     .filter-btn[data-status="pending"],
@@ -307,7 +326,7 @@
       top: 0;
       right: 0;
       border-radius: 0 12px 0 10px;
-      padding: 5px 12px;
+      padding: 7px 12px;
       font-family: var(--fnt-j);
       font-size: 0.75em;
       font-weight: 600;

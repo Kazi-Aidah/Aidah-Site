@@ -69,7 +69,7 @@ function styleAdminSelect(sel) {
 let allRequests  = [];
 let filtered     = [];
 let currentPage  = 1;
-let activeFilter = 'pending';
+let activeFilter = 'all';
 let searchQuery  = '';
 let isAdmin      = false;
 
@@ -602,7 +602,10 @@ function applyFilters() {
   const q = searchQuery.trim().toLowerCase();
   filtered = allRequests.filter(r => {
     const s = (r.status || 'pending').toLowerCase();
-    const matchesStatus = activeFilter === 'all' || s === activeFilter;
+    // The "Progressing" chip groups both in-progress and pending requests.
+    const matchesStatus = activeFilter === 'all'
+      || s === activeFilter
+      || (activeFilter === 'in progress' && s === 'pending');
     const matchesSearch = !q
       || r.title.toLowerCase().includes(q)
       || (r.description && r.description.toLowerCase().includes(q));
@@ -792,7 +795,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Clicking an already-active chip turns the filter off → back to pending.
       if (btn.classList.contains('active')) {
         filterBtns.forEach(b => b.classList.remove('active'));
-        activeFilter = 'pending';
+        activeFilter = 'all';
         applyFilters();
         return;
       }

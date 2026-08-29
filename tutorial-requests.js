@@ -602,10 +602,10 @@ function applyFilters() {
   const q = searchQuery.trim().toLowerCase();
   filtered = allRequests.filter(r => {
     const s = (r.status || 'pending').toLowerCase();
-    // The "Progressing" chip groups both in-progress and pending requests.
+    // The "Progressing" chip groups both in-progress and accepted requests.
     const matchesStatus = activeFilter === 'all'
       || s === activeFilter
-      || (activeFilter === 'in progress' && s === 'pending');
+      || (activeFilter === 'in progress' && s === 'accepted');
     const matchesSearch = !q
       || r.title.toLowerCase().includes(q)
       || (r.description && r.description.toLowerCase().includes(q));

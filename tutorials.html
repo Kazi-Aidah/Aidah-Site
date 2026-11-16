@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <title>Aidah's Tutorials!</title>
-  <link rel="stylesheet" href="../styles.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=2">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
@@ -151,7 +151,7 @@
   <div class="page-wrapper">
     <header>
    <nav style="color: #C7D0EF; font-weight: 500;">
-      <a href="../index.html">
+      <a href="index.html">
         <i class="fas fa-home"></i>
         HOME</a>
       | </span>
@@ -570,7 +570,7 @@
       const apiKeyLoadPromise = new Promise((resolve) => {
           // Try to load local API key if running locally
           if (isLocalhost) {
-              fetch('../config.js')
+              fetch('tools/config.js')
                   .then(r => r.text())
                   .then(text => {
                       // Extract API key from config.js using regex

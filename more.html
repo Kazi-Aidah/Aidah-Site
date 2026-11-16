@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Aidah's Linkpage</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="styles.css?v=2" />
+  <script src="scripts/page-transition.js"></script>
+  <style>
+    .bubblebody { background-color: var(--bg-pri); }
+    .more-section { margin-bottom: 2em; }
+    .more-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .more-item {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        
+        background: #22222e;
+        color: var(--txt-n);
+        border: 2px solid transparent;
+        border-radius: var(--radius-l);
+
+        font-family: var(--fnt-p);
+        font-size: 1.3em;
+        letter-spacing: 0.05em;
+
+        gap: 14px;
+        padding: 10px 16px;
+        transition: background 0.2s ease, border-color 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.575);
+    }
+    .more-item:hover {
+        border: 2px solid var(--red);
+        transform: scale(1.03);
+    }
+    .more-tag {
+        font-size: 0.75em;
+        padding: 2px 8px;
+        border-radius: var(--radius-xs);
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .more-item:has(.more-tag) {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+        padding: 14px; padding-bottom: 8px;
+    }
+    .more-tag.stable { background: #9fc387; color: #000000; }
+    .more-tag.work { background: #ffc800; color: #000000; }
+    .more-tag.dead { background: #d7614c; color: #000000; }
+
+    /* .more-tag.stable { background: #4b7132; color: #bfe1a5; }
+    .more-tag.work { background: #854914; color: #f7d7a6; }
+    .more-tag.dead { background: #893121; color: #f6c8c8; }
+     */
+     
+    .more-title { flex: 1; }
+    
+    .more-page h2 {
+        font-size: 1.4em;
+        font-weight: 600;
+        color: var(--txt-n);
+        margin: 0;
+        font-family: var(--fnt-h);
+        margin: 10px;
+    }
+    .more-page .heading-container hr {
+        border-top: 2px dashed transparent;
+    }
+    highl
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+  <div class="content-wrapper">
+  <header>
+    <nav>
+      <a href="index.html"><i class="fas fa-home"></i> HOME</a> |
+      <a href="#contact"><i class="fa-solid fa-envelopes-bulk"></i> CONTACT</a>
+    </nav>
+  </header>
+
+  <div class="bubblebody more-page">
+    <div class="heading-container">
+      <!-- <h2>Links</h2> -->
+      <hr>
+    </div>
+
+    <h2>Aidah's All Socials</h2>
+    <div class="more-list">
+      <a class="more-item" href="https://www.youtube.com/@kaziaidahhaque" target="_blank" rel="noopener"><i class="fab fa-youtube" style="color:#ff6262;"></i><span class="more-title">YouTube Channel (Main)</span></a>
+      <a class="more-item" href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener"><i class="fab fa-youtube" style="color:#ff8cb4;"></i><span class="more-title">YouTube Channel (Alt)</span></a>
+      <a class="more-item" href="https://www.instagram.com/kazi_aidah" target="_blank" rel="noopener"><i class="fab fa-instagram" style="color:#df87ff;"></i><span class="more-title">Instagram Account</span></a>
+      <a class="more-item" href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener"><i class="fab fa-discord" style="color:#b787ff;"></i><span class="more-title">Discord Server</span></a>
+      <a class="more-item" href="https://www.tiktok.com/@kazi_aidah" target="_blank" rel="noopener"><i class="fab fa-tiktok" style="color:#7acaff;"></i><span class="more-title">TikTok Account</span></a>
+      <a class="more-item" href="https://vgen.co/kazi_aidah" target="_blank" rel="noopener"><i class="fas fa-pen-nib" style="color:#b1ff7a;"></i><span class="more-title">Commission me on Vgen</span></a>
+      <a class="more-item" href="https://github.com/Kazi-Aidah" target="_blank" rel="noopener"><i class="fab fa-github" style="color:#ffffff;"></i><span class="more-title">GitHub Account</span></a>
+      <div class="more-item" onclick="copyEmail()" style="cursor:pointer;"><i class="fas fa-envelope" style="color:#ff6262;"></i><span class="more-title">Best contact me through Emails</span></div>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="more-list">
+      <a class="more-item" href="https://github.com/Kazi-Aidah/always-color-text" target="_blank" rel="noopener"><span class="more-tag stable">STABLE</span><span class="more-title">Obsidian Plugin to <mark>Automatically Color Texts</mark></span></a>
+      <a class="more-item" href="https://github.com/Kazi-Aidah/color-table-cells" target="_blank" rel="noopener"><span class="more-tag work">IN-WORK</span><span class="more-title">Obsidian Plugin to Color Markdown Tables</span></a>
+      <a class="more-item" href="https://github.com/Kazi-Aidah/dayble-calendar" target="_blank" rel="noopener"><span class="more-tag work">IN-WORK</span><span class="more-title">Obsidian Calendar Plugin with auto-coloring events</span></a>
+      <a class="more-item" href="https://github.com/Kazi-Aidah/sidecards" target="_blank" rel="noopener"><span class="more-tag dead">UNMAINTAINED</span><span class="more-title">Obsidian Plugin to store notes in the Sidebar</span></a>
+      <a class="more-item" href="https://github.com/Kazi-Aidah/emoticon-picker" target="_blank" rel="noopener"><span class="more-tag stable">STABLE</span><span class="more-title">Obsidian Plugin to insert Emoticons</span></a>
+      <a class="more-item" href="https://github.com/Kazi-Aidah/blobob" target="_blank" rel="noopener"><span class="more-tag work">IN-WORK</span><span class="more-title">Animated Obsidian Theme</span></a>
+    </div>
+    
+    <h2>Random Things</h2>
+    <div class="more-list">
+      <a class="more-item" href="https://kaziaidah.pages.dev/lorepage" target="_blank" rel="noopener"><i class="fas fa-folder-open" style="color:#60a7ff;"></i><span class="more-title">An unused file explorer I made for my characters...</span></a>
+      <a class="more-item" href="https://kaziaidah.pages.dev/option/oldtutspage" target="_blank" rel="noopener"><i class="fas fa-book" style="color:#e84c4c;"></i><span class="more-title">Old ugly tutorials page</span></a>
+      <a class="more-item" href="wallpapers.html"><i class="fas fa-image" style="color:#df87ff;"></i><span class="more-title">My Wallpapers</span></a>
+      <a class="more-item" href="challenges.html"><i class="fas fa-trophy" style="color:#e8c64c;"></i><span class="more-title">My Challenges</span></a>
+    </div>
+  </div>
+
+
+  
+  <footer id="contact" class="footer" role="contentinfo" aria-label="Contact and social links">
+    <div class="footer-grid">
+      <div class="footer-section contact-section">
+        <h3 style="margin-bottom: 5px;">Contact Me</h3>
+        <ul class="contact-list">
+          <li><i class="fas fa-envelope-circle-check" style="color: #ff6262;" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+          <li><i class="fab fa-discord" style="color: #b787ff" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
+          <li><i class="fa-solid fa-paper-plane" style="color: #60a7ff;"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
+        </ul>
+      </div>
+      <div class="footer-section socials-section">
+        <h3 style="margin-bottom: 5px;">Social Medias</h3>
+        <ul class="socials-list">
+          <li><i class="fab fa-youtube" style="color: #ff6262;" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+          <li><i class="fab fa-youtube" style="color: #ff8cb4;" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+          <li><i class="fab fa-instagram" style="color: #df87ff;"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+          <li><i class="fab fa-facebook" style="color: #60a7ff;"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
+          <li><i class="fab fa-tiktok" style="color: #7acaff;"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  </div>
+  </div>
+<script>
+function copyEmail(){ if(navigator.clipboard){ navigator.clipboard.writeText('kaziaidahhaque@gmail.com').then(function(){ alert('Email copied!'); }); } else { alert('kaziaidahhaque@gmail.com'); } }
+</script>
+</body>
+</html>

@@ -13,8 +13,8 @@
   <script async src="https://tally.so/widgets/embed.js"></script>
   <style>
     /* ===== NAV ===== */
-    nav a:hover { color: var(--color-accent-light-blue-3); transform: translateY(-2px); }
-    header { border-bottom: 2px solid var(--color-border); padding: 8px; }
+    nav a:hover { color: #6993c2; transform: translateY(-2px); }
+    header { border-bottom: 2px solid var(--brdr-3); padding: 8px; }
 
     /* ===== PAGE WRAPPER ===== */
     .tut-req-page {
@@ -132,7 +132,7 @@
       overflow: hidden;
       transition: border-color 0.2s;
     }
-    .search-wrap:focus-within { border-color: var(--color-accent-blue); }
+    .search-wrap:focus-within { border-color: #3392ff; }
     .search-icon-box {
       display: flex;
       align-items: center;
@@ -220,7 +220,7 @@
     .filter-btn[data-status="declined"]:hover    { background: rgba(130,168,200,0.22); }
 
     /* active state: solid status colour + dark text (matches the badge) */
-    .filter-btn[data-status="all"].active         { background: var(--color-accent-blue); color: #fff; border-color: var(--color-accent-blue); }
+    .filter-btn[data-status="all"].active         { background: #3392ff; color: #fff; border-color: #3392ff; }
     .filter-btn[data-status="pending"].active     { background: #9aa3ad; color: #11151c; border-color: #9aa3ad; }
     .filter-btn[data-status="accepted"].active    { background: #e8c64c; color: #11151c; border-color: #e8c64c; }
     .filter-btn[data-status="in progress"].active { background: #e59c58; color: #11151c; border-color: #e59c58; }
@@ -310,7 +310,7 @@
       font-family: var(--fnt-g);
       font-size: 1.15em;
       font-weight: 600;
-      color: var(--txt-mm);
+      color: var(--txt-f);
       margin: 0;
       line-height: 1.4;
       overflow-wrap: break-word;
@@ -372,7 +372,7 @@
       gap: 5px;
       padding: 3px 0;
       background: transparent;
-      color: var(--color-accent-light-blue);
+      color: #7dbaff;
       font-family: var(--fnt-j);
       font-size: 0.8em;
       text-decoration: underline;
@@ -421,14 +421,14 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .admin-field:focus { border-color: var(--color-accent-blue); }
+    .admin-field:focus { border-color: #3392ff; }
     .admin-submit-btn {
       margin-top: 10px;
       width: 100%;
       padding: 9px;
       border-radius: 8px;
       border: none;
-      background: var(--color-accent-blue);
+      background: #3392ff;
       color: #fff;
       font-family: var(--fnt-j);
       font-size: 0.9em;
@@ -436,7 +436,7 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .admin-submit-btn:hover { background: var(--color-accent-blue-lighter); }
+    .admin-submit-btn:hover { background: #2b56d5; }
     .admin-controls {
       display: flex;
       flex-wrap: wrap;
@@ -474,7 +474,7 @@
       padding: 5px 14px;
       border-radius: 7px;
       border: none;
-      background: var(--color-retro-green);
+      background: #9fc387;
       color: #0f2010;
       font-family: var(--fnt-j);
       font-size: 0.78em;
@@ -487,7 +487,7 @@
       padding: 5px 14px;
       border-radius: 7px;
       border: none;
-      background: var(--color-retro-red);
+      background: #d7614c;
       color: #fff;
       font-family: var(--fnt-j);
       font-size: 0.78em;
@@ -499,7 +499,7 @@
     .admin-notes-display {
       font-family: var(--fnt-j);
       font-size: 0.8em;
-      color: var(--color-retro-yellow);
+      color: #e8c64c;
       background: rgba(232,198,76,0.07);
       border-radius: 6px;
       padding: 6px 10px;
@@ -557,13 +557,13 @@
       justify-content: center;
       transition: background 0.2s, color 0.2s;
     }
-    .req-modal-close:hover { background: rgba(215,97,76,0.22); color: var(--color-retro-red); }
+    .req-modal-close:hover { background: rgba(215,97,76,0.22); color: #d7614c; }
     .req-modal-title {
       font-family: var(--fnt-g);
       font-size: 1.4em;
       font-weight: 800;
       letter-spacing: 0.01em;
-      color: var(--txt-n2);
+      color: var(--txt-n);
       margin: 0 36px 10px 0;
       line-height: 1.3;
     }
@@ -582,7 +582,7 @@
     .req-modal-date {
       font-family: var(--fnt-j);
       font-size: 0.78em;
-      color: var(--color-text-meta);
+      color: #9aa3ad;
       padding-left: 10px;
     }
     .req-modal-divider {
@@ -597,7 +597,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--color-retro-green);
+      color: #9fc387;
       margin-bottom: 6px;
     }
     .req-modal-desc {
@@ -611,7 +611,7 @@
       margin: 0;
     }
     .req-modal-desc a, .req-modal-notes-text a {
-      color: var(--color-accent-light-blue);
+      color: #7dbaff;
       text-decoration: underline;
       text-underline-offset: 3px;
       transition: color 0.15s;
@@ -627,7 +627,7 @@
       text-decoration: none;
     }
     .req-modal-attachments .attachment-chip i { display: inline; }
-    .req-modal-attachments .attachment-chip:hover { background: var(--color-accent-blue-darker); }
+    .req-modal-attachments .attachment-chip:hover { background: #23234a; }
     .req-modal-admin { display: flex; flex-direction: column; gap: 8px; }
     .req-modal-admin-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .req-modal-img {
@@ -725,8 +725,8 @@
       justify-content: center;
       gap: 6px;
     }
-    .page-btn:hover { border-color: var(--color-accent-blue); color: var(--txt-n); background: var(--bg-ter); }
-    .page-btn.active { border: 3px solid var(--color-accent-blue); color: var(--color-accent-light-blue); background: var(--bg-ter); font-weight: 600; }
+    .page-btn:hover { border-color: #3392ff; color: var(--txt-n); background: var(--bg-ter); }
+    .page-btn.active { border: 3px solid #3392ff; color: #7dbaff; background: var(--bg-ter); font-weight: 600; }
     .page-btn:disabled { opacity: 0.35; cursor: default; }
 
     /* ===== RESPONSIVE ===== */
@@ -745,7 +745,7 @@
   <div class="content-wrapper">
 
   <header>
-    <nav style="color: var(--color-text-secondary); font-weight: 500; font-size: 1.0em;">
+    <nav style="color: #C7D0EF; font-weight: 500; font-size: 1.0em;">
       <a href="index.html"><i class="fas fa-home"></i> HOME</a> |
       <a href="tutorials.html"><i class="fas fa-play-circle"></i> TUTORIALS</a> |
       <a href="#contact"><i class="fas fa-envelope"></i> CONTACT</a>
@@ -754,7 +754,7 @@
 
   <div class="tut-req-page">
 
-    <!-- Hero card -->
+    
     <section class="tut-req-hero" aria-label="Tutorial Requests header">
       <img class="tut-req-hero-avatar" src="images/tutu.png" alt="Aidah" onerror="this.src='images/favicon.png'">
       <div class="tut-req-hero-body">
@@ -766,7 +766,7 @@
       </div>
     </section>
 
-    <!-- Controls -->
+    
     <div class="controls-bar">
       <div class="search-wrap">
         <span class="search-icon-box"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -775,26 +775,26 @@
       </div>
       <div class="controls-divider" aria-hidden="true"></div>
       <div class="filter-pills">
-        <!-- visible pills matching the mockup -->
+        
         <button class="filter-btn" data-status="in progress">Progressing</button>
         <button class="filter-btn" data-status="done">Solved</button>
         <button class="filter-btn" data-status="declined">Rejected</button>
-        <!-- hidden but kept so JS filter logic still works -->
+        
         <button class="filter-btn" data-status="all" style="display:none">All</button>
         <button class="filter-btn" data-status="pending" style="display:none">Pending</button>
         <button class="filter-btn" data-status="accepted" style="display:none">Accepted</button>
       </div>
     </div>
 
-    <!-- Admin login panel -->
+    
     <div class="admin-login-wrap" id="adminLoginWrap">
       <h3><i class="fa-solid fa-key"></i> Admin Access</h3>
       <input class="admin-field" id="adminPassword" type="password" placeholder="Password" autocomplete="current-password">
       <button class="admin-submit-btn" id="adminLoginBtn">Unlock</button>
-      <p id="adminLoginError" style="color: var(--color-retro-red); font-family: var(--fnt-j); font-size: 0.82em; margin: 8px 0 0; display:none;"></p>
+      <p id="adminLoginError" style="color: #d7614c; font-family: var(--fnt-j); font-size: 0.82em; margin: 8px 0 0; display:none;"></p>
     </div>
 
-    <!-- Requests list -->
+    
     <div class="requests-grid" id="requestsGrid">
       <div class="state-msg" id="stateMsg">
         <i class="fa-solid fa-spinner fa-spin"></i>
@@ -802,10 +802,10 @@
       </div>
     </div>
 
-    <!-- Pagination -->
+    
     <div class="pagination" id="pagination"></div>
 
-  </div><!-- /.tut-req-page -->
+  </div>
 
   <div class="bottom-spacer" id="bottomSpacer"></div>
   </div>
@@ -815,26 +815,26 @@
       <div class="footer-section contact-section">
         <h3 style="margin-bottom: 5px;">Contact Me</h3>
         <ul class="contact-list">
-          <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
-          <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
-          <li><i class="fa-solid fa-paper-plane" style="color: var(--color-plane)"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
+          <li><i class="fas fa-envelope-circle-check" style="color: #ff6262;" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+          <li><i class="fab fa-discord" style="color: #b787ff" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
+          <li><i class="fa-solid fa-paper-plane" style="color: #60a7ff;"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
         </ul>
       </div>
       <div class="footer-section socials-section">
         <h3 style="margin-bottom: 5px;">Social Medias</h3>
         <ul class="socials-list">
-          <li><i class="fab fa-youtube" style="color: var(--color-youtube-red)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
-          <li><i class="fab fa-youtube" style="color: var(--color-youtube-pink)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
-          <li><i class="fab fa-instagram" style="color: var(--color-instagram)"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
-          <li><i class="fab fa-facebook" style="color: var(--color-facebook)"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
-          <li><i class="fab fa-tiktok" style="color: var(--color-tiktok)"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+          <li><i class="fab fa-youtube" style="color: #ff6262" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+          <li><i class="fab fa-youtube" style="color: #ff8cb4" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+          <li><i class="fab fa-instagram" style="color: #df87ff"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+          <li><i class="fab fa-facebook" style="color: #60a7ff"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
+          <li><i class="fab fa-tiktok" style="color: #7acaff"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
         </ul>
       </div>
     </div>
   </footer>
   </div>
 
-  <!-- Request detail modal -->
+  
   <div class="req-modal-backdrop" id="reqModalBackdrop" role="dialog" aria-modal="true" aria-label="Request details">
     <div class="req-modal" id="reqModal">
       <button class="req-modal-close" id="reqModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
@@ -842,10 +842,13 @@
     </div>
   </div>
 
-  <!-- Toast container -->
+  
   <div id="toastContainer" aria-live="polite" style="position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:3000;pointer-events:none;display:flex;flex-direction:column;align-items:center;"></div>
 
-  <script src="tutorial-requests.js" defer></script>
-  <script src="page-transition.js"></script>
+  <script src="scripts/tutorial-requests.js" defer></script>
+  <script src="scripts/page-transition.js"></script>
+<script>
+(function(){var pw=document.querySelector('.page-wrapper');if(!pw)return;pw.addEventListener('scroll',function(){if(pw.scrollTop>50)pw.classList.add('scrolled');else pw.classList.remove('scrolled');},{passive:true});})();
+</script>
 </body>
 </html>

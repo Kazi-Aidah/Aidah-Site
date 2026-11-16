@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
 
   <link rel="stylesheet" href="styles.css?v=2" />
-  <script src="intro-mobile.js"></script>
+  <script src="scripts/intro-mobile.js"></script>
   <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <style>
@@ -101,7 +101,7 @@
     }
     .blog-date {
         font-size: small;
-        color: var(--color-text-secondary)
+        color: #C7D0EF
     }
     .blog-readmore {
         font-family: var(--fnt-p);
@@ -363,7 +363,7 @@
   <div class="top-spacer" id="topSpacer"></div>
   <div class="content-wrapper">
   <header>
-   <nav style="color: var(--color-text-secondary); font-weight: 500;">
+   <nav style="color: #C7D0EF; font-weight: 500;">
       <a href="../index.html">
         <i class="fas fa-home"></i>
         HOME</a>
@@ -460,35 +460,6 @@
     </div>
   </div>
 
-  <div class="cc-blog">
-    <div class="heading-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-        <h2 class="blog-h"><a href="blog.html" style="color: inherit; text-decoration: none;">Blog</a></h2>
-        <div class="global-search-container">
-          <div class="search-input-wrapper">
-              <i class="fas fa-search search-icon" id="global-search-icon"></i>
-              <input type="text" id="global-search-input" placeholder="|" class="global-search-input">
-          </div>
-          <button id="filter-toggle-button" class="filter-toggle-btn"><i class="fas fa-filter"></i> Filter</button>
-        </div>
-    </div>
-
-    <div class="blog-container">
-        <div class="blog-item" onclick="window.location.href='blog.html#with-markdown'" style="cursor: pointer;">
-            <div class="blog-img-wrapper">
-                <img class="blog-img" src="images/alwayscolortext1.jpg" alt="Blog Image">
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <span class="card-tag">Obsidian Plugin</span>
-                    <span class="card-tag">Productivity</span>
-                </div>
-                <h3 class="blog-title">Title</h3>
-                <p class="blog-desc">hi, me aidah</p>
-                <span class="blog-date">2025 May 26</span>
-            </div>
-        </div>
-    </div>
-  </div>
 
   <script>
     // Simple Custom Carousel
@@ -740,8 +711,7 @@
 
     document.addEventListener('DOMContentLoaded', styleTags);
     window.addEventListener('load', styleTags);
-    document.addEventListener('DOMContentLoaded', loadBlogPostsForCodelog);
+    // document.addEventListener("DOMContentLoaded", loadBlogPostsForCodelog);
   </script>
 
 
-<!-- python3 -m http.server 8000 -->

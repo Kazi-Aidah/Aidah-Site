@@ -12,16 +12,19 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
 
   <link rel="stylesheet" href="styles.css?v=2" />
-  <script src="intro-mobile"></script>
+  <script src="scripts/intro-mobile.js"></script>
   <script async src="https://tally.so/widgets/embed.js"></script>
   <style>
+    .bubblebody {
+      padding: 10px 10px;
+    }
     #animation-search-input {
         font-size: 18px !important;
         border-radius: 18px !important;
     }
 
     nav a:hover {
-      color: var(--color-retro-orange);
+      color: #e59c58;
     }
 
 .filter-btn {
@@ -42,14 +45,14 @@
   filter: brightness(1.2);
   transform: scale(1.1) !important;
     transition: filter 0.2s ease, transform 0.2s ease-out;
-    border-color: var(--color-border-secondary) !important;
+    border-color: var(--brdr-1) !important;
 }
 
 .filter-btn:active {
   filter: brightness(1.4);
   transform: scale(0.9) !important;
     transition: filter 0.2s ease, transform 0.2s ease-out;
-    border-color: var(--color-border-secondary) !important;
+    border-color: var(--brdr-1) !important;
 }
 
 
@@ -63,7 +66,7 @@
 
     .video-context-menu {
         position: fixed;
-        background-color: var(--color-bg-dark);
+        background-color: #0F0F13;
         border: 2px solid #5d678a;
         border-radius: 15px;
         min-width: 250px;
@@ -100,23 +103,23 @@
     }
 
     .video-context-menu-item:hover {
-        background-color: var(--color-bg-card);
+        background-color: #1A1A2A;
     }
 
     /* Specific hover colors for each item */
     .video-context-menu-item[data-action="open-new-tab"]:hover,
     .video-context-menu-item[data-action="open-new-tab"]:hover i {
-        color: var(--color-retro-orange);
+        color: #e59c58;
     }
 
     .video-context-menu-item[data-action="copy-link"]:hover,
     .video-context-menu-item[data-action="copy-link"]:hover i {
-        color: var(--color-retro-green);
+        color: #9fc387;
     }
 
     .video-context-menu-item[data-action="open-thumbnail"]:hover,
     .video-context-menu-item[data-action="open-thumbnail"]:hover i {
-        color: var(--color-retro-blue);
+        color: #6993c2;
     }
 
     .video-context-menu-item:first-child {
@@ -142,7 +145,7 @@
     .countdown-text {
         font-size: 6rem;
         font-weight: 700;
-        color: var(--color-retro-orange);
+        color: #e59c58;
         /* text-shadow: 0 0 20px rgba(138, 148, 191, 0.3); */
         animation: countdownPulse 1s ease-in-out infinite;
     }
@@ -150,7 +153,7 @@
     .loading-subtext {
         margin-top: 1rem;
         font-size: 1.2rem;
-        color: var(--color-text-secondary);
+        color: #C7D0EF;
         letter-spacing: 1px;
     }
 
@@ -161,11 +164,19 @@
     }
 
   </style>
+  <style>
+    #animation-search-input.expanded {
+      width: 220px !important;
+      padding: 12px 15px !important;
+      border: 2px solid var(--brdr-1) !important;
+      opacity: 1 !important;
+    }
+  </style>
 </head>
 <body>
   <div class="page-wrapper">
   <header>
-   <nav style="color: var(--color-text-secondary); font-weight: 500;">
+   <nav style="color: #C7D0EF; font-weight: 500;">
       <a href="index.html">
         <i class="fas fa-home"></i>
         HOME</a>
@@ -173,17 +184,12 @@
       <a href="#contact">
         <i class="fa-solid fa-envelopes-bulk" href="#contact"></i>
         CONTACT OPTIONS</a>
-      <!-- |
-      <a href="#contact">
-        <i class="fa-solid fa-border-top-left"></i>
-        FORMS</a  -->
+      
     </nav>
-    <div class="global-search-container" style="flex-direction: column; padding-bottom: 15px;">
-        <div class="search-input-wrapper" style="width: 100%; max-width: 600px;">
-            <i class="fas fa-search search-icon" id="animation-search-icon"></i>
-            <input type="text" id="animation-search-input" placeholder="Search animations..." class="global-search-input">
-        </div>
-        <div id="year-buttons-container" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 10px; width: 100%;"></div>
+    <div class="global-search-container" style="flex-direction: row; align-items: center; justify-content: center; gap: 8px; padding-top: 20px; padding-bottom: 15px; flex-wrap: wrap;">
+        <i class="fas fa-search search-icon" id="animation-search-icon" style="position: static; transform: none; padding-top: 0; cursor: pointer; padding-right: 8px;"></i>
+        <input type="text" id="animation-search-input" placeholder="Search animations..." class="global-search-input" style="width: 0; padding: 0; border: 0; opacity: 0; transition: all 0.3s ease; border-radius: 12px !important;">
+        <div id="year-buttons-container" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;"></div>
     </div>
   </header>
 
@@ -197,20 +203,20 @@
     <div class="footer-section contact-section">
       <h3 style="margin-bottom: 5px;">Contact Me</h3>
       <ul class="contact-list">
-        <li><i class="fas fa-envelope-circle-check" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
-        <li><i class="fab fa-discord" style="color: var(--color-discord)" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
-        <li><i class="fa-solid fa-paper-plane" style="color: var(--color-plane)"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
+        <li><i class="fas fa-envelope-circle-check" style="color: #ff6262;" aria-hidden="true"></i>&nbsp;<a href="mailto:kaziaidahhaque@gmail.com">kaziaidahhaque@gmail.com</a></li>
+        <li><i class="fab fa-discord" style="color: #b787ff" aria-hidden="true"></i>&nbsp;@kazi_aidah — <a href="https://discord.gg/MQHdupwMXD" target="_blank" rel="noopener">Join Discord</a></li>
+        <li><i class="fa-solid fa-paper-plane" style="color: #60a7ff;"></i>&nbsp;<a class="request-form-button" data-tally-open="nW688P" data-tally-layout="modal" data-tally-width="600" data-tally-hide-title="1" href="#">Request a Tutorial</a></li>
       </ul>
     </div>
 
     <div class="footer-section socials-section">
       <h3 style="margin-bottom: 5px;">Social Medias</h3>
       <ul class="socials-list">
-        <li><i class="fab fa-youtube" style="color: var(--color-youtube-red)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
-        <li><i class="fab fa-youtube" style="color: var(--color-youtube-pink)" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
-        <li><i class="fab fa-instagram" style="color: var(--color-instagram)"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
-        <li><i class="fab fa-facebook" style="color: var(--color-facebook)"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
-        <li><i class="fab fa-tiktok" style="color: var(--color-tiktok)"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
+        <li><i class="fab fa-youtube" style="color: #ff6262" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/c/KaziAidahHaque" target="_blank" rel="noopener">Tutorial Channel</a></li>
+        <li><i class="fab fa-youtube" style="color: #ff8cb4" aria-hidden="true"></i>&nbsp;<a href="https://www.youtube.com/@kazi_aidah" target="_blank" rel="noopener">Animation Channel</a></li>
+        <li><i class="fab fa-instagram" style="color: #df87ff"></i>&nbsp;<a href="https://www.instagram.com/kazi_aidah">Instagram</a></li>
+        <li><i class="fab fa-facebook" style="color: #60a7ff"></i>&nbsp;<a href="https://www.facebook.com/people/Kazi-Aidahs-Tutorials/61575879443731/">Facebook</a></li>
+        <li><i class="fab fa-tiktok" style="color: #7acaff"></i>&nbsp;<a href="https://www.tiktok.com/@kazi_aidah">TikTok</a></li>
       </ul>
     </div>
   </div>
@@ -530,9 +536,14 @@
     });
     
     searchIcon.addEventListener('click', () => {
-        if (searchIcon.classList.contains('fa-times')) {
+        if (!searchInput.classList.contains('expanded')) {
+            searchInput.classList.add('expanded');
+            searchInput.focus();
+        } else if (searchIcon.classList.contains('fa-times')) {
             searchInput.value = '';
             performSearch('');
+        } else {
+            searchInput.classList.remove('expanded');
         }
     });
 
@@ -577,6 +588,9 @@
       renderGroupedByYear(allAnimationItems);
     })();
   </script>
-  <script src="page-transition.js"></script>
+  <script src="scripts/page-transition.js"></script>
+<script>
+(function(){var pw=document.querySelector('.page-wrapper');if(!pw)return;pw.addEventListener('scroll',function(){if(pw.scrollTop>50)pw.classList.add('scrolled');else pw.classList.remove('scrolled');},{passive:true});})();
+</script>
 </body>
 </html>

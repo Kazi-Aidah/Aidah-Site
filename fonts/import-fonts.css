@@ -1,0 +1,43 @@
+/* FONT LIST
+    Sans Serif
+    - Google Sans Flex
+    - Iosevka Aile
+    
+    Monospace
+
+    Handwriting
+    - Pally
+
+*/
+
+@font-face {
+    font-family: "Google Sans Flex";
+    src: url("fonts/GoogleSansFlex-Variable.ttf") format("truetype");
+    font-weight: 100 1000;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Pally";
+    src: url("fonts/Pally-Variable.ttf") format("truetype");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: url("fonts/GeneralSans-Variable.ttf") format("truetype");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Departure Mono";
+    src: url("fonts/DepartureMono-Regular.otf") format("opentype");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}

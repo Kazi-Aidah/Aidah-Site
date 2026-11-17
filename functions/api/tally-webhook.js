@@ -40,7 +40,8 @@ export async function onRequestPost(context) {
     // 1. Verify Tally webhook signature (optional but recommended)
     // -----------------------------------------------------------------------
     if (TALLY_SECRET) {
-      const signature = context.request.headers.get('x-tally-signature');
+      const signature = context.request.headers.get('tally-signature') ||
+                        context.request.headers.get('x-tally-signature');
       const body      = await context.request.clone().text();
       const valid     = await verifySignature(body, signature, TALLY_SECRET);
       if (!valid) {
@@ -118,8 +119,14 @@ function getFieldValue(fields, labelSubstring) {
 }
 
 async function verifySignature(body, signatureHeader, secret) {
-  if (!signatureHeader?.startsWith('sha256=')) return false;
-  const expected = signatureHeader.slice(7);
+  if (!signatureHeader) return false;
+
+  // Tally sends the signature in the `Tally-Signature` header as a base64-
+  // encoded HMAC-SHA256 of the raw request body (see Tally docs). Some
+  // setups prefix it with `sha256=`, so strip any such prefix.
+  const expected = signatureHeader.startsWith('sha256=')
+    ? signatureHeader.slice(7)
+    : signatureHeader;
 
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
@@ -130,9 +137,14 @@ async function verifySignature(body, signatureHeader, secret) {
     ['sign']
   );
   const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(body));
-  const hex = Array.from(new Uint8Array(sig))
+  const bytes = new Uint8Array(sig);
+
+  // Base64 (Tally's actual format).
+  const b64 = btoa(String.fromCharCode(...bytes));
+  // Hex (kept for backwards compatibility with older integrations).
+  const hex = Array.from(bytes)
     .map(b => b.toString(16).padStart(2, '0'))
     .join('');
 
-  return hex === expected;
+  return expected === b64 || expected === hex;
 }

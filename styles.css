@@ -33,11 +33,20 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: "Monocraft";
+    src: url("fonts/Monocraft.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 /* ===== COLOR VARIABLES ===== */
 :root {
     --bg-pri: #0F0F13;
     --bg-sec: #1A1A2A;
     --bg-ter: #232B4A;
+    --bg-element: #22222e;
 
     --txt-n: #E9EBF4;
     --txt-m: #BCC7DE;

@@ -17,14 +17,13 @@
 </head>
 <style>
     .cc-bubblebody {
-        background: var(--bg-sec);
-        border-top: 2px solid var(--brdr-1);
+        background: var(--bg-pri);
         width: 80%;
         max-width: auto !important;
         margin: 0 auto 1.5em;
         padding: 20px;
         border-radius: 24px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        /* box-shadow: 0 5px 15px rgba(0,0,0,0.3); */
         transition: all 0.3s ease;
         margin-top: 0px !important;
         padding-bottom: 10px;
@@ -93,7 +92,7 @@
         line-height: 1.2;
     }
     .blog-desc {
-        font-family: var(--fnt-j);
+        font-family: var(--fnt-d);
         font-size: 1em;
         font-weight: 400;
         margin-top: -2px;
@@ -104,7 +103,7 @@
         color: #C7D0EF
     }
     .blog-readmore {
-        font-family: var(--fnt-p);
+        font-family: var(--fnt-d);
         font-size: 1em;
         font-weight: 400;
         margin-top: -2px;
@@ -112,46 +111,70 @@
     }
     
     /* Simple Custom Carousel */
-    .custom-carousel {
+    .projects-grid {
         position: relative;
         width: 100%;
-        overflow: hidden;
         border-radius: 20px;
     }
     
-    .custom-carousel-track {
-        display: flex;
+    .projects-grid-track {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 15px;
-        transition: transform 0.5s ease;
         padding: 10px 0;
     }
     
-    .custom-carousel .proj-card {
-        background: var(--bg-ter);
-        border: 2px solid var(--brdr-1);
+    .projects-grid .proj-card {
+        background: var(--bg-element);
+        /* border: 2px solid var(--brdr-1); */
+        border: 2px solid transparent;
         border-radius: 16px;
         overflow: hidden;
         text-decoration: none;
         display: flex;
         flex-direction: column;
-        transition: all 0.3s ease;
-        width: 300px;
-        flex: 0 0 auto;
+        transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        width: 100%;
+        position: relative;
+    }
+
+    .proj-card-status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
     
-    .custom-carousel .proj-card:hover {
-        transform: translateY(-4px);
+    .projects-grid .proj-card:hover {
+        transform: translateY(-4px) scale(1.05);
+        border: 2px solid var(--red);
         box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
+
+    .projects-grid .proj-card:hover .proj-card-img {
+        border-bottom: 2px solid var(--red);
+    }
+
+    .projects-grid .proj-card:active {
+        transform: translateY(2px) scale(0.95);
+        border: 2px solid var(--red);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .projects-grid .proj-card:hover .proj-card-img {
+        border-bottom: 2px solid var(--red);
+    }
     
-    .custom-carousel .proj-card-img {
+    .projects-grid .proj-card-img {
         width: 100%;
         height: 180px;
         object-fit: cover;
-        border-bottom: 2px solid var(--brdr-1);
+        border-bottom: 2px solid transparent;
+        transition: all 0.3s ease;
     }
     
-    .custom-carousel .proj-card-content {
+    .projects-grid .proj-card-content {
         padding: 15px;
         padding-top: 10px;
         /* padding-bottom: 0px; */
@@ -160,24 +183,25 @@
         gap: 4px;
     }
     
-    .custom-carousel .proj-card-title {
-        font-family: var(--fnt-h);
-        font-size: 1.3em;
+    .projects-grid .proj-card-title {
+        font-family: "Monocraft", monospace;
+        font-size: 1.4em;
         font-weight: 600;
-        color: var(--txt-n);
+        letter-spacing: 0.05em;
+        color: var(--txt-m);
         margin: 0;
         margin-top: 4px;
     }
     
-    .custom-carousel .proj-card-desc {
-        font-family: var(--fnt-j);
-        font-size: 0.9em;
-        color: var(--txt-m);
+    .projects-grid .proj-card-desc {
+        font-family: var(--fnt-d);
+        font-size: 1.2em;
+        color: var(--txt-f);
         margin: 0;
         line-height: 1.5;
     }
     
-    .custom-carousel .proj-card-tags {
+    .projects-grid .proj-card-tags {
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
@@ -185,12 +209,17 @@
     }
     
     .card-tag {
-        font-family: var(--fnt-j);
+        font-family: var(--fnt-m);
         font-size: 0.8em;
-        padding: 4px 10px;
+        padding: 2px 8px;
         border-radius: 8px;
         background: var(--bg-sec);
         color: var(--txt-m);
+        text-transform: lowercase;
+    }
+
+    .card-tag::before {
+        content: "> ";
     }
 
     .card-tag.tag-obsidian-plugin {
@@ -222,8 +251,21 @@
         background: rgb(249, 115, 22, 0.2);
         color: rgb(253, 186, 116);
     }
+
+    .more-tag {
+        font-size: 0.75em;
+        padding: 2px 8px;
+        border-radius: 8px;
+        font-weight: 600;
+        white-space: nowrap;
+        display: inline-block;
+        margin-bottom: 6px;
+    }
+    .more-tag.stable { background: #9fc387; color: #000000; }
+    .more-tag.work { background: #f7d24c; color: #000000; }
+    .more-tag.dead { background: #d7614c; color: #000000; }
     
-    .custom-carousel-controls {
+    .projects-grid-controls {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -236,7 +278,7 @@
         z-index: 10;
     }
     
-    .custom-carousel-btn {
+    .projects-grid-btn {
         pointer-events: auto;
         background: #1a1a2a40;
         backdrop-filter: blur(2px);
@@ -251,20 +293,20 @@
         transition: all 0.2s ease;
     }
     
-    .custom-carousel-btn.hidden {
+    .projects-grid-btn.hidden {
         visibility: hidden !important;
         opacity: 0 !important;
         pointer-events: none !important;
     }
     
-    .custom-carousel-btn:hover {
+    .projects-grid-btn:hover {
         background-color: #49506e40;
         border: 2px solid var(--clr-o);
         color: var(--clr-o);
         transform: scale(1.05);
     }
 
-    .custom-carousel-btn:active {
+    .projects-grid-btn:active {
         background-color: #49506e40;
         border: 2px solid var(--clr-b);
         color: var(--clr-b);
@@ -317,7 +359,7 @@
     }
     
     /* .blog-tag {
-        font-family: var(--fnt-j);
+        font-family: var(--fnt-d);
         font-size: 0.85em;
         padding: 3px 8px;
         border-radius: 8px;
@@ -377,12 +419,12 @@
   <div class="cc-bubblebody">
     <div class="heading-container">
         <h2 class="checkoutprojects">Projects</h2>
-        <hr>
     </div>
-    <div class="custom-carousel" id="projectsCarousel">
-        <div class="custom-carousel-track" id="carouselTrack">
+    <div class="projects-grid" id="projectsGrid">
+        <div class="projects-grid-track" id="projectsGridTrack">
           <a href="https://github.com/kazi-aidah/always-color-text" class="proj-card" data-project-id="always-color-text" target="_blank">
             <img src="https://github.com/user-attachments/assets/905f5f4b-8b8b-440a-b00f-b32548e721db" alt="Always Color Text" class="proj-card-img">
+            <span class="more-tag stable proj-card-status">STABLE</span>
             <div class="proj-card-content">
               <h3 class="proj-card-title">Always Color Text</h3>
               <p class="proj-card-desc">Automatically color any word, phrase, or date across your vault.</p>
@@ -395,6 +437,7 @@
 
           <a href="https://github.com/kazi-aidah/sidecards" class="proj-card" data-project-id="sidecards" target="_blank">
             <img src="https://github.com/user-attachments/assets/503eae84-0d7d-4385-9253-7b48d7bef43e" alt="SideCards" class="proj-card-img">
+            <span class="more-tag dead proj-card-status">UNMAINTAINED</span>
             <div class="proj-card-content">
               <h3 class="proj-card-title">SideCards</h3>
               <p class="proj-card-desc">Create sidebar cards you can color, tag, and drag into notes.</p>
@@ -407,6 +450,7 @@
 
           <a href="https://github.com/kazi-aidah/dayble-calendar" class="proj-card" data-project-id="dayble-calendar" target="_blank">
             <img src="https://github.com/Kazi-Aidah/dayble-calendar/blob/main/assets/banner.gif?raw=true" alt="Dayble Calendar" class="proj-card-img">
+            <span class="more-tag work proj-card-status">IN-WORK</span>
             <div class="proj-card-content">
               <h3 class="proj-card-title">Dayble Calendar</h3>
               <p class="proj-card-desc">A fast, customizable calendar for Obsidian that stores events as monthly JSON files.</p>
@@ -419,6 +463,7 @@
 
           <a href="https://github.com/kazi-aidah/color-table-cell" class="proj-card" data-project-id="color-table-cell" target="_blank">
             <img src="https://github.com/user-attachments/assets/3a8923c4-af87-4f2c-8505-6bc03a31aa6c" alt="Color Table Cell" class="proj-card-img">
+            <span class="more-tag work proj-card-status">IN-WORK</span>
             <div class="proj-card-content">
               <h3 class="proj-card-title">Color Table Cell</h3>
               <p class="proj-card-desc">Color table cells manually or with rules based on keywords or numbers.</p>
@@ -431,6 +476,7 @@
 
           <a href="https://github.com/kazi-aidah/emoticon-picker" class="proj-card" data-project-id="emoticon-picker" target="_blank">
             <img src="images/emoticon-picker.png" alt="Emoticon Picker" class="proj-card-img">
+            <span class="more-tag stable proj-card-status">STABLE</span>
             <div class="proj-card-content">
               <h3 class="proj-card-title">Emoticon Picker</h3>
               <p class="proj-card-desc">Instant emoticon insertion with favorites and search.</p>
@@ -443,6 +489,7 @@
 
           <a href="https://github.com/kazi-aidah/blobob" class="proj-card" data-project-id="blobob-theme" target="_blank">
             <img src="https://github.com/Kazi-Aidah/blobob/raw/main/assets/screenshot-HQ.png" alt="Blobob Theme" class="proj-card-img">
+            <span class="more-tag work proj-card-status">IN-WORK</span>
             <div class="proj-card-content">
               <h3 class="proj-card-title">Blobob Theme</h3>
               <p class="proj-card-desc">An animated theme for Obsidian with 60+ color options.</p>
@@ -453,80 +500,11 @@
             </div>
           </a>
         </div>
-        <div class="custom-carousel-controls">
-            <button class="custom-carousel-btn hidden" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-            <button class="custom-carousel-btn hidden" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-        </div>
     </div>
   </div>
 
 
   <script>
-    // Simple Custom Carousel
-    const carousel = document.getElementById('projectsCarousel');
-    const track = document.getElementById('carouselTrack');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    let currentPosition = 0;
-    const cardWidth = 295; // card width (280px) + gap (15px)
-
-    // Get max scrollable position
-    function getMaxPosition() {
-        const viewportWidth = carousel.clientWidth;
-        const trackWidth = track.scrollWidth;
-        return Math.max(0, trackWidth - viewportWidth);
-    }
-
-    // Update arrow visibility
-    function updateArrows() {
-        const maxPosition = getMaxPosition();
-        
-        // Show left arrow only if we can go left
-        if (currentPosition > 0) {
-            prevBtn.classList.remove('hidden');
-        } else {
-            prevBtn.classList.add('hidden');
-        }
-        
-        // Show right arrow only if we can go right
-        if (currentPosition < maxPosition) {
-            nextBtn.classList.remove('hidden');
-        } else {
-            nextBtn.classList.add('hidden');
-        }
-    }
-
-    // Update carousel position
-    function updateCarousel() {
-        track.style.transform = `translateX(-${currentPosition}px)`;
-        updateArrows();
-    }
-
-    nextBtn.addEventListener('click', () => {
-        const maxPosition = getMaxPosition();
-        currentPosition = Math.min(currentPosition + cardWidth, maxPosition);
-        updateCarousel();
-    });
-
-    prevBtn.addEventListener('click', () => {
-        currentPosition = Math.max(currentPosition - cardWidth, 0);
-        updateCarousel();
-    });
-
-    // Initial update when DOM is ready and when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        updateArrows();
-    });
-    window.addEventListener('load', () => {
-        updateArrows();
-    });
-    
-    // Update on window resize
-    window.addEventListener('resize', () => {
-        currentPosition = Math.min(currentPosition, getMaxPosition());
-        updateCarousel();
-    });
-
     // Style tags based on their text content
     function styleTags() {
         const tags = document.querySelectorAll('.card-tag');
